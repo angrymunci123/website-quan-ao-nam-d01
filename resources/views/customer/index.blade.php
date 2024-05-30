@@ -3,16 +3,16 @@
   <!-- Hero Section Begin -->
   <section class="hero">
         <div class="hero__slider owl-carousel">
+            {{-- hero slider 1 --}}
             <div class="hero__items set-bg" data-setbg="{{ asset ('temp_assets/img/hero/hero-1.jpg')}}">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h6>Bộ sưu tập mùa hè</h6>
+                                <h2>Bộ sưu tập mùa hè 2024</h2>
+                                <p>Mùa hè năm nay nóng vãi lồn, mua đi mặc cho nó mát</p>
+                                <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -24,16 +24,16 @@
                     </div>
                 </div>
             </div>
+            {{-- hero slider 2 --}}
             <div class="hero__items set-bg" data-setbg="{{ asset ('temp_assets/img/hero/hero-2.jpg')}}">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h6>Bộ sưu tập mùa Đông</h6>
+                                <h2>Bộ sưu tập Thu-Đông 2024</h2>
+                                <p>Lạnh vãi lồn, mua nhiều vào mặc cho nó ấm</p>
+                                <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -59,8 +59,8 @@
                             <img src="{{ asset ('temp_assets/img/banner/banner-1.jpg')}}" alt="">
                         </div>
                         <div class="banner__item__text">
-                            <h2>Clothing Collections 2030</h2>
-                            <a href="#">Shop now</a>
+                            <h2>Quần đùi</h2>
+                            <a href="#">Mua ngay</a>
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                             <img src="{{ asset ('temp_assets/img/banner/banner-2.jpg')}}" alt="">
                         </div>
                         <div class="banner__item__text">
-                            <h2>Accessories</h2>
-                            <a href="#">Shop now</a>
+                            <h2>Áo ba lỗ</h2>
+                            <a href="#">Mua ngay</a>
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
                             <img src="{{ asset ('temp_assets/img/banner/banner-3.jpg')}}" alt="">
                         </div>
                         <div class="banner__item__text">
-                            <h2>Shoes Spring 2030</h2>
-                            <a href="#">Shop now</a>
+                            <h2>Dép tổ ong</h2>
+                            <a href="#">Mua ngay</a>
                         </div>
                     </div>
                 </div>
@@ -384,53 +384,7 @@
     </section>
     <!-- Product Section End -->
 
-    <!-- Categories Section Begin -->
-    <section class="categories spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="categories__text">
-                        <h2>Clothings Hot <br /> <span>Shoe Collection</span> <br /> Accessories</h2>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="categories__hot__deal">
-                        <img src="img/product-sale.png" alt="">
-                        <div class="hot__deal__sticker">
-                            <span>Sale Of</span>
-                            <h5>$29.99</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1">
-                    <div class="categories__deal__countdown">
-                        <span>Deal Of The Week</span>
-                        <h2>Multi-pocket Chest Bag Black</h2>
-                        <div class="categories__deal__countdown__timer" id="countdown">
-                            <div class="cd-item">
-                                <span>3</span>
-                                <p>Days</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>1</span>
-                                <p>Hours</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>50</span>
-                                <p>Minutes</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>18</span>
-                                <p>Seconds</p>
-                            </div>
-                        </div>
-                        <a href="#" class="primary-btn">Shop now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Categories Section End -->
+
 
     <!-- Instagram Section Begin -->
     <section class="instagram spad">
@@ -448,10 +402,9 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="instagram__text">
-                        <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                        <h3>#Male_Fashion</h3>
+                        <h2>Instagram Reels</h2>
+                        <p>Nơi các chiến thần bàn phím combat mõm</p>
+                        <h3>#socialmediain2024</h3>
                     </div>
                 </div>
             </div>
@@ -465,8 +418,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
+                        <span>Tin tức mới nhất</span>
+                        <h2>Các mặt hàng giảm giá</h2>
                     </div>
                 </div>
             </div>
@@ -475,9 +428,9 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-1.jpg')}}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 29 Tháng 2 2024</span>
+                            <h5>Giảm giá 75% toàn bộ mặt hàng quần què</h5>
+                            <a href="#">Đọc thêm</a>
                         </div>
                     </div>
                 </div>
@@ -485,9 +438,9 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-2.jpg')}}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 31 Tháng 4 2024</span>
+                            <h5>Giảm giá 50% toàn bộ cửa hàng</h5>
+                            <a href="#">Đọc thêm</a>
                         </div>
                     </div>
                 </div>
@@ -495,9 +448,9 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-3.jpg')}}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 30 Tháng 5 2024</span>
+                            <h5>Sale cực sốc không mặt hàng nào cả</h5>
+                            <a href="#">Đọc thêm</a>
                         </div>
                     </div>
                 </div>
