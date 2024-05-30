@@ -1,4 +1,4 @@
-@extends('admin.dashboard.dashboard_layout')
+@extends('admin.admin_layout')
 @section('content')
 <?php
     session_start();
