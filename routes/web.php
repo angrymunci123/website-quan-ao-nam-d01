@@ -28,6 +28,21 @@ Route::get('/', function () {
 Route::get('/admin', [AdminController::class, "loginAdmin"]);
 Route::post('/admin/login_process', [AdminController::class, "loginProcess"])->name("loginProcess");;
 Route::get('/admin/dashboard', [AdminController::class, "view_dashboard"]);
+//Brand
+Route::get('/admin/brand', [AdminController::class, "brand_management"]);
+Route::get('/admin/add_brand', [AdminController::class, "add_brand"]);
+Route::post('/admin/add_brand_process', [AdminController::class, "add_brand_process"]);
+Route::get('/admin/update_brand', [AdminController::class, "add_brand"]);
+Route::post('/admin/update_brand_process', [AdminController::class, "add_brand_process"]);
+Route::get('/admin/delete_brand', [AdminController::class, "add_brand"]);
+Route::post('/admin/delete_brand_process', [AdminController::class, "add_brand_process"]);
+//Category
+
+//User list
+Route::get('/admin/user', [AdminController::class, "user_list"]);
+
+//Product
+Route::get('/admin/product', [AdminController::class, "product_management"]);
 
 
 //Customer

@@ -43,6 +43,7 @@ class AdminController extends Controller
         return redirect('admin');
     }
 
+    //Dashboard
     public function view_dashboard()
     {
         if (!Auth::check()) {
@@ -50,4 +51,38 @@ class AdminController extends Controller
         }
         return view('admin.dashboard.dashboard');
     }
+
+    //User
+    public function user_list() 
+    {
+        if (!Auth::check()) {
+            return redirect('admin');
+        }
+        return view('admin.user.user_list');
+    }
+
+
+    //Product
+    public function product_management() 
+    {
+        if (!Auth::check()) {
+            return redirect('admin');
+        }
+        return view('admin.product.product_list');
+    }
+
+
+    //Brand
+    public function brand_management() 
+    {
+        if (!Auth::check()) {
+            return redirect('admin');
+        }
+        return view('admin.brand.list');
+    }
+
+    //Category
+
+
+
 }
