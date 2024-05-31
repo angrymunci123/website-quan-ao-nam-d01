@@ -28,14 +28,17 @@ Route::get('/', function () {
 Route::get('/admin', [AdminController::class, "loginAdmin"]);
 Route::post('/admin/login_process', [AdminController::class, "loginProcess"])->name("loginProcess");;
 Route::get('/admin/dashboard', [AdminController::class, "view_dashboard"]);
+
 //Brand
 Route::get('/admin/brand', [AdminController::class, "brand_management"]);
-Route::get('/admin/add_brand', [AdminController::class, "add_brand"]);
-Route::post('/admin/add_brand_process', [AdminController::class, "add_brand_process"]);
-Route::get('/admin/update_brand', [AdminController::class, "add_brand"]);
-Route::post('/admin/update_brand_process', [AdminController::class, "add_brand_process"]);
-Route::get('/admin/delete_brand', [AdminController::class, "add_brand"]);
-Route::post('/admin/delete_brand_process', [AdminController::class, "add_brand_process"]);
+
+Route::get('/admin/brand/add_brand', [AdminController::class, "add_brand"]);
+Route::post('/admin/brand/save_brand', [AdminController::class, "save_brand"]);
+
+Route::get('/admin/brand/edit_brand/brand_id={brand_id}', [AdminController::class, "edit_brand"]);
+Route::post('/admin/brand/update_brand/brand_id={brand_id}', [AdminController::class, "update_brand"]);
+
+Route::post('/admin/brand/delete_brand/brand_id={brand_id}', [AdminController::class, "delete_brand"]);
 //Category
 
 //User list

@@ -6,16 +6,16 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h4>Tạo Hãng Sản Xuất</h4>
+              <h4>Sửa Hãng Sản Xuất</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
-              <form action="/admin/brand/save_brand" method="POST" enctype='multipart/form-data'>
+              <form action="/admin/brand/update_brand/brand_id={{$brands->brand_id}}" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Hãng Sản Xuất</strong>
-                        <input type="text" name="name" id="name" class="form-control" required>
+                        <input type="text" name="name" id="name" value="{{$brands->name}}" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xl-1">

@@ -7,6 +7,16 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h4>Hãng Sản Xuất</h4>
+                <form method="get" action="/admin/brand/add_brand">
+                    <button name="controller=create" class="btn btn-success">Tạo Hãng Sản Xuất</button>
+                </form>
+            </div>
+            <div class="card-body">
+                @if(Session::has('notification'))
+                    <div class="alert alert-success">
+                        {{Session::get('notification')}}
+                    </div>
+                @endif
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -19,35 +29,27 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($brands as $brand)
                     <tr>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">1</h5>
+                        <h5 class="mb-0 text-sm">{{ $brand->brand_id }}</h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">Nike</h5>
+                        <h5 class="mb-0 text-sm">{{ $brand->name }}</h5>
                       </td>
-                      <!-- <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                        <br>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Remove
-                        </a>
-                      </td> -->
                       <td style="width:100px" class="text-center">
-                            <form action="" method="GET">
-                                @csrf
-                                <button type="submit" class="btn btn-warning" style="width:100px; color:black">Update</button>
+                            <form action="/admin/brand/edit_brand/brand_id={{$brand->brand_id}}" method="GET">    
+                                <button type="submit" class="btn btn-warning" style="width:100px; color:black">Sửa</button>
                             </form>
                             <br>
-                            <form onclick="return confirm('Are you sure you want to delete this brand?');"
-                                  action="" method="POST">
+                            <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Hãng Sản Xuất Này Không?');"
+                                  action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger" style="width:100px">Delete</button>
+                                <button type="submit" class="btn btn-danger" style="width:100px">Xóa</button>
                             </form>
                         </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
