@@ -39,7 +39,17 @@ Route::get('/admin/brand/edit_brand/brand_id={brand_id}', [AdminController::clas
 Route::post('/admin/brand/update_brand/brand_id={brand_id}', [AdminController::class, "update_brand"]);
 
 Route::post('/admin/brand/delete_brand/brand_id={brand_id}', [AdminController::class, "delete_brand"]);
+
 //Category
+Route::get('/admin/category', [AdminController::class, "category_management"]);
+
+Route::get('/admin/category/add_category', [AdminController::class, "add_category"]);
+Route::post('/admin/category/save_category', [AdminController::class, "save_category"]);
+
+Route::get('/admin/category/edit_category/category_id={category_id}', [AdminController::class, "edit_category"]);
+Route::post('/admin/category/update_category/category_id={category_id}', [AdminController::class, "update_category"]);
+
+Route::post('/admin/category/delete_category/category_id={category_id}', [AdminController::class, "delete_category"]);
 
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);

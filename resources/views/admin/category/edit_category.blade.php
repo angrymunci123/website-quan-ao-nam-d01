@@ -6,16 +6,16 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h4>Tạo Danh Mục</h4>
+              <h4>Sửa Danh Mục</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
-              <form action="/admin/category/save_category" method="POST" enctype='multipart/form-data'>
+              <form action="/admin/category/update_category/category_id={{$categories->category_id}}" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <strong>Tên Danh Mục</strong>
-                        <input type="text" name="name" id="name" class="form-control" required>
+                        <strong>Tên Hãng Sản Xuất</strong>
+                        <input type="text" name="name" id="name" value="{{$categories->name}}" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xl-1">
@@ -24,7 +24,7 @@
             </form>
             <br>
             <div class="col-sm-4 col-xl-1">
-                <form action="/admin/brand" enctype="multipart/form-data">
+                <form action="/admin/category" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-warning">Quay Lại</button>
                 </form>
             </div>
