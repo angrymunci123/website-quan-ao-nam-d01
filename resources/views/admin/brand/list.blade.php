@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 @if(Session::has('notification'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success" style="color:white">
                         {{Session::get('notification')}}
                     </div>
                 @endif
