@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StoreController;
 
 /*
@@ -30,32 +36,32 @@ Route::post('/admin/login_process', [AdminController::class, "loginProcess"])->n
 Route::get('/admin/dashboard', [AdminController::class, "view_dashboard"]);
 
 //Brand
-Route::get('/admin/brand', [AdminController::class, "brand_management"]);
+Route::get('/admin/brand', [BrandController::class, "brand_management"]);
 
-Route::get('/admin/brand/add_brand', [AdminController::class, "add_brand"]);
-Route::post('/admin/brand/save_brand', [AdminController::class, "save_brand"]);
+Route::get('/admin/brand/add_brand', [BrandController::class, "add_brand"]);
+Route::post('/admin/brand/save_brand', [BrandController::class, "save_brand"]);
 
-Route::get('/admin/brand/edit_brand/brand_id={brand_id}', [AdminController::class, "edit_brand"]);
-Route::post('/admin/brand/update_brand/brand_id={brand_id}', [AdminController::class, "update_brand"]);
+Route::get('/admin/brand/edit_brand/brand_id={brand_id}', [BrandController::class, "edit_brand"]);
+Route::post('/admin/brand/update_brand/brand_id={brand_id}', [BrandController::class, "update_brand"]);
 
-Route::post('/admin/brand/delete_brand/brand_id={brand_id}', [AdminController::class, "delete_brand"]);
+Route::post('/admin/brand/delete_brand/brand_id={brand_id}', [BrandController::class, "delete_brand"]);
 
 //Category
-Route::get('/admin/category', [AdminController::class, "category_management"]);
+Route::get('/admin/category', [CategoryController::class, "category_management"]);
 
-Route::get('/admin/category/add_category', [AdminController::class, "add_category"]);
-Route::post('/admin/category/save_category', [AdminController::class, "save_category"]);
+Route::get('/admin/category/add_category', [CategoryController::class, "add_category"]);
+Route::post('/admin/category/save_category', [CategoryController::class, "save_category"]);
 
-Route::get('/admin/category/edit_category/category_id={category_id}', [AdminController::class, "edit_category"]);
-Route::post('/admin/category/update_category/category_id={category_id}', [AdminController::class, "update_category"]);
+Route::get('/admin/category/edit_category/category_id={category_id}', [CategoryController::class, "edit_category"]);
+Route::post('/admin/category/update_category/category_id={category_id}', [CategoryController::class, "update_category"]);
 
-Route::post('/admin/category/delete_category/category_id={category_id}', [AdminController::class, "delete_category"]);
+Route::post('/admin/category/delete_category/category_id={category_id}', [CategoryController::class, "delete_category"]);
 
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //Product
-Route::get('/admin/product', [AdminController::class, "product_management"]);
+Route::get('/admin/product', [ProductController::class, "product_management"]);
 
 
 //Customer
