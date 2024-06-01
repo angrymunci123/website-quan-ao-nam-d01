@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset ('temp_assets/css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{ asset ('temp_assets/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{ asset ('temp_assets/css/style.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset ('temp_assets/css/product-card.css')}}" type="text/css">
 </head>
 
 <body>

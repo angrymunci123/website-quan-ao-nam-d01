@@ -188,74 +188,64 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
+                        <div class="col-md-3">
+                            <div class="product__item" style="width: 210px;">
                                 <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
-
                                 </div>
-                                <div class="product__item__text">
-                                    <h6>Piqué Biker Jacket</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>$67.24</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
-                                </div>
+                                <div class="bottom">
+                                    <div class="left">
+                                        <div class="details">
+                                            <h5><b>Áo Sơmi</b></h5>
+                                            <p>£250</p>
+                                        </div>
+                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
+                                </div>   
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item sale">
-                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-3.jpg')}}">
-                                    <span class="label">Sale</span>
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="{{ asset ('temp_assets/img/icon/heart.png')}}" alt=""></a></li>
-                                        <li><a href="#"><img src="{{ asset ('temp_assets/img/icon/compare.png')}}" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a></li>
-                                    </ul>
+                    </div> 
+                    <div class="col-md-3">
+                            <div class="product__item" style="width: 210px;">
+                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-1.jpg')}}"fffffff>
                                 </div>
-                                <div class="product__item__text">
-                                    <h6>Multi-pocket Chest Bag</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>$43.48</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-7">
-                                            <input type="radio" id="pc-7">
-                                        </label>
-                                        <label class="active black" for="pc-8">
-                                            <input type="radio" id="pc-8">
-                                        </label>
-                                        <label class="grey" for="pc-9">
-                                            <input type="radio" id="pc-9">
-                                        </label>
-                                    </div>
-                                </div>
+                                <div class="bottom">
+                                    <div class="left">
+                                        <div class="details">
+                                            <h5><b>Giày</b></h5>
+                                            <p>£250</p>
+                                        </div>
+                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
+                                </div>   
                             </div>
                         </div>
-
-
+                    </div>
+                    <div class="col-md-3">
+                            <div class="product__item" style="width: 210px;">
+                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-1.jpg')}}"fffffff>
+                                </div>
+                                <div class="bottom">
+                                    <div class="left">
+                                        <div class="details">
+                                            <h5><b>Giày</b></h5>
+                                            <p>£250</p>
+                                        </div>
+                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <div class="product__item" style="width: 210px;">
+                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
+                                </div>
+                                <div class="bottom">
+                                    <div class="left">
+                                        <div class="details">
+                                            <h5><b>Áo Sơmi</b></h5>
+                                            <p>£250</p>
+                                        </div>
+                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
+                                </div>   
+                            </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
