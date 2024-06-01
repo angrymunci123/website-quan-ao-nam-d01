@@ -5,7 +5,7 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="user" method="POST" action="{{route('loginProcess')}}">
 					<span class="login100-form-title p-b-49">
-						Login
+						Đăng Nhập KTC Store
 					</span>
 					@if(Session::has('success'))
                         <div class="alert alert-success">{{Session::get('success')}}</div>
@@ -15,15 +15,15 @@
                     @endif
                     @csrf
                     <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
-					<div class="wrap-input100 validate-input m-b-23" data-validate = "Email is required">
-						<span class="label-input100">Email Address</span>
-						<input class="input100" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Type your username">
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Địa chỉ email là bắt buộc">
+						<span class="label-input100">Địa Chỉ Email</span>
+						<input class="input100" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Địa chỉ email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<div class="wrap-input100 validate-input" data-validate="Mật khẩu là bắt buộc">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="password" id="exampleInputPassword1" placeholder="Type your password">
+						<input class="input100" type="password" name="password" id="exampleInputPassword1" placeholder="Mật khẩu">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 
