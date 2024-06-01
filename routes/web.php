@@ -62,7 +62,8 @@ Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //Product
 Route::get('/admin/product', [ProductController::class, "product_management"]);
-
+Route::get('/admin/product/add_product', [ProductController::class, "add_product"]);
+Route::post('/admin/product/save_product', [ProductController::class, "save_product"]);
 
 //Customer
 Route::get('/mainpage', [StoreController::class, "mainpage"]);
