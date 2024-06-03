@@ -1,16 +1,16 @@
 @extends('admin.admin_layout')
 @section('content')
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
+<!-- End Navbar -->
+<div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
               <table style="width: 100%">
-              <th style="font-size: 26px">Sản Phẩm</th>
+              <th style="font-size: 26px;" >Tin Tức</th>
               <th style="float:right">
                 <form method="get" action="/admin/product/add_product">
-                    <button name="controller=create"  class="btn btn-success">Tạo Sản Phẩm</button>
+                    <button name="controller=create"  class="btn btn-success">Tạo Bài Viết</button>
                 </form>
                 </th>
                 </table>
@@ -24,51 +24,44 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0" >
+                <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Sản Phẩm</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Danh Mục</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Nhãn Hiệu</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">STT</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tiêu Đề</th>     
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th>               
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="3">Chức Năng</th>
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach($inner_join as $inj)
                     <tr>
                       <td class="text-center">
-                          <h5 class="mb-0 text-sm">{{$inj->product_id}}</h5>
-                        </td>
-                      <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->product_name}}</h5>
+                        <h5 class="mb-0 text-sm"></h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->category_name}}</h5>
+                        <h5 class="mb-0 text-sm"></h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->name}}</h5>
+                        <h5 class="mb-0 text-sm"></h5>
                       </td>
-                      <td style="width:10px; column-gap: 1px;" class="text-center" >
-                            <form action="/admin/product/view_product/product_id={{$inj->product_id}}" method="GET">
+                      <td style="width:10px; column-gap: 1px;" class="text-center">
+                        <form action="/admin/news/view_news/news_id=" method="GET">
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:white">Xem</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/update_product/product_id=" method="GET">
+                            <form action="/admin/news/update_news/news_id=" method="GET">
                                 <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
-                                  action="/admin/product/delete_product/product_id=" method="POST">
+                            <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Bài viết Này Không?');"
+                                  action="/admin/news/delete_news/news_id=" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>
-                            </td>
                         </td>
                     </tr>
-                  @endforeach
                   </tbody>
                 </table>
               </div>
@@ -185,4 +178,4 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  @endsection
+@endsection

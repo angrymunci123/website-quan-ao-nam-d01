@@ -14,9 +14,11 @@
   <!-- Nucleo Icons -->
   <link href="{{asset('admin_assets/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <link href="{{asset('admin_assets/css/dropdown.css')}}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('admin_assets/css/soft-ui-dashboard.css?v=1.0.7')}}" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
@@ -97,7 +99,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  " href="../pages/tables.html">
+            <a class="nav-link  " href="/admin/news">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>Tin tức</title>
@@ -192,6 +194,14 @@
   <script src="{{asset('admin_assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
   <script src="{{asset('admin_assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
   <script src="{{asset('admin_assets/js/plugins/chartjs.min.js')}}"></script>
+  <script src="{{asset('admin_assets/js/dropdown.js')}}"></script>
+  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
