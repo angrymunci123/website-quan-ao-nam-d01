@@ -65,6 +65,9 @@ Route::get('/admin/product', [ProductController::class, "product_management"]);
 Route::get('/admin/product/add_product', [ProductController::class, "add_product"]);
 Route::post('/admin/product/save_product', [ProductController::class, "save_product"]);
 
+//Order
+Route::get('/admin/order', [OrderController::class, "or_lists"]);
+
 //Customer
 Route::get('/mainpage', [StoreController::class, "mainpage"]);
 Route::get('/mainpage/contact', [StoreController::class, "contact"]);
