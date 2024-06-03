@@ -34,4 +34,7 @@ class StoreController extends Controller
     public function about(){
         return view("customer.about");
     }
+    public function login_customer(){
+        return view("customer.login_cus");
+    }
 }
