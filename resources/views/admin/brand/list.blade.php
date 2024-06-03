@@ -28,7 +28,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Hãng</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Hãng Sản Xuất</th>                      
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Hãng Sản Xuất</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="2">Chức Năng</th>
                     </tr>
                   </thead>
@@ -42,7 +42,7 @@
                         <h5 class="mb-0 text-sm">{{ $brand->name }}</h5>
                       </td>
                       <td style="width: 100px;" class="text-center">
-                            <form action="/admin/brand/edit_brand/brand_id={{$brand->brand_id}}" method="GET">    
+                            <form action="/admin/brand/edit_brand/brand_id={{$brand->brand_id}}" method="GET">
                                 <button type="submit" class="btn btn-warning" style="width:75px; color:black">Sửa</button>
                             </form>
                             </td>

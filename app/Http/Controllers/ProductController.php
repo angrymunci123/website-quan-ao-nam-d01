@@ -59,13 +59,28 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('notification', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
-    public function add_product_detail()
+    public function view_product(Request $request, $product_id)
     {
         if (!Auth::check())
         {
             return view('admin');
         }
-        $products = Product::orderBy('products.product_id', "ASC")->get(['product_id', 'name']);
+
+        $products = Product::join("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->where("products.product_id", "=", $product_id)
+            ->orderBy("product_detail.product_detail_id", "desc")
+            ->paginate(5);
+        return view('admin.product.product_detail.product_detail_list', compact('products'));
+    }
+
+    public function add_product_detail(Request $request)
+    {
+        if (!Auth::check())
+        {
+            return view('admin');
+        }
+        $product_id = $request->product_id;
+        $products = Product::where('products.product_id', "=", $product_id)->get(['product_id', 'product_name']);
         return view('admin.product.product_detail.add_detail', compact('products'));
     }
 

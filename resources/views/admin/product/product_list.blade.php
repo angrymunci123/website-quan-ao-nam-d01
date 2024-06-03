@@ -28,9 +28,9 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Sản Phẩm</th> 
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Danh Mục</th> 
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Nhãn Hiệu</th>                      
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Sản Phẩm</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Danh Mục</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Nhãn Hiệu</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="3">Chức Năng</th>
                     </tr>
                   </thead>
@@ -50,12 +50,12 @@
                         <h5 class="mb-0 text-sm">{{$inj->name}}</h5>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
-                            <form action="/admin/product/view_product/product_id=" method="GET">    
+                            <form action="/admin/product/view_product/product_id={{$inj->product_id}}" method="GET">
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:black">Xem</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/update_product/product_id=" method="GET">    
+                            <form action="/admin/product/update_product/product_id=" method="GET">
                                 <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
                             </form>
                             </td>

@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
-    public function brand_management() 
+    public function brand_management()
     {
         if (!Auth::check()) {
             return redirect('admin');
         }
         $brands = Brand::paginate(10);
-        Paginator::useBootstrap();  
+        Paginator::useBootstrap();
         return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) -1) *5);
     }
 
-    public function add_brand() 
+    public function add_brand()
     {
         if (!Auth::check()) {
             return redirect('admin');
@@ -28,7 +28,7 @@ class BrandController extends Controller
         return view('admin.brand.add_brand');
     }
 
-    public function save_brand(Request $request) 
+    public function save_brand(Request $request)
     {
         if (!Auth::check()) {
             return redirect('admin');

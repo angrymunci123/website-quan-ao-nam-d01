@@ -15,7 +15,11 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Hãng Sản Xuất</strong>
+<<<<<<< HEAD
+                        <input type="text" name="brand_name" id="brand_name" value="{{$brands->brand_name}}" class="form-control" required>
+=======
                         <input type="text" name="name" id="name" value="{{$brands->name}}" class="form-control" required>
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
                     </div>
                 </div>
                 <div class="col-sm-4 col-xl-1">
@@ -142,4 +146,8 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd

@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function category_management() 
+    public function category_management()
     {
         if (!Auth::check()) {
             return redirect('admin');
         }
         $categories = Category::paginate(10);
-        Paginator::useBootstrap();  
+        Paginator::useBootstrap();
         return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) -1) *5);
     }
 
-    public function add_category() 
+    public function add_category()
     {
         if (!Auth::check()) {
             return redirect('admin');
@@ -28,7 +28,7 @@ class CategoryController extends Controller
         return view('admin.category.add_category');
     }
 
-    public function save_category(Request $request) 
+    public function save_category(Request $request)
     {
         if (!Auth::check()) {
             return redirect('admin');

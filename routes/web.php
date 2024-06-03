@@ -64,6 +64,9 @@ Route::get('/admin/user', [AdminController::class, "user_list"]);
 Route::get('/admin/product', [ProductController::class, "product_management"]);
 Route::get('/admin/product/add_product', [ProductController::class, "add_product"]);
 Route::post('/admin/product/save_product', [ProductController::class, "save_product"]);
+Route::get('/admin/product/view_product/product_id={product_id}', [ProductController::class, "view_product"]);
+
+Route::get('/admin/product/product_detail/add_product_detail', [ProductController::class, "add_product_detail"]);
 
 //Order
 Route::get('/admin/order', [OrderController::class, "or_lists"]);

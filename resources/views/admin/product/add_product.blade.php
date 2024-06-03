@@ -13,7 +13,7 @@
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <strong>Brand Name</strong>
+                        <strong>Nhãn Hiệu</strong>
                         <select class="form-control" name='brand_id'>
                             @foreach($brands as $brand)
                                 <option type="number" name='brand_id' value='{{$brand->brand_id}}'>{{$brand->name}}</option>
@@ -22,7 +22,7 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <strong>Product Source</strong>
+                        <strong>Danh Mục</strong>
                         <select class="form-control" name='category_id'>
                             @foreach($categories as $category)
                                 <option type="number" name='category_id' value='{{$category->category_id}}'>{{$category->name}}</option>
@@ -89,5 +89,5 @@
         </div>
       </footer>
     </div>
-  </main>  
+  </main>
 @endsection
