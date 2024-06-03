@@ -60,6 +60,9 @@ Route::post('/admin/category/delete_category/category_id={category_id}', [Catego
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
 
+//News
+Route::get('/admin/news', [AdminController::class, "news"]);
+
 //Product
 Route::get('/admin/product', [ProductController::class, "product_management"]);
 Route::get('/admin/product/add_product', [ProductController::class, "add_product"]);
