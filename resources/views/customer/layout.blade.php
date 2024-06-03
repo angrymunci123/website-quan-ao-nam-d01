@@ -62,7 +62,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-7">
                         <div class="header__top__left">
-                            <p>Chắc chắn là đéo FreeShip, hoàn trả hàng thì bố đéo hoàn tiền</p>
+                            <p></p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
@@ -80,13 +80,13 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
+                        <a href="./"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="index">Trang chủ</a></li>
+                            <li class="active"><a href="./">Trang chủ</a></li>
                             <li><a href="/mainpage/shop">Cửa hàng</a></li>
                             <li><a href="/mainpage/blog">Tin tức</a></li>
                             <li><a href="/mainpage/contact">Liên hệ</a></li>
