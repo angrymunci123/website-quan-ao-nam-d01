@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function category_management() 
+    public function category_management()
     {
         if (!Auth::check()) {
             return redirect('admin');
         }
         $categories = Category::paginate(10);
-        Paginator::useBootstrap();  
+        Paginator::useBootstrap();
         return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) -1) *5);
     }
 
-    public function add_category() 
+    public function add_category()
     {
         if (!Auth::check()) {
             return redirect('admin');
@@ -28,18 +28,14 @@ class CategoryController extends Controller
         return view('admin.category.add_category');
     }
 
-    public function save_category(Request $request) 
+    public function save_category(Request $request)
     {
         if (!Auth::check()) {
             return redirect('admin');
         }
         $brand_name = $request->name;
         DB::table('category')->insert([
-<<<<<<< HEAD
-            'name' => $brand_name
-=======
             'category_name' => $brand_name
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
         ]);
         return redirect("/admin/category")->with('notification', 'Tạo Danh Mục Mới Thành Công!');;
     }
@@ -60,11 +56,7 @@ class CategoryController extends Controller
         }
         $name = $request->name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
-<<<<<<< HEAD
-            'name' => $name
-=======
             'category_name' => $name
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
         ]);
         return redirect('/admin/category')->with('notification', 'Sửa Danh Mục Thành Công!');
     }

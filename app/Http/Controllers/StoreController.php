@@ -19,13 +19,8 @@ class StoreController extends Controller
     public function shopping_cart(){
         return view("customer.shopping-cart");
     }
-<<<<<<< HEAD
-    public function shop_detail(){
-        return view("customer.shop-details");
-=======
     public function product_detail(){
         return view("customer.product-details");
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
     }
     public function checkout(){
         return view("customer.checkout");
