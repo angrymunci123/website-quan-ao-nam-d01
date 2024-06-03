@@ -6,10 +6,14 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h4>Danh Mục</h4>
-                <form method="get" action="/admin/category/add_category">
+              <table style="width: 100%">
+              <th style="font-size: 26px;">Danh Mục</th>
+              <th style="float: right;">
+              <form method="get" action="/admin/category/add_category">
                     <button name="controller=create" class="btn btn-success">Tạo Danh Mục</button>
                 </form>
+              </th>
+                </table>
             </div>
             <div class="card-body">
                 @if(Session::has('notification'))
@@ -25,7 +29,7 @@
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Danh Mục</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Danh Mục</th>                      
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Chức Năng</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="2">Chức Năng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -35,18 +39,20 @@
                         <h5 class="mb-0 text-sm">{{ $category->category_id }}</h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{ $category->name }}</h5>
+                        <h5 class="mb-0 text-sm">{{ $category->category_name }}</h5>
                       </td>
                       <td style="width:100px" class="text-center">
                             <form action="/admin/category/edit_category/category_id={{$category->category_id}}" method="GET">    
-                                <button type="submit" class="btn btn-warning" style="width:100px; color:black">Sửa</button>
+                                <button type="submit" class="btn btn-warning" style="width:75px; color:black">Sửa</button>
                             </form>
-                            <br>
+                            </td>
+                            <td style="width:100px">
                             <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Danh Mục Này Không?');"
                                   action="/admin/category/delete_category/category_id={{$category->category_id}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger" style="width:100px">Xóa</button>
+                                <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>
+                            </td>
                         </td>
                     </tr>
                     @endforeach

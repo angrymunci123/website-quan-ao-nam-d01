@@ -11,7 +11,7 @@
                             <div class="hero__text">
                                 <h6>Bộ sưu tập mùa hè</h6>
                                 <h2>Bộ sưu tập mùa hè 2024</h2>
-                                <p>Mùa hè năm nay nóng vãi lồn, mua đi mặc cho nó mát</p>
+                                <p></p>
                                 <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -32,7 +32,7 @@
                             <div class="hero__text">
                                 <h6>Bộ sưu tập mùa Đông</h6>
                                 <h2>Bộ sưu tập Thu-Đông 2024</h2>
-                                <p>Lạnh vãi lồn, mua nhiều vào mặc cho nó ấm</p>
+                                <p></p>
                                 <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>

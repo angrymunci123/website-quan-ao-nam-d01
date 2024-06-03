@@ -35,7 +35,7 @@ class CategoryController extends Controller
         }
         $brand_name = $request->name;
         DB::table('category')->insert([
-            'name' => $brand_name
+            'category_name' => $brand_name
         ]);
         return redirect("/admin/category")->with('notification', 'Tạo Danh Mục Mới Thành Công!');;
     }
@@ -56,7 +56,7 @@ class CategoryController extends Controller
         }
         $name = $request->name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
-            'name' => $name
+            'category_name' => $name
         ]);
         return redirect('/admin/category')->with('notification', 'Sửa Danh Mục Thành Công!');
     }
