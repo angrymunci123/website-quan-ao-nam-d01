@@ -8,18 +8,25 @@
               <h4>Tạo Hãng Sản Xuất</h4>
             </div>
             <div class="card-body">
+<<<<<<< HEAD
                 {{-- @if(Session::has('notification'))
                     <div class="alert alert-success" style="color:white">
                         {{Session::get('notification')}}
                     </div>
                 @endif --}}
+=======
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
               <div class="table-responsive p-0">
               <form action="/admin/brand/save_brand" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Hãng Sản Xuất</strong>
+<<<<<<< HEAD
                         <input type="text" name="brand_name" id="brand_name" class="form-control" required>
+=======
+                        <input type="text" name="name" id="name" class="form-control" required>
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
                     </div>
                 </div>
                 <div class="col-sm-4 col-xl-1">
@@ -146,4 +153,8 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd

@@ -75,5 +75,9 @@ Route::get('/mainpage/shopping-cart', [StoreController::class, "shopping_cart"])
 Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
 Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
+<<<<<<< HEAD
 Route::get('/mainpage/shop-detail', [StoreController::class, "shop-detail"]);
+=======
+Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
 Route::get('/login', [StoreController::class, "login_customer"]);

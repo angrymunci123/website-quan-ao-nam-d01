@@ -51,7 +51,11 @@ class ProductController extends Controller
         DB::table('products')->insert([
             'brand_id' => $brand,
             'category_id' => $category,
+<<<<<<< HEAD
             'name' => $product_name,
+=======
+            'product_name' => $product_name,
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
             'description' => $description,
             'created_at' => now(),
             'updated_at' => NULL

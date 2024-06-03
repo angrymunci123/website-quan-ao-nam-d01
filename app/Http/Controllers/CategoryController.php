@@ -35,7 +35,11 @@ class CategoryController extends Controller
         }
         $brand_name = $request->name;
         DB::table('category')->insert([
+<<<<<<< HEAD
             'name' => $brand_name
+=======
+            'category_name' => $brand_name
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
         ]);
         return redirect("/admin/category")->with('notification', 'Tạo Danh Mục Mới Thành Công!');;
     }
@@ -56,7 +60,11 @@ class CategoryController extends Controller
         }
         $name = $request->name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
+<<<<<<< HEAD
             'name' => $name
+=======
+            'category_name' => $name
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
         ]);
         return redirect('/admin/category')->with('notification', 'Sửa Danh Mục Thành Công!');
     }

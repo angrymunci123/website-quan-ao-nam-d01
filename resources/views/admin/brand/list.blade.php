@@ -6,10 +6,14 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h4>Hãng Sản Xuất</h4>
+              <table style="width: 100%;">
+              <th style="font-size: 26px">Hãng Sản Xuất</th>
+              <th style="float: right">
                 <form method="get" action="/admin/brand/add_brand">
                     <button name="controller=create" class="btn btn-success">Tạo Hãng Sản Xuất</button>
                 </form>
+                </th>
+                </table>
             </div>
             <div class="card-body">
                 @if(Session::has('notification'))
@@ -25,29 +29,30 @@
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Hãng</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Tên Hãng Sản Xuất</th>
-                      <th colspan="3" class="text-uppercase font-weight-bolder opacity-7 text-center">Chức Năng</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="2">Chức Năng</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($brands as $brand)
                     <tr>
-                        <td class="text-center">
-                            <h5 class="mb-0 text-sm">{{ $brand->brand_id }}</h5>
-                        </td>
-                        <td class="text-center">
-                            <h5 class="mb-0 text-sm">{{ $brand->brand_name }}</h5>
-                        </td>
-                        <td style="width:50px">
+                      <td class="text-center">
+                        <h5 class="mb-0 text-sm">{{ $brand->brand_id }}</h5>
+                      </td>
+                      <td class="text-center">
+                        <h5 class="mb-0 text-sm">{{ $brand->name }}</h5>
+                      </td>
+                      <td style="width: 100px;" class="text-center">
                             <form action="/admin/brand/edit_brand/brand_id={{$brand->brand_id}}" method="GET">
-                                <button type="submit" class="btn btn-warning" style="color:black">Sửa</button>
+                                <button type="submit" class="btn btn-warning" style="width:75px; color:black">Sửa</button>
                             </form>
-                        </td>
-                        <td style="width:50px">
+                            </td>
+                            <td style="width: 100px;">
                             <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Hãng Sản Xuất Này Không?');"
-                                action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                  action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>
+                            </td>
                         </td>
                     </tr>
                     @endforeach
@@ -167,4 +172,8 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+<<<<<<< HEAD
   @endsection
+=======
+  @endsection
+>>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
