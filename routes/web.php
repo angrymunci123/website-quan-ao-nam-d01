@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StoreController;
 
 /*
@@ -61,7 +62,8 @@ Route::post('/admin/category/delete_category/category_id={category_id}', [Catego
 Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
-Route::get('/admin/news', [AdminController::class, "news"]);
+Route::get('/admin/news', [NewsController::class, "news"]);
+Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
 
 //Product
 Route::get('/admin/product', [ProductController::class, "product_management"]);
@@ -78,7 +80,7 @@ Route::post('/admin/product/product_detail/save_product_detail', [ProductControl
 
 Route::get('/admin/product/product_detail/add_product_detail/product_id={product_id}', [ProductController::class, "add_product_detail"]);
 
-Route::get('/admin/product/product_detail/product_id={product_id}/product_detail_id={product_detail_id}', [ProductController::class, "view_product_detail"]);
+Route::get('/admin/product/product_detail/view_product_detail', [ProductController::class, "view_product_detail"]);
 
 
 //Order

@@ -9,7 +9,7 @@
               <table style="width: 100%">
               <th style="font-size: 26px;" >Tin Tức</th>
               <th style="float:right">
-                <form method="get" action="/admin/product/add_product">
+                <form method="get" action="/admin/news/create_news">
                     <button name="controller=create"  class="btn btn-success">Tạo Bài Viết</button>
                 </form>
                 </th>
