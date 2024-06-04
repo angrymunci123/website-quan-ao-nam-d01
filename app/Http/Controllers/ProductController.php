@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -59,28 +60,32 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('notification', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
-    public function view_product(Request $request, $product_id)
+    public function view_product($product_id)
     {
         if (!Auth::check())
         {
             return view('admin');
         }
 
-        $products = Product::join("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->where("products.product_id", "=", $product_id)
-            ->orderBy("product_detail.product_detail_id", "desc")
-            ->paginate(5);
-        return view('admin.product.product_detail.product_detail_list', compact('products'));
+        // $products = Product::where("products.product_id", "=", $product_id)
+        //     ->orderBy("products.products_id", "desc")
+        //     ->paginate(5);
+        $products = Product::where("products.product_id", "=", $product_id)
+        ->first();
+        $product_details = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
+        ->where("products.product_id", "=", $product_id)->paginate(5);
+        Paginator::useBootstrap();
+        return view('admin.product.product_detail.product_detail_list', compact(['products', 'product_details']))->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
-    public function add_product_detail(Request $request)
+    public function add_product_detail(Request $request)    
     {
         if (!Auth::check())
         {
             return view('admin');
         }
-        $product_id = $request->product_id;
-        $products = Product::where('products.product_id', "=", $product_id)->get(['product_id', 'product_name']);
+        $product_id = $request->product_id; 
+        $products = Product::where('product_id', "=", $product_id)->get();
         return view('admin.product.product_detail.add_detail', compact('products'));
     }
 

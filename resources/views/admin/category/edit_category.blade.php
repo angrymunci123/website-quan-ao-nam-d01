@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Hãng Sản Xuất</strong>
-                        <input type="text" name="name" id="name" value="{{$categories->name}}" class="form-control" required>
+                        <input type="text" name="category_name" id="category_name" value="{{$categories->category_name}}" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xl-1">
