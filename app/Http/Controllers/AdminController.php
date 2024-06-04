@@ -64,12 +64,6 @@ class AdminController extends Controller
         }
         return view('admin.user.user_list');
     }
-    public function news() 
-    {
-        if (!Auth::check()) {
-            return redirect('admin');
-        }
-        return view('admin.news.news_management');
-    }
+
 
 }
