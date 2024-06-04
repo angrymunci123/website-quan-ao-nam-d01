@@ -47,10 +47,10 @@
                         <h5 class="mb-0 text-sm">{{$inj->category_name}}</h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->name}}</h5>
+                        <h5 class="mb-0 text-sm">{{$inj->brand_name}}</h5>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
-                            <form action="/admin/product/view_product/product_id={{$inj->product_id}}" method="GET">
+                            <form action="/admin/product/view_product/product_id={{$inj->product_id}}" method="GET">    
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:white">Xem</button>
                             </form>
                             </td>
@@ -71,6 +71,7 @@
                   @endforeach
                   </tbody>
                 </table>
+                {{ $inner_join->onEachSide(1)->links() }}
               </div>
             </div>
           </div>

@@ -14,15 +14,39 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Sản Phẩm</strong>
-                        @foreach ($products as $product)
-                        <input type="text" name="product_name" id="product_name" class="form-control" value="{{$product->product_name}}" required>
+                        @foreach($products as $prd)
+                        <input type="text" name="product_id" id="product_id" class="form-control" value="{{$prd->product_name}}" readonly/>
                         @endforeach
                     </div>
-                    <br>
                     <div class="form-group">
-                        <strong>Mô Tả Sản Phẩm</strong>
-                        <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
+                        <strong>Giá</strong>
+                        <input type="number" name="price" id="price" class="form-control" required>
                     </div>
+                    <div class="form-group">
+                        <strong>Giá Khuyến Mãi</strong>
+                        <input type="number" name="sale_price" id="sale_price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <strong>Số lượng</strong>
+                        <input type="number" name="quantity" id="quantity" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <strong>Màu Sắc</strong>
+                        <input type="text" name="color" id="color" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <strong>Kích Cỡ</strong>
+                        <input type="number" name="size" id="size" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <strong>Chất Liệu</strong>
+                        <input type="text" name="material" id="material" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <strong>Image</strong>
+                        <input type="file" name="image" id="image" class="form-control-ls">
+                    </div>
+                </div>
                 </div>
                 <br>
                 <div class="col-sm-4 col-xl-1">
