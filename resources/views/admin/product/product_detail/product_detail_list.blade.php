@@ -9,12 +9,12 @@
               <table style="width: 100%">
                 <th style="font-size: 26px">Sản Phẩm</th>
                 <th style="float:right">
-                  <form method="get" action="/admin/product/product_detail/add_product_detail/product_id={{$products->product_id}}">
+                <form method="get" action="/admin/product/product_detail/add_product_detail/product_id={{ $product_id }}">
                   @csrf
-                  <input type="number" name="product_id" value="{{ $products->product_id }}" required hidden>
+                  <input type="number" name="product_id" value="{{$product_id}}" required hidden>
                   <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                       <button name="controller=create" class="btn btn-success">Tạo Biến Thể Sản Phẩm</button>
-                  </form>
+                  </form>        
                 </th>
               </table>
             </div>
