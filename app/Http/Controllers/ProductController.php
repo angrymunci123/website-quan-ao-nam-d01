@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
-    public function product_management() {
+    public function product_management()
+    {
         if (!Auth::check()) {
             return redirect('admin');
         }
@@ -29,8 +30,7 @@ class ProductController extends Controller
 
     public function add_product()
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return view('admin');
         }
         $brands = Brand::all();
@@ -40,8 +40,7 @@ class ProductController extends Controller
 
     public function save_product(Request $request)
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return view('admin');
         }
 
@@ -60,10 +59,45 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('notification', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
+    public function edit_product($product_id)
+    {
+        if (!Auth::check()) {
+            return view('admin');
+        }
+        $brands = Brand::all();
+        $categories = Category::all();
+        $products = Product::find($product_id);
+        return view('admin.product.update_product', compact('products'))->with("brands", $brands)->with("categories", $categories);
+    }
+    public function update_product(Request $request, $product_id)
+    {
+        $brand = $request->brand_id;
+        $category = $request->category_id;
+        $product_name = $request->product_name;
+        $description = $request->description;
+        DB::table('products')->where("product_id", "=", "$product_id")->update([
+            'brand_id' => $brand,
+            'category_id' => $category,
+            'product_name' => $product_name,
+            'description' => $description,
+            'updated_at' => now()
+        ]);
+        return redirect('/admin/product')->with('notification', 'Sửa Sản Phẩm Thành Công!');
+    }
+    public function delete_product($product_id)
+    {
+        if (!Auth::check()) {
+            return view('admin');
+        }
+        $product = Product::findOrFail($product_id);
+        $product->delete();
+        return redirect('/admin/product')->with('notification', 'Xóa Sản Phẩm Thành Công!');
+    }
+
+
     public function view_product(Request $request)
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return view('admin');
         }
         $product_id = $request->product_id;
@@ -75,21 +109,19 @@ class ProductController extends Controller
         return view('admin.product.product_detail.product_detail_list', compact(['product_id', 'product_details', 'product_name']))->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
-    public function add_product_detail(Request $request)    
+    public function add_product_detail(Request $request)
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return view('admin');
         }
-        $product_id = $request->product_id; 
+        $product_id = $request->product_id;
         $products = Product::where('product_id', "=", $product_id)->get();
         return view('admin.product.product_detail.add_detail', compact('products'));
     }
 
     public function save_product_detail(Request $request)
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return view('admin');
         }
 
@@ -100,7 +132,7 @@ class ProductController extends Controller
         $color = $request->color;
         $quantity = $request->quantity;
         $material = $request->material;
-        $image = time().$request->image->getClientOriginalName();
+        $image = time() . $request->image->getClientOriginalName();
         $request->image->move(public_path('image'), $image);
         DB::table('product_detail')->insert([
             'product_id' => $product_id,
@@ -181,10 +213,5 @@ class ProductController extends Controller
         $product_detail = Product_Detail::findOrFail($product_detail_id);
         $product_detail->delete();
         return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
-    }
-
-    public function update_product()
-    {
-        return view("admin.product.update_product");
     }
 }

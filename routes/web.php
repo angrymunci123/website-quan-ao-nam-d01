@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StoreController;
 
 /*
@@ -61,18 +62,24 @@ Route::post('/admin/category/delete_category/category_id={category_id}', [Catego
 Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
-Route::get('/admin/news', [AdminController::class, "news"]);
+Route::get('/admin/news', [NewsController::class, "news"]);
+Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
+Route::post('/admin/news/save_news', [NewsController::class, "save_news"]);
+Route::get('/admin/news/edit_news/news_id={news_id}', [NewsController::class, "edit_news"]);
+Route::post('/admin/news/update_news/news_id={news_id}', [NewsController::class, "update_news"]);
+Route::post('/admin/news/delete_news/news_id={news_id}', [NewsController::class, "delete_news"]);
 
 //Product
 Route::get('/admin/product', [ProductController::class, "product_management"]);
 Route::get('/admin/product/add_product', [ProductController::class, "add_product"]);
 Route::post('/admin/product/save_product', [ProductController::class, "save_product"]);
+Route::get('/admin/product/edit_product/product_id={product_id}', [ProductController::class, "edit_product"]);
 
 Route::get('/admin/product/product_detail/product_id={product_id}', [ProductController::class, "view_product"]);
 
 Route::get('/admin/product/update_product_detail/product_id=', [ProductController::class, "update_product_detail"]);
-Route::get('/admin/product/update_product/product_id=', [ProductController::class, "update_product"]);
-
+Route::post('/admin/product/update_product/product_id={product_id}', [ProductController::class, "update_product"]);
+Route::post('/admin/product/delete_product/product_id={product_id}', [ProductController::class, "delete_product"]);
 
 Route::post('/admin/product/product_detail/save_product_detail', [ProductController::class, "save_product_detail"]);
 

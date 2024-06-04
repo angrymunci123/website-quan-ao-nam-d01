@@ -17,7 +17,7 @@ class BrandController extends Controller
         }
         $brands = Brand::paginate(10);
         Paginator::useBootstrap();
-        return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) -1) *5);
+        return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function add_brand()
@@ -33,37 +33,37 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('admin');
         }
-        $brand_name = $request->name;
+        $brand_name = $request->brand_name;
         DB::table('brands')->insert([
             'brand_name' => $brand_name
         ]);
         return redirect("/admin/brand")->with('notification', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
     }
 
-    public function edit_brand($brand_id) {
-        if (!Auth::check())
-        {
+    public function edit_brand($brand_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
         $brands = Brand::find($brand_id);
         return view('admin.brand.edit_brand', compact('brands'));
     }
 
-    public function update_brand(Request $request, $brand_id) {
-        if (!Auth::check())
-        {
+    public function update_brand(Request $request, $brand_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
-        $name = $request->name;
+        $name = $request->brand_name;
         DB::table('brands')->where("brand_id", "=", "$brand_id")->update([
             'brand_name' => $name
         ]);
         return redirect('/admin/brand')->with('notification', 'Sửa Hãng Sản Xuất Thành Công!');
     }
 
-    public function delete_brand($brand_id) {
-        if (!Auth::check())
-        {
+    public function delete_brand($brand_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
         $brand = Brand::findOrFail($brand_id);

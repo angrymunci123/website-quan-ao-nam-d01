@@ -42,9 +42,9 @@
                       </td>
                       <td class="align-middle text-center">
                         <div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Dropdown</button>
+                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Quản Lý</button>
                           <div id="myDropdown" class="dropdown-content">
-                            <a href="#">Chủ Cửa Hàng</a>
+                            <a href="#">Khách Hàng</a>
                             <a href="#">Quản Lý</a>
                             <a href="#">Nhân Viên</a>
                           </div>
@@ -71,9 +71,9 @@
                       </td>
                       <td class="align-middle text-center">
                         <div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Dropdown</button>
+                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Nhân Viên</button>
                           <div id="myDropdown" class="dropdown-content">
-                            <a href="#">Chủ Cửa Hàng</a>
+                          <a href="#">Khách Hàng</a>
                             <a href="#">Quản Lý</a>
                             <a href="#">Nhân Viên</a>
                           </div>
@@ -100,9 +100,9 @@
                       </td>
                       <td class="align-middle text-center">
                         <div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Dropdown</button>
+                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Khách Hàng</button>
                           <div id="myDropdown" class="dropdown-content">
-                            <a href="#">Chủ Cửa Hàng</a>
+                          <a href="#">Khách Hàng</a>
                             <a href="#">Quản Lý</a>
                             <a href="#">Nhân Viên</a>
                           </div>

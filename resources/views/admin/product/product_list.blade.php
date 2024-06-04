@@ -55,13 +55,13 @@
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/update_product/product_id=" method="GET">
+                            <form action="/admin/product/edit_product/product_id={{$inj->product_id}}" method="GET">
                                 <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
                             <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
-                                  action="/admin/product/delete_product/product_id=" method="POST">
+                                  action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>

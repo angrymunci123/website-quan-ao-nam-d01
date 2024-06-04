@@ -36,17 +36,15 @@
                             </form>
                       </td>
                     </tr>
-                    <tr>
-                        <td class="col-md-6" style="width: 20px ">
-                            <h6>Mô Tả</h6>
-                            <p>Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable
-                                cuff tabs,<br> adjustable asymmetric hem with elastic side tabs and a front<br> zip fastening
-                            with placket.</p></td>
-                            <td></td>
-                    </tr>
-                    @endforeach
-                </table>
 
+                    <h6 style="text-align: center">Mô Tả</h6>
+                    <p style="text-align: center">Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable
+                                cuff tabs,<br> adjustable asymmetric hem with elastic side tabs and a front<br> zip fastening
+                            with placket and.</p>
+                    <center>
+                    <img src="{{ asset ('admin_assets/img/des.png')}}" style="width: 550px">  
+                    </center>
+                </div>
               </div>
             </div>
           </div>
