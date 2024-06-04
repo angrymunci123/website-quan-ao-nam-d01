@@ -19,32 +19,12 @@
          
                     </div>
                     <div class="form-group">
-                        <strong>Giá</strong>
+                        <strong>Danh Mục</strong>
                         <input type="number" name="price" id="price" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <strong>Giá Khuyến Mãi</strong>
+                        <strong>Nhãn Hiệu</strong>
                         <input type="number" name="sale_price" id="sale_price" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Số lượng</strong>
-                        <input type="number" name="quantity" id="quantity" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Màu Sắc</strong>
-                        <input type="text" name="color" id="color" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Kích Cỡ</strong>
-                        <input type="number" name="size" id="size" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Chất Liệu</strong>
-                        <input type="text" name="material" id="material" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Image</strong>
-                        <input type="file" name="image" id="image" class="form-control-ls">
                     </div>
                 </div>
                 </div>
