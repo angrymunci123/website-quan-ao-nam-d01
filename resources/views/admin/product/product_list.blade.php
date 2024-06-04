@@ -50,7 +50,7 @@
                         <h5 class="mb-0 text-sm">{{$inj->brand_name}}</h5>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
-                            <form action="/admin/product/product_detail/product_id={product_id}/product_detail_id={product_detail_id}" method="GET">
+                            <form action="/admin/product/product_detail/product_id={{$inj->product_id}}" method="GET">    
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:white">Xem</button>
                             </form>
                             </td>
