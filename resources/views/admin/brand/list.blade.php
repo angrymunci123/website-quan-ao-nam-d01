@@ -39,7 +39,7 @@
                         <h5 class="mb-0 text-sm">{{ $brand->brand_id }}</h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{ $brand->name }}</h5>
+                        <h5 class="mb-0 text-sm">{{ $brand->brand_name }}</h5>
                       </td>
                       <td style="width: 100px;" class="text-center">
                             <form action="/admin/brand/edit_brand/brand_id={{$brand->brand_id}}" method="GET">

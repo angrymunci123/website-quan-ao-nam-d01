@@ -70,7 +70,7 @@ class ProductController extends Controller
         // $products = Product::where("products.product_id", "=", $product_id)
         //     ->orderBy("products.products_id", "desc")
         //     ->paginate(5);
-        
+
         $product_id = $request->product_id;
         $product_details = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
         ->where("products.product_id", "=", $product_id)->paginate(5);
@@ -118,9 +118,15 @@ class ProductController extends Controller
         return redirect('/admin/product/view_product/product_id=' . $product_id)
         ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
-    public function view_product_detail(){
-        return view("admin.product.product_detail.view_detail");
+
+    public function view_product_detail(Request $request)
+    {
+        $product_id = $request->product_id;
+        $products = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
+        ->where("products.product_id", "=", $product_id)->get();    
+        return view("admin.product.product_detail.view_detail", compact('products'));
     }
+
     public function update_product_detail(){
         return view("admin.product.product_detail.update_detail");
     }
