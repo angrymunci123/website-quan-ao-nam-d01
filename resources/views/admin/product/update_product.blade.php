@@ -14,37 +14,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tên Sản Phẩm</strong>
-  
-                        <input type="text" name="product_id" id="product_id" class="form-control" value="" readonly/>
-         
-                    </div>
-                    <div class="form-group">
-                        <strong>Giá</strong>
-                        <input type="number" name="price" id="price" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Giá Khuyến Mãi</strong>
-                        <input type="number" name="sale_price" id="sale_price" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Số lượng</strong>
-                        <input type="number" name="quantity" id="quantity" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Màu Sắc</strong>
-                        <input type="text" name="color" id="color" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Kích Cỡ</strong>
-                        <input type="number" name="size" id="size" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Chất Liệu</strong>
-                        <input type="text" name="material" id="material" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <strong>Image</strong>
-                        <input type="file" name="image" id="image" class="form-control-ls">
+                        <input type="text" name="product_name" id="product_name" class="form-control" value="" readonly/>
                     </div>
                 </div>
                 </div>
@@ -55,7 +25,7 @@
             </form>
             <br>
             <div class="col-sm-4 col-xl-1">
-                <form action="/admin/brand" enctype="multipart/form-data">
+                <form action="/admin/product" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-warning">Quay Lại</button>
                 </form>
             </div>

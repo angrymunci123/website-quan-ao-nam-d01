@@ -7,7 +7,9 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <table style="width: 100%">
-                <th style="font-size: 26px">Sản Phẩm</th>
+              @foreach($product_name as $prd)
+                <th style="font-size: 26px">Các Biến Thể Sản Phẩm: {{ $prd->product_name }}</th>
+              @endforeach
                 <th style="float:right">
                 <form method="get" action="/admin/product/product_detail/add_product_detail/product_id={{ $product_id }}">
                   @csrf
@@ -57,18 +59,18 @@
                         <h5 class="mb-0 text-sm">{{$product_detail->material}}</h5>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
-                            <form action="/admin/product/product_detail/view_detail/product_detail_id={{$product_detail->product_detail_id}}" method="GET">
+                            <form action="/admin/product/product_detail/view_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:black">Xem</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/product_detail/view_detail/product_detail_id={{$product_detail->product_detail_id}}" method="GET">
+                            <form action="/admin/product/product_detail/edit_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
                                 <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
                             <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
-                                  action="/admin/product/product_detail/view_detail/product_detail_id={{$product_detail->product_detail_id}}" method="POST">
+                                  action="/admin/product/product_detail/delete_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>

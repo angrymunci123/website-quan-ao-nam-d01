@@ -9,53 +9,59 @@
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
+              @foreach($inner_join as $inj)
               <form action="/admin/product/product_detail/save_product_detail" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
+                {{--        @method('put')--}}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <strong>Tên Sản Phẩm</strong>
-  
-                        <input type="text" name="product_id" id="product_id" class="form-control" value="" readonly/>
-         
+                        <strong>Sản Phẩm: {{$inj->product_name}}</strong>
+                        <input type="number" name="product_id" id="product_id" value="{{$inj->product_id}}" hidden required>
                     </div>
                     <div class="form-group">
                         <strong>Giá</strong>
-                        <input type="number" name="price" id="price" class="form-control" required>
+                        <input type="number" name="price" id="price" value="{{$inj->price}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Giá Khuyến Mãi</strong>
-                        <input type="number" name="sale_price" id="sale_price" class="form-control" required>
+                        <input type="number" name="sale_price" id="sale_price" value="{{$inj->sale_price}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Số lượng</strong>
-                        <input type="number" name="quantity" id="quantity" class="form-control" required>
+                        <input type="number" name="quantity" id="quantity" value="{{$inj->quantity}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Màu Sắc</strong>
-                        <input type="text" name="color" id="color" class="form-control" required>
+                        <input type="text" name="color" id="color" value="{{$inj->color}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Kích Cỡ</strong>
-                        <input type="number" name="size" id="size" class="form-control" required>
+                        <input type="text" name="size" id="size" value="{{$inj->size}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Chất Liệu</strong>
-                        <input type="text" name="material" id="material" class="form-control" required>
+                        <input type="text" name="material" id="material" value="{{$inj->material}}" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <strong>Image</strong>
-                        <input type="file" name="image" id="image" class="form-control-ls">
+                      <strong>Image</strong>
+                      <div class="card" style="width: 300px">
+                        <input type="file" name="image" value="/image/{{$inj->image}}" class="form-control-ls">
+                      </div>
+                      <div class="card" style="width: 300px">
+                        <img type="file" id="image" src="/image/{{$inj->image}}" class="form-control-ls">
+                      </div>
                     </div>
                 </div>
                 </div>
                 <br>
                 <div class="col-sm-4 col-xl-1">
-                        <button type="submit" class="btn btn-primary mt-2" style="width:100px">Tạo</button>
+                  <button type="submit" class="btn btn-primary mt-2" style="width:100px">Sửa</button>
                 </div>
             </form>
+            @endforeach
             <br>
             <div class="col-sm-4 col-xl-1">
-                <form action="/admin/brand" enctype="multipart/form-data">
+                <form action="/admin/product/product_detail/product_id={{$inj->product_id}}" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-warning">Quay Lại</button>
                 </form>
             </div>

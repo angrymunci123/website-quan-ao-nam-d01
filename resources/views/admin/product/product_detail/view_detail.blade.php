@@ -18,7 +18,7 @@
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0 ">
                 <table class="table align-items-center" style="width: 100%; margin-left:auto; margin-right:auto">
-                @foreach($products as $prd)
+                @foreach($view_prd_details as $prd)
                     <tr>
                       <td class="col-md-6">
                         <div style="float: right">
@@ -31,7 +31,9 @@
                             <h6>Màu Sắc:</h6>
                                 <p><b>Size</b>: S M L XL</p>
                             <h6>Số Lượng: </h6>
-                            <button class="btn btn-info">Quay Lại</button>
+                            <form action="/admin/product/product_detail/product_id={{$prd->product_id}}" method="GET" enctype='multipart/form-data'>
+                              <button class="btn btn-info">Quay Lại</button>
+                            </form>
                       </td>
                     </tr>
                     <tr>

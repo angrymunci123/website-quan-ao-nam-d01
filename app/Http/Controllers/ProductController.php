@@ -66,16 +66,13 @@ class ProductController extends Controller
         {
             return view('admin');
         }
-
-        // $products = Product::where("products.product_id", "=", $product_id)
-        //     ->orderBy("products.products_id", "desc")
-        //     ->paginate(5);
-
         $product_id = $request->product_id;
-        $product_details = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
-        ->where("products.product_id", "=", $product_id)->paginate(5);
+        $product_name = DB::table('products')->where('product_id', '=', $product_id)->get('product_name');
+        $product_details = DB::table('products')->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
+        ->where('products.product_id', '=', $product_id)
+        ->paginate(5);
         Paginator::useBootstrap();
-        return view('admin.product.product_detail.product_detail_list', compact(['product_id', 'product_details']))->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('admin.product.product_detail.product_detail_list', compact(['product_id', 'product_details', 'product_name']))->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     public function add_product_detail(Request $request)    
@@ -115,22 +112,79 @@ class ProductController extends Controller
             'quantity' => $quantity,
             'image' => $image,
         ]);
-        return redirect('/admin/product/view_product/product_id=' . $product_id)
+        return redirect('/admin/product/product_detail/product_id=' . $product_id)
         ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
 
-    public function view_product_detail(Request $request)
+    public function view_product_detail($product_id, $product_detail_id)
     {
-        $product_id = $request->product_id;
-        $products = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
-        ->where("products.product_id", "=", $product_id)->get();    
-        return view("admin.product.product_detail.view_detail", compact('products'));
+        if (!Auth::check())
+        {
+            return view('admin');
+        }
+        $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
+        ->where('product_detail.product_detail_id', "=", $product_detail_id)
+        ->get();  
+        return view("admin.product.product_detail.view_detail", compact('view_prd_details'));
     }
 
-    public function update_product_detail(){
-        return view("admin.product.product_detail.update_detail");
+    public function edit_product_detail(Request $request)
+    {
+        if (!Auth::check())
+        {
+            return view('admin');
+        }
+        $product_id = $request->product_id;
+        $inner_join = Product::where("products.product_id", "=", $product_id)
+        ->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')->get();  
+        return view("admin.product.product_detail.update_detail", compact('inner_join'));
     }
-    public function update_product(){
+
+    public function update_product_detail(Request $request, $product_detail_id)
+    {
+        if (!Auth::check())
+        {
+            return view('admin');
+        }
+
+        $product_id = $request->product_id;
+        $price = $request->price;
+        $sale_price = $request->sale_price;
+        $size = $request->size;
+        $color = $request->color;
+        $quantity = $request->quantity;
+        $material = $request->material;
+        $image = time().$request->image->getClientOriginalName();
+        $request->image->move(public_path('image'), $image);
+        DB::table('product_detail')->where("product_detail_id", "=", "$product_detail_id")
+        ->update([
+            'product_id' => $product_id,
+            'price' => $price,
+            'sale_price' => $sale_price,
+            'size' => $size,
+            'color' => $color,
+            'material' => $material,
+            'quantity' => $quantity,
+            'image' => $image,
+        ]);
+
+        return redirect('/admin/product/product_detail/product_id='.$product_id.'/product_detail_id='.$product_detail_id)
+        ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
+    }
+
+    public function delete_product_detail($product_id, $product_detail_id)
+    {
+        if (!Auth::check())
+        {
+            return view('adminAuth.login');
+        }
+        $product_detail = Product_Detail::findOrFail($product_detail_id);
+        $product_detail->delete();
+        return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
+    }
+
+    public function update_product()
+    {
         return view("admin.product.update_product");
     }
 }
