@@ -27,36 +27,19 @@
                       <td class="col-md-6">
                         <h5><b>Áo Sơmi</b></h5>
                             <p>£250</p>
-                            <div class="product__details__option__color">
-                                    <span><b>Màu Sắc:</b></span>
-                                    <label class="c-1" for="sp-1">
-                                        <input type="radio" id="sp-1">
-                                    </label>
-                                    <label class="c-2" for="sp-2">
-                                        <input type="radio" id="sp-2">
-                                    </label>
-                                    <label class="c-3" for="sp-3">
-                                        <input type="radio" id="sp-3">
-                                    </label>
-                                    <label class="c-4" for="sp-4">
-                                        <input type="radio" id="sp-4">
-                                    </label>
-                                    <label class="c-9" for="sp-9">
-                                        <input type="radio" id="sp-9">
-                                    </label>
-                                </div>
+                            <h6>Màu Sắc:</h6>
                                 <p><b>Size</b>: S M L XL</p>
+                            <h6>Số Lượng: </h6>
+                            <button class="btn btn-info">Quay Lại</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-6" style="width: 20px ">
                             <h6>Mô Tả</h6>
                             <p>Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable
                                 cuff tabs,<br> adjustable asymmetric hem with elastic side tabs and a front<br> zip fastening
-                            with placket.</p>
-                            <h6>Số Lượng</h6>
-                            <form action="">
-                            <input type="text">
-                            </form>
-                            <br>
-                            <button class="btn btn-info">Thêm vào giỏ hàng</button>
-                      </td>
+                            with placket.</p></td>
+                            <td></td>
                     </tr>
                 </table>
 
