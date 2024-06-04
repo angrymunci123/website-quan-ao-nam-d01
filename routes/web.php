@@ -70,6 +70,8 @@ Route::post('/admin/product/save_product', [ProductController::class, "save_prod
 Route::get('/admin/product/view_product/product_id={product_id}', [ProductController::class, "view_product"]);
 
 Route::get('/admin/product/product_detail/add_product_detail/product_id={product_id}', [ProductController::class, "add_product_detail"]);
+Route::post('/admin/product/product_detail/save_product_detail', [ProductController::class, "save_product_detail"]);
+
 
 //Order
 Route::get('/admin/order', [OrderController::class, "or_lists"]);
