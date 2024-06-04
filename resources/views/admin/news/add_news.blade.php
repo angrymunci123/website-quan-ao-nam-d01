@@ -9,17 +9,17 @@
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
-              <form action="/admin/product/save_product" method="POST" enctype='multipart/form-data'>
+              <form action="/admin/news/save_news" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tiêu Đề</strong>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" required>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Tên sản phẩm" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <strong>Nội Dung</strong>
-                        <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
+                        <textarea type="text" name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
                     </div>
                 </div>
                 <br>
