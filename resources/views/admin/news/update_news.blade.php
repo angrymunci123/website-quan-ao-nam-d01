@@ -9,7 +9,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
-              <form action="/admin/product/save_product" method="POST" enctype='multipart/form-data'>
+              <form action="/admin/news/save_news/news_id={{$new -> news_id}}" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 <div class="col-md-12">
                     <div class="form-group">
@@ -24,7 +24,7 @@
                 </div>
                 <br>
                 <div class="col-sm-4 col-xl-1">
-                        <button type="submit" class="btn btn-primary mt-2" style="width:100px">Tạo</button>
+                        <button type="submit" class="btn btn-primary mt-2" style="width:100px">Cập Nhật</button>
                 </div>
             </form>
             <br>
