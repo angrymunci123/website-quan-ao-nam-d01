@@ -16,7 +16,7 @@
                         <strong>Nhãn Hiệu</strong>
                         <select class="form-control" name='brand_id'>
                             @foreach($brands as $brand)
-                                <option type="number" name='brand_id' value='{{$brand->brand_id}}'>{{$brand->name}}</option>
+                                <option type="number" name='brand_id' value='{{$brand->brand_id}}'>{{$brand->brand_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -25,7 +25,7 @@
                         <strong>Danh Mục</strong>
                         <select class="form-control" name='category_id'>
                             @foreach($categories as $category)
-                                <option type="number" name='category_id' value='{{$category->category_id}}'>{{$category->name}}</option>
+                                <option type="number" name='category_id' value='{{$category->category_id}}'>{{$category->category_name}}</option>
                             @endforeach
                         </select>
                     </div>
