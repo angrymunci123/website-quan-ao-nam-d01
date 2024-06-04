@@ -35,7 +35,7 @@ class BrandController extends Controller
         }
         $brand_name = $request->name;
         DB::table('brands')->insert([
-            'name' => $brand_name
+            'brand_name' => $brand_name
         ]);
         return redirect("/admin/brand")->with('notification', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
     }
@@ -56,7 +56,7 @@ class BrandController extends Controller
         }
         $name = $request->name;
         DB::table('brands')->where("brand_id", "=", "$brand_id")->update([
-            'name' => $name
+            'brand_name' => $name
         ]);
         return redirect('/admin/brand')->with('notification', 'Sửa Hãng Sản Xuất Thành Công!');
     }

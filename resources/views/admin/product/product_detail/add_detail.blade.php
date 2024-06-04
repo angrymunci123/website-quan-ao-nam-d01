@@ -5,19 +5,20 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h4>Tạo Sản Phẩm</h4>
+              <h4>Tạo Biến Thể Sản Phẩm</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
               <form action="/admin/product/product_detail/save_product_detail" method="POST" enctype='multipart/form-data'>
-                {!! csrf_field() !!}
+                @csrf
                 <div class="col-md-12">
                     <div class="form-group">
-                        <strong>Tên Sản Phẩm</strong>
                         @foreach($products as $prd)
-                        <input type="text" name="product_id" id="product_id" class="form-control" value="{{$prd->product_name}}" readonly/>
+                        <strong>Sản Phẩm: {{$prd->product_name}}</strong>
+                        <input hidden type="number" name="product_id" id="product_id" class="form-control" value="{{$prd->product_id}}" readonly/>
                         @endforeach
                     </div>
+                    <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     <div class="form-group">
                         <strong>Giá</strong>
                         <input type="number" name="price" id="price" class="form-control" required>
@@ -36,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <strong>Kích Cỡ</strong>
-                        <input type="number" name="size" id="size" class="form-control" required>
+                        <input type="text" name="size" id="size" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Chất Liệu</strong>

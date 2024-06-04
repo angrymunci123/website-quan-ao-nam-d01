@@ -18,6 +18,7 @@
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0 ">
                 <table class="table align-items-center" style="width: 100%; margin-left:auto; margin-right:auto">
+                @foreach($products as $prd)
                     <tr>
                       <td class="col-md-6">
                         <div style="float: right">
@@ -25,7 +26,7 @@
                         </div>
                       </td>
                       <td class="col-md-6">
-                        <h5><b>Áo Sơmi</b></h5>
+                        <h5><b>{{ $prd->product_name }}</b></h5>
                             <p>£250</p>
                             <h6>Màu Sắc:</h6>
                                 <p><b>Size</b>: S M L XL</p>
@@ -33,10 +34,6 @@
                             <button class="btn btn-info">Quay Lại</button>
                       </td>
                     </tr>
-             
-            
-                </table> 
-                <div class="container" >
 
                     <h6 style="text-align: center">Mô Tả</h6>
                     <p style="text-align: center">Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable

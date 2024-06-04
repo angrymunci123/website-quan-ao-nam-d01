@@ -60,7 +60,7 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('notification', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
-    public function view_product($product_id)
+    public function view_product(Request $request)
     {
         if (!Auth::check())
         {
@@ -70,12 +70,12 @@ class ProductController extends Controller
         // $products = Product::where("products.product_id", "=", $product_id)
         //     ->orderBy("products.products_id", "desc")
         //     ->paginate(5);
-        $products = Product::where("products.product_id", "=", $product_id)
-        ->first();
+
+        $product_id = $request->product_id;
         $product_details = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
         ->where("products.product_id", "=", $product_id)->paginate(5);
         Paginator::useBootstrap();
-        return view('admin.product.product_detail.product_detail_list', compact(['products', 'product_details']))->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('admin.product.product_detail.product_detail_list', compact(['product_id', 'product_details']))->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     public function add_product_detail(Request $request)    
@@ -89,7 +89,7 @@ class ProductController extends Controller
         return view('admin.product.product_detail.add_detail', compact('products'));
     }
 
-    public function saveProduct_Detail(Request $request)
+    public function save_product_detail(Request $request)
     {
         if (!Auth::check())
         {
@@ -97,23 +97,36 @@ class ProductController extends Controller
         }
 
         $product_id = $request->product_id;
+        $price = $request->price;
+        $sale_price = $request->sale_price;
         $size = $request->size;
+        $color = $request->color;
         $quantity = $request->quantity;
+        $material = $request->material;
         $image = time().$request->image->getClientOriginalName();
         $request->image->move(public_path('image'), $image);
-        $description = $request->description;
         DB::table('product_detail')->insert([
             'product_id' => $product_id,
+            'price' => $price,
+            'sale_price' => $sale_price,
             'size' => $size,
+            'color' => $color,
+            'material' => $material,
             'quantity' => $quantity,
             'image' => $image,
-            'description' => $description
         ]);
-        return redirect('/admin/product')->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
+        return redirect('/admin/product/view_product/product_id=' . $product_id)
+        ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
-    public function view_product_detail(){
-        return view("admin.product.product_detail.view_detail");
+
+    public function view_product_detail(Request $request)
+    {
+        $product_id = $request->product_id;
+        $products = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
+        ->where("products.product_id", "=", $product_id)->get();    
+        return view("admin.product.product_detail.view_detail", compact('products'));
     }
+
     public function update_product_detail(){
         return view("admin.product.product_detail.update_detail");
     }
