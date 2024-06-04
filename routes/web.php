@@ -78,7 +78,7 @@ Route::post('/admin/product/product_detail/save_product_detail', [ProductControl
 
 Route::get('/admin/product/product_detail/add_product_detail/product_id={product_id}', [ProductController::class, "add_product_detail"]);
 
-Route::get('/admin/product/product_detail/product_id={product_id}/product_detail_id={product_detail_id}', [ProductController::class, "view_product_detail"]);
+Route::get('/admin/product/product_detail/view_product_detail', [ProductController::class, "view_product_detail"]);
 
 
 //Order
