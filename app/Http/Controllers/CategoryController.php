@@ -17,7 +17,7 @@ class CategoryController extends Controller
         }
         $categories = Category::paginate(10);
         Paginator::useBootstrap();
-        return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) -1) *5);
+        return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function add_category()
@@ -33,37 +33,37 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('admin');
         }
-        $brand_name = $request->name;
+        $brand_name = $request->category_name;
         DB::table('category')->insert([
             'category_name' => $brand_name
         ]);
         return redirect("/admin/category")->with('notification', 'Tạo Danh Mục Mới Thành Công!');;
     }
 
-    public function edit_category($category_id) {
-        if (!Auth::check())
-        {
+    public function edit_category($category_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
         $categories = Category::find($category_id);
         return view('admin.category.edit_category', compact('categories'));
     }
 
-    public function update_category(Request $request, $category_id) {
-        if (!Auth::check())
-        {
+    public function update_category(Request $request, $category_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
-        $name = $request->name;
+        $name = $request->category_name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
             'category_name' => $name
         ]);
         return redirect('/admin/category')->with('notification', 'Sửa Danh Mục Thành Công!');
     }
 
-    public function delete_category($category_id) {
-        if (!Auth::check())
-        {
+    public function delete_category($category_id)
+    {
+        if (!Auth::check()) {
             return view('admin');
         }
         $categories = Category::findOrFail($category_id);
