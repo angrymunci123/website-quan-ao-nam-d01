@@ -118,4 +118,13 @@ class ProductController extends Controller
         return redirect('/admin/product/view_product/product_id=' . $product_id)
         ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
+    public function view_product_detail(){
+        return view("admin.product.product_detail.view_detail");
+    }
+    public function update_product_detail(){
+        return view("admin.product.product_detail.update_detail");
+    }
+    public function update_product(){
+        return view("admin.product.update_product");
+    }
 }
