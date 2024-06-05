@@ -62,11 +62,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-7">
                         <div class="header__top__left">
-<<<<<<< HEAD
-                            <p>Chắc chắn là đéo FreeShip, hoàn trả hàng thì bố đéo hoàn tiền</p>
-=======
                             <p></p>
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
@@ -84,21 +80,13 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-<<<<<<< HEAD
-                        <a href="./index.html"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
-=======
                         <a href="./"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-<<<<<<< HEAD
-                            <li class="active"><a href="index">Trang chủ</a></li>
-=======
                             <li class="active"><a href="./">Trang chủ</a></li>
->>>>>>> b06a2870b85a934339f3d1d1149f39bfdfdbf8dd
                             <li><a href="/mainpage/shop">Cửa hàng</a></li>
                             <li><a href="/mainpage/blog">Tin tức</a></li>
                             <li><a href="/mainpage/contact">Liên hệ</a></li>
@@ -108,7 +96,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a>
-                        <a class="ml-2" href="#"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
+                        <a class="ml-2" href="/mainpage/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
                     </div>
                 </div>
             </div>
