@@ -36,7 +36,8 @@
                             </form>
                       </td>
                     </tr>
-
+                @endforeach
+                </table>
                     <h6 style="text-align: center">Mô Tả</h6>
                     <p style="text-align: center">Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable
                                 cuff tabs,<br> adjustable asymmetric hem with elastic side tabs and a front<br> zip fastening
