@@ -179,11 +179,11 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
                                     <p>Sắp xếp theo giá</p>
-                                    <select>
-                                        <option value="">Thấp tới cao</option>
-                                        <option value="">Cao tới thấp</option>
+                                    <select id="sort_options">
+                                        <option value="/mainpage/shop">Thấp tới cao</option>
+                                        <option value="/mainpage/shop">Cao tới thấp</option>
                                     </select>
-                                </div>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -264,4 +264,15 @@
     </section>
     <!-- Shop Section End -->
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#sort_options").change(function(){
+        var selectedValue = $(this).val();
+        if(selectedValue) {
+            window.location.href = selectedValue;
+        }
+    });
+});
+</script>
 @endsection
