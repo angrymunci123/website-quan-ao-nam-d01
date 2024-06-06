@@ -30,11 +30,12 @@ Route::get('/', function () {
 //     return view('customer.index');
 // });
 
+//Login (Chung cho cả Admin và Khách Hàng)
+Route::get('/login', [AuthController::class, "login_form"]);
+Route::post('login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 
 //Admin
-Route::get('/admin', [AdminController::class, "loginAdmin"]);
-Route::post('/admin/login_process', [AdminController::class, "loginProcess"])->name("loginProcess");;
-Route::get('/admin/dashboard', [AdminController::class, "view_dashboard"]);
+Route::get('/admin', [AdminController::class, "view_dashboard"]);
 
 //Brand
 Route::get('/admin/brand', [BrandController::class, "brand_management"]);
@@ -101,4 +102,3 @@ Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
 Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
 Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
-Route::get('/login', [StoreController::class, "login_customer"]);
