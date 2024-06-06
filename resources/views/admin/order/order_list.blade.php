@@ -30,10 +30,10 @@
                   <tbody>
                     <tr>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm"></h5>
+                        <h5 class="mb-0"></h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm"></h5>
+                        <h5 class="mb-0"></h5>
                       </td>
                       <td style="width:100px" class="text-center">
                             <form action="/admin/order/view_order/order_id=?" method="GET">    

@@ -38,16 +38,16 @@
                   @foreach($inner_join as $inj)
                     <tr>
                       <td class="text-center">
-                          <h5 class="mb-0 text-sm">{{$inj->product_id}}</h5>
+                        <h6 class="mb-0">{{$inj->product_id}}</h6>
                         </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->product_name}}</h5>
+                        <h6 class="mb-0">{{$inj->product_name}}</h6>
+                      </td> 
+                      <td class="text-center">
+                        <h6 class="mb-0">{{$inj->category_name}}</h6>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->category_name}}</h5>
-                      </td>
-                      <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$inj->brand_name}}</h5>
+                        <h6 class="mb-0">{{$inj->brand_name}}</h6>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
                             <form action="/admin/product/product_detail/product_id={{$inj->product_id}}" method="GET">    

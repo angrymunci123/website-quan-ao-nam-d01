@@ -6,7 +6,11 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-                <h4 style="font-size: 26px" class="text-center"><b>Chi Tiết Sản Phẩm</b></h4>
+              <table style="width: 100%">
+                @foreach($view_prd_details as $prd)
+                  <th style="font-size: 26px; text-align:center">Chi Tiết Sản Phẩm: {{ $prd->product_name }}</th>
+                @endforeach
+              </table>
             </div>
             <div class="card-body">
                 @if(Session::has('notification'))
@@ -22,29 +26,37 @@
                     <tr>
                       <td class="col-md-6">
                         <div style="float: right">
-                            <img src="{{ asset ('temp_assets/img/product/product-2.jpg')}}" style="width:400px;height:400px;">
+                            <img src="/image/{{$prd->image}}" style="width:400px;height:400px;">
                         </div>
                       </td>
                       <td class="col-md-6">
                         <h5><b>{{ $prd->product_name }}</b></h5>
                             <p>£250</p>
-                            <h6>Màu Sắc:</h6>
-                                <p><b>Size</b>: S M L XL</p>
-                            <h6>Số Lượng: </h6>
+                            <h6>Màu Sắc: {{ $prd->color }}</h6>
+                                <p><b>Size</b>: {{ $prd->size }}</p>
+                            <h6>Số Lượng: {{ $prd->quantity }}</h6>
                             <form action="/admin/product/product_detail/product_id={{$prd->product_id}}" method="GET" enctype='multipart/form-data'>
                               <button class="btn btn-info">Quay Lại</button>
+                            </form>
+                            <form action="/admin/product/product_detail/edit_detail/product_id={{$prd->product_id}}&product_detail_id={{$prd->product_detail_id}}" method="GET">
+                                <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
+                            </form>
+                            <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
+                                  action="/admin/product/product_detail/delete_detail/product_id={{$prd->product_id}}&product_detail_id={{$prd->product_detail_id}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
                             </form>
                       </td>
                     </tr>
                 @endforeach
                 </table>
-                    <h6 style="text-align: center">Mô Tả</h6>
-                    <p style="text-align: center">Coat with quilted lining and an adjustable hood.<br> Featuring long sleeves with adjustable
-                                cuff tabs,<br> adjustable asymmetric hem with elastic side tabs and a front<br> zip fastening
-                            with placket and.</p>
+                <div class="container">
+                    <h4 style="text-align: justify">Mô Tả</h4>
+                    <p style="text-align: justify">{{$prd->description}}</p>
                     <center>
                     <img src="{{ asset ('admin_assets/img/des.png')}}" style="width: 550px">  
                     </center>
+                </div>
                 </div>
               </div>
             </div>

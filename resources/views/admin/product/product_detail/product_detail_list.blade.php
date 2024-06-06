@@ -44,19 +44,19 @@
                   @foreach($product_details as $product_detail)
                     <tr>
                       <td class="text-center">
-                          <h5 class="mb-0 text-sm">{{$product_detail->product_detail_id}}</h5>
+                          <h6 class="mb-0">{{$product_detail->product_detail_id}}</h6>
                         </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$product_detail->price}}</h5>
+                        <h6 class="mb-0">{{$product_detail->price}}</h6>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$product_detail->quantity}}</h5>
+                        <h6 class="mb-0">{{$product_detail->quantity}}</h6>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$product_detail->color}}</h5>
+                        <h6 class="mb-0">{{$product_detail->color}}</h6>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{$product_detail->material}}</h5>
+                        <h6 class="mb-0">{{$product_detail->material}}</h6>
                       </td>
                       <td style="width:10px; column-gap: 1px;" class="text-center" >
                             <form action="/admin/product/product_detail/view_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">

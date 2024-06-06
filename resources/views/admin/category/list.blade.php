@@ -36,10 +36,10 @@
                     @foreach ($categories as $category)
                     <tr>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{ $category->category_id }}</h5>
+                        <h6 class="mb-0">{{ $category->category_id }}</h6>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0 text-sm">{{ $category->category_name }}</h5>
+                        <h6 class="mb-0">{{ $category->category_name }}</h6>
                       </td>
                       <td style="width:100px" class="text-center">
                             <form action="/admin/category/edit_category/category_id={{$category->category_id}}" method="GET">
