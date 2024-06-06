@@ -2,14 +2,14 @@
 @section('content')
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
-        <div class="container">
+        <div class="container" style="background-image: url('temp_assets/img/banner.png')">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4>Cửa hàng</h4>
+                        <h4 style="color: white">Cửa hàng</h4>
                         <div class="breadcrumb__links">
-                            <a href="/mainpage">Trang chủ</a>
-                            <span>Cửa hàng</span>
+                            <a href="/mainpage" style="color: white">Trang chủ</a>
+                            <span style="color: white">Cửa hàng</span>
                         </div>
                     </div>
                 </div>

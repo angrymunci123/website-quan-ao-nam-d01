@@ -101,4 +101,5 @@ Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
 Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
 Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
-Route::get('/login', [StoreController::class, "login_customer"]);
+Route::get('/login', [CustomerController::class, "login_customer"]);
+Route::get('/register', [CustomerController::class, "registerCustomer"]);

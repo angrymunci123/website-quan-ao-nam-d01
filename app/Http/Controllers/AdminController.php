@@ -20,6 +20,7 @@ class AdminController extends Controller
         return view('admin.login');
     }
 
+
     public function loginProcess(Request $request)
     {
         $credentials = $request->only('email', 'password');
