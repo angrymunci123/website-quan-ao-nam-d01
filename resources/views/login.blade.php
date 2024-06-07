@@ -43,7 +43,7 @@
 						Hoặc Đăng Ký 
 					</span>
 				</div>
-				<form class="user" method="GET" action="admin/register">
+				<form class="user" method="GET" action="/register">
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
