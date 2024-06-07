@@ -17,7 +17,7 @@ class AdminController extends Controller
         if (Auth::check()) {
             return view('admin.dashboard.dashboard');
         }
-        return view('admin.login');
+        return view('login');
     }
 
     // public function loginProcess(Request $request)
