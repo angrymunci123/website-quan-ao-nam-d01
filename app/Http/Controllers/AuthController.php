@@ -25,27 +25,34 @@ class AuthController extends Controller
         return view('login');
     }
 
+    private function setSessionData(Request $request, $user)
+    {
+        $request->session()->put('user_id', $user->user_id);
+        $request->session()->put('full_name', $user->full_name);
+        $request->session()->put('role', $user->role);
+    }
+
     public function loginProcess(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+        'email' => $request->email,
+        'password' => $request->password,
+        ];
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             if ($user->role == 'Admin') {
-                $request->session()->put('user_id', $user->user_id);
-                $request->session()->put('full_name', $user->full_name);
-                $request->session()->put('role', $user->role);
+                $this->setSessionData($request, $user);
                 return view('admin.dashboard.dashboard');
             }
 
-            else if ($user->role == 'Khách Hàng') {
-                $request->session()->put('user_id', $user->user_id);
-                $request->session()->put('full_name', $user->full_name);
-                $request->session()->put('role', $user->role);
-                return view('customer.mainpage');
+            if ($user->role == 'Khách Hàng') {
+                $this->setSessionData($request, $user);
+                return view('customer.index');
             }
         }
-    return redirect('login')->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
+        return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
     }
+
 
     public function register() 
     {
@@ -60,12 +67,15 @@ class AuthController extends Controller
         $password = $request->password;
         $confirm_password = $request->confirm_password;
         $address = $request->address;
+
+        $hashedPassword = bcrypt($request->password);
+
         if ($password == $confirm_password || $confirm_password == $password) {
         DB::table('users')->insert([
             'fullname' => $full_name,
             'email' => $email,
             'phone_number' => $phone_number,
-            'password' => Hash::make('password'),
+            'password' => $hashedPassword,
             'address' => $address,
             'role' => 'Khách Hàng',
             'created_at' => now(),
