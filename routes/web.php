@@ -30,11 +30,12 @@ Route::get('/', function () {
 //     return view('customer.index');
 // });
 
+//Login (Chung cho cả Admin và Khách Hàng)
+Route::get('/login', [AuthController::class, "login_form"]);
+Route::post('login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 
 //Admin
-Route::get('/admin', [AdminController::class, "loginAdmin"]);
-Route::post('/admin/login_process', [AdminController::class, "loginProcess"])->name("loginProcess");;
-Route::get('/admin/dashboard', [AdminController::class, "view_dashboard"]);
+Route::get('/admin', [AdminController::class, "view_dashboard"]);
 
 //Brand
 Route::get('/admin/brand', [BrandController::class, "brand_management"]);
@@ -101,5 +102,8 @@ Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
 Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
 Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
+<<<<<<< HEAD
 Route::get('/login', [CustomerController::class, "login_customer"]);
 Route::get('/register', [CustomerController::class, "registerCustomer"]);
+=======
+>>>>>>> b77c5bd0366016f91cb5fb7aa4062ee20c34b04c

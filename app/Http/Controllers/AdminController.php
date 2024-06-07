@@ -20,21 +20,20 @@ class AdminController extends Controller
         return view('admin.login');
     }
 
-
-    public function loginProcess(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        $check = Auth::attempt($credentials);
-        if ($check) {
-            $email_account = User::where('email', '=', $request->email)->first();
-            $request->session()->put('user_id', $email_account->user_id);
-            $request->session()->put('full_name', $email_account->full_name);
-            $request->session()->put('password', $email_account->password);
-            $request->session()->put('position', $email_account->position);
-            return view('admin.dashboard.dashboard');
-        }
-        return redirect('admin')->with('fail', 'Invalid email address or password.');
-    }
+    // public function loginProcess(Request $request)
+    // {
+    //     $credentials = $request->only('email', 'password');
+    //     $check = Auth::attempt($credentials);
+    //     if ($check) {
+    //         $email_account = User::where('email', '=', $request->email)->first();
+    //         $request->session()->put('user_id', $email_account->user_id);
+    //         $request->session()->put('full_name', $email_account->full_name);
+    //         $request->session()->put('password', $email_account->password);
+    //         $request->session()->put('position', $email_account->position);
+    //         return view('admin.dashboard.dashboard');
+    //     }
+    //     return redirect('admin')->with('fail', 'Invalid email address or password.');
+    // }
 
 
     public function logoutAdmin(Request $request)
