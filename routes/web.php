@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 //Login (Chung cho cả Admin và Khách Hàng)
 Route::get('/login', [AuthController::class, "login_form"]);
-Route::post('login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+Route::post('login/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 
 //Admin
 Route::get('/admin', [AdminController::class, "view_dashboard"]);
