@@ -31,7 +31,8 @@
                       </td>
                       <td class="col-md-6">
                         <h5><b>{{ $prd->product_name }}</b></h5>
-                            <p>£250</p>
+                            <h6>Giá: {{ number_format($prd->price) }} VND</h6>
+                            <h6>Giá khuyến mãi: {{ number_format($prd->_sale_price) }} VND</h6>
                             <h6>Màu Sắc: {{ $prd->color }}</h6>
                                 <p><b>Size</b>: {{ $prd->size }}</p>
                             <h6>Số Lượng: {{ $prd->quantity }}</h6>

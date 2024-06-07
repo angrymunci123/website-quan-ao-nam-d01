@@ -3,7 +3,7 @@
 <div class="limiter">
 		<div class="container-login100" style="background-image: url('temp_assets/img/background.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="user" method="POST" action="">
+				<form class="user" method="POST" action="{{route('registerProcess')}}">
 					<span class="login100-form-title p-b-49" style="font-family: Arial;">
 						<b>Đăng Ký KTC Store</b>
 					</span>
@@ -22,19 +22,19 @@
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Họ và tên là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Họ Và Tên</span>
-						<input class="input100" type="text" name="name" id="" placeholder="Họ Và Tên" style="font-family: Arial;">
+						<input class="input100" type="text" name="full_name" id="" placeholder="Họ Và Tên" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Địa Chỉ là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Địa Chỉ</span>
-						<input class="input100" type="text" name="" id="" placeholder="Địa Chỉ" style="font-family: Arial;">
+						<input class="input100" type="text" name="address" id="" placeholder="Địa Chỉ" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Số Điện Thoại là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Số Điện Thoại</span>
-						<input class="input100" type="text" name="" id="" placeholder="Số Điện Thoại" style="font-family: Arial;">
+						<input class="input100" type="text" name="phone_number" id="" placeholder="Số Điện Thoại" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
@@ -46,11 +46,11 @@
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Mật khẩu là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Xác Nhận Mật Khẩu</span>
-						<input class="input100" type="password" name="password" id="exampleInputPassword1" placeholder="Mật khẩu" style="font-family: Arial;">
+						<input class="input100" type="password" name="confirm_password" id="" placeholder="Mật khẩu" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>
-					<form class="user" method="GET" action="/register">
+					<form class="user" method="GET" action="/register/register_process">
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
