@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 //Login (Chung cho cả Admin và Khách Hàng)
 Route::get('/login', [AuthController::class, "login_form"]);
-Route::post('login/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+Route::post('login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 
 //Admin
 Route::get('/admin', [AdminController::class, "view_dashboard"]);
@@ -102,5 +102,3 @@ Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
 Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
 Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
-Route::get('/login', [CustomerController::class, "login_customer"]);
-Route::get('/register', [CustomerController::class, "registerCustomer"]);

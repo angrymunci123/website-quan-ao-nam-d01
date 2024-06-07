@@ -14,11 +14,5 @@ class CustomerController extends Controller
         }
         return view('register_cus');
     }
-    public function login_customer()
-    {
-        if (Auth::check()) {
-            return view('customer.index');
-        }
-        return view('login_cus');
-    }
+    
 }

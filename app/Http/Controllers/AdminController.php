@@ -12,14 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function loginAdmin()
-    {
-        if (Auth::check()) {
-            return view('admin.dashboard.dashboard');
-        }
-        return view('login');
-    }
-
     // public function loginProcess(Request $request)
     // {
     //     $credentials = $request->only('email', 'password');
@@ -44,14 +36,14 @@ class AdminController extends Controller
         $request->session()->forget('last_name');
         $request->session()->forget('role');
         $request->session()->forget('password');
-        return redirect('admin');
+        return redirect('login');
     }
 
     //Dashboard
     public function view_dashboard()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         return view('admin.dashboard.dashboard');
     }
@@ -60,7 +52,7 @@ class AdminController extends Controller
     public function user_list() 
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         return view('admin.user.user_list');
     }
