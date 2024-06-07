@@ -30,9 +30,11 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<strong class="login100-form-btn" type="submit" style="font-family: Arial">
+							<button class="login100-form-btn" type="submit" style="font-family: Arial">
+								<strong>
 								Đăng Nhập
-							</strong>
+								</strong>
+							</button>
 						</div>
 					</div>
 				</form>
