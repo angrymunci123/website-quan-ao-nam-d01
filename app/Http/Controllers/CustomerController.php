@@ -10,15 +10,15 @@ class CustomerController extends Controller
     public function registerCustomer()
     {
         if (Auth::check()) {
-            return view('register_cus');
+            return view('customer.index');
         }
-        return view('customer.index');
+        return view('register_cus');
     }
     public function login_customer()
     {
         if (Auth::check()) {
-            return view('login_cus');
+            return view('customer.index');
         }
-        return view('customer.index');
+        return view('login_cus');
     }
 }
