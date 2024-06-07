@@ -13,7 +13,7 @@ class BrandController extends Controller
     public function brand_management()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         $brands = Brand::paginate(10);
         Paginator::useBootstrap();
@@ -23,7 +23,7 @@ class BrandController extends Controller
     public function add_brand()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         return view('admin.brand.add_brand');
     }
@@ -31,7 +31,7 @@ class BrandController extends Controller
     public function save_brand(Request $request)
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         $brand_name = $request->brand_name;
         DB::table('brands')->insert([
@@ -43,7 +43,7 @@ class BrandController extends Controller
     public function edit_brand($brand_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $brands = Brand::find($brand_id);
         return view('admin.brand.edit_brand', compact('brands'));
@@ -52,7 +52,7 @@ class BrandController extends Controller
     public function update_brand(Request $request, $brand_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $name = $request->brand_name;
         DB::table('brands')->where("brand_id", "=", "$brand_id")->update([
@@ -64,7 +64,7 @@ class BrandController extends Controller
     public function delete_brand($brand_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $brand = Brand::findOrFail($brand_id);
         $brand->delete();

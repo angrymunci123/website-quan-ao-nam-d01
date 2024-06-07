@@ -1,7 +1,7 @@
 @extends('login_layout')
 @section('content')
 <div class="limiter">
-		<div class="container-login100" style="background-image: url('Login_v4/images/sunset-city-roads-cityscape.jpg');">
+		<div class="container-login100" style="background-image: url('temp_assets/img/background.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="user" method="POST" action="{{route('loginProcess')}}">
 					<strong class="login100-form-title p-b-49" style="font-family: Arial">

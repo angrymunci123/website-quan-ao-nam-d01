@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function category_management()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         $categories = Category::paginate(10);
         Paginator::useBootstrap();
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function add_category()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         return view('admin.category.add_category');
     }
@@ -31,7 +31,7 @@ class CategoryController extends Controller
     public function save_category(Request $request)
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
         $brand_name = $request->category_name;
         DB::table('category')->insert([
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     public function edit_category($category_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $categories = Category::find($category_id);
         return view('admin.category.edit_category', compact('categories'));
@@ -52,7 +52,7 @@ class CategoryController extends Controller
     public function update_category(Request $request, $category_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $name = $request->category_name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
@@ -64,7 +64,7 @@ class CategoryController extends Controller
     public function delete_category($category_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
         $categories = Category::findOrFail($category_id);
         $categories->delete();
