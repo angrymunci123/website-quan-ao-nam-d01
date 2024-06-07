@@ -69,6 +69,7 @@ class ProductController extends Controller
         $products = Product::find($product_id);
         return view('admin.product.update_product', compact('products'))->with("brands", $brands)->with("categories", $categories);
     }
+
     public function update_product(Request $request, $product_id)
     {
         $brand = $request->brand_id;
@@ -172,14 +173,13 @@ class ProductController extends Controller
         return view("admin.product.product_detail.update_detail", compact('inner_join'));
     }
 
-    public function update_product_detail(Request $request, $product_detail_id)
+    public function update_product_detail(Request $request, $product_id, $product_detail_id)
     {
         if (!Auth::check())
         {
             return view('admin');
         }
 
-        $product_id = $request->product_id;
         $price = $request->price;
         $sale_price = $request->sale_price;
         $size = $request->size;
@@ -200,8 +200,8 @@ class ProductController extends Controller
             'image' => $image,
         ]);
 
-        return redirect('/admin/product/product_detail/product_id='.$product_id.'/product_detail_id='.$product_detail_id)
-        ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
+        return redirect('/admin/product/product_detail/product_id='.$product_id.'&product_detail_id='.$product_detail_id)
+        ->with('notification', 'Sửa Chi Tiết Sản Phẩm Mới Thành Công!');
     }
 
     public function delete_product_detail($product_id, $product_detail_id)

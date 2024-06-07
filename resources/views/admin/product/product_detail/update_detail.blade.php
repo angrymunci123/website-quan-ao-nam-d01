@@ -10,7 +10,7 @@
             <div class="card-body">
               <div class="table-responsive p-0">
               @foreach($inner_join as $inj)
-              <form action="/admin/product/product_detail/save_product_detail" method="POST" enctype='multipart/form-data'>
+              <form action="/admin/product/product_detail/update_detail/product_id={{$inj->product_id}}&product_detail_id={{$inj->product_detail_id}}" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}
                 {{--        @method('put')--}}
                 <div class="col-md-12">
