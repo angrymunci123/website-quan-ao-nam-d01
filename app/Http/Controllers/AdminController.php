@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    // public function loginAdmin()
-    // {
-    //     if (Auth::check()) {
-    //         return view('admin.dashboard.dashboard');
-    //     }
-    //     return view('login');
-    // }
+    public function loginAdmin()
+    {
+        if (Auth::check()) {
+            return view('admin.dashboard.dashboard');
+        }
+        return view('admin.login');
+    }
 
     // public function loginProcess(Request $request)
     // {
