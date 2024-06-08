@@ -32,7 +32,9 @@ Route::get('/', function () {
 
 //Login (Chung cho cả Admin và Khách Hàng)
 Route::get('/login', [AuthController::class, "login_form"]);
-Route::post('login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+Route::post('/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+Route::get('/register', [AuthController::class, "register"]);
+Route::post('/register_process', [AuthController::class, "registerProcess"])->name("registerProcess");
 
 //Admin
 Route::get('/admin', [AdminController::class, "view_dashboard"]);
@@ -76,7 +78,6 @@ Route::get('/admin/product/add_product', [ProductController::class, "add_product
 Route::post('/admin/product/save_product', [ProductController::class, "save_product"]);
 Route::get('/admin/product/edit_product/product_id={product_id}', [ProductController::class, "edit_product"]);
 Route::get('/admin/product/product_detail/product_id={product_id}', [ProductController::class, "view_product"]);
-Route::get('/admin/product/update_product_detail/product_id=', [ProductController::class, "update_product_detail"]);
 Route::post('/admin/product/update_product/product_id={product_id}', [ProductController::class, "update_product"]);
 Route::post('/admin/product/delete_product/product_id={product_id}', [ProductController::class, "delete_product"]);
 
@@ -85,7 +86,7 @@ Route::get('/admin/product/product_detail/add_product_detail/product_id={product
 Route::post('/admin/product/product_detail/save_product_detail', [ProductController::class, "save_product_detail"]);
 Route::get('/admin/product/product_detail/view_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "view_product_detail"]);
 Route::get('/admin/product/product_detail/edit_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "edit_product_detail"]);
-Route::get('/admin/product/product_detail/edit_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "edit_product_detail"]);
+Route::post('/admin/product/product_detail/update_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "update_product_detail"]);
 Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "delete_product_detail"]);
 
 //Order

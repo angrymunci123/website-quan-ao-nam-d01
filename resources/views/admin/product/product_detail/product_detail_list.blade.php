@@ -47,7 +47,7 @@
                           <h6 class="mb-0">{{$product_detail->product_detail_id}}</h6>
                         </td>
                       <td class="text-center">
-                        <h6 class="mb-0">{{$product_detail->price}}</h6>
+                        <h6 class="mb-0">{{number_format($product_detail->price)}} VND</h6>
                       </td>
                       <td class="text-center">
                         <h6 class="mb-0">{{$product_detail->quantity}}</h6>
