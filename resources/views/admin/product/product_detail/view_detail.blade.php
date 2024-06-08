@@ -26,7 +26,7 @@
                     <tr>
                       <td class="col-md-6">
                         <div style="float: right">
-                            <img src="/image/{{$prd->image}}" style="width:400px;height:400px;">
+                            <img src="/image/{{$prd->image}}" style="width:400px;height:600px;">
                         </div>
                       </td>
                       <td class="col-md-6">

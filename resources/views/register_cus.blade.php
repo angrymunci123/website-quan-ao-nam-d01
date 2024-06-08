@@ -50,7 +50,7 @@
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>
-					<form class="user" method="GET" action="/register">
+					<form class="user" method="GET" action="">
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
