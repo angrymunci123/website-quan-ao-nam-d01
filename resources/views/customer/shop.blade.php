@@ -188,6 +188,7 @@
                         </div>
                     </div>
                     <div class="row">
+                        {{-- Product Card --}}
                         @foreach($product_details as $details)
                         <div class="col-md-3">
                             <div class="product__item" style="width: 210px;">
@@ -207,6 +208,7 @@
                             </div>
                         </div>
                          @endforeach
+                         {{-- End Product Card --}}
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
