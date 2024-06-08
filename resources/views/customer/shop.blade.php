@@ -183,69 +183,32 @@
                                         <option value="/mainpage/shop">Thấp tới cao</option>
                                         <option value="/mainpage/shop">Cao tới thấp</option>
                                     </select>
-                                </div>  
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        {{-- Product Card --}}
+                        @foreach($product_details as $details)
                         <div class="col-md-3">
                             <div class="product__item" style="width: 210px;">
-                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
+                                {{-- <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
+                                </div> --}}
+                                <div class="product__item__pic set-bg">
+                                <img src="/image/{{$details->image}}" alt="">
                                 </div>
                                 <div class="bottom">
                                     <div class="left">
                                         <div class="details">
-                                            <h5><b>Áo Sơmi</b></h5>
-                                            <p>£250</p>
+                                            <h5><b>{{$details->product->product_name}}</b></h5>
+                                            <p>{{$details->sale_price}}</p>
                                         </div>
                                     <div class="buy"><i class="fa fa-shopping-cart"></i></div>
-                                </div>   
+                                </div>
                             </div>
                         </div>
-                    </div> 
-                    <div class="col-md-3">
-                            <div class="product__item" style="width: 210px;">
-                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-1.jpg')}}"fffffff>
-                                </div>
-                                <div class="bottom">
-                                    <div class="left">
-                                        <div class="details">
-                                            <h5><b>Giày</b></h5>
-                                            <p>£250</p>
-                                        </div>
-                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                            <div class="product__item" style="width: 210px;">
-                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-1.jpg')}}"fffffff>
-                                </div>
-                                <div class="bottom">
-                                    <div class="left">
-                                        <div class="details">
-                                            <h5><b>Giày</b></h5>
-                                            <p>£250</p>
-                                        </div>
-                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                            <div class="product__item" style="width: 210px;">
-                                <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
-                                </div>
-                                <div class="bottom">
-                                    <div class="left">
-                                        <div class="details">
-                                            <h5><b>Áo Sơmi</b></h5>
-                                            <p>£250</p>
-                                        </div>
-                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
-                                </div>   
-                            </div>
+                         @endforeach
+                         {{-- End Product Card --}}
                     </div>
                     <div class="row">
                         <div class="col-lg-12">

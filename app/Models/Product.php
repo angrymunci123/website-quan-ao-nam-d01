@@ -22,4 +22,8 @@ class Product extends Model
         'created_at',
         'updated_at'
     ];
+    public function product_details()
+    {
+        return $this->hasMany(Product_Detail::class, 'product_id');
+    }
 }
