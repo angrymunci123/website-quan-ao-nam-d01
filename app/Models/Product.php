@@ -22,8 +22,16 @@ class Product extends Model
         'created_at',
         'updated_at'
     ];
-    public function product_details()
+    public function product_detail()
     {
         return $this->hasMany(Product_Detail::class, 'product_id');
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
