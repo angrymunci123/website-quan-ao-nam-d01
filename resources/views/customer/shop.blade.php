@@ -187,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="row ">
                         {{-- Product Card --}}
                         @foreach($product_details as $details)
@@ -198,24 +198,39 @@
                                 <div class="product__item__pic set-bg ">
                                 <img src="/image/{{$details->image}}" alt="">
                                 </div>
-                                <div class="sale_off">
-                                    <span class="sale_off_percent"><b>2%</b></span>
-                                    <span class="sale_off_label"><b>Giảm</b></span>
-                                </div>
+                                 <?php
+                                 if ($details->sale_price !=0){
+                                    $sale_percent = ($details->price - $details->sale_price ) / $details->price * 100;
+                                    $sale_format = number_format((float)$sale_percent, 1, '.','');
+                                    echo " <div class='sale_off'>
+                                    <span class='sale_off_percent'><b> $sale_format% </b></span>
+                                    <span class='sale_off_label'><b>Giảm</b></span>
+                                </div>";
+                                 }
+                                 else {}
+                                ?>
                                 <div class="bottom">
                                     <div class="left">
                                         <div class="details">
-                                            <h8 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><b>{{$details->product->product_name}}</b></h8>
-                                            <p style="font-size: 13px"><del>{{$details->price}} VND</del> <b><span style="color: red; font-size: 14px;">{{$details->sale_price}} VND</span></b></p>
+                                            <?php
+                                            if ($details->sale_price !=0){
+                                            echo "<h8 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><b>{$details->product->product_name}</b></h8>
+                                            <p style='font-size: 13px'><del>$details->price VND</del> <b><span style='color: red; font-size: 14px;'>$details->sale_price VND</span></b></p>";
+                                        } else {
+                                            echo"
+                                            <span style='color: black; font-size: 14px;'>$details->price VND</span>
+                                            ";
+                                        }
+                                            ?>
                                         </div>
                                     <div class="buy"><i class="fa fa-shopping-cart"></i></div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                         @endforeach
                          {{-- End Product Card --}}
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
