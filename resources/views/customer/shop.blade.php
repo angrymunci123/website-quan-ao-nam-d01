@@ -187,6 +187,7 @@
                             </div>
                         </div>
                     </div>
+                   
                     <div class="row">
                         {{-- Product Card --}}
                         @foreach($product_details as $details)
@@ -194,22 +195,27 @@
                             <div class="product__item" style="width: 210px;">
                                 {{-- <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
                                 </div> --}}
-                                <div class="product__item__pic set-bg">
+                                <div class="product__item__pic set-bg ">
                                 <img src="/image/{{$details->image}}" alt="">
+                                </div>
+                                <div class="sale_off">
+                                    <span class="sale_off_percent"><b>2%</b></span>
+                                    <span class="sale_off_label"><b>Giảm</b></span>
                                 </div>
                                 <div class="bottom">
                                     <div class="left">
                                         <div class="details">
-                                            <h5><b>{{$details->product->product_name}}</b></h5>
-                                            <p>{{$details->sale_price}}</p>
+                                            <h8 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><b>{{$details->product->product_name}}</b></h8>
+                                            <p style="font-size: 13px"><del>{{$details->price}} VND</del> <b><span style="color: red; font-size: 14px;">{{$details->sale_price}} VND</span></b></p>
                                         </div>
                                     <div class="buy"><i class="fa fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
-                         @endforeach
+                        @endforeach
                          {{-- End Product Card --}}
                     </div>
+                    
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
