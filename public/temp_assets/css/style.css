@@ -944,6 +944,36 @@ ol {
 	color: #ffffff;
 	background: #111111;
 }
+.sale_off{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	background-color: rgba(255, 216, 64);
+}
+.sale_off::after{
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -8px;
+	border-width: 0 20px 8px;
+	border-style: solid;
+	border-color: transparent rgba(255, 216, 64) transparent rgba(255, 216, 64);
+}
+.sale_off_percent{
+	color: red;
+	font-size: 1rem;
+	line-height: 1rem;
+}
+.sale_off_label{
+	color: black;
+	font-size: 12px;
+	line-height: 1rem;
+	position: relative;
+	top: -5px;
+}
 
 .product__item.sale .product__item__text .rating i {
 	color: #f7941d;
