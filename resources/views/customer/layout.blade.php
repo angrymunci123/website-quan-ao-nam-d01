@@ -34,7 +34,7 @@
     </div>
 
     <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
+    {{-- <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
@@ -52,10 +52,11 @@
         <div class="offcanvas__text">
             <p>Free shipping, 30-day return or refund guarantee.</p>
         </div>
-    </div>
+    </div> --}}
     <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
+    @if(!session('user_id'))
     <header class="header">
         <div class="header__top">
             <div class="container">
@@ -69,7 +70,6 @@
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 <a href="/login">Đăng nhập</a>
-                                <a href="/register">Đăng ký</a>
                             </div>
                         </div>
                     </div>
@@ -103,6 +103,71 @@
             <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>
     </header>
+    @endif
+
+    @if(session('user_id'))
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white">
+                                        <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end bg-primary border-0 rounded-0 rounded-bottom m-0">
+                                        <a href="/admin/admin_info" class="dropdown-item">Thông tin cá nhân</a>
+                                        <form id="logout-form" action="/mainpage/logout" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to log out?')) { document.getElementById('logout-form').submit(); }">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Đăng xuất
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="./"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="active"><a href="./">Trang chủ</a></li>
+                            <li><a href="/mainpage/shop">Cửa hàng</a></li>
+                            <li><a href="/mainpage/blog">Tin tức</a></li>
+                            <li><a href="/mainpage/contact">Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a>
+                        <a class="ml-2" href="/mainpage/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    @endif
     <!-- Header Section End -->
     @yield('content')
     <!-- Footer Section Begin -->
@@ -178,5 +243,4 @@
     <script src="{{ asset ('temp_assets/js/owl.carousel.min.js')}}"></script>
     <script src="{{ asset ('temp_assets/js/main.js')}}"></script>
 </body>
-
 </html>

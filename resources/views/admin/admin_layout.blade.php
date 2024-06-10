@@ -131,7 +131,7 @@
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">{{session('full_name')}}</span>
+                <span class="d-sm-inline d-none">{{session('fullname')}}</span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -140,7 +140,7 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="{{asset('shoestreet_asset/img/people-icon.png')}}"
                              alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">{{session('full_name')}}</span>
+                        <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                         <a href="/admin/admin_info" class="dropdown-item">My Profile</a>
