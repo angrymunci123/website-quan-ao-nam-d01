@@ -17,14 +17,14 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
+     <br>
     <!-- Shop Section Begin -->
-    <section class="shop spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="shop__sidebar">
-                        <div class="shop__sidebar__search">
+    <div class="app__container">
+        <div class="grid">
+            <div class="grid__row">
+            <div class="grid__colunm-2">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__search">
                             <form action="#">
                                 <input type="text" placeholder="Search...">
                                 <button type="submit"><span class="icon_search"></span></button>
@@ -97,9 +97,6 @@
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__size">
-                                                <label for="xs">xs
-                                                    <input type="radio" id="xs">
-                                                </label>
                                                 <label for="sm">s
                                                     <input type="radio" id="sm">
                                                 </label>
@@ -168,95 +165,57 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <div class="shop__product__option">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="shop__product__option__left">
-                                    <p>Hiển thị 1-12 của 200 kết quả</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="shop__product__option__right">
-                                    <p>Sắp xếp theo giá</p>
-                                    <select id="sort_options">
-                                        <option value="/mainpage/shop">Thấp tới cao</option>
-                                        <option value="/mainpage/shop">Cao tới thấp</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row ">
-                        {{-- Product Card --}}
-                        @foreach($product_details as $details)
-                        <div class="col-md-3">
-                            <div class="product__item" style="width: 210px;">
-                                {{-- <div class="product__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/product/product-2.jpg')}}">
-                                </div> --}}
-                                <div class="product__item__pic set-bg ">
-                                <img src="/image/{{$details->image}}" alt="">
-                                </div>
-                                 <?php
-                                 if ($details->sale_price !=0){
-                                    $sale_percent = ($details->price - $details->sale_price ) / $details->price * 100;
-                                    $sale_format = number_format((float)$sale_percent, 1, '.','');
-                                    echo " <div class='sale_off'>
-                                    <span class='sale_off_percent'><b> $sale_format% </b></span>
-                                    <span class='sale_off_label'><b>Giảm</b></span>
-                                </div>";
-                                 }
-                                 else {}
-                                ?>
-                                <div class="bottom">
-                                    <div class="left">
-                                        <div class="details">
-                                            <?php
-                                            if ($details->sale_price !=0){
-                                            echo "<h8 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><b>{$details->product->product_name}</b></h8>
-                                            <p style='font-size: 13px'><del>$details->price VND</del> <b><span style='color: red; font-size: 14px;'>$details->sale_price VND</span></b></p>";
-                                        } else {
-                                            echo"
-                                            <span style='color: black; font-size: 14px;'>$details->price VND</span>
-                                            ";
-                                        }
-                                            ?>
-                                        </div>
-                                    <div class="buy"><i class="fa fa-shopping-cart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                         {{-- End Product Card --}}
-                    </div>
-
+            <div class="grid__column-10">
+                <div class="shop__product__option">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="product__pagination">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="shop__product__option__left">
+                                        <p>Hiển thị 1-12 của 200 kết quả</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="shop__product__option__right">
+                                        <p>Sắp xếp theo giá</p>
+                                        <select id="sort_options">
+                                            <option value="/mainpage/shop">Thấp tới cao</option>
+                                            <option value="/mainpage/shop">Cao tới thấp</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <div class="home-product">
+                    <div class="grid__row">
+                        <!-- Foreach từ đây -->
+                        <div class="grid__column-2-4">
+                            <div class="home-product-item">
+                                <div class="product-card">
+                                    <div class="home-product-item_img">
+                                        <img src="{{asset('temp_assets/img/product/product-1.jpg')}}">
+                                    </div>
+                                    <h6 class="home-product-name"><b>ÁO SƠ MI DÀI TAY MÀU <br> TRẮNG CỔ NHỌN BẤM CÚC THE TUXEDO</b></h6>
+                                    <div class="home-product_price"><span style="font-size: 12px"><del>900.000đ</del> <b style="font-size: 16px; color: red; margin-left:2px">890.000đ</b></span></div>
+                                    <div class='sale_off'>
+                                            <span class='sale_off_percent'><b>2%</b></span>
+                                            <span class='sale_off_label'><b>Giảm</b></span>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="product__pagination">
                                 <a class="active" href="#">1</a>
                                 <a href="#">2</a>
                                 <a href="#">3</a>
                                 <span>...</span>
                                 <a href="#">21</a>
                             </div>
-                        </div>
-                    </div>
-                </>
             </div>
+            </div>  
         </div>
-    </section>
-    <!-- Shop Section End -->
+     </div> 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#sort_options").change(function(){
-        var selectedValue = $(this).val();
-        if(selectedValue) {
-            window.location.href = selectedValue;
-        }
-    });
-});
-</script>
 @endsection
