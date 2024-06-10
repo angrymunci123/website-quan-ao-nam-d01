@@ -13,15 +13,18 @@ class AuthController extends Controller
     public function login_form()
     {
         $user = Auth::user();
-        if (Auth::check()) {
-            if ($user->role == 'Admin') {
+        if ($user->role == 'Admin') {
+            if (Auth::check()) {
                 return view('admin.dashboard.dashboard');
             }
+        }
 
-            else if ($user->role == 'Khách Hàng') {
-                return view('customer.mainpage');
+        else if ($user->role == 'Khách Hàng') {
+            if (Auth::check()) {
+                return view('customer.index');
             }
         }
+
         return view('login');
     }
 
@@ -44,7 +47,7 @@ class AuthController extends Controller
     private function setSessionData(Request $request, $user)
     {
         $request->session()->put('user_id', $user->user_id);
-        $request->session()->put('fullname', $user->fullname);
+        $request->session()->put('fullname', $user->full_name);
         $request->session()->put('role', $user->role);
     }
 
