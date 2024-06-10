@@ -26,19 +26,6 @@ class AdminController extends Controller
     //     }
     //     return redirect('admin')->with('fail', 'Invalid email address or password.');
     // }
-
-
-    public function logoutAdmin(Request $request)
-    {
-        Auth::logout();
-        $request->session()->forget('user_id');
-        $request->session()->forget('first_name');
-        $request->session()->forget('last_name');
-        $request->session()->forget('role');
-        $request->session()->forget('password');
-        return redirect('login');
-    }
-
     //Dashboard
     public function view_dashboard()
     {
@@ -49,7 +36,7 @@ class AdminController extends Controller
     }
 
     //User
-    public function user_list() 
+    public function user_list()
     {
         if (!Auth::check()) {
             return redirect('login');

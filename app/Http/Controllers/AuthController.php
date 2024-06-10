@@ -25,10 +25,26 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function logout_admin(Request $request) {
+        Auth::logout();
+        $request->session()->forget('user_id');
+        $request->session()->forget('fullname');
+        $request->session()->forget('role');
+        return view("login");
+    }
+
+    public function logout_customer(Request $request) {
+        Auth::logout();
+        $request->session()->forget('user_id');
+        $request->session()->forget('fullname');
+        $request->session()->forget('role');
+        return view("customer.index");
+    }
+
     private function setSessionData(Request $request, $user)
     {
         $request->session()->put('user_id', $user->user_id);
-        $request->session()->put('full_name', $user->full_name);
+        $request->session()->put('fullname', $user->fullname);
         $request->session()->put('role', $user->role);
     }
 
@@ -54,12 +70,12 @@ class AuthController extends Controller
     }
 
 
-    public function register() 
+    public function register()
     {
         return view('register');
     }
 
-    public function registerProcess(Request $request) 
+    public function registerProcess(Request $request)
     {
         $full_name = $request->full_name;
         $email = $request->email;
@@ -70,24 +86,30 @@ class AuthController extends Controller
 
         $hashedPassword = bcrypt($request->password);
 
-        if ($password == $confirm_password || $confirm_password == $password) {
-        DB::table('users')->insert([
-            'fullname' => $full_name,
-            'email' => $email,
-            'phone_number' => $phone_number,
-            'password' => $hashedPassword,
-            'address' => $address,
-            'role' => 'Khách Hàng',
-            'created_at' => now(),
-            'updated_at' => NULL
-        ]);
-            return redirect('/login')->with('notification', 'Đăng Ký Tài Khoản Thành Công!');
+        $email_in_db = DB::table('users')->where('email','=', $email)->first();
+        if (!$email_in_db) {
+            if ($password == $confirm_password || $confirm_password == $password) {
+            DB::table('users')->insert([
+                'fullname' => $full_name,
+                'email' => $email,
+                'phone_number' => $phone_number,
+                'password' => $hashedPassword,
+                'address' => $address,
+                'role' => 'Khách Hàng',
+                'created_at' => now(),
+                'updated_at' => NULL
+            ]);
+                return redirect('/login')->with('success', 'Đăng Ký Tài Khoản Thành Công!');
+            }
+
+            else {
+                return back()->with('fail', 'Thông tin hoặc mật khẩu với xác nhận mật khẩu chưa đúng. Vui lòng kiểm tra lại thông tin!');
+            }
+        }
+        else {
+            return back()->with('fail', 'Địa chỉ email này đã tồn tại!');
         }
 
-        else {
-            return back()->with('notification', 'Thông tin hoặc mật khẩu với xác nhận mật khẩu chưa đúng. Vui lòng kiểm tra lại thông tin!');
-        }
-        
     }
-    
+
 }

@@ -23,22 +23,23 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($users as $user)
                     <tr>
                       <td style="width: 100px">
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">1</h6>
+                            <h6 class="mb-0 text-sm">{{ $user->user_id }}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                          <h6 class="mb-0 text-sm">Đặng Quốc Khánh</h6>
+                          <h6 class="mb-0 text-sm">{{ $user->fullname }}</h6>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <h6 class="mb-0 text-sm">khanh123@gmail.com</h6>
+                        <h6 class="mb-0 text-sm">{{ $user->email }}</h6>
                       </td>
                       <td class="align-middle text-center">
-                        <h6 class="mb-0 text-sm">0987654321</h6>
+                        <h6 class="mb-0 text-sm">{{ $user->phone_number }}</h6>
                       </td>
                       <td class="align-middle text-center">
                         <div class="dropdown">
@@ -50,65 +51,8 @@
                           </div>
                         </div>
                       </td>
-                      
                     </tr>
-                    <tr>
-                      <td style="width: 100px">
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">2</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                          <h6 class="mb-0 text-sm">Nguyễn Xuân Công</h6>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <h6 class="mb-0 text-sm">xuancong123@gmail.com</h6>
-                      </td>
-                      <td class="align-middle text-center">
-                        <h6 class="mb-0 text-sm">0987654321</h6>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Nhân Viên</button>
-                          <div id="myDropdown" class="dropdown-content">
-                          <a href="#">Khách Hàng</a>
-                            <a href="#">Quản Lý</a>
-                            <a href="#">Nhân Viên</a>
-                          </div>
-                        </div>
-                      </td>
-                      
-                    </tr>
-                    <tr>
-                      <td style="width: 100px">
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">3</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                          <h6 class="mb-0 text-sm">Nguyễn Trung Thành</h6>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <h6 class="mb-0 text-sm">thanh123@gmail.com</h6>
-                      </td>
-                      <td class="align-middle text-center">
-                        <h6 class="mb-0 text-sm">0912345678</h6>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Khách Hàng</button>
-                          <div id="myDropdown" class="dropdown-content">
-                          <a href="#">Khách Hàng</a>
-                            <a href="#">Quản Lý</a>
-                            <a href="#">Nhân Viên</a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
