@@ -96,6 +96,7 @@ Route::get('/admin/order', [OrderController::class, "or_lists"]);
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
+Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
 Route::get('/ktcstore/blog', [StoreController::class, "blog"]);
 Route::get('/ktcstore/shop', [StoreController::class, "shop"]);
@@ -104,4 +105,3 @@ Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"])
 Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
-Route::get('/ktcstore/product-detail', [StoreController::class, "product_detail"]);
