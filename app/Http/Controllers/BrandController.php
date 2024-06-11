@@ -15,6 +15,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $brands = Brand::paginate(10);
         Paginator::useBootstrap();
         return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) - 1) * 5);
@@ -25,6 +31,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         return view('admin.brand.add_brand');
     }
 
@@ -33,6 +45,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $brand_name = $request->brand_name;
         DB::table('brands')->insert([
             'brand_name' => $brand_name
@@ -45,6 +63,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $brands = Brand::find($brand_id);
         return view('admin.brand.edit_brand', compact('brands'));
     }
@@ -54,6 +78,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $name = $request->brand_name;
         DB::table('brands')->where("brand_id", "=", "$brand_id")->update([
             'brand_name' => $name
@@ -66,6 +96,12 @@ class BrandController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+        
         $brand = Brand::findOrFail($brand_id);
         $brand->delete();
         return redirect('/admin/brand')->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');

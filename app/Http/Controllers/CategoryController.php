@@ -15,6 +15,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $categories = Category::paginate(10);
         Paginator::useBootstrap();
         return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) - 1) * 5);
@@ -25,6 +31,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         return view('admin.category.add_category');
     }
 
@@ -33,6 +45,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $brand_name = $request->category_name;
         DB::table('category')->insert([
             'category_name' => $brand_name
@@ -45,6 +63,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $categories = Category::find($category_id);
         return view('admin.category.edit_category', compact('categories'));
     }
@@ -54,6 +78,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $name = $request->category_name;
         DB::table('category')->where("category_id", "=", "$category_id")->update([
             'category_name' => $name
@@ -66,6 +96,12 @@ class CategoryController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+        
         $categories = Category::findOrFail($category_id);
         $categories->delete();
         return redirect('/admin/category')->with('notification', 'Xóa Danh Mục Thành Công!');

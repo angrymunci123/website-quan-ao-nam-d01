@@ -13,8 +13,14 @@ class NewsController extends Controller
     public function news()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $news = News::paginate(10);
         Paginator::useBootstrap();
         return view('admin.news.list', compact('news'))->with('i', (request()->input('page', 1) - 1) * 5);
@@ -24,6 +30,12 @@ class NewsController extends Controller
         if (!Auth::check()) {
             return redirect('admin');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         return view('admin.news.add_news');
     }
 
@@ -32,6 +44,12 @@ class NewsController extends Controller
         if (!Auth::check()) {
             return redirect('admin');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $title = $request->title;
         $content = $request->content;
         $user_id = Auth::id();
@@ -50,6 +68,12 @@ class NewsController extends Controller
         if (!Auth::check()) {
             return view('admin');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $news = News::findOrFail($news_id);
         $news->delete();
         return redirect('/admin/news')->with('notification', 'Xóa Tin Tức Thành Công!');
@@ -59,6 +83,12 @@ class NewsController extends Controller
         if (!Auth::check()) {
             return view('admin');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $news = News::find($news_id);
         return view('admin.news.edit_news', compact('news'));
     }
@@ -67,6 +97,12 @@ class NewsController extends Controller
         if (!Auth::check()) {
             return view('admin');
         }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
         $title = $request->title;
         $content = $request->content;
         $user_id = Auth::id();

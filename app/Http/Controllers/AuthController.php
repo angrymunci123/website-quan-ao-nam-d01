@@ -10,23 +10,48 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // public function login_form()
+    // {
+    //     $user = Auth::user();
+    //     if ($user->role == 'Admin') 
+    //     {
+    //         if (Auth::check()) 
+    //         {
+    //         return view('admin.dashboard.dashboard');
+    //         }
+    //     } 
+        
+    //     else if ($user->role == 'Khách Hàng') 
+    //     {
+    //         if (Auth::check()) 
+    //         {
+    //         return view('customer.index');
+    //         }
+    //     }
+    //     return view('login');
+    // }
     public function login_form()
-    {
+{
+    if (Auth::check()) {
         $user = Auth::user();
-        if ($user->role == 'Admin') {
-            if (Auth::check()) {
+        if ($user) 
+        {
+            if ($user->role == 'Admin') 
+            {
                 return view('admin.dashboard.dashboard');
-            }
-        }
-
-        else if ($user->role == 'Khách Hàng') {
-            if (Auth::check()) {
+            } 
+            
+            else if ($user->role == 'Khách Hàng') 
+            {
                 return view('customer.index');
             }
+        } else 
+        {
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập lại.');
         }
-
-        return view('login');
     }
+    return view('login');
+}
 
     public function logout_admin(Request $request) {
         Auth::logout();
@@ -47,7 +72,7 @@ class AuthController extends Controller
     private function setSessionData(Request $request, $user)
     {
         $request->session()->put('user_id', $user->user_id);
-        $request->session()->put('fullname', $user->full_name);
+        $request->session()->put('fullname', $user->fullname);
         $request->session()->put('role', $user->role);
     }
 
