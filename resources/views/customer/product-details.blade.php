@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="/mainpage">Home</a>
-                            <a href="/mainpage/shop">Shop</a>
+                            <a href="/ktcstore">Home</a>
+                            <a href="/ktcstore/shop">Shop</a>
                             <span>Product Details</span>
                         </div>
                     </div>

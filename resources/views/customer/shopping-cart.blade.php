@@ -8,8 +8,8 @@
                     <div class="breadcrumb__text">
                         <h4 style="color: white">Giỏ hàng</h4>
                         <div class="breadcrumb__links">
-                            <a href="/mainpage" style="color: white">Trang chủ</a>
-                            <a href="/mainpage/shop" style="color: white">Cửa hàng</a>
+                            <a href="/ktcstore" style="color: white">Trang chủ</a>
+                            <a href="/ktcstore/shop" style="color: white">Cửa hàng</a>
                             <span style="color: white">Giỏ hàng</span>
                         </div>
                     </div>

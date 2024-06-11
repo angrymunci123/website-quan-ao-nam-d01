@@ -87,16 +87,16 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="./">Trang chủ</a></li>
-                            <li><a href="/mainpage/shop">Cửa hàng</a></li>
-                            <li><a href="/mainpage/blog">Tin tức</a></li>
-                            <li><a href="/mainpage/contact">Liên hệ</a></li>
+                            <li><a href="/ktcstore/shop">Cửa hàng</a></li>
+                            <li><a href="/ktcstore/blog">Tin tức</a></li>
+                            <li><a href="/ktcstore/contact">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a>
-                        <a class="ml-2" href="/mainpage/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
+                        <a class="ml-2" href="/ktcstore/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end bg-primary border-0 rounded-0 rounded-bottom m-0">
                                         <a href="/admin/admin_info" class="dropdown-item">Thông tin cá nhân</a>
-                                        <form id="logout-form" action="/mainpage/logout" method="POST" style="display: none;">
+                                        <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
                                             @csrf
                                         </form>
 
@@ -151,16 +151,16 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="./">Trang chủ</a></li>
-                            <li><a href="/mainpage/shop">Cửa hàng</a></li>
-                            <li><a href="/mainpage/blog">Tin tức</a></li>
-                            <li><a href="/mainpage/contact">Liên hệ</a></li>
+                            <li><a href="/ktcstore/shop">Cửa hàng</a></li>
+                            <li><a href="/ktcstore/blog">Tin tức</a></li>
+                            <li><a href="/ktcstore/contact">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a>
-                        <a class="ml-2" href="/mainpage/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
+                        <a class="ml-2" href="/ktcstore/shopping-cart"><div class="price">Giỏ hàng</div> <img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""></a>
                     </div>
                 </div>
             </div>

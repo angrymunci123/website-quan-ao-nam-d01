@@ -95,13 +95,13 @@ Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}
 Route::get('/admin/order', [OrderController::class, "or_lists"]);
 
 //Customer
-Route::get('/mainpage', [StoreController::class, "mainpage"]);
-Route::get('/mainpage/contact', [StoreController::class, "contact"]);
-Route::get('/mainpage/blog', [StoreController::class, "blog"]);
-Route::get('/mainpage/shop', [StoreController::class, "shop"]);
-Route::get('/mainpage/about', [StoreController::class, "about"]);
-Route::get('/mainpage/shopping-cart', [StoreController::class, "shopping_cart"]);
-Route::get('/mainpage/shop-details', [StoreController::class, "shop_detail"]);
-Route::get('/mainpage/checkout', [StoreController::class, "checkout"]);
-Route::get('/mainpage/blog-details', [StoreController::class, "blog_detail"]);
-Route::get('/mainpage/product-detail', [StoreController::class, "product_detail"]);
+Route::get('/ktcstore', [StoreController::class, "mainpage"]);
+Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
+Route::get('/ktcstore/blog', [StoreController::class, "blog"]);
+Route::get('/ktcstore/shop', [StoreController::class, "shop"]);
+Route::get('/ktcstore/about', [StoreController::class, "about"]);
+Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
+Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
+Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
+Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
+Route::get('/ktcstore/product-detail', [StoreController::class, "product_detail"]);
