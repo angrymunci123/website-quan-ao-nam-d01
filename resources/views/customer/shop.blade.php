@@ -1,7 +1,7 @@
 @extends('customer.layout')
 @section('content')
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-option">
+    <section class="breadcrumb-option">
         <div class="container" style="background-image: url('temp_assets/img/banner.png')">
             <div class="row">
                 <div class="col-lg-12">
@@ -184,38 +184,52 @@
                                 </div>
                             </div>
                 </div>
+                
                 <div class="home-product">
                     <div class="grid__row">
                         <!-- Foreach từ đây -->
+                        @foreach($products as $product)
                         <div class="grid__column-2-4">
                             <div class="home-product-item">
                                 <div class="product-card">
                                     <div class="home-product-item_img">
                                         <img src="{{asset('temp_assets/img/product/product-1.jpg')}}">
                                     </div>
-                                    <h6 class="home-product-name"><b>ÁO SƠ MI DÀI TAY MÀU <br> TRẮNG CỔ NHỌN BẤM CÚC THE TUXEDO</b></h6>
-                                    <div class="home-product_price"><span style="font-size: 12px"><del>900.000đ</del> <b style="font-size: 16px; color: red; margin-left:2px">890.000đ</b></span></div>
+                                    <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
+                                    <div class="home-product_price"><span style="font-size: 12px"><del>{{number_format($product->price)}}</del> <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}</b></span></div>
                                     <div class='sale_off'>
                                             <span class='sale_off_percent'><b>2%</b></span>
                                             <span class='sale_off_label'><b>Giảm</b></span>
                                         </div>
-                                </div>
-                            </div>
-
+                                </div> 
+                            </div> 
                         </div>
-                        
+                        @endforeach
                     </div>
                 </div>
                 <div class="product__pagination">
-                                <a class="active" href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <span>...</span>
-                                <a href="#">21</a>
-                            </div>
+                    @if ($products->lastPage() > 1)
+                        <a class="active" href="{{ $products->previousPageUrl() }}">«</a>
+                        @for ($i = 1; $i <= $products->lastPage(); $i++)
+                            <a class="{{ $i === $products->currentPage() ? 'active' : '' }}" href="{{ $products->url($i) }}">{{ $i }}</a>
+                        @endfor
+                        <a class="active" href="{{ $products->nextPageUrl() }}">»</a>
+                    @endif
+                </div>
+                <br>
             </div>
             </div>  
         </div>
-     </div> 
+    </div> 
+    <style>
+        .product-card {
+            box-shadow: none;
+            transition: box-shadow 0.3s ease;
+            border: 1px solid #ececec;
+        }
 
+        .product-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 @endsection
