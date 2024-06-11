@@ -8,7 +8,7 @@
                     <div class="breadcrumb__text">
                         <h4 style="color: white">Cửa hàng</h4>
                         <div class="breadcrumb__links">
-                            <a href="/mainpage" style="color: white">Trang chủ</a>
+                            <a href="/ktcstore" style="color: white">Trang chủ</a>
                             <span style="color: white">Cửa hàng</span>
                         </div>
                     </div>
@@ -177,8 +177,8 @@
                                     <div class="shop__product__option__right">
                                         <p>Sắp xếp theo giá</p>
                                         <select id="sort_options">
-                                            <option value="/mainpage/shop">Thấp tới cao</option>
-                                            <option value="/mainpage/shop">Cao tới thấp</option>
+                                            <option value="/ktcstore/shop">Thấp tới cao</option>
+                                            <option value="/ktcstore/shop">Cao tới thấp</option>
                                         </select>
                                     </div>
                                 </div>
@@ -192,11 +192,12 @@
                         <div class="grid__column-2-4">
                             <div class="home-product-item">
                                 <div class="product-card">
+                                    <a href="/ktcstore"></a>
                                     <div class="home-product-item_img">
                                         <img src="{{asset('temp_assets/img/product/product-1.jpg')}}">
                                     </div>
                                     <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
-                                    <div class="home-product_price"><span style="font-size: 12px"><del>{{number_format($product->price)}}</del> <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}</b></span></div>
+                                    <div class="home-product_price"><span style="font-size: 12px"><del>{{number_format($product->price)}}đ</del> <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}đ</b></span></div>
                                     <div class='sale_off'>
                                             <span class='sale_off_percent'><b>2%</b></span>
                                             <span class='sale_off_label'><b>Giảm</b></span>
