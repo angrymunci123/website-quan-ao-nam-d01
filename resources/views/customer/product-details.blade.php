@@ -17,20 +17,26 @@
         
         <div class="product__details__content">
             <div class="container">
+                @foreach($product_details as $product_detail)
                 <table align="center" style="width: 100%">
                     <tr>
                         <td>
                             <div class="rowdy">
                                 <div class="border">
-                                <img src="{{ asset ('temp_assets/img/product/product-1.jpg') }}" style="width: 500px; height: 500px">
+                                <img src="/image/{{$product_detail->image}}" style="width: 500px; height: 500px">
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="ml-5">
-                        <h2><b>Hooded thermal anorak</b></h2>
+                        <h2><b>{{$product_detail->product_name}}</b></h2>
                         <br>
-                            <h3>$270.00 <span>70.00</span></h3>
+                        @if ($product_detail->sale_price == 0)
+                            <h3>{{number_format($product_detail->price)}}đ</h3>
+                            @if ($product_detail->sale_price > 0)
+                            <h3>{{number_format($product_detail->sale_price)}}đ</h3>
+                            @endif
+                        @endif
                             <br>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
@@ -83,6 +89,7 @@
                         </td>
                     </tr>
                 </table>
+                @endforeach
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">

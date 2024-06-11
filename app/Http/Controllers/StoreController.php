@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use App\Models\Product_Detail;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {
@@ -20,22 +22,58 @@ class StoreController extends Controller
         return view("customer.contact");
     }
 
-    public function shop()
-    {
-        $products = Product::join("product_detail", "products.product_id" ,"=", "product_detail.product_id")
-        ->paginate(16);    
-        Paginator::useBootstrap();
-        return view("customer.shop", compact('products'))->with('i', (request()->input('page', 1) - 1) * 16);
-    }
-
     public function shopping_cart()
     {
-        return view("customer.shopping-cart");
+        return view("customer.shopping-cart");  
     }
 
-    public function product_detail()
+    public function shop()
     {
-        return view("customer.product-details");
+        $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->where('product_detail.size', '=', 'S')
+            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+            ->groupBy('products.product_id', 'products.product_name')
+            ->paginate(16);
+        Paginator::useBootstrap();
+    
+        // Xử lý chuẩn hóa tên sản phẩm
+        foreach ($products as $product) {
+            $standardized_product_name = $product->product_name;
+            $standardized_product_name = strtolower($standardized_product_name);
+            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name); 
+            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
+            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
+            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
+            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
+            
+            $product->standardized_product_name = $standardized_product_name;
+        }
+    
+        return view("customer.shop", compact('products'))->with('i', (request()->input('page', 1) - 1) * 16);
+    }
+    
+
+    public function product_detail($product_name)
+    {
+        $product_details = Product::where("products.product_name", "=", $product_name)
+            ->join('brands', "products.brand_id", "=", "brands.brand_id")
+            ->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
+            ->where('product_detail.size', '=', 'S')
+            ->get(['brands.brand_name', 'products.product_id', 'products.product_name', 'product_detail.price', 'product_detail.product_detail_id',
+                'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size']);
+        foreach ($product_details as $product_detail) {
+            $product_id = $product_detail->product_id;
+            
+            $product_size = Product_Detail::where("product_detail.product_id", "=", $product_id)
+            ->get(['product_detail.product_detail_id','product_detail.product_id', 'product_detail.size']);
+        }
+        return view("customer.product-details", compact('product_details', 'product_size'));
     }
 
     public function checkout()
