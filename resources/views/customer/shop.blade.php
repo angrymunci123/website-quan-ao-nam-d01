@@ -194,7 +194,7 @@
                                 <div class="product-card">
                                     <a href="/ktcstore"></a>
                                     <div class="home-product-item_img">
-                                        <img src="{{asset('temp_assets/img/product/product-1.jpg')}}">
+                                        <img src="/image/{{$product->image}}">
                                     </div>
                                     <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
                                     <div class="home-product_price"><span style="font-size: 12px"><del>{{number_format($product->price)}}đ</del> <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}đ</b></span></div>
