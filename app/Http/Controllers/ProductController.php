@@ -201,7 +201,7 @@ class ProductController extends Controller
         ]);
 
         return redirect('/admin/product/product_detail/product_id='.$product_id.'&product_detail_id='.$product_detail_id)
-        ->with('notification', 'Sửa Chi Tiết Sản Phẩm Mới Thành Công!');
+        ->with('notification', 'Sửa Chi Tiết Sản Phẩm Thành Công!');
     }
 
     public function delete_product_detail($product_id, $product_detail_id)
