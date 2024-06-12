@@ -31,11 +31,11 @@
                             <div class="ml-5">
                         <h2><b>{{$product_detail->product_name}}</b></h2>
                         <br>
-                        @if ($product_detail->sale_price == 0)
-                            <h3>{{number_format($product_detail->price)}}đ</h3>
-                        @endif
                         @if ($product_detail->sale_price > 0)
+                            <del>{{number_format($product_detail->price)}}đ</del>
                             <h3>{{number_format($product_detail->sale_price)}}đ</h3>
+                        @else
+                            <h3>{{number_format($product_detail->price)}}đ</h3>
                         @endif
                             <br>
                             <div class="product__details__option">

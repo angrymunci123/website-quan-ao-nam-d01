@@ -65,7 +65,8 @@ class StoreController extends Controller
             ->join('brands', "products.brand_id", "=", "brands.brand_id")
             ->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
             ->where('product_detail.size', '=', 'S')
-            ->get(['brands.brand_name', 'products.product_id', 'products.product_name', 'product_detail.price', 'product_detail.product_detail_id', 'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size']);
+            ->get(['brands.brand_name', 'products.product_id', 'products.product_name', 'product_detail.price', 'product_detail.sale_price',
+            'product_detail.product_detail_id', 'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size']);
 
         $product_detail = $product_details->first();
 
