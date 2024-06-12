@@ -38,8 +38,34 @@
                             <h3>{{number_format($product_detail->price)}}đ</h3>
                         @endif
                             <br>
-                            <div class="product__details__option">
+                            <!-- <div class="product__details__option">
                                 <div class="product__details__option__size">
+                                @if(session()->exists('user_id'))
+                                    <form action="/ktcstore/product/add_to_cart" method="get" enctype="multipart/form-data">
+                                        @csrf
+                                        <input hidden type="text" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
+                                        <input hidden type="text" name="product_id" value="{{$product_detail->product_id}}"/>
+                                        <label>Quantity</label>
+                                        <br>
+                                        <input class="form-control" style="width: 150px;" type="number" name="quantity" value="1" min="1" max="100"/>
+                                        <br>
+                                        <label>Product Size</label>
+                                            <select name="size" class="form-control" style="width: 150px;">
+                                                @foreach($product_size as $display_size)
+                                                    <option value="{{$display_size->size}}">{{$display_size->size}}</option>
+                                                @endforeach
+                                            </select>
+                                        <br>
+                                        <div class="product__details__cart__option">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" value="1">
+                                                </div>
+                                            </div>
+                                            <a href="#" class="primary-btn">add to cart</a>
+                                        </div>
+                                    </form>
+                                @endif
                                     <span>Size:</span>
                                     @foreach ($product_size as $current_size)
                                         <label for="{{$current_size->size}}">{{$current_size->size}}
@@ -55,14 +81,54 @@
                                             </label>
                                         @endforeach
                                 </div>
-                            </div>
-                            <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+                            </div> -->
+                            <div class="product__details__option">
+                                @if(session()->exists('user_id'))
+                                    <form action="/ktcstore/product/add_to_cart" method="get" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
+                                        <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
+                                        
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <label>Kích Cỡ</label>
+                                                    <br>
+                                                    <select name="size" class="form-control" style="width: 150px;">
+                                                        @foreach($product_size as $display_size)
+                                                            <option value="{{$display_size->size}}">{{$display_size->size}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </th>
+                                                <th>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+                                                <th>
+                                                    <label>Màu Sắc</label>
+                                                    <br>
+                                                    @foreach($product_colors as $color)
+                                                        <label for="color-{{ $color->index }}">{{ $color->color }}
+                                                            <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
+                                                        </label>
+                                                    @endforeach
+                                                </th>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                        <div class="quantity">
+                                            <label>Số Lượng:</label>
+                                            <div class="product__details__cart__option">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="1">
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="primary-btn">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                @endif
                             </div>
                             </div>
                         </td>
@@ -72,8 +138,6 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-
-
                             <div class="product__details__last__option">
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="{{ asset ('temp_assets/img/shop-details/details-payment.png')}}" alt="">
@@ -92,15 +156,13 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#tabs-5"
-                                    role="tab">Description</a>
+                                    role="tab">Mô Tả Sản Phẩm</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Customer
-                                    Previews(5)</a>
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Đánh Giá</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional
-                                    information</a>
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Thông Tin Khác</a>
                                 </li>
                             </ul>
                             <div class="tab-content">

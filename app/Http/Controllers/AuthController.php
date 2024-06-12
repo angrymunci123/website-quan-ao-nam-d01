@@ -79,22 +79,32 @@ class AuthController extends Controller
     public function loginProcess(Request $request)
     {
         $credentials = [
-        'email' => $request->email,
-        'password' => $request->password,
+            'email' => $request->email,
+            'password' => $request->password,
         ];
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->role == 'Admin') {
-                $this->setSessionData($request, $user);
-                return view('admin.dashboard.dashboard');
-            }
 
-            if ($user->role == 'Khách Hàng') {
-                $this->setSessionData($request, $user);
-                return view('customer.index');
-            }
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with('fail', 'Tài khoản hiện chưa được đăng ký. Vui lòng đăng ký để mua hàng tại KTC Store');
         }
-        return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
+
+        else {
+            if (Auth::attempt($credentials)) 
+            {
+                $user = Auth::user();
+                if ($user->role == 'Admin') {
+                    $this->setSessionData($request, $user);
+                    return view('admin.dashboard.dashboard');
+                }
+
+                if ($user->role == 'Khách Hàng') {
+                    $this->setSessionData($request, $user);
+                    return view('customer.index');
+                }
+            }
+            return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
+        }
     }
 
 
@@ -114,30 +124,26 @@ class AuthController extends Controller
 
         $hashedPassword = bcrypt($request->password);
 
-        $email_in_db = DB::table('users')->where('email','=', $email)->first();
+        $email_in_db = DB::table('users')->where('email', '=', $email)->first();
         if (!$email_in_db) {
             if ($password == $confirm_password || $confirm_password == $password) {
-            DB::table('users')->insert([
-                'fullname' => $full_name,
-                'email' => $email,
-                'phone_number' => $phone_number,
-                'password' => $hashedPassword,
-                'address' => $address,
-                'role' => 'Khách Hàng',
-                'created_at' => now(),
-                'updated_at' => NULL
-            ]);
+                DB::table('users')->insert([
+                    'fullname' => $full_name,
+                    'email' => $email,
+                    'phone_number' => $phone_number,
+                    'password' => $hashedPassword,
+                    'address' => $address,
+                    'role' => 'Khách Hàng',
+                    'created_at' => now(),
+                    'updated_at' => NULL
+                ]);
                 return redirect('/login')->with('success', 'Đăng Ký Tài Khoản Thành Công!');
-            }
-
-            else {
+            } else {
                 return back()->with('fail', 'Thông tin hoặc mật khẩu với xác nhận mật khẩu chưa đúng. Vui lòng kiểm tra lại thông tin!');
             }
+        } else {
+            return back()->with('fail', 'Địa chỉ email này đã tồn tại! Vui lòng sử dụng địa chỉ email khác.');
         }
-        else {
-            return back()->with('fail', 'Địa chỉ email này đã tồn tại!');
-        }
-
     }
 
 }
