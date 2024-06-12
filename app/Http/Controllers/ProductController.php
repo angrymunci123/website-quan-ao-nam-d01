@@ -22,7 +22,7 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $inner_join = Product::join("brands", "products.brand_id", "=", "brands.brand_id")
@@ -42,7 +42,7 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $brands = Brand::all();
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $brand = $request->brand_id;
@@ -84,9 +84,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $brands = Brand::all();
         $categories = Category::all();
         $products = Product::find($product_id);
@@ -101,9 +101,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $brand = $request->brand_id;
         $category = $request->category_id;
         $product_name = $request->product_name;
@@ -125,9 +125,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $product = Product::findOrFail($product_id);
         $product->delete();
         return redirect('/admin/product')->with('notification', 'Xóa Sản Phẩm Thành Công!');
@@ -142,9 +142,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $product_id = $request->product_id;
         $product_name = DB::table('products')->where('product_id', '=', $product_id)->get('product_name');
         $product_details = DB::table('products')->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
@@ -162,9 +162,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $product_id = $request->product_id;
         $products = Product::where('product_id', "=", $product_id)->get();
         return view('admin.product.product_detail.add_detail', compact('products'));
@@ -178,9 +178,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-    
+
         $product_id = $request->product_id;
         $price = $request->price;
         $sale_price = $request->sale_price;
@@ -212,12 +212,12 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
         ->where('product_detail.product_detail_id', "=", $product_detail_id)
-        ->get();  
+        ->get();
         return view("admin.product.product_detail.view_detail", compact('view_prd_details'));
     }
 
@@ -229,12 +229,13 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $product_id = $request->product_id;
-        $inner_join = Product::where("products.product_id", "=", $product_id)
-        ->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')->get();  
+        $product_detail_id = $request->product_detail_id;
+        $inner_join = Product_Detail::where("product_detail.product_detail_id", "=", $product_detail_id)
+        ->join('products', 'product_detail.product_id', '=', 'products.product_id')->get();
         return view("admin.product.product_detail.update_detail", compact('inner_join'));
     }
 
@@ -246,7 +247,7 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $price = $request->price;
@@ -281,9 +282,9 @@ class ProductController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-        
+
         $product_detail = Product_Detail::findOrFail($product_detail_id);
         $product_detail->delete();
         return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
