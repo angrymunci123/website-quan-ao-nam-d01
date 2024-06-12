@@ -23,7 +23,7 @@
                         <td>
                             <div class="rowdy">
                                 <div class="border">
-                                <img src="/image/{{$product_detail->image}}" style="width: 500px; height: 500px">
+                                <img src="/image/{{$product_detail->image}}" style="width: 500px; height: 600px; object-fit: cover">
                                 </div>
                             </div>
                         </td>

@@ -60,7 +60,7 @@
                       </td>
                         <td style="width:10px; column-gap: 1px;" class="text-center" >
                             <form action="/admin/product/product_detail/view_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
-                                <button type="submit" class="btn btn-info" style="width:75px ;color:black">Xem</button>
+                                <button type="submit" class="btn btn-info" style="width:75px ;color:white">Xem</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
