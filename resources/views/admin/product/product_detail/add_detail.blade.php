@@ -56,9 +56,11 @@
             </form>
             <br>
             <div class="col-sm-4 col-xl-1">
-                <form action="/admin/brand" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-warning">Quay Lại</button>
-                </form>
+                @foreach ($products as $product)
+                    <form action="/admin/product/product_detail/product_id={{$product->product_id}}" enctype="multipart/form-data">
+                        <button type="submit" class="btn btn-warning">Quay Lại</button>
+                    </form>
+                @endforeach
             </div>
               </div>
             </div>
