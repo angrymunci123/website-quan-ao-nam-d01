@@ -16,7 +16,7 @@
                   <input type="number" name="product_id" value="{{$product_id}}" required hidden>
                   <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                       <button name="controller=create" class="btn btn-success">Tạo Biến Thể Sản Phẩm</button>
-                  </form>        
+                  </form>
                 </th>
               </table>
             </div>
@@ -58,15 +58,15 @@
                       <td class="text-center">
                         <h6 class="mb-0">{{$product_detail->material}}</h6>
                       </td>
-                      <td style="width:10px; column-gap: 1px;" class="text-center" >
+                        <td style="width:10px; column-gap: 1px;" class="text-center" >
                             <form action="/admin/product/product_detail/view_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
                                 <button type="submit" class="btn btn-info" style="width:75px ;color:black">Xem</button>
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/product_detail/edit_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
-                                <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
-                            </form>
+                                <form action="/admin/product/product_detail/edit_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
+                                    <button type="submit" class="btn btn-warning" style="width:75px ;color:black">Sửa</button>
+                                </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
                             <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
