@@ -92,7 +92,7 @@ Route::post('/admin/product/product_detail/update_detail/product_id={product_id}
 Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "delete_product_detail"]);
 
 //Order
-Route::get('/admin/order', [OrderController::class, "or_lists"]);
+Route::get('/admin/order', [OrderController::class, "order_list"]);
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
