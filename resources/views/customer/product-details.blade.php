@@ -33,17 +33,17 @@
                         <br>
                         @if ($product_detail->sale_price == 0)
                             <h3>{{number_format($product_detail->price)}}đ</h3>
-                            @if ($product_detail->sale_price > 0)
+                        @endif
+                        @if ($product_detail->sale_price > 0)
                             <h3>{{number_format($product_detail->sale_price)}}đ</h3>
-                            @endif
                         @endif
                             <br>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
                                     @foreach ($product_size as $current_size)
-                                        <label for="xxl">{{$current_size->size}}
-                                            <input type="radio" id="xxl">
+                                        <label for="{{$current_size->size}}">{{$current_size->size}}
+                                            <input type="radio">
                                         </label>
                                     @endforeach
                                 </div>
