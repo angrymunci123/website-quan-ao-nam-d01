@@ -105,3 +105,4 @@ Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"])
 Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
+Route::post('/ktcstore/product/add_to_cart', [StoreController::class, "add_to_cart"])->name("add_to_cart");
