@@ -88,7 +88,6 @@
                                         @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-                                        
                                         <table>
                                             <tr>
                                                 <th>
@@ -123,11 +122,52 @@
                                                         <input type="text" value="1">
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="primary-btn">Add to Cart</button>
+                                                <button type="submit" class="primary-btn">Thêm Vào Giỏ Hàng</button>
                                             </div>
                                         </div>
                                         
                                     </form>
+                                @endif
+                                @if(!session('user_id'))
+                                <form action="/login" method="get" enctype="multipart/form-data">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            <label>Kích Cỡ</label>
+                                            <br>
+                                            <select name="size" class="form-control" style="width: 150px;">
+                                            @foreach($product_size as $display_size)
+                                                <option value="{{$display_size->size}}">{{$display_size->size}}</option>
+                                            @endforeach
+                                            </select>
+                                        </th>
+                                        <th>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </th>
+                                        <th>
+                                            <label>Màu Sắc</label>
+                                            <br>
+                                            @foreach($product_colors as $color)
+                                            <label for="color-{{ $color->index }}">{{ $color->color }}
+                                                <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
+                                            </label>
+                                            @endforeach
+                                        </th>
+                                    </tr>
+                                </table>
+                                <br>
+                                <div class="quantity">
+                                    <label>Số Lượng:</label>
+                                    <div class="product__details__cart__option">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>                           
+                                        <button type="submit" class="primary-btn">Mua Ngay</button>
+                                    </div>
+                                </div>
+                                </form>
                                 @endif
                             </div>
                             </div>
