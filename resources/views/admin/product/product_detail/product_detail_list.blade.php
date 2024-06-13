@@ -34,9 +34,11 @@
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Giá</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Giá khuyến mãi</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Số Lượng</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Màu Sắc</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Chất Liệu</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Size</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center" colspan="3">Chức Năng</th>
                     </tr>
                   </thead>
@@ -50,6 +52,9 @@
                         <h6 class="mb-0">{{number_format($product_detail->price)}} VND</h6>
                       </td>
                       <td class="text-center">
+                        <h6 class="mb-0">{{number_format($product_detail->sale_price)}} VND</h6>
+                      </td>
+                      <td class="text-center">
                         <h6 class="mb-0">{{$product_detail->quantity}}</h6>
                       </td>
                       <td class="text-center">
@@ -57,6 +62,9 @@
                       </td>
                       <td class="text-center">
                         <h6 class="mb-0">{{$product_detail->material}}</h6>
+                      </td>
+                      <td class="text-center">
+                        <h6 class="mb-0">{{$product_detail->size}}</h6>
                       </td>
                         <td style="width:10px; column-gap: 1px;" class="text-center" >
                             <form action="/admin/product/product_detail/view_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="GET">
