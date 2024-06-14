@@ -80,7 +80,7 @@
                                             <div class="product__details__cart__option">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <input  type="number" name="quantity" value="1" min="1" max="100">
+                                                        <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="100">
                                                     </div>
                                                 </div>
                                                 <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
@@ -122,7 +122,7 @@
                                     <div class="product__details__cart__option">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="1">
+                                                <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="100">
                                             </div>
                                         </div>                           
                                         <button type="submit" class="primary-btn">Mua Ngay</button>
@@ -401,9 +401,11 @@
     <!-- Related Section End -->
 @endsection
 <script>
-    add_filter( 'add_to_cart_message', function( $message, $products, $show_qty ) 
-    {
-        $message = __( 'Product added, yay!', 'my-text-domain' );
-        return $message;
-    }, 10, 3 );
+    document.getElementById('add_to_cart_message').addEventListener('click', function(event) {
+        var quantityInput = document.getElementById('quantity_input');
+        if (parseInt(quantityInput.value) === 1) {
+            event.preventDefault(); 
+            alert('Số lượng phải lớn hơn 0');
+        }
+    });
 </script>
