@@ -141,4 +141,23 @@ class StoreController extends Controller
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
     }
 
+    public function update_cart(Request $request) {
+        if ($request->product_id && $request->quantity) {
+            $shopping_cart = session()->get('shopping_cart');
+            $shopping_cart[$request->product_id]["quantity"] = $request->quantity;
+            session()->put('shopping_cart', $shopping_cart);
+            session()->flash('success', 'Product has been updated.');
+        }
+    }
+
+    public function remove_from_cart(Request $request) {
+        if ($request->product_id) {
+            $shopping_cart = session()->get('shopping_cart');
+            if (isset($shopping_cart[$request->product_id])) {
+                unset($shopping_cart[$request->product_id]);
+                session()->put('shopping_cart', $shopping_cart);
+            }
+            session()->flash('success', 'Product has been removed.');
+        }
+    }
 }

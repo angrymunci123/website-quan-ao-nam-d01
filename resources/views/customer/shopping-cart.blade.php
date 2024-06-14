@@ -46,7 +46,7 @@ $total_in_cart = 0;
                             $total = $details['price'] * $details['quantity'];
                             $total_in_cart += $total;
                             @endphp
-                            <tr>
+                            <tr data-id="{{$product_id}}">
                                 <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
                                         <img src="/image/{{$details['image']}}" alt="blank" style="width:85px">
@@ -58,8 +58,8 @@ $total_in_cart = 0;
                                 </td>
                                 <td class="quantity__item">
                                     <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="{{$details['quantity']}}">
+                                        <div class="pro-qty-2" data-id="Quantity">
+                                            <input type="text" class="quantity cart_update" value="{{$details['quantity']}}" min="1">
                                         </div>
                                     </div>
                                 </td>
@@ -121,4 +121,45 @@ $total_in_cart = 0;
 </section>
 @endif
 <!-- Shopping Cart Section End -->
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+
+        $(".cart_update").change(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            $.ajax({
+                url: '/storeIndex/cart/update_cart',
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: ele.parents("tr").attr("data-id"),
+                    quantity: ele.parents("td").find(".quantity").val()
+                },
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        });
+
+        $(".cart_remove").click(function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            if(confirm("Bạn có thực sự muốn xóa sản phẩm này khỏi giỏ hàng không??")) {
+                $.ajax({
+                    url: '/ktcstore/shopping-cart/remove/{product_id}',
+                    method: "POST",
+                    data: {
+                        _token: '{{csrf_token()}}',
+                        product_id: ele.parents("tr").attr("data-id")
+                    },
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                })
+            }
+        });
+    </script>
 @endsection
