@@ -105,5 +105,20 @@ $total_in_cart = 0;
     </div>
 </section>
 @endif
+@if(!session()->exists('shopping_cart'))
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8" style="height:300px; margin:auto">
+                <img src="{{asset('/image/empty_cart.png')}}" style="width:50%; display:block; margin-left:auto; margin-right:auto">
+                <br><br>
+                <h5 style="text-align:center">Không có sản phẩm nào trong giỏ hàng</h5>
+                <br>
+                <a href="/ktcstore/shop" class="primary-btn" style="width:275px; display: block; margin: 0 auto; text-align: center;">Tiếp Tục Mua Hàng</a>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 <!-- Shopping Cart Section End -->
 @endsection
