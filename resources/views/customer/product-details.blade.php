@@ -14,10 +14,15 @@
                     </div>
                 </div>
             </div>
-
+            @foreach($product_details as $product_detail)
         <div class="product__details__content">
             <div class="container">
-                @foreach($product_details as $product_detail)
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
                 <table align="center" style="width: 100%">
                     <tr>
                         <td>
@@ -38,66 +43,30 @@
                             <h3>{{number_format($product_detail->price)}}đ</h3>
                         @endif
                             <br>
-                            <!-- <div class="product__details__option">
-                                <div class="product__details__option__size">
-                                @if(session()->exists('user_id'))
-                                    <form action="/ktcstore/product/add_to_cart" method="get" enctype="multipart/form-data">
-                                        @csrf
-                                        <input hidden type="text" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
-                                        <input hidden type="text" name="product_id" value="{{$product_detail->product_id}}"/>
-                                        <label>Quantity</label>
-                                        <br>
-                                        <input class="form-control" style="width: 150px;" type="number" name="quantity" value="1" min="1" max="100"/>
-                                        <br>
-                                        <label>Product Size</label>
-                                            <select name="size" class="form-control" style="width: 150px;">
-                                                @foreach($product_size as $display_size)
-                                                    <option value="{{$display_size->size}}">{{$display_size->size}}</option>
-                                                @endforeach
-                                            </select>
-                                        <br>
-                                        <div class="product__details__cart__option">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                            <a href="#" class="primary-btn">add to cart</a>
-                                        </div>
-                                    </form>
-                                @endif
-                                    <span>Size:</span>
-                                    @foreach ($product_size as $current_size)
-                                        <label for="{{$current_size->size}}">{{$current_size->size}}
-                                            <input type="radio">
-                                        </label>
-                                    @endforeach
-                                </div>
-                                <div class="product__details__option__color">
-                                    <span>Color:</span>
-                                        @foreach($product_colors as $color)
-                                            <label for="color-{{ $loop->index }}">{{ $color->color }}
-                                                <input type="radio" id="color-{{ $loop->index }}" name="color" value="{{ $color->color }}">
-                                            </label>
-                                        @endforeach
-                                </div>
-                            </div> -->
                             <div class="product__details__option">
                                 @if(session()->exists('user_id'))
-                                    <form action="/ktcstore/product/add_to_cart" method="get" enctype="multipart/form-data">
+                                    <form action="/ktcstore/product/add_to_cart" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
+<<<<<<< HEAD
                                         
                                             <div class="detail_container">
                                                 <div>
                                                     <label for="size"><b>Kích Cỡ</b></label>
+=======
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <label>Kích Cỡ</label>
+>>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
                                                     <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
-                                                            <option value="{{$display_size->size}}">{{$display_size->size}}</option>
+                                                            <option name="size" value="{{$display_size->size}}">{{$display_size->size}}</option>
                                                         @endforeach
                                                     </select>
+<<<<<<< HEAD
                                                 </div>
                                                 <div></div>
                                                 <br>
@@ -110,27 +79,84 @@
                                                     @endforeach
                                                 </div>
                                             </div>
+=======
+                                                </th>
+                                                <th>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+                                                <th>
+                                                    <label>Màu Sắc</label>
+                                                    <br>
+                                                    <select name="color" class="form-control" style="width: 150px;">
+                                                        @foreach($product_colors as $color)
+                                                            <option name="color" value="{{ $color->color }}">{{ $color->color }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </th>
+                                            </tr>
+                                        </table>
+>>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
                                         <br>
                                         <div class="quantity">
                                             <label><b>Số Lượng:</b></label>
                                             <div class="product__details__cart__option">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <input type="text" value="1">
+                                                        <input  type="number" name="quantity" value="1" min="1" max="100">
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="primary-btn">Add to Cart</button>
+                                                <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
                                             </div>
                                         </div>
                                         
                                     </form>
+                                @endif
+                                @if(!session('user_id'))
+                                <form action="/login" method="get" enctype="multipart/form-data">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            <label>Kích Cỡ</label>
+                                            <br>
+                                            <select name="size" class="form-control" style="width: 150px;">
+                                            @foreach($product_size as $display_size)
+                                                <option value="{{$display_size->size}}">{{$display_size->size}}</option>
+                                            @endforeach
+                                            </select>
+                                        </th>
+                                        <th>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </th>
+                                        <th>
+                                            <label>Màu Sắc</label>
+                                            <br>
+                                            @foreach($product_colors as $color)
+                                            <label for="color-{{ $color->index }}">{{ $color->color }}
+                                                <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
+                                            </label>
+                                            @endforeach
+                                        </th>
+                                    </tr>
+                                </table>
+                                <br>
+                                <div class="quantity">
+                                    <label>Số Lượng:</label>
+                                    <div class="product__details__cart__option">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>                           
+                                        <button type="submit" class="primary-btn">Mua Ngay</button>
+                                    </div>
+                                </div>
+                                </form>
                                 @endif
                             </div>
                             </div>
                         </td>
                     </tr>
                 </table>
-                @endforeach
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
@@ -240,6 +266,7 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </section>
     <!-- Shop Details Section End -->
 
@@ -394,5 +421,11 @@
         </div>
     </section>
     <!-- Related Section End -->
-
 @endsection
+<script>
+    add_filter( 'add_to_cart_message', function( $message, $products, $show_qty ) 
+    {
+        $message = __( 'Product added, yay!', 'my-text-domain' );
+        return $message;
+    }, 10, 3 );
+</script>

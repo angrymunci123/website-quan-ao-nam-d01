@@ -24,7 +24,15 @@ class StoreController extends Controller
 
     public function shopping_cart()
     {
-        return view("customer.shopping-cart");
+        // $total = 0;
+        // $total_in_cart = 0;
+        // foreach(session('shopping_cart') as $product_id => $details) {
+        //     $total += $details['price'] * $details['quantity'];
+        //     $total_in_cart += $total;
+        // }
+
+        // return view('customer.shopping-cart', ['total' => $total, 'total_in_cart' => $total_in_cart]);
+        return view('customer.shopping-cart');
     }
 
     public function shop()
@@ -68,16 +76,16 @@ class StoreController extends Controller
             ->get(['brands.brand_name', 'products.product_id', 'products.product_name', 'product_detail.price', 'product_detail.sale_price',
             'product_detail.product_detail_id', 'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size']);
 
-        $product_detail = $product_details->first();
-
-        $product_size = Product_Detail::where("product_detail.product_id", "=", $product_detail->product_id)
+        if ($product_details->isNotEmpty()) {
+            $product_id = $product_details->first()->product_id;
+            $product_size = Product_Detail::where("product_detail.product_id", "=", $product_id)
             ->get(['product_detail.product_detail_id', 'product_detail.product_id', 'product_detail.size']);
 
-        $product_colors = Product_Detail::where("product_detail.product_id", "=", $product_detail->product_id)
-            ->distinct()
-            ->get(['product_detail.color']);
-
-        return view("customer.product-details", compact('product_details', 'product_size', 'product_colors'));
+            $product_colors = Product_Detail::where("product_detail.product_id", "=", $product_id)
+                ->distinct()
+                ->get(['product_detail.color']);
+            return view("customer.product-details", compact('product_details', 'product_size', 'product_colors'));
+        } 
     }
 
 
@@ -100,4 +108,37 @@ class StoreController extends Controller
     {
         return view("customer.about");
     }
+
+    public function add_to_cart(Request $request) {
+        $product_id = $request->product_id;
+        $product_detail_id = $request->product_detail_id;
+        $size = $request->size;
+        $color = $request->color;
+        $quantity = $request->quantity;
+        $product = Product_Detail::join('products', 'product_detail.product_id', '=', 'products.product_id')
+            ->where('product_detail.product_detail_id', '=' , $product_detail_id)
+            ->where('products.product_id', '=' , $product_id)
+            ->findOrFail($product_detail_id);
+        $shopping_cart = session()->get('shopping_cart', []);
+
+        if (isset($shopping_cart[$product_detail_id])) {
+            $shopping_cart[$product_detail_id]['quantity']++;
+        }
+
+        else {
+            $shopping_cart[$product_detail_id] = [
+                'product_id' => $product->product_id,
+                'product_detail_id' => $product->product_detail_id,
+                'product_name' => $product->product_name,
+                'price' => $product->price,
+                'size' => $size,
+                'color' => $color,
+                'image' => $product->image,
+                'quantity' => $quantity
+            ];
+        }
+        session()->put('shopping_cart', $shopping_cart);
+        return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
+    }
+
 }
