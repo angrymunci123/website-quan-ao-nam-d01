@@ -93,8 +93,8 @@
 
     <!-- Product Section Begin -->
     <section class="product spad">
-        <div class="container">
-            <div class="row">
+        <div class="app_container">
+            <div class="grid">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
                         <li class="active" data-filter="*">Best Sellers</li>

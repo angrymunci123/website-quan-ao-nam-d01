@@ -1009,7 +1009,9 @@ ol {
 	margin-left: 10px;
 	display: flex;
 	flex-wrap: wrap;
+	width: 100%;
  }
+
  /*Responsive*/
  .grid__row{
 	display: flex;
@@ -1035,7 +1037,15 @@ ol {
 	padding-right: 12px;
 	width: 75%;
  }
-
+ .detail_container {
+	display: grid;
+	grid-template-columns: 1fr 50px 1fr;
+	align-items: center;
+	gap: 20px;
+}
+.form-control {
+	width: 150px;
+}
 
 .product__item.sale .product__item__text .rating i {
 	color: #f7941d;
