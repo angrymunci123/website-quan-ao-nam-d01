@@ -29,6 +29,12 @@ $total_in_cart = 0;
         <div class="row">
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
                     <table >
                         <thead>
                             <tr>
@@ -103,7 +109,13 @@ $total_in_cart = 0;
                                     </div>
                                 </td>
                                 <td class="cart__price">{{number_format($total)}}đ</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class="cart__close">
+                                    <!-- <i class="fa fa-close">
+                                        <a href="{{ url('/ktcstore/shopping-cart/remove_cart/product_id='.$details['product_id']) }}"></a>
+                                    </i> -->
+                                    <a class="btn btn-danger mx-2"
+                                        href="{{ url('/ktcstore/shopping-cart/remove_cart/product_id='.$details['product_id']) }}">Remove</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
