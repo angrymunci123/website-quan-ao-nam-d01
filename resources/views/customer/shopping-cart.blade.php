@@ -56,11 +56,36 @@ $total_in_cart = 0;
                                         <h5>{{number_format($details['price'])}}đ</h5>
                                     </div>
                                 </td>
-                                <td class="quantity__item">
+                                <!-- <td class="quantity__item">
                                     <div class="quantity">
                                         <div class="pro-qty-2" data-id="Quantity">
                                             <input type="text" class="quantity cart_update" value="{{$details['quantity']}}" min="1">
                                         </div>
+                                    </div>
+                                </td> -->
+                                <td class="text-center">
+                                    <div class="float-left">
+                                        @if($details['quantity'] == 1)
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id']) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm" disabled>-</button>
+                                            </form>
+                                        @else
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id']) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm">-</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                    {{ $details['quantity'] }}
+                                    <div class="float-right">
+                                        @if($details['quantity'] == $details['total_quantity'])
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id']) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm" disabled>+</button>
+                                            </form>
+                                        @else
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id']) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm">+</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="size__item">
@@ -122,7 +147,7 @@ $total_in_cart = 0;
 @endif
 <!-- Shopping Cart Section End -->
 @endsection
-@section('scripts')
+<!-- @section('scripts')
     <script type="text/javascript">
 
         $(".cart_update").change(function (e) {
@@ -162,4 +187,4 @@ $total_in_cart = 0;
             }
         });
     </script>
-@endsection
+@endsection -->

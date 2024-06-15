@@ -45,8 +45,8 @@
                             <br>
                             <div class="product__details__option">
                                 @if(session()->exists('user_id'))
-                                    <form action="/ktcstore/product/add_to_cart" method="post" enctype="multipart/form-data">
-                                        @csrf
+                                    <form action="/ktcstore/add_to_cart/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="get">
+                                    @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
 <<<<<<< HEAD
