@@ -211,14 +211,31 @@ class StoreController extends Controller
         }
     }
 
-    public function remove_from_cart(Request $request) {
-        if ($request->product_id) {
+    // public function remove_from_cart(Request $request) {
+    //     if ($request->product_id) {
+    //         $shopping_cart = session()->get('shopping_cart');
+    //         if (isset($shopping_cart[$request->product_id])) {
+    //             unset($shopping_cart[$request->product_id]);
+    //             session()->put('shopping_cart', $shopping_cart);
+    //         }
+    //         session()->flash('success', 'Sản phảm đã được xóa khỏi giỏ hàng.');
+    //     }
+    // }
+
+    public function remove_from_cart($product_id)
+    {
+        if($product_id) {
+
             $shopping_cart = session()->get('shopping_cart');
-            if (isset($shopping_cart[$request->product_id])) {
-                unset($shopping_cart[$request->product_id]);
+
+            if(isset($shopping_cart[$product_id])) {
+
+                unset($shopping_cart[$product_id]);
+
                 session()->put('shopping_cart', $shopping_cart);
             }
-            session()->flash('success', 'Sản phảm đã được xóa khỏi giỏ hàng.');
+
+            return redirect()->back()->with('message', 'Sản phảm đã được xóa khỏi giỏ hàng.');
         }
     }
 }
