@@ -49,24 +49,21 @@
                                     @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-<<<<<<< HEAD
+
                                         
                                             <div class="detail_container">
                                                 <div>
                                                     <label for="size"><b>Kích Cỡ</b></label>
-=======
-                                        <table>
-                                            <tr>
-                                                <th>
-                                                    <label>Kích Cỡ</label>
->>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
+
+                                    
+
                                                     <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
                                                             <option name="size" value="{{$display_size->size}}">{{$display_size->size}}</option>
                                                         @endforeach
                                                     </select>
-<<<<<<< HEAD
+
                                                 </div>
                                                 <div></div>
                                                 <br>
@@ -79,23 +76,7 @@
                                                     @endforeach
                                                 </div>
                                             </div>
-=======
-                                                </th>
-                                                <th>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                </th>
-                                                <th>
-                                                    <label>Màu Sắc</label>
-                                                    <br>
-                                                    <select name="color" class="form-control" style="width: 150px;">
-                                                        @foreach($product_colors as $color)
-                                                            <option name="color" value="{{ $color->color }}">{{ $color->color }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </th>
-                                            </tr>
-                                        </table>
->>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
+
                                         <br>
                                         <div class="quantity">
                                             <label><b>Số Lượng:</b></label>
