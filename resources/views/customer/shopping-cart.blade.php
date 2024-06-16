@@ -1,6 +1,5 @@
 @extends('customer.layout')
 @section('content')
-<!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
@@ -17,9 +16,7 @@
         </div>
     </div>
 </section>
-<!-- Breadcrumb Section End -->
 
-<!-- Shopping Cart Section Begin -->
 @if(session()->exists('shopping_cart'))
 @php
 $total_in_cart = 0;
@@ -62,13 +59,6 @@ $total_in_cart = 0;
                                         <h5>{{number_format($details['price'])}}đ</h5>
                                     </div>
                                 </td>
-                                <!-- <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2" data-id="Quantity">
-                                            <input type="text" class="quantity cart_update" value="{{$details['quantity']}}" min="1">
-                                        </div>
-                                    </div>
-                                </td> -->
                                 <td class="text-center">
                                     <div class="float-left">
                                         @if($details['quantity'] == 1)
@@ -110,8 +100,7 @@ $total_in_cart = 0;
                                 </td>
                                 <td class="cart__price">{{number_format($total)}}đ</td>
                                 <td class="cart__close">
-
-                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
+                                   <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                     <button type="submit" ><i class="fa fa-close"></i></button>
                                 </form>
                             </td>
@@ -156,46 +145,5 @@ $total_in_cart = 0;
     </div>
 </section>
 @endif
-<!-- Shopping Cart Section End -->
 @endsection
-<!-- @section('scripts')
-    <script type="text/javascript">
 
-        $(".cart_update").change(function (e) {
-            e.preventDefault();
-
-            var ele = $(this);
-
-            $.ajax({
-                url: '/storeIndex/cart/update_cart',
-                method: "patch",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: ele.parents("tr").attr("data-id"),
-                    quantity: ele.parents("td").find(".quantity").val()
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
-        });
-
-        $(".cart_remove").click(function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            if(confirm("Bạn có thực sự muốn xóa sản phẩm này khỏi giỏ hàng không??")) {
-                $.ajax({
-                    url: '/ktcstore/shopping-cart/remove/{product_id}',
-                    method: "POST",
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        product_id: ele.parents("tr").attr("data-id")
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                })
-            }
-        });
-    </script>
-@endsection -->
