@@ -49,31 +49,28 @@
                                     @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-                                        <table>
-                                            <tr>
-                                                <th>
-                                                    <label>Kích Cỡ</label>
-                                                    <br>
+       
+                                            <div class="detail_container">
+                                                <div>
+                                                    <label for="size"><b>Kích Cỡ</b></label>                         
+                                                   <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
                                                             <option name="size" value="{{$display_size->size}}">{{$display_size->size}}</option>
                                                         @endforeach
                                                     </select>
-                                                </th>
-                                                <th>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                </th>
-                                                <th>
-                                                    <label>Màu Sắc</label>
-                                                    <br>
-                                                    <select name="color" class="form-control" style="width: 150px;">
-                                                        @foreach($product_colors as $color)
-                                                            <option name="color" value="{{ $color->color }}">{{ $color->color }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </th>
-                                            </tr>
-                                        </table>
+                                                </div>
+                                                <div></div>
+                                                <br>
+                                                <div>
+                                                    <label><b>Màu Sắc: </b></label>
+                                                    @foreach($product_colors as $color)
+                                                        <label for="color-{{ $color->index }}">{{ $color->color }}
+                                                            <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
+                                                        </label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         <br>
                                         <div class="quantity">
                                             <label><b>Số Lượng:</b></label>

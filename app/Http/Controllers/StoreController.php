@@ -216,6 +216,7 @@ class StoreController extends Controller
             return redirect()->back();
         }
     }
+
     public function remove_from_cart($product_id, $product_detail_id)
     {
         $shopping_cart = session()->get('shopping_cart');

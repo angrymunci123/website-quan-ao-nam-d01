@@ -29,6 +29,12 @@ $total_in_cart = 0;
         <div class="row">
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
                     <table >
                         <thead>
                             <tr>
@@ -104,6 +110,7 @@ $total_in_cart = 0;
                                 </td>
                                 <td class="cart__price">{{number_format($total)}}đ</td>
                                 <td class="cart__close">
+
                                     <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                     <button type="submit" ><i class="fa fa-close"></i></button>
                                 </form>
