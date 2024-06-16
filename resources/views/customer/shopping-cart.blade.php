@@ -21,8 +21,8 @@
 
 <!-- Shopping Cart Section Begin -->
 @if(session()->exists('shopping_cart'))
-@php 
-$total_in_cart = 0; 
+@php
+$total_in_cart = 0;
 @endphp
 <section class="shopping-cart spad">
     <div style="width:1500px; margin:auto">
@@ -41,7 +41,7 @@ $total_in_cart = 0;
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(session('shopping_cart') as $product_id => $details)     
+                            @foreach(session('shopping_cart') as $product_id => $details)
                             @php
                             $total = $details['price'] * $details['quantity'];
                             $total_in_cart += $total;
@@ -66,11 +66,11 @@ $total_in_cart = 0;
                                 <td class="text-center">
                                     <div class="float-left">
                                         @if($details['quantity'] == 1)
-                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id']) }}">
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                                 <button type="submit" class="btn btn-danger btn-sm" disabled>-</button>
                                             </form>
                                         @else
-                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id']) }}">
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/minus_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                                 <button type="submit" class="btn btn-danger btn-sm">-</button>
                                             </form>
                                         @endif
@@ -78,11 +78,11 @@ $total_in_cart = 0;
                                     {{ $details['quantity'] }}
                                     <div class="float-right">
                                         @if($details['quantity'] == $details['total_quantity'])
-                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id']) }}">
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                                 <button type="submit" class="btn btn-danger btn-sm" disabled>+</button>
                                             </form>
                                         @else
-                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id']) }}">
+                                            <form method="GET" action="{{ url('/ktcstore/shopping-cart/plus_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
                                                 <button type="submit" class="btn btn-danger btn-sm">+</button>
                                             </form>
                                         @endif
@@ -103,7 +103,11 @@ $total_in_cart = 0;
                                     </div>
                                 </td>
                                 <td class="cart__price">{{number_format($total)}}đ</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class="cart__close">
+                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
+                                    <button type="submit" ><i class="fa fa-close"></i></button>
+                                </form>
+                            </td>
                             </tr>
                             @endforeach
                         </tbody>

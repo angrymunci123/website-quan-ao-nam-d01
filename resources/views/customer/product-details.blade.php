@@ -49,37 +49,16 @@
                                     @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-<<<<<<< HEAD
-                                        
-                                            <div class="detail_container">
-                                                <div>
-                                                    <label for="size"><b>Kích Cỡ</b></label>
-=======
                                         <table>
                                             <tr>
                                                 <th>
                                                     <label>Kích Cỡ</label>
->>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
                                                     <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
                                                             <option name="size" value="{{$display_size->size}}">{{$display_size->size}}</option>
                                                         @endforeach
                                                     </select>
-<<<<<<< HEAD
-                                                </div>
-                                                <div></div>
-                                                <br>
-                                                <div>
-                                                    <label><b>Màu Sắc: </b></label>
-                                                    @foreach($product_colors as $color)
-                                                        <label for="color-{{ $color->index }}">{{ $color->color }}
-                                                            <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
-                                                        </label>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-=======
                                                 </th>
                                                 <th>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,7 +74,6 @@
                                                 </th>
                                             </tr>
                                         </table>
->>>>>>> efa44fbd603fd1f9390e2584d0c879451d3cf0ea
                                         <br>
                                         <div class="quantity">
                                             <label><b>Số Lượng:</b></label>
@@ -108,7 +86,7 @@
                                                 <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
                                 @endif
                                 @if(!session('user_id'))
@@ -146,7 +124,7 @@
                                             <div class="pro-qty">
                                                 <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="100">
                                             </div>
-                                        </div>                           
+                                        </div>
                                         <button type="submit" class="primary-btn">Mua Ngay</button>
                                     </div>
                                 </div>
@@ -426,7 +404,7 @@
     document.getElementById('add_to_cart_message').addEventListener('click', function(event) {
         var quantityInput = document.getElementById('quantity_input');
         if (parseInt(quantityInput.value) === 1) {
-            event.preventDefault(); 
+            event.preventDefault();
             alert('Số lượng phải lớn hơn 0');
         }
     });
