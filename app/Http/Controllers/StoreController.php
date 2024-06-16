@@ -142,7 +142,7 @@ class StoreController extends Controller
     //     session()->put('shopping_cart', $shopping_cart);
     //     return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
     // }
-    public function add_to_cart($product_id, $product_detail_id)
+    public function add_to_cart(Request $request, $product_id, $product_detail_id)
     {
         $product = Product::find($product_id);
         $product_detail = Product_Detail::find($product_detail_id);
@@ -152,7 +152,8 @@ class StoreController extends Controller
         }
 
         $shopping_cart = session()->get('shopping_cart');
-        $total_quantity = $product->quantity;
+        $chosen_quantity = $request->quantity;
+        $total_quantity = $product_detail->quantity;
 
         if (!$shopping_cart) {
             $shopping_cart = [
@@ -160,7 +161,7 @@ class StoreController extends Controller
                     "product_id" => $product->product_id,
                     "product_detail_id" => $product_detail_id,
                     "product_name" => $product->product_name,
-                    "quantity" => 1,
+                    "quantity" => $chosen_quantity,
                     "price" => $product_detail->price,
                     "sale_price" => $product_detail->sale_price,
                     "size" => $product_detail->size,
@@ -180,7 +181,7 @@ class StoreController extends Controller
                     "product_id" => $product->product_id,
                     "product_detail_id" => $product_detail_id,
                     "product_name" => $product->product_name,
-                    "quantity" => 1,
+                    "quantity" => $chosen_quantity,
                     "price" => $product_detail->price,
                     "sale_price" => $product_detail->sale_price,
                     "size" => $product_detail->size,
@@ -193,29 +194,41 @@ class StoreController extends Controller
             session()->put('shopping_cart', $shopping_cart);
         }
 
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
 
     public function plus_quantity($product_id, $product_detail_id)
     {
         $shopping_cart = session()->get('shopping_cart');
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
-            session()->put('shopping_cart', $shopping_cart);
-            return redirect()->back();
-            //lmao
+            $stock_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['total_quantity']; 
+            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) {
+                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
+                session()->put('shopping_cart', $shopping_cart);
+            } 
+            
+            else {
+                session()->flash('fail', 'Số lượng đã đạt giới hạn số lượng sản phẩm có sẵn!');
+            }
         }
+        return redirect()->back();
     }
 
     public function minus_quantity($product_id, $product_detail_id)
     {
         $shopping_cart = session()->get('shopping_cart');
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
-            session()->put('shopping_cart', $shopping_cart);
-            return redirect()->back();
+            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) {
+                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
+                session()->put('shopping_cart', $shopping_cart);
+            } 
+            else {
+                session()->flash('fail', 'Số lượng sản phẩm không thể giảm xuống 0!');
+            }
         }
+        return redirect()->back();
     }
+
     public function remove_from_cart($product_id, $product_detail_id)
     {
         $shopping_cart = session()->get('shopping_cart');
@@ -227,15 +240,3 @@ class StoreController extends Controller
         return redirect()->back();
     }
 }
-//     public function remove_from_cart(Request $request)
-//     {
-//         if ($request->product_id) {
-//             $shopping_cart = session()->get('shopping_cart');
-//             if (isset($shopping_cart[$request->product_id])) {
-//                 unset($shopping_cart[$request->product_id]);
-//                 session()->put('shopping_cart', $shopping_cart);
-//             }
-//             session()->flash('success', 'Sản phảm đã được xóa khỏi giỏ hàng.');
-//         }
-//     }
-// }
