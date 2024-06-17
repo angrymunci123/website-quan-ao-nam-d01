@@ -22,6 +22,7 @@ class Order extends Model
         'address',
         'payment_method',
         'shipping_unit',
+        'notes',
         'user_id',
         'created_at',
         'updated_at'
