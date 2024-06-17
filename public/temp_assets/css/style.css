@@ -1033,6 +1033,7 @@ ol {
 	width: 25%;
  }
  .grid__column-10{
+	padding-top: 10px;
 	padding-left: 12px;
 	padding-right: 12px;
 	width: 75%;
@@ -1957,7 +1958,7 @@ ol {
 }
 
 .product__details__tab {
-	padding-top: 60px;
+	padding: 60px;
 }
 
 .product__details__tab .nav-tabs {
@@ -2474,8 +2475,7 @@ ol {
 }
 
 .shopping__cart__table table tbody tr td.quantity__item .quantity .pro-qty-2 .qtybtn {
-	font-size: 16px;
-	color: #888888;
+	font-size: 16px;	
 	width: 10px;
 	cursor: pointer;
 }
@@ -2492,8 +2492,6 @@ ol {
 	color: #111111;
 	height: 40px;
 	width: 40px;
-	background: #f3f2ee;
-	border-radius: 50%;
 	line-height: 40px;
 	text-align: center;
 }

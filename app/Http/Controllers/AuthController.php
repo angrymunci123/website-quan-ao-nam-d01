@@ -130,12 +130,12 @@ class AuthController extends Controller
                 DB::table('users')->insert([
                     'fullname' => $full_name,
                     'email' => $email,
+                    'phone_number' => $phone_number,
                     'password' => $hashedPassword,
                     'address' => $address,
                     'role' => 'Khách Hàng',
                     'created_at' => now(),
-                    'updated_at' => NULL,
-                    'phone_number' => $phone_number
+                    'updated_at' => NULL
                 ]);
                 return redirect('/login')->with('success', 'Đăng Ký Tài Khoản Thành Công!');
             } else {

@@ -95,6 +95,11 @@ class StoreController extends Controller
     {
         return view("customer.checkout");
     }
+    public function or_history()
+    {
+        return view("customer.order_history");
+    }
+
 
     public function blog()
     {
