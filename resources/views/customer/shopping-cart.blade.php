@@ -35,12 +35,14 @@ $total_in_cart = 0;
                     <table style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 50%">Sản phẩm</th>
-                                <th style="width: 17%">Số lượng</th>
-                                <th style="width: 10%">Kích Cỡ</th>
-                                <th style="width: 17%">Màu Săc</th>
-                                <th style="width: 17%">Thành tiền</th>
-                                <th style="width: 17%"></th>
+
+                                <th>Sản phẩm</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Kích Cỡ</th>
+                                <th class="text-center">Màu Sắc</th>
+                                <th class="text-center">Thành tiền</th>
+                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -55,8 +57,8 @@ $total_in_cart = 0;
                                         <img src="/image/{{$details['image']}}" alt="blank" style="width:85px">
                                     </div>
                                     <div class="product__cart__item__text">
-                                        <h6>{{$details['product_name']}}</h6>
-                                        <h5>{{number_format($details['price'])}}đ</h5>
+                                        <h5><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></h5>
+                                        <h6>{{number_format($details['price'])}}đ</h6>
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -84,25 +86,25 @@ $total_in_cart = 0;
                                         @endif
                                     </div>
                                 </td>
-                                <td class="size__item">
+                                <td class="size__item text-center">
                                     <div class="size">
                                         <div>
                                         <h5>{{$details['size']}}</h5>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="color__item">
+                                <td class="color__item text-center">
                                     <div class="color">
                                         <div style="text-align: center">
                                             <h5>{{$details['color']}}</h5>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="cart__price">{{number_format($total)}}đ</td>
+                                <td class="cart__price text-center">{{number_format($total)}}đ</td>
                                 <td class="cart__close">
-                                   <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
-                                    <button type="submit" ><i class="fa fa-close"></i></button>
-                                </form>
+                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
+                                        <button type="submit" style="border: solid white; background-color:white"><i class="fa fa-close"></i></button>
+                                    </form>
                             </td>
                             </tr>
                             @endforeach
@@ -123,7 +125,7 @@ $total_in_cart = 0;
                     <ul>
                         <li>Tổng tiền<span>{{ number_format($total_in_cart) }}đ</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">Thanh toán</a>
+                    <a href="/ktcstore/checkout" class="primary-btn">Thanh toán</a>
                 </div>
             </div>
         </div>
