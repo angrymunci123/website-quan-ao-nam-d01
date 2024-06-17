@@ -20,8 +20,12 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Checkout Section Begin -->
+    @if(session()->exists('shopping_cart'))
+    @php
+    $total_in_cart = 0;
+    @endphp
     <section class="checkout spad">
-        <div class="container">
+        <div style="width:100%; max-width:1500px; margin:auto">
             <div class="checkout__form">
                 <form action="#">
                     <div class="row">
@@ -30,44 +34,25 @@
                             <div class="row">
                                     <div class="checkout__input">
                                         <p>Họ và tên người nhận<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="{{ $customer->fullname }}" style="color:black">
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Địa chỉ<span>*</span></p>
-                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Tỉnh/Thành phố<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Quận/Huyện<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Xã/Phường/Thị Trấn<span>*</span></p>
-                                <input type="text">
+                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add" style="color:black" value="{{ $customer->address }}" style="color:black">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="text">
+                                        <input type="number" value="{{ $customer->phone_number }}" style="color:black">
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="diff-acc">
-                                    Có ghi chú về đơn hàng
-                                    <input type="checkbox" id="diff-acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
                             <div class="checkout__input">
-                                <p>Ghi chú<span>*</span></p>
-                                <input type="text"
-                                placeholder="Điền ghi chú về đơn hàng">
+                                <p>Ghi chú<span> (Nếu có)</span></p>
+                                <input type="text" name="order_notes"
+                                placeholder="Ghi chú về đơn hàng" style="color:black">
                             </div>
                         </div>
                         {{-- đơn hàng --}}
@@ -78,23 +63,24 @@
                                     <tr>
                                         <th scope="col">Sản phẩm</th>
                                         <th scope="col">Số lượng</th>
+                                        <th scope="col">Đơn giá</th>
                                         <th scope="col">Thành tiền</th>
                                     </tr>
+                                    @foreach ($shopping_cart as $cart => $details)
+                                    @php
+                                        $total = $details['price'] * $details['quantity'];
+                                        $total_in_cart += $total;
+                                    @endphp
                                     <tr>
-                                        <td>Đầu cắt moi</td>
-                                        <td>01</td>
-                                        <td>50000</td>
+                                        <td><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></td>
+                                        <td>{{$details['quantity']}}</td>
+                                        <td>{{number_format($details['price'])}}đ</td>
+                                        <td>{{number_format($total)}}đ</td>
                                     </tr>
+                                    @endforeach
                                 </table>
-                                {{-- <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
-                                <ul class="checkout__total__products">
-                                    <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                    <li>02. German chocolate <span>$ 170.0</span></li>
-                                    <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                    <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
-                                </ul> --}}
                                 <ul class="checkout__total__all">
-                                    <li>Tổng tiền <span>$750.99</span></li>
+                                    <li>Tổng tiền <span>{{number_format($total_in_cart)}}đ</span></li>
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>Phương thức thanh toán</li>
@@ -122,5 +108,6 @@
             </div>
         </div>
     </section>
+    @endif
     <!-- Checkout Section End -->
 @endsection
