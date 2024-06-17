@@ -27,35 +27,34 @@
     <section class="checkout spad">
         <div style="width:100%; max-width:1500px; margin:auto">
             <div class="checkout__form">
-                <form action="#">
+                <form action="/ktcstore/purchase" method="POST" enctype='multipart/form-data'>
+                @csrf
                     <div class="row">
                         <div class="col-lg-5 col-md-6">
                             <h6 class="checkout__title">Thông tin thanh toán</h6>
                             <div class="row">
                                     <div class="checkout__input">
                                         <p>Họ và tên người nhận<span>*</span></p>
-                                        <input type="text" value="{{ $customer->fullname }}" style="color:black">
+                                        <input type="text" name="consignee" value="{{ $customer->fullname }}" style="color:black">
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Địa chỉ<span>*</span></p>
-                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add" style="color:black" value="{{ $customer->address }}" style="color:black">
+                                <input type="text" name="address" placeholder="Địa chỉ nhận hàng" class="checkout__input__add" style="color:black" value="{{ $customer->address }}" style="color:black">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="number" value="{{ $customer->phone_number }}" style="color:black">
+                                        <input type="number" name="phone_number" value="{{ $customer->phone_number }}" style="color:black">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Ghi chú<span> (Nếu có)</span></p>
-                                <input type="text" name="order_notes"
-                                placeholder="Ghi chú về đơn hàng" style="color:black">
+                                <input type="text" name="notes" placeholder="Ghi chú về đơn hàng" style="color:black">
                             </div>
                         </div>
-                        {{-- đơn hàng --}}
                         <div class="col-lg-7 col-md-6">
                             <div class="checkout__order">
                                 <h4 class="order__title">Đơn hàng</h4>
@@ -87,14 +86,14 @@
                                     <div class="checkout__input__checkbox">
                                         <label for="payment">
                                             Thanh toán khi nhận hàng
-                                            <input type="checkbox" id="payment">
+                                            <input type="checkbox" name="payment_method" id="payment" value="Thanh toán khi nhận hàng">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="checkout__input__checkbox">
                                         <label for="paypal">
                                             Chuyển khoản
-                                            <input type="checkbox" id="paypal">
+                                            <input type="checkbox" name="payment_method" id="paypal" value="Chuyển khoản">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

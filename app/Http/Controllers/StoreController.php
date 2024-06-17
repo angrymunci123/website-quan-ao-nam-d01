@@ -8,6 +8,7 @@ use Illuminate\Pagination\Paginator;
 use App\Models\Product_Detail;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -91,11 +92,6 @@ class StoreController extends Controller
         }
     }
 
-
-    public function checkout()
-    {
-        return view("customer.checkout");
-    }
     public function or_history()
     {
         return view("customer.order_history");
@@ -231,8 +227,41 @@ class StoreController extends Controller
         }
     }
 
-    public function purchase()
-    {
-        return view("customer.checkout");
+    public function purchase(Request $request) {
+        $payment_method = $request->payment_method;
+        $consignee = $request->consignee;
+        $address = $request->address;
+        $phone_number = $request->phone_number;
+        $consignee = $request->consignee;
+        $shipping_unit = $request->shipping_unit;
+        $create_product_order = DB::table('order')->insert([
+            'status' => 'Đang chờ xác nhận',
+            'consignee' => $consignee,
+            'phone_number' => $phone_number,
+            'address' => $address,
+            'payment_method' => $payment_method,
+            'shipping_unit' => $shipping_unit,
+            'user_id' => session('user_id'),
+            'created_at' => now(),
+            'updated_at' => NULL
+        ]);
+
+        $shopping_cart = session()->get('shopping_cart', []);
+        if (empty($shopping_cart)) {
+            return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
+        }
+        if ($create_product_order) {
+            $select_order = Order::where('user_id', '=', session('user_id'))->orderBy('order_id', 'desc')->first();
+                foreach ($shopping_cart as $recordData) {
+                    DB::table('order_detail')->insert([
+                        'order_id' => $select_order->order_id,
+                        'product_detail_id' => $recordData['product_detail_id'],
+                        'price' => $recordData['price'],
+                        'quantity' => $recordData['quantity']
+                    ]);
+            session()->forget('shopping_cart');
+            }
+        }
+        return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
     }
 }

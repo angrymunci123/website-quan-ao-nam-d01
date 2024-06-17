@@ -49,7 +49,12 @@
                 </div>
             <div class="grid__column-10">
                 <div class="shop__product__option">
-                    
+                @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
                 </div>
             </div>
             </div>
