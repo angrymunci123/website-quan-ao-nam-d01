@@ -36,10 +36,10 @@ $total_in_cart = 0;
                         <thead>
                             <tr>
                                 <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Kích Cỡ</th>
-                                <th>Màu Săc</th>
-                                <th>Thành tiền</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Kích Cỡ</th>
+                                <th class="text-center">Màu Săc</th>
+                                <th class="text-center">Thành tiền</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -84,25 +84,25 @@ $total_in_cart = 0;
                                         @endif
                                     </div>
                                 </td>
-                                <td class="size__item">
+                                <td class="size__item text-center">
                                     <div class="size">
                                         <div>
                                         <h5>{{$details['size']}}</h5>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="color__item">
+                                <td class="color__item text-center">
                                     <div class="color">
                                         <div>
                                             <h5>{{$details['color']}}</h5>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="cart__price">{{number_format($total)}}đ</td>
+                                <td class="cart__price text-center">{{number_format($total)}}đ</td>
                                 <td class="cart__close">
-                                   <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
-                                    <button type="submit" ><i class="fa fa-close"></i></button>
-                                </form>
+                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
+                                        <button type="submit" style="border: solid white; background-color:white"><i class="fa fa-close"></i></button>
+                                    </form>
                             </td>
                             </tr>
                             @endforeach

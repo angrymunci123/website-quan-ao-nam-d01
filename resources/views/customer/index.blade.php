@@ -93,7 +93,7 @@
 
     <!-- Product Section Begin -->
     <section class="product spad">
-        <div class="app_container">
+        <div class="container">
             <div class="grid">
                 <div class="col-lg-12">
                     <ul class="filter__controls">

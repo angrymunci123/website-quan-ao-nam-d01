@@ -49,10 +49,10 @@
                                     @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-       
+
                                             <div class="detail_container">
                                                 <div>
-                                                    <label for="size"><b>Kích Cỡ</b></label>                         
+                                                    <label for="size"><b>Kích Cỡ</b></label>
                                                    <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
@@ -77,7 +77,7 @@
                                             <div class="product__details__cart__option">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="100">
+                                                        <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="{{$product_detail->quantity}}">
                                                     </div>
                                                 </div>
                                                 <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
