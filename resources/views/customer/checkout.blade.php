@@ -6,10 +6,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4>Thanh toán</h4>
+                        <h4 style="color: white">Thanh toán</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Trang chủ</a>
-                            <a href="./shop.html">Cửa hàng</a>
+                            <a href="./index.html" style="color: white">Trang chủ</a>
+                            <a href="./shop.html" style="color: white">Cửa hàng</a>
                             <span>Thanh toán</span>
                         </div>
                     </div>

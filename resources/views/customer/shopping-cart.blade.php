@@ -22,7 +22,7 @@
 $total_in_cart = 0;
 @endphp
 <section class="shopping-cart spad">
-    <div style="width:1500px; margin:auto">
+    <div style="width: 1500px; margin:auto">
         <div class="row">
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
@@ -32,15 +32,17 @@ $total_in_cart = 0;
                     @if(Session::has('fail'))
                         <div class="alert alert-danger">{{Session::get('fail')}}</div>
                     @endif
-                    <table >
+                    <table style="width: 100%;">
                         <thead>
                             <tr>
+
                                 <th>Sản phẩm</th>
                                 <th class="text-center">Số lượng</th>
                                 <th class="text-center">Kích Cỡ</th>
                                 <th class="text-center">Màu Sắc</th>
                                 <th class="text-center">Thành tiền</th>
                                 <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -93,7 +95,7 @@ $total_in_cart = 0;
                                 </td>
                                 <td class="color__item text-center">
                                     <div class="color">
-                                        <div>
+                                        <div style="text-align: center">
                                             <h5>{{$details['color']}}</h5>
                                         </div>
                                     </div>
