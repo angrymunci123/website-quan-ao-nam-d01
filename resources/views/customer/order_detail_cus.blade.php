@@ -64,7 +64,24 @@
                                     <li>Tổng tiền <span>đ</span></li>
                                 </ul>
     
-                                <button type="submit" class="site-btn">Quay lại</button>
+                                <table>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="GET" style="padding-right: 20px; float: right">    
+                                                <button type="submit" class="btn btn-danger" style="width: 110px; color:white"><b>Hủy</b></button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="" method="GET" style="padding-right: 20px; float: right">    
+                                                <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                             </div>
                             <br>
