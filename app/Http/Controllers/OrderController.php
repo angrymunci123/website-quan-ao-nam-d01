@@ -24,4 +24,7 @@ class OrderController extends Controller
 
         return view("admin.order.order_list");
     }
+    public function or_detail(){
+        return view ('admin.order.order_detail');
+    }
 }

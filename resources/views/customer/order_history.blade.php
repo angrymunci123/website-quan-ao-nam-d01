@@ -6,11 +6,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4 style="color: white">Lịch Sử Đơn Hàng</h4>
+                        <h4 style="color: white">Lịch sử đơn hàng</h4>
                         <div class="breadcrumb__links">
                             <a href="./index.html" style="color: white">Trang chủ</a>
                             <a href="./shop.html" style="color: white">Cửa hàng</a>
-                            <span>Lịch Sử Đơn Hàng</span>
+                            <span>Lịch sử đơn hàng</span>
                         </div>
                     </div>
                 </div>
@@ -49,6 +49,28 @@
                 </div>
             <div class="grid__column-10">
                 <div class="shop__product__option">
+                    <h4 style="padding-top: 8px;"><b>Danh sách đơn hàng</b></h4>
+                    <br>
+                    <table style="width: 100%; text-align: center" class="table table-border">
+                        <tr>
+                            <th>Đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>   
+                            <td>
+                                <form action="/ktcstore/order_detail" method="GET">    
+                                    <button type="submit" class="btn btn-info" style="width:90px; color:white"><b>Chi tiết</b></button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                 @if(Session::has('success'))
                         <div class="alert alert-success">{{Session::get('success')}}</div>
                     @endif

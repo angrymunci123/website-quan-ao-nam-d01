@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order_Detail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -101,6 +102,10 @@ class StoreController extends Controller
     public function blog()
     {
         return view("customer.blog");
+    }
+    public function or_detail()
+    {
+        return view("customer.order_detail_cus");
     }
 
     public function blog_detail()
