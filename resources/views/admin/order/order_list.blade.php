@@ -36,7 +36,7 @@
                         <h5 class="mb-0"></h5>
                       </td>
                       <td style="width:100px" class="text-center">
-                            <form action="/admin/order/view_order/order_id=?" method="GET">    
+                            <form action="/admin/order_detail" method="GET">    
                                 <button type="submit" class="btn btn-info" style="width:75px; color:white">Xem</button>
                             </form>
                         </td>

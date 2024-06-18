@@ -1038,6 +1038,7 @@ ol {
 	padding-right: 12px;
 	width: 75%;
  }
+
  .detail_container {
 	display: grid;
 	grid-template-columns: 1fr 50px 1fr;

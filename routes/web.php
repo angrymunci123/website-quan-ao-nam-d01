@@ -93,6 +93,7 @@ Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}
 
 //Order
 Route::get('/admin/order', [OrderController::class, "order_list"]);
+Route::get('/admin/order_detail', [OrderController::class, "or_detail"]);
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
@@ -105,6 +106,7 @@ Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"])
 Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
 Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::get('/ktcstore/order_history', [StoreController::class, "or_history"]);
+Route::get('/ktcstore/order_detail', [StoreController::class, "or_detail"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 // Route::post('/ktcstore/product/add_to_cart', [StoreController::class, "add_to_cart"])->name("add_to_cart");
 // Route::post('/ktcstore/shopping-cart/remove/{product_id}', [StoreController::class, "remove_from_cart"])->name("remove_from_cart");
