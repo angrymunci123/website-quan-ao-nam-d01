@@ -104,16 +104,16 @@ Route::get('/ktcstore/shop', [StoreController::class, "shop"]);
 Route::get('/ktcstore/about', [StoreController::class, "about"]);
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
 Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
-Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
-Route::get('/ktcstore/order_history', [StoreController::class, "or_history"]);
-Route::get('/ktcstore/order_detail', [StoreController::class, "or_detail"]);
-Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
-// Route::post('/ktcstore/product/add_to_cart', [StoreController::class, "add_to_cart"])->name("add_to_cart");
-// Route::post('/ktcstore/shopping-cart/remove/{product_id}', [StoreController::class, "remove_from_cart"])->name("remove_from_cart");
 
-// Route::patch('/ktcstore/shopping-cart/update', [StoreController::class, "update_cart"])->name("update_cart");
 Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/ktcstore/shopping-cart/remove_from_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
+
+Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
+
+Route::get('/ktcstore/order_history', [StoreController::class, "order_history"]);
+
+Route::get('/ktcstore/order_detail/order_id={order_id}', [StoreController::class, "order_detail"]);
+Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);

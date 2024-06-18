@@ -93,19 +93,9 @@ class StoreController extends Controller
         }
     }
 
-    public function or_history()
-    {
-        return view("customer.order_history");
-    }
-
-
     public function blog()
     {
         return view("customer.blog");
-    }
-    public function or_detail()
-    {
-        return view("customer.order_detail_cus");
     }
 
     public function blog_detail()
@@ -268,5 +258,49 @@ class StoreController extends Controller
             }
         }
         return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+    }
+
+    public function order_history()
+    {
+        $order = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
+                    ->select('order.*', 'order_detail.price', 'order_detail.quantity') 
+                    ->where('order.user_id', '=', session('user_id'))
+                    ->get();
+        return view('customer.order_history', compact('order'));
+    }
+
+    public function order_detail($order_id)
+    {
+        $user_id = session('user_id');
+        
+        $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
+                        ->join('users', 'order.user_id', '=', 'users.user_id')
+                        ->where('order.order_id', '=', $order_id)
+                        ->where('users.user_id', '=', $user_id)
+                        ->get();
+
+        $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
+                        ->join('products', 'product_detail.product_id', '=', 'products.product_id')
+                        ->where('order_detail.order_id', '=', $order_id)
+                        ->select('order_detail.*', 'products.product_id', 'products.product_name')
+                        ->get();
+        return view("customer.order_detail_cus", compact('order_details', 'product_order'));
+    }
+
+    public function cancel_order($order_id) {
+        $orders = Order::find($order_id);
+        $customer_id = $orders->customer_id;
+        // if ($customer_id != Auth::user()->order_id)  
+        // {
+        //     return redirect('/storeIndex');
+        // }
+        if ($orders->status == 'Đã xác nhận')
+        {
+            return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');
+        }
+        $orders->status = 'Đã hủy';
+        $orders->save();
+
+        return redirect('/storeIndex/order_history')->with('notification', 'Hủy đơn hàng thành công!');
     }
 }
