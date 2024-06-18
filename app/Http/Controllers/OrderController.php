@@ -22,7 +22,8 @@ class OrderController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        return view("admin.order.order_list");
+        $order = Order::all();
+        return view("admin.order.order_list", compact('order'));
     }
     public function or_detail(){
         return view ('admin.order.order_detail');
