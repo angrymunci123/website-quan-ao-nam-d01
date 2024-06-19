@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ class BrandController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        $brands = Brand::paginate(11);
+        $brands = Brand::paginate(5);
         Paginator::useBootstrap();
         return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -99,11 +100,24 @@ class BrandController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('login');
         }
-        
+
+        // 1. Check product mang brand_id tương ứng có tồn tại hay không
+        DB::beginTransaction();
+        $product_exist = Product::where('brand_id', $brand_id)->exists();
+
+        if ($product_exist) {
+            DB::rollback();
+            return redirect('/admin/category')->with('notification', 'Không thể xóa hãng sản xuất vì có sản phẩm mang mã hãng sản xuất đang tồn tại!');
+        }
+
+        // 2. Nếu không có product mang brand_id tương ứng tồn tại, tiến hành xóa brand
         $brand = Brand::findOrFail($brand_id);
         $brand->delete();
-        return redirect('/admin/brand')->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');
+
+        DB::commit();
+
+        return redirect('/admin/brand_id')->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');
     }
 }

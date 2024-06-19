@@ -47,27 +47,28 @@
                             </form>
                             </td>
                             <td style="width:100px">
-                            <form action="/admin/category/delete_category/category_id={{$category->category_id}}" method="POST" id="deleteForm">
+                            <form action="/admin/category/delete_category/category_id={{ $category->category_id }}" method="POST" id="deleteForm-{{ $category->category_id }}">
                                 @csrf
-                                <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup()">Xóa</button>
+                                <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('{{ $category->category_id }}')">Xóa</button>
                             </form>
-
-                            
                             </td>
                         </td>
                     </tr>
-                    @endforeach
                     <div class="popup" id="confirmPopup">
-                                <div class="popup-content">
-                                    <p>Bạn có chắc chắn muốn xóa mục này?</p>
-                                    <button id="confirmDeleteButton">Xác nhận</button>
-                                    <button id="cancelDeleteButton">Hủy bỏ</button>
-                                </div>
+                      <div class="popup-content">
+                          <p>Bạn có chắc chắn muốn xóa mục này?</p>
+                          <form action="/admin/category/delete_category/category_id={{ $category->category_id }}" method="POST">
+                          @csrf
+                          <button id="confirmDeleteButton">Xác nhận</button>
+                          </form>
+                          <button id="cancelDeleteButton">Hủy bỏ</button>
+                      </div>
                     </div>
+                    @endforeach
                   </tbody>
                 </table>
+                {{ $categories->onEachSide(1)->links() }}
               </div>
-              
             </div>
           </div>
         </div>
@@ -150,7 +151,7 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     let confirmPopup = document.getElementById("confirmPopup");
-    let deleteForm = document.getElementById("deleteForm");
+    let deleteForm = document.getElementById("deleteForm-{{ $category->category_id }}");
 
     function openPopup() {
         confirmPopup.classList.add("open-popup");

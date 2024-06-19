@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 
@@ -117,6 +118,7 @@ class ProductController extends Controller
         ]);
         return redirect('/admin/product')->with('notification', 'Sửa Sản Phẩm Thành Công!');
     }
+
     public function delete_product($product_id)
     {
         if (!Auth::check()) {
@@ -128,8 +130,21 @@ class ProductController extends Controller
             return redirect('/ktcstore');
         }
 
+        // 1. Check product detail có tồn tại hay không
+        DB::beginTransaction();
+        $product_detail_exist = Product_Detail::where('product_id', $product_id)->exists();
+
+        if ($product_detail_exist) {
+            DB::rollback();
+            return redirect('/admin/product')->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
+        }
+
+        // 2. Nếu không có product detail tồn tại, tiến hành xóa product
         $product = Product::findOrFail($product_id);
         $product->delete();
+
+        DB::commit();
+
         return redirect('/admin/product')->with('notification', 'Xóa Sản Phẩm Thành Công!');
     }
 
