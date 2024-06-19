@@ -19,7 +19,7 @@
     </section>
     <!-- Breadcrumb Section End -->
      <div class="app__container">
-        <div class="grid" > 
+        <div class="grid" >
         <div class="grid__row">
         <div class="grid__colunm-2">
                 <div class="shop__sidebar">
@@ -51,9 +51,6 @@
                 <div class="shop__product__option">
                     <h4 style="padding-top: 8px;"><b>Danh sách đơn hàng</b></h4>
                     <br>
-                    @php
-                    $total_in_order = 0;
-                    @endphp
                     <table style="width: 100%; text-align: center" class="table table-border">
                         <tr>
                             <th>Đơn hàng</th>
@@ -64,17 +61,19 @@
                         </tr>
                         @foreach($orders as $order)
                         @php
+                            $details = App\Models\Order_Detail::where('order_id', '=', $order->order_id)->get();
                             $total = 0;
-                            $total += $order->price * $order->quantity;
-                            $total_in_order += $total;
                         @endphp
+                        @foreach($details as $detail)
+                        @php($total += $detail->price * $detail->quantity)
+                        @endforeach
                         <tr>
                             <td>{{$order->order_id}}</td>
                             <td>{{$order->created_at->format('d/m/Y')}}</td>
                             <td>{{$order->status}}</td>
-                            <td>{{number_format($total_in_order)}}đ</td>   
+                            <td>{{number_format($total)}}đ</td>
                             <td>
-                                <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">    
+                                <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">
                                     <button type="submit" class="btn btn-info" style="width:90px; color:white"><b>Chi tiết</b></button>
                                 </form>
                             </td>
