@@ -113,58 +113,61 @@ class StoreController extends Controller
         $product = Product::find($product_id);
         $product_detail = Product_Detail::find($product_detail_id);
 
-        if (!$product || !$product_detail) {
+        if (!$product || !$product_detail) 
+        {
             abort(404);
         }
 
         $shopping_cart = session()->get('shopping_cart');
         $chosen_quantity = $request->quantity;
         $total_quantity = $product_detail->quantity;
-
-        if (!$shopping_cart) {
+        $size = $request->size;
+        $color = $request->color;
+        
+        if (!$shopping_cart) 
+        {
+            // Trường hợp trong giỏ hàng chưa có sản phẩm
             $shopping_cart = [
-                $product_id . '_' . $product_detail_id => [
+                $product_id . '_' . $product_detail_id . '_' . $size => [
                     "product_id" => $product->product_id,
                     "product_detail_id" => $product_detail_id,
                     "product_name" => $product->product_name,
                     "quantity" => $chosen_quantity,
                     "price" => $product_detail->price,
                     "sale_price" => $product_detail->sale_price,
-                    "size" => $product_detail->size,
-                    "color" => $product_detail->color,
+                    "size" => $size,
+                    "color" => $color,
                     "image" => $product_detail->image,
                     "total_quantity" => $total_quantity
-                    // Các thông tin khác của sản phẩm
                 ]
             ];
-
-            session()->put('shopping_cart', $shopping_cart);
-        }
-
-        else
-        {
-            if (isset($shopping_cart[$product_id . '_' . $product_detail_id]))
+        } else {
+            // Trường hợp trong giỏ hàng đã có sản phẩm
+            $already_in_cart = $product_id . '_' . $product_detail_id . '_' . $size;
+            
+            if (isset($shopping_cart[$already_in_cart])) 
             {
-                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
-            }
-            else
+                $shopping_cart[$already_in_cart]['quantity'] += $chosen_quantity;
+            } 
+            
+            else 
             {
-                $shopping_cart[$product_id . '_' . $product_detail_id] = [
+                $shopping_cart[$already_in_cart] = [
                     "product_id" => $product->product_id,
                     "product_detail_id" => $product_detail_id,
                     "product_name" => $product->product_name,
                     "quantity" => $chosen_quantity,
                     "price" => $product_detail->price,
                     "sale_price" => $product_detail->sale_price,
-                    "size" => $product_detail->size,
-                    "color" => $product_detail->color,
+                    "size" => $size,
+                    "color" => $color,
                     "image" => $product_detail->image,
                     "total_quantity" => $total_quantity
                 ];
             }
-
-            session()->put('shopping_cart', $shopping_cart);
         }
+
+        session()->put('shopping_cart', $shopping_cart);
 
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
@@ -262,11 +265,12 @@ class StoreController extends Controller
 
     public function order_history()
     {
-        $order = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-                    ->select('order.*', 'order_detail.price', 'order_detail.quantity') 
-                    ->where('order.user_id', '=', session('user_id'))
-                    ->get();
-        return view('customer.order_history', compact('order'));
+        $orders = Order::select('order.order_id', 'order.created_at', 'order.status')
+        ->join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
+        ->where('order.user_id', session('user_id'))
+        ->groupBy('order.order_id', 'order.created_at', 'order.status')
+        ->get();
+        return view('customer.order_history', compact('orders'));
     }
 
     public function order_detail($order_id)
@@ -274,26 +278,26 @@ class StoreController extends Controller
         $user_id = session('user_id');
         
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-                        ->join('users', 'order.user_id', '=', 'users.user_id')
-                        ->where('order.order_id', '=', $order_id)
-                        ->where('users.user_id', '=', $user_id)
-                        ->get();
+        ->join('users', 'order.user_id', '=', 'users.user_id')
+        ->where('order.order_id', '=', $order_id)
+        ->where('users.user_id', '=', $user_id)
+        ->get();
 
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
-                        ->join('products', 'product_detail.product_id', '=', 'products.product_id')
-                        ->where('order_detail.order_id', '=', $order_id)
-                        ->select('order_detail.*', 'products.product_id', 'products.product_name')
-                        ->get();
+        ->join('products', 'product_detail.product_id', '=', 'products.product_id')
+        ->where('order_detail.order_id', '=', $order_id)
+        ->select('order_detail.*', 'products.product_id', 'products.product_name')
+        ->get();
         return view("customer.order_detail_cus", compact('order_details', 'product_order'));
     }
 
     public function cancel_order($order_id) {
         $orders = Order::find($order_id);
         $customer_id = $orders->customer_id;
-        // if ($customer_id != Auth::user()->order_id)  
-        // {
-        //     return redirect('/storeIndex');
-        // }
+        if ($customer_id != Auth::user()->order_id)  
+        {
+            return redirect('/storeIndex');
+        }
         if ($orders->status == 'Đã xác nhận')
         {
             return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');

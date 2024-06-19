@@ -62,24 +62,24 @@
                             <th>Tổng</th>
                             <th></th>
                         </tr>
-                        @foreach($order as $order_history) 
-                        @php 
+                        @foreach($orders as $order)
+                        @php
                             $total = 0;
-                            $total += $order_history->price * $order_history->quantity;
+                            $total += $order->price * $order->quantity;
                             $total_in_order += $total;
                         @endphp
-                        @endforeach
                         <tr>
-                            <td>{{$order_history->order_id}}</td>
-                            <td>{{$order_history->created_at->format('d/m/Y') }}</td>
-                            <td>{{$order_history->status}}</td>
+                            <td>{{$order->order_id}}</td>
+                            <td>{{$order->created_at->format('d/m/Y')}}</td>
+                            <td>{{$order->status}}</td>
                             <td>{{number_format($total_in_order)}}đ</td>   
                             <td>
-                                <form action="/ktcstore/order_detail/order_id={{$order_history->order_id}}" method="GET">    
+                                <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">    
                                     <button type="submit" class="btn btn-info" style="width:90px; color:white"><b>Chi tiết</b></button>
                                 </form>
                             </td>
                         </tr>
+                        @endforeach
                     </table>
                 @if(Session::has('success'))
                         <div class="alert alert-success">{{Session::get('success')}}</div>
