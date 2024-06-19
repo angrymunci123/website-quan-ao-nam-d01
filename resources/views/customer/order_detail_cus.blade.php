@@ -80,11 +80,11 @@
                                     <tr>
                                         <td>
                                             <form action="" method="GET" style="padding-right: 20px; float: right">    
-                                                <button type="submit" class="btn btn-danger" style="width: 110px; color:white"><b>Hủy</b></button>
+                                                <button type="submit" class="btn btn-danger" style="width: 150px; color:white">Hủy Đơn Hàng</button>
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="" method="GET" style="padding-right: 20px; float: right">    
+                                            <form action="/ktcstore/order_history" method="GET" style="padding-right: 20px; float: right">    
                                                 <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
                                             </form>
                                         </td>

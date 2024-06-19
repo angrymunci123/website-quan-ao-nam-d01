@@ -246,7 +246,9 @@ class StoreController extends Controller
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $recordData['product_detail_id'],
                     'price' => $recordData['price'],
-                    'quantity' => $recordData['quantity']
+                    'quantity' => $recordData['quantity'],
+                    'created_at' => now(),
+                    'updated_at' => NULL
                 ]);
                 session()->forget('shopping_cart');
             }
@@ -256,6 +258,15 @@ class StoreController extends Controller
 
     public function order_history()
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+    
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
         $orders = Order::where('order.user_id', session('user_id'))->get();
         return view('customer.order_history', compact('orders'));
     }
@@ -268,6 +279,7 @@ class StoreController extends Controller
             ->join('users', 'order.user_id', '=', 'users.user_id')
             ->where('order.order_id', '=', $order_id)
             ->where('users.user_id', '=', $user_id)
+            ->select('order.*', 'order_detail.*', 'order.created_at as order_created_at')
             ->get();
 
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
