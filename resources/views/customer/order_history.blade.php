@@ -19,7 +19,7 @@
     </section>
     <!-- Breadcrumb Section End -->
      <div class="app__container">
-        <div class="grid" >
+        <div class="grid">
         <div class="grid__row">
         <div class="grid__colunm-2">
                 <div class="shop__sidebar">
