@@ -21,7 +21,7 @@ class BrandController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        $brands = Brand::paginate(10);
+        $brands = Brand::paginate(11);
         Paginator::useBootstrap();
         return view('admin.brand.list', compact('brands'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
