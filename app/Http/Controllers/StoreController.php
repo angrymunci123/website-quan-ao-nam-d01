@@ -113,8 +113,7 @@ class StoreController extends Controller
         $product = Product::find($product_id);
         $product_detail = Product_Detail::find($product_detail_id);
 
-        if (!$product || !$product_detail) 
-        {
+        if (!$product || !$product_detail) {
             abort(404);
         }
 
@@ -123,9 +122,8 @@ class StoreController extends Controller
         $total_quantity = $product_detail->quantity;
         $size = $request->size;
         $color = $request->color;
-        
-        if (!$shopping_cart) 
-        {
+
+        if (!$shopping_cart) {
             // Trường hợp trong giỏ hàng chưa có sản phẩm
             $shopping_cart = [
                 $product_id . '_' . $product_detail_id . '_' . $size => [
@@ -144,14 +142,10 @@ class StoreController extends Controller
         } else {
             // Trường hợp trong giỏ hàng đã có sản phẩm
             $already_in_cart = $product_id . '_' . $product_detail_id . '_' . $size;
-            
-            if (isset($shopping_cart[$already_in_cart])) 
-            {
+
+            if (isset($shopping_cart[$already_in_cart])) {
                 $shopping_cart[$already_in_cart]['quantity'] += $chosen_quantity;
-            } 
-            
-            else 
-            {
+            } else {
                 $shopping_cart[$already_in_cart] = [
                     "product_id" => $product->product_id,
                     "product_detail_id" => $product_detail_id,
@@ -180,9 +174,7 @@ class StoreController extends Controller
             if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
                 session()->put('shopping_cart', $shopping_cart);
-            }
-
-            else {
+            } else {
                 session()->flash('fail', 'Số lượng đã đạt giới hạn số lượng sản phẩm có sẵn!');
             }
         }
@@ -196,8 +188,7 @@ class StoreController extends Controller
             if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
                 session()->put('shopping_cart', $shopping_cart);
-            }
-            else {
+            } else {
                 session()->flash('fail', 'Số lượng sản phẩm không thể giảm xuống 0!');
             }
         }
@@ -218,14 +209,14 @@ class StoreController extends Controller
     public function checkout()
     {
         $shopping_cart = session()->get('shopping_cart');
-        if (isset($shopping_cart))
-        {
+        if (isset($shopping_cart)) {
             $customer = User::where("user_id", "=", session('user_id'))->first();
             return view("customer.checkout", compact(['customer', 'shopping_cart']));
         }
     }
 
-    public function purchase(Request $request) {
+    public function purchase(Request $request)
+    {
         $payment_method = $request->payment_method;
         $consignee = $request->consignee;
         $address = $request->address;
@@ -250,14 +241,14 @@ class StoreController extends Controller
         }
         if ($create_product_order) {
             $select_order = Order::where('user_id', '=', session('user_id'))->orderBy('order_id', 'desc')->first();
-                foreach ($shopping_cart as $recordData) {
-                    DB::table('order_detail')->insert([
-                        'order_id' => $select_order->order_id,
-                        'product_detail_id' => $recordData['product_detail_id'],
-                        'price' => $recordData['price'],
-                        'quantity' => $recordData['quantity']
-                    ]);
-            session()->forget('shopping_cart');
+            foreach ($shopping_cart as $recordData) {
+                DB::table('order_detail')->insert([
+                    'order_id' => $select_order->order_id,
+                    'product_detail_id' => $recordData['product_detail_id'],
+                    'price' => $recordData['price'],
+                    'quantity' => $recordData['quantity']
+                ]);
+                session()->forget('shopping_cart');
             }
         }
         return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
@@ -265,41 +256,36 @@ class StoreController extends Controller
 
     public function order_history()
     {
-        $orders = Order::select('order.order_id', 'order.created_at', 'order.status')
-        ->join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-        ->where('order.user_id', session('user_id'))
-        ->groupBy('order.order_id', 'order.created_at', 'order.status')
-        ->get();
+        $orders = Order::where('order.user_id', session('user_id'))->get();
         return view('customer.order_history', compact('orders'));
     }
 
     public function order_detail($order_id)
     {
         $user_id = session('user_id');
-        
+
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-        ->join('users', 'order.user_id', '=', 'users.user_id')
-        ->where('order.order_id', '=', $order_id)
-        ->where('users.user_id', '=', $user_id)
-        ->get();
+            ->join('users', 'order.user_id', '=', 'users.user_id')
+            ->where('order.order_id', '=', $order_id)
+            ->where('users.user_id', '=', $user_id)
+            ->get();
 
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
-        ->join('products', 'product_detail.product_id', '=', 'products.product_id')
-        ->where('order_detail.order_id', '=', $order_id)
-        ->select('order_detail.*', 'products.product_id', 'products.product_name')
-        ->get();
+            ->join('products', 'product_detail.product_id', '=', 'products.product_id')
+            ->where('order_detail.order_id', '=', $order_id)
+            ->select('order_detail.*', 'products.product_id', 'products.product_name')
+            ->get();
         return view("customer.order_detail_cus", compact('order_details', 'product_order'));
     }
 
-    public function cancel_order($order_id) {
+    public function cancel_order($order_id)
+    {
         $orders = Order::find($order_id);
         $customer_id = $orders->customer_id;
-        if ($customer_id != Auth::user()->order_id)  
-        {
+        if ($customer_id != Auth::user()->order_id) {
             return redirect('/storeIndex');
         }
-        if ($orders->status == 'Đã xác nhận')
-        {
+        if ($orders->status == 'Đã xác nhận') {
             return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');
         }
         $orders->status = 'Đã hủy';
