@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -99,11 +100,25 @@ class CategoryController extends Controller
 
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); 
+            return redirect('login');
         }
-        
+
+        // 1. Check product detail có tồn tại hay không
+        DB::beginTransaction();
+        $product_exist = Product::where('category_id', $category_id)->exists();
+
+        if ($product_exist) {
+            DB::rollback();
+            return redirect('/admin/category')->with('notification', 'Không thể xóa sản phẩm vì có biến thể sản phẩm đang tồn tại!');
+        }
+
+        // 2. Nếu không có product detail tồn tại, tiến hành xóa product
         $categories = Category::findOrFail($category_id);
+        dd($categories);
         $categories->delete();
-        return redirect('/admin/category')->with('notification', 'Xóa Danh Mục Thành Công!');
+
+        DB::commit();
+
+        return redirect('/admin/category')->with('notification', 'Xóa Sản Phẩm Thành Công!');
     }
 }

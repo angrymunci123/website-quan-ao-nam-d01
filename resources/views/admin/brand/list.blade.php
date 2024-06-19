@@ -47,20 +47,27 @@
                             </form>
                             </td>
                             <td style="width: 100px;">
-                            <form action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST">
+                            <form action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST" id="deleteForm-{{$brand->brand_id}}">
                                 @csrf
-                                <button type="submit" class="btn btn-danger" style="width:75px" onclick="openPopup()">Xóa</button>
+                                <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('{{$brand->brand_id}}')">Xóa</button>
                             </form>
-                            <div class="popup" id="popup">
-                              <img src="{{asset('/temp_assets/img/tick.png')}}">
-                              <h2>Delete Complete!</h2>
-                            </div>
                             </td>
                         </td>
                     </tr>
+                    <div class="popup" id="confirmPopup">
+                      <div class="popup-content">
+                          <p>Bạn có chắc chắn muốn xóa mục này?</p>
+                          <form action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST" id="deleteForm-{{$brand->brand_id}}">
+                            @csrf
+                            <button id="confirmDeleteButton">Xác nhận</button>
+                          </form>
+                          <button id="cancelDeleteButton">Hủy bỏ</button>
+                      </div>
+                    </div>
                     @endforeach
                   </tbody>
                 </table>
+                {{ $brands->onEachSide(1)->links() }}
               </div>
             </div>
           </div>
@@ -174,9 +181,21 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    let popup = document.getElementById("popup")
-    function openPopup(){
-      popup.classList.add("open-popup")
+    let confirmPopup = document.getElementById("confirmPopup");
+    let deleteForm = document.getElementById("deleteForm-{{$brand->brand_id}}");
+
+    function openPopup() {
+        confirmPopup.classList.add("open-popup");
     }
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+        deleteForm.submit(); // Thực hiện submit form để xóa
+    });
+
+    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+    });
+
   </script>
   @endsection

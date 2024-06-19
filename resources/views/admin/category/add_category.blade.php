@@ -24,7 +24,7 @@
             </form>
             <br>
             <div class="col-sm-4 col-xl-1">
-                <form action="/admin/brand" enctype="multipart/form-data">
+                <form action="/admin/category" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-warning">Quay Lại</button>
                 </form>
             </div>

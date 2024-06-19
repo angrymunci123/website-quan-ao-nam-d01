@@ -60,17 +60,23 @@
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST">
+                            <form action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST" id="deleteForm-{{$inj->product_id}}">
                                 @csrf
-                                <button type="submit" class="btn btn-danger" style="width:75px" onclick="openPopup()">Xóa</button>
+                                <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('{{$inj->product_id}}')">Xóa</button>
                             </form>
-                            <div class="popup" id="popup">
-                              <img src="{{asset('/temp_assets/img/tick.png')}}">
-                              <h2>Delete Complete!</h2>
-                            </div>
                             </td>
                         </td>
                     </tr>
+                    <div class="popup" id="confirmPopup">
+                      <div class="popup-content">
+                          <p>Bạn có chắc chắn muốn xóa mục này?</p>
+                          <form action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST">
+                          @csrf 
+                          <button id="confirmDeleteButton">Xác nhận</button>
+                          </form>
+                          <button id="cancelDeleteButton">Hủy bỏ</button>
+                      </div>
+                    </div>
                   @endforeach
                   </tbody>
                 </table>
@@ -181,16 +187,21 @@
     </div>
   </div>
   <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    let confirmPopup = document.getElementById("confirmPopup");
+    let deleteForm = document.getElementById("deleteForm-{{ $inj->product_id }}");
+
+    function openPopup() {
+        confirmPopup.classList.add("open-popup");
     }
-    let popup = document.getElementById("popup")
-    function openPopup(){
-      popup.classList.add("open-popup")
-    }
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+        deleteForm.submit(); // Thực hiện submit form để xóa
+    });
+
+    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+    });
+
   </script>
   @endsection
