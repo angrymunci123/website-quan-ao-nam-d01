@@ -60,11 +60,14 @@
                             </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form onclick="return confirm('Bạn Có Thực Sự Muốn Xóa Sản Phẩm Này Không?');"
-                                  action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST">
+                            <form action="/admin/product/delete_product/product_id={{$inj->product_id}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger" style="width:75px">Xóa</button>
+                                <button type="submit" class="btn btn-danger" style="width:75px" onclick="openPopup()">Xóa</button>
                             </form>
+                            <div class="popup" id="popup">
+                              <img src="{{asset('/temp_assets/img/tick.png')}}">
+                              <h2>Delete Complete!</h2>
+                            </div>
                             </td>
                         </td>
                     </tr>
@@ -184,6 +187,10 @@
         damping: '0.5'
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+    let popup = document.getElementById("popup")
+    function openPopup(){
+      popup.classList.add("open-popup")
     }
   </script>
   @endsection
