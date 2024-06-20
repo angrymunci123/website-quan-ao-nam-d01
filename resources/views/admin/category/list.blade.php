@@ -58,7 +58,7 @@
                       <div class="popup-content">
                           <p>Bạn có chắc chắn muốn xóa mục này?</p>
                           <form action="/admin/category/delete_category/category_id={{ $category->category_id }}" method="POST">
-                          @csrf
+                          @csrf 
                           <button id="confirmDeleteButton">Xác nhận</button>
                           </form>
                           <button id="cancelDeleteButton">Hủy bỏ</button>
