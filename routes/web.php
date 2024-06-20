@@ -117,3 +117,9 @@ Route::get('/ktcstore/order_history', [StoreController::class, "order_history"])
 
 Route::get('/ktcstore/order_detail/order_id={order_id}', [StoreController::class, "order_detail"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
+
+Route::get('/ktcstore/shop/filter_price/{price_range}', [StoreController::class, "filter_price"])->name('filter.price');
+Route::get('/ktcstore/shop/filter_brand/{brand_name}', [StoreController::class, "filter_brand"])->name('filter.brand');
+Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::class, "filter_category"])->name('filter.category');
+Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
+Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');

@@ -103,7 +103,7 @@ class CategoryController extends Controller
             return redirect('login');
         }
 
-        // 1. Check product detail có tồn tại hay không
+        // 1. Check product có tồn tại hay không
         DB::beginTransaction();
         $product_exist = Product::where('category_id', $category_id)->exists();
 
@@ -112,7 +112,7 @@ class CategoryController extends Controller
             return redirect('/admin/category')->with('notification', 'Không thể xóa sản phẩm vì có biến thể sản phẩm đang tồn tại!');
         }
 
-        // 2. Nếu không có product detail tồn tại, tiến hành xóa product
+        // 2. Nếu không có product tồn tại, tiến hành xóa category
         $categories = Category::findOrFail($category_id);
         dd($categories);
         $categories->delete();

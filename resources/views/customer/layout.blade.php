@@ -78,15 +78,15 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-3 col-md-3" style="height:90px">
                     <div class="header__logo">
-                        <a href="./"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
+                        <a href="/ktcstore"><img src="{{ asset ('/temp_assets/KTC_Store.png')}}" style="width:90px; margin-top:-30px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./">Trang chủ</a></li>
+                            <li class="active"><a href="/ktcstore">Trang chủ</a></li>
                             <li><a href="/ktcstore/shop">Cửa hàng</a></li>
                             <li><a href="/ktcstore/blog">Tin tức</a></li>
                             <li><a href="/ktcstore/contact">Liên hệ</a></li>
@@ -122,7 +122,7 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white">
                                         <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-end bg-primary border-0 rounded-0 rounded-bottom m-0">
+                                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                                         <a href="/admin/user_info" class="dropdown-item">Thông tin cá nhân</a>
                                         <a href="/ktcstore/order_history" class="dropdown-item">Lịch sử đơn hàng</a>
                                         <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
@@ -130,8 +130,7 @@
                                         </form>
 
                                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to log out?')) { document.getElementById('logout-form').submit(); }">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Đăng xuất
+                                        Đăng xuất
                                         </a>
                                     </div>
                                 </div>
@@ -143,15 +142,15 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-3 col-md-3" style="height:90px">
                     <div class="header__logo">
-                        <a href="./"><img src="{{ asset ('temp_assets/img/logo.png')}}" alt=""></a>
+                        <a href="/ktcstore"><img src="{{ asset ('/temp_assets/KTC_Store.png')}}" style="width:90px; margin-top:-30px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./">Trang chủ</a></li>
+                            <li class="active"><a href="/ktcstore">Trang chủ</a></li>
                             <li><a href="/ktcstore/shop">Cửa hàng</a></li>
                             <li><a href="/ktcstore/blog">Tin tức</a></li>
                             <li><a href="/ktcstore/contact">Liên hệ</a></li>

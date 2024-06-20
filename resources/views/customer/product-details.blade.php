@@ -7,9 +7,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="/ktcstore">Home</a>
-                            <a href="/ktcstore/shop">Shop</a>
-                            <span>Product Details</span>
+                            <a href="/ktcstore">Trang chủ</a>
+                            <a href="/ktcstore/shop">Cửa hàng</a>
+                            @foreach($product_details as $product_detail)
+                            <span>{{$product_detail->product_name}}</span>
+                            @endforeach
                         </div>
                     </div>
                 </div>
