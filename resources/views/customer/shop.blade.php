@@ -91,7 +91,7 @@
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__size">
-                                                <form action="{{ route('filter.size', ['size' => $size]) }}" method="GET">
+                                                <form action="" method="GET">
                                                     <label for="size_sm">S
                                                         <input type="radio" id="size_sm" name="size" value="S">
                                                     </label>
