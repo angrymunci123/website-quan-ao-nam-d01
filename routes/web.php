@@ -123,3 +123,5 @@ Route::get('/ktcstore/shop/filter_brand/{brand_name}', [StoreController::class, 
 Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::class, "filter_category"])->name('filter.category');
 Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
+
+Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
