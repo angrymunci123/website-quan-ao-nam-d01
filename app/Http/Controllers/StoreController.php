@@ -227,6 +227,10 @@ class StoreController extends Controller
         $phone_number = $request->phone_number;
         $consignee = $request->consignee;
         $shipping_unit = $request->shipping_unit;
+
+        // AAAAAAAAAAAAAAA
+
+
         $create_product_order = DB::table('order')->insert([
             'status' => 'Đang chờ xác nhận',
             'consignee' => $consignee,
@@ -265,10 +269,10 @@ class StoreController extends Controller
         if (!Auth::check()) {
             return redirect('/ktcstore');
         }
-    
+
         $user = Auth::user();
         if ($user->role !== 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $orders = Order::where('order.user_id', session('user_id'))->get();
@@ -310,11 +314,11 @@ class StoreController extends Controller
         return redirect('/storeIndex/order_history')->with('notification', 'Hủy đơn hàng thành công!');
     }
 
-    public function filter_price_under200() 
+    public function filter_price_under200()
     {
         $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S')
-            ->where('product_detail.price','<', 200000)
+            ->where('product_detail.price', '<', 200000)
             ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
@@ -343,11 +347,11 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_price($price_range) 
+    public function filter_price($price_range)
     {
         $price = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($price_range) {
             case 'under-200':
                 $price->where('product_detail.price', '<', 200000);
@@ -411,17 +415,17 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_brand($brand_name) 
+    public function filter_brand($brand_name)
     {
         $brand = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($brand_name) {
             case 'Adam':
                 $brand->where('brands.brand_name', 'Adam');
                 break;
-                
+
             case 'Atino':
                 $brand->where('brands.brand_name', 'Atino');
                 break;
@@ -488,17 +492,17 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_category($category_name) 
+    public function filter_category($category_name)
     {
         $category = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftjoin("category", "products.category_id", "=", "category.category_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($category_name) {
             case 'Áo':
                 $category->where('category.category_name', 'Áo');
                 break;
-                
+
             case 'Quần':
                 $category->where('category.category_name', 'Quần');
                 break;
@@ -549,7 +553,7 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_size($size) 
+    public function filter_size($size)
     {
         $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
@@ -557,7 +561,7 @@ class StoreController extends Controller
             ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
-        
+
         Paginator::useBootstrap();
 
         $brand_sidebars = Brand::get();
@@ -566,4 +570,3 @@ class StoreController extends Controller
         return view("customer.shop", compact('products', 'brand_sidebars', 'category_sidebars'))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 }
-
