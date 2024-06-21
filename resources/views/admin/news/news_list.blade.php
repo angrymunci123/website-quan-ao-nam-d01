@@ -9,8 +9,8 @@
               <table style="width: 100%;">
               <th style="font-size: 26px">Danh sách tin tức</th>
               <th style="float: right">
-                <form method="get" action="/admin/brand/add_brand">
-                    <button name="controller=create" class="btn btn-success">Tạo bài viết</button>
+                <form method="get" action="/admin/news/add_news" enctype='multipart/form-data'>
+                    <button class="btn btn-success">Tạo bài viết</button>
                 </form>
                 </th>
                 </table>

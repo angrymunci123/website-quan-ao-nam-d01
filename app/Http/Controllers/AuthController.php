@@ -10,55 +10,36 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // public function login_form()
-    // {
-    //     $user = Auth::user();
-    //     if ($user->role == 'Admin') 
-    //     {
-    //         if (Auth::check()) 
-    //         {
-    //         return view('admin.dashboard.dashboard');
-    //         }
-    //     } 
-        
-    //     else if ($user->role == 'Khách Hàng') 
-    //     {
-    //         if (Auth::check()) 
-    //         {
-    //         return view('customer.index');
-    //         }
-    //     }
-    //     return view('login');
-    // }
     public function login_form()
-{
-    if (Auth::check()) {
-        $user = Auth::user();
-        if ($user) 
-        {
-            if ($user->role == 'Admin') 
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user) 
             {
-                return view('admin.dashboard.dashboard');
-            } 
-            
-            else if ($user->role == 'Khách Hàng') 
+                if ($user->role == 'Admin') 
+                {
+                    return view('admin.dashboard.dashboard');
+                } 
+                
+                else if ($user->role == 'Khách Hàng') 
+                {
+                    return view('customer.index');
+                }
+            } else 
             {
-                return view('customer.index');
+                return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
             }
-        } else 
-        {
-            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập lại.');
         }
+
+        return view('login');
     }
-    return view('login');
-}
 
     public function logout_admin(Request $request) {
         Auth::logout();
         $request->session()->forget('user_id');
         $request->session()->forget('fullname');
         $request->session()->forget('role');
-        return view("login");
+        return redirect("/login");
     }
 
     public function logout_customer(Request $request) {
