@@ -272,11 +272,9 @@ class StoreController extends Controller
         }
     
         if ($create_order) {
-            // Retrieve the newly created order
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
     
             foreach ($shopping_cart as $recordData) {
-                // Determine which price to use based on availability of sale_price
                 if ($recordData['price'] && $recordData['sale_price'] == 0) {
                     $price_to_use = $recordData['price'];
                 }
@@ -285,7 +283,6 @@ class StoreController extends Controller
                     $price_to_use = $recordData['sale_price'];
                 }
     
-                // Insert into order_detail
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $recordData['product_detail_id'],
@@ -296,7 +293,6 @@ class StoreController extends Controller
                 ]);
             }
             
-            // Clear the shopping cart session after processing
             session()->forget('shopping_cart_' . auth()->id());
     
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
