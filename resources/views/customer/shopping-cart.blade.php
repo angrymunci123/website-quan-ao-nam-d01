@@ -17,7 +17,7 @@
     </div>
 </section>
 
-@if(session()->exists('shopping_cart'))
+@if(session()->has('shopping_cart_' . auth()->id()))
 @php
 $total_in_cart = 0;
 @endphp
@@ -46,10 +46,18 @@ $total_in_cart = 0;
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(session('shopping_cart') as $product_id => $details)
+                            @foreach(session('shopping_cart_' . auth()->id()) as $product_id => $details)
                             @php
-                            $total = $details['price'] * $details['quantity'];
-                            $total_in_cart += $total;
+                            if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price']) 
+                            {
+                                $total = $details['sale_price'] * $details['quantity'];
+                                $total_in_cart += $total;
+                            }
+                            else 
+                            {
+                                $total = $details['price'] * $details['quantity'];
+                                $total_in_cart += $total;
+                            }
                             @endphp
                             <tr data-id="{{$product_id}}">
                                 <td class="product__cart__item">
@@ -58,7 +66,12 @@ $total_in_cart = 0;
                                     </div>
                                     <div class="product__cart__item__text">
                                         <h5><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></h5>
+                                        @if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price'])
+                                        <h6>{{number_format($details['sale_price'])}}đ</h6>
+                                        
+                                        @else
                                         <h6>{{number_format($details['price'])}}đ</h6>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -102,10 +115,12 @@ $total_in_cart = 0;
                                 </td>
                                 <td class="cart__price text-center">{{number_format($total)}}đ</td>
                                 <td class="cart__close">
-                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart/product_id='.$details['product_id'].'&product_detail_id='.$details['product_detail_id']) }}">
+                                    <form method="GET" action="{{ url('/ktcstore/shopping-cart/remove_from_cart') }}">
+                                        <input type="hidden" name="product_id" value="{{ $details['product_id'] }}">
+                                        <input type="hidden" name="product_detail_id" value="{{ $details['product_detail_id'] }}">
                                         <button type="submit" style="border: solid white; background-color:white"><i class="fa fa-close"></i></button>
                                     </form>
-                            </td>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -132,7 +147,7 @@ $total_in_cart = 0;
     </div>
 </section>
 @endif
-@if(!session()->exists('shopping_cart'))
+@if(!session()->has('shopping_cart_' . auth()->id()))
 <section class="shopping-cart spad">
     <div class="container">
         <div class="row">
