@@ -248,50 +248,53 @@ class StoreController extends Controller
 
         // AAAAAAAAAAAAAAA
 
-
-        $create_product_order = DB::table('order')->insert([
-            'status' => 'Đang chờ xác nhận',
-            'consignee' => $consignee,
-            'phone_number' => $phone_number,
-            'address' => $address,
-            'payment_method' => $payment_method,
-            'shipping_unit' => $shipping_unit,
-            'user_id' => session('user_id'),
-            'created_at' => now(),
-            'updated_at' => NULL
-        ]);
+        try {
+            $new_order_id = DB::table('order')->insertGetId([
+                'status' => 'Đang chờ xác nhận',
+                'consignee' => $consignee,
+                'phone_number' => $phone_number,
+                'address' => $address,
+                'payment_method' => $payment_method,
+                'shipping_unit' => $shipping_unit,
+                'user_id' => session('user_id'),
+                'created_at' => now(),
+                'updated_at' => NULL
+            ]);
+        } catch (\exception $e) {
+            return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
+        }
+        if ($payment_method = "Chuyển khoản") {
+            $this->vnpay_payment($request, $new_order_id);
+        }
 
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
 
-        if ($create_order) {
-            $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
 
-            foreach ($shopping_cart as $recordData) {
-                if ($recordData['price'] && $recordData['sale_price'] == 0) {
-                    $price_to_use = $recordData['price'];
-                } else if ($recordData['sale_price'] && $recordData['sale_price'] < $recordData['price']) {
-                    $price_to_use = $recordData['sale_price'];
-                }
+        $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
 
-                DB::table('order_detail')->insert([
-                    'order_id' => $select_order->order_id,
-                    'product_detail_id' => $recordData['product_detail_id'],
-                    'price' => $price_to_use,
-                    'quantity' => $recordData['quantity'],
-                    'created_at' => now(),
-                    'updated_at' => NULL
-                ]);
+        foreach ($shopping_cart as $recordData) {
+            if ($recordData['price'] && $recordData['sale_price'] == 0) {
+                $price_to_use = $recordData['price'];
+            } else if ($recordData['sale_price'] && $recordData['sale_price'] < $recordData['price']) {
+                $price_to_use = $recordData['sale_price'];
             }
 
-            session()->forget('shopping_cart_' . auth()->id());
-
-            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+            DB::table('order_detail')->insert([
+                'order_id' => $select_order->order_id,
+                'product_detail_id' => $recordData['product_detail_id'],
+                'price' => $price_to_use,
+                'quantity' => $recordData['quantity'],
+                'created_at' => now(),
+                'updated_at' => NULL
+            ]);
         }
 
-        return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
+        session()->forget('shopping_cart_' . auth()->id());
+
+        return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
     }
 
     public function order_history()
@@ -327,18 +330,18 @@ class StoreController extends Controller
             ->get();
         return view("customer.order_detail_cus", compact('order_details', 'product_order'));
     }
-    public function vnpay_payment(Request $request)
+    public function vnpay_payment(Request $request, $new_order_id)
     {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "https://localhost/vnpay_php/vnpay_return.php";
         $vnp_TmnCode = "VRNE42A3"; //Mã website tại VNPAY
         $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Chuỗi bí mật
 
-        $vnp_TxnRef = $_POST['order_id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $new_order_id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn";
         $vnp_OrderType = "Chuyển khoản VNPay";
-        $vnp_Amount = $request->total_in_cart;
-        $vnp_Locale = $_POST['language'];
+        $vnp_Amount = $request->total_in_cart * 100;
+        $vnp_Locale = 'VN';
         // $vnp_BankCode =
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $inputData = array(
