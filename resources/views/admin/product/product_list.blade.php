@@ -15,6 +15,10 @@
                 </th>
                 </table>
             </div>
+            <div class="input-group" style="width: 300px; padding-left: 23px">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" placeholder="Type here...">
+            </div>
             <div class="card-body">
                 @if(Session::has('notification'))
                     <div class="alert alert-success" style="color:white">

@@ -126,7 +126,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                                         <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}}, hãy quay về trang Admin để xem thông tin cá nhân')">Thông tin cá nhân</a>
-                                        <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}} (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">Lịch sử đơn hàng</a>
+                                        <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}}, (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">Lịch sử đơn hàng</a>
                                         <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
                                             @csrf
                                         </form>
