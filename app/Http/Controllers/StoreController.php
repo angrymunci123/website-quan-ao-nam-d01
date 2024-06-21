@@ -19,8 +19,6 @@ class StoreController extends Controller
 {
     public function mainpage()
     {
-        $user = Auth::user();
-        if (Auth::check() && $user->role == 'Khách Hàng' || $user->role == 'Admin') {
             $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
                 ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function($join) {
                     $join->on('product_detail.product_id', '=', 'min_prices.product_id')
@@ -54,7 +52,6 @@ class StoreController extends Controller
         }
 
         return view("customer.index");
-        }
     }
 
     public function contact()
