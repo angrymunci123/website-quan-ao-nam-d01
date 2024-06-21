@@ -56,7 +56,7 @@
                     </tr>
                     <div class="popup" id="confirmPopup">
                       <div class="popup-content">
-                          <p>Bạn có chắc chắn muốn xóa mục này?</p>
+                          <p>Bạn có chắc chắn muốn xóa mục này??</p>
                           <form action="/admin/category/delete_category/category_id={{ $category->category_id }}" method="POST">
                           @csrf 
                           <button id="confirmDeleteButton">Xác nhận</button>
