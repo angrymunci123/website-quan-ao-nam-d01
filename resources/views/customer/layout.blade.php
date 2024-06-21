@@ -118,6 +118,26 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
+                                @if (session('role') == 'Admin')
+                                <div class="nav-item dropdown">
+                                    <a href="/admin" style="color: white" style="margin:left">Quay về trang Admin</a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white">
+                                        <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                        <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}}, hãy quay về trang Admin để xem thông tin cá nhân')">Thông tin cá nhân</a>
+                                        <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}} (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">Lịch sử đơn hàng</a>
+                                        <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Bạn có muốn đăng xuát không?')) { document.getElementById('logout-form').submit(); }">
+                                        Đăng xuất
+                                        </a>
+                                    </div>
+                                </div>
+                                @endif
+                                @if (session('role') == 'Khách Hàng')
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white">
                                         <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
@@ -129,11 +149,12 @@
                                             @csrf
                                         </form>
 
-                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to log out?')) { document.getElementById('logout-form').submit(); }">
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Bạn có muốn đăng xuát không?')) { document.getElementById('logout-form').submit(); }">
                                         Đăng xuất
                                         </a>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>

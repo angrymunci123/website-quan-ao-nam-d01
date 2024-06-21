@@ -19,7 +19,8 @@ class StoreController extends Controller
 {
     public function mainpage()
     {
-        if (Auth::check()) {
+        $user = Auth::user();
+        if (Auth::check() && $user->role == 'Khách Hàng' || $user->role == 'Admin') {
             $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
                 ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function($join) {
                     $join->on('product_detail.product_id', '=', 'min_prices.product_id')
@@ -32,8 +33,6 @@ class StoreController extends Controller
                 ->paginate(16);
         Paginator::useBootstrap();
 
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
         // Xử lý chuẩn hóa tên sản phẩm
         foreach ($products as $product) 
         {
@@ -52,14 +51,8 @@ class StoreController extends Controller
             $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
 
             $product->standardized_product_name = $standardized_product_name;
-            return redirect('/ktcstore');
         }
-    
-        $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') 
-        {
-            return redirect('/ktcstore'); 
-        }
+
         return view("customer.index");
         }
     }
@@ -272,11 +265,9 @@ class StoreController extends Controller
         }
     
         if ($create_order) {
-            // Retrieve the newly created order
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
     
             foreach ($shopping_cart as $recordData) {
-                // Determine which price to use based on availability of sale_price
                 if ($recordData['price'] && $recordData['sale_price'] == 0) {
                     $price_to_use = $recordData['price'];
                 }
@@ -285,7 +276,6 @@ class StoreController extends Controller
                     $price_to_use = $recordData['sale_price'];
                 }
     
-                // Insert into order_detail
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $recordData['product_detail_id'],
@@ -296,7 +286,6 @@ class StoreController extends Controller
                 ]);
             }
             
-            // Clear the shopping cart session after processing
             session()->forget('shopping_cart_' . auth()->id());
     
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
