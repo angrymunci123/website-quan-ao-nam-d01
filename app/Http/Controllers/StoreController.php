@@ -19,7 +19,41 @@ class StoreController extends Controller
 {
     public function mainpage()
     {
-        return view("customer.index");
+        $user = Auth::user();
+        if (Auth::check() && $user->role == 'Khách Hàng' || $user->role == 'Admin') {
+            $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+                ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function ($join) {
+                    $join->on('product_detail.product_id', '=', 'min_prices.product_id')
+                        ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
+                })
+                ->where('product_detail.size', '=', 'S')
+                ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+                ->groupBy('products.product_id', 'products.product_name')
+                ->orderBy('products.product_id')
+                ->paginate(16);
+            Paginator::useBootstrap();
+
+            // Xử lý chuẩn hóa tên sản phẩm
+            foreach ($products as $product) {
+                $standardized_product_name = $product->product_name;
+                $standardized_product_name = strtolower($standardized_product_name);
+                $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
+                $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
+                $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
+                $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
+
+                $product->standardized_product_name = $standardized_product_name;
+            }
+
+            return view("customer.index");
+        }
     }
 
     public function contact()
@@ -29,14 +63,6 @@ class StoreController extends Controller
 
     public function shopping_cart()
     {
-        // $total = 0;
-        // $total_in_cart = 0;
-        // foreach(session('shopping_cart') as $product_id => $details) {
-        //     $total += $details['price'] * $details['quantity'];
-        //     $total_in_cart += $total;
-        // }
-
-        // return view('customer.shopping-cart', ['total' => $total, 'total_in_cart' => $total_in_cart]);
         return view('customer.shopping-cart');
     }
 
@@ -121,63 +147,49 @@ class StoreController extends Controller
             abort(404);
         }
 
-        $shopping_cart = session()->get('shopping_cart');
+        $user_id = auth()->id();
+
+        $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
+
         $chosen_quantity = $request->quantity;
         $total_quantity = $product_detail->quantity;
         $size = $request->size;
         $color = $request->color;
 
-        if (!$shopping_cart) {
-            // Trường hợp trong giỏ hàng chưa có sản phẩm
-            $shopping_cart = [
-                $product_id . '_' . $product_detail_id . '_' . $size => [
-                    "product_id" => $product->product_id,
-                    "product_detail_id" => $product_detail_id,
-                    "product_name" => $product->product_name,
-                    "quantity" => $chosen_quantity,
-                    "price" => $product_detail->price,
-                    "sale_price" => $product_detail->sale_price,
-                    "size" => $size,
-                    "color" => $color,
-                    "image" => $product_detail->image,
-                    "total_quantity" => $total_quantity
-                ]
-            ];
+        $shopping_cart_item = $product_id . '_' . $product_detail_id;
+        if (isset($shopping_cart[$shopping_cart_item])) {
+            // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
+            $shopping_cart[$shopping_cart_item]['quantity'] += $chosen_quantity;
         } else {
-            // Trường hợp trong giỏ hàng đã có sản phẩm
-            $already_in_cart = $product_id . '_' . $product_detail_id . '_' . $size;
-
-            if (isset($shopping_cart[$already_in_cart])) {
-                $shopping_cart[$already_in_cart]['quantity'] += $chosen_quantity;
-            } else {
-                $shopping_cart[$already_in_cart] = [
-                    "product_id" => $product->product_id,
-                    "product_detail_id" => $product_detail_id,
-                    "product_name" => $product->product_name,
-                    "quantity" => $chosen_quantity,
-                    "price" => $product_detail->price,
-                    "sale_price" => $product_detail->sale_price,
-                    "size" => $size,
-                    "color" => $color,
-                    "image" => $product_detail->image,
-                    "total_quantity" => $total_quantity
-                ];
-            }
+            // Nếu chưa có, thêm sản phẩm vào giỏ hàng
+            $shopping_cart[$shopping_cart_item] = [
+                "product_id" => $product->product_id,
+                "product_detail_id" => $product_detail_id,
+                "product_name" => $product->product_name,
+                "quantity" => $chosen_quantity,
+                "price" => $product_detail->price,
+                "sale_price" => $product_detail->sale_price,
+                "size" => $size,
+                "color" => $color,
+                "image" => $product_detail->image,
+                "total_quantity" => $total_quantity
+            ];
         }
-
-        session()->put('shopping_cart', $shopping_cart);
+        session()->put('shopping_cart_' . $user_id, $shopping_cart);
 
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
 
     public function plus_quantity($product_id, $product_detail_id)
     {
-        $shopping_cart = session()->get('shopping_cart');
+        $user_id = auth()->id();
+        $shopping_cart = session()->get('shopping_cart_' . $user_id);
+
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             $stock_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['total_quantity'];
             if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
-                session()->put('shopping_cart', $shopping_cart);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
             } else {
                 session()->flash('fail', 'Số lượng đã đạt giới hạn số lượng sản phẩm có sẵn!');
             }
@@ -187,11 +199,13 @@ class StoreController extends Controller
 
     public function minus_quantity($product_id, $product_detail_id)
     {
-        $shopping_cart = session()->get('shopping_cart');
+        $user_id = auth()->id();
+        $shopping_cart = session()->get('shopping_cart_' . $user_id);
+
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
-                session()->put('shopping_cart', $shopping_cart);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
             } else {
                 session()->flash('fail', 'Số lượng sản phẩm không thể giảm xuống 0!');
             }
@@ -199,20 +213,25 @@ class StoreController extends Controller
         return redirect()->back();
     }
 
-    public function remove_from_cart($product_id, $product_detail_id)
+    public function remove_from_cart(Request $request)
     {
-        $shopping_cart = session()->get('shopping_cart');
+        $user_id = auth()->id();
+        $product_id = $request->input('product_id');
+        $product_detail_id = $request->input('product_detail_id');
+
+        $shopping_cart = session()->get('shopping_cart_' . $user_id);
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             unset($shopping_cart[$product_id . '_' . $product_detail_id]);
-            session()->put('shopping_cart', $shopping_cart);
+            session()->put('shopping_cart_' . $user_id, $shopping_cart);
         }
-        session()->flash('success', 'Sản phảm đã được xóa khỏi giỏ hàng.');
+        session()->flash('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
         return redirect()->back();
     }
 
     public function checkout()
     {
-        $shopping_cart = session()->get('shopping_cart');
+        $user_id = auth()->id();
+        $shopping_cart = session()->get('shopping_cart_' . $user_id);
         if (isset($shopping_cart)) {
             $customer = User::where("user_id", "=", session('user_id'))->first();
             return view("customer.checkout", compact(['customer', 'shopping_cart']));
@@ -225,7 +244,6 @@ class StoreController extends Controller
         $consignee = $request->consignee;
         $address = $request->address;
         $phone_number = $request->phone_number;
-        $consignee = $request->consignee;
         $shipping_unit = $request->shipping_unit;
 
         // AAAAAAAAAAAAAAA
@@ -243,25 +261,37 @@ class StoreController extends Controller
             'updated_at' => NULL
         ]);
 
-        $shopping_cart = session()->get('shopping_cart', []);
+        $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
-        if ($create_product_order) {
-            $select_order = Order::where('user_id', '=', session('user_id'))->orderBy('order_id', 'desc')->first();
+
+        if ($create_order) {
+            $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
+
             foreach ($shopping_cart as $recordData) {
+                if ($recordData['price'] && $recordData['sale_price'] == 0) {
+                    $price_to_use = $recordData['price'];
+                } else if ($recordData['sale_price'] && $recordData['sale_price'] < $recordData['price']) {
+                    $price_to_use = $recordData['sale_price'];
+                }
+
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $recordData['product_detail_id'],
-                    'price' => $recordData['price'],
+                    'price' => $price_to_use,
                     'quantity' => $recordData['quantity'],
                     'created_at' => now(),
                     'updated_at' => NULL
                 ]);
-                session()->forget('shopping_cart');
             }
+
+            session()->forget('shopping_cart_' . auth()->id());
+
+            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
         }
-        return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+
+        return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
     }
 
     public function order_history()

@@ -46,15 +46,14 @@
                         @endif
                             <br>
                             <div class="product__details__option">
-                                @if(session()->exists('user_id'))
                                     <form action="/ktcstore/add_to_cart/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="get">
                                     @csrf
                                         <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}"/>
                                         <input type="hidden" name="product_id" value="{{$product_detail->product_id}}"/>
-
-                                            <div class="detail_container">
-                                                <div>
-                                                    <label for="size"><b>Kích Cỡ</b></label>
+                                        <table>
+                                            <th>
+                                            <div>
+                                                <label for="size"><b>Kích Cỡ</b></label>
                                                    <br>
                                                     <select name="size" id="size" class="form-control">
                                                         @foreach($product_size as $display_size)
@@ -62,17 +61,20 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div></div>
+                                            <th>
+
+                                            <th>
+                                            <div>
+                                                <label><b>Màu Sắc: </b></label>
                                                 <br>
-                                                <div>
-                                                    <label><b>Màu Sắc: </b></label>
-                                                    @foreach($product_colors as $color)
-                                                        <label for="color-{{ $color->index }}">{{ $color->color }}
-                                                            <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
-                                                        </label>
-                                                    @endforeach
-                                                </div>
+                                                <select name="color" id="color" class="form-control">
+                                                @foreach($product_colors as $color)
+                                                    <option name="color" value="{{$color->color}}">{{$color->color}}</option>
+                                                @endforeach
+                                                </select>
                                             </div>
+                                        <th>
+                                        </table>
                                         <br>
                                         <div class="quantity">
                                             <label><b>Số Lượng:</b></label>
@@ -82,53 +84,18 @@
                                                         <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="{{$product_detail->quantity}}">
                                                     </div>
                                                 </div>
+                                                @if(session()->exists('user_id') && session('role') == 'Khách Hàng')
                                                 <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
-                                            </div>
-                                        </div>
+                                                @endif
 
-                                    </form>
-                                @endif
-                                @if(!session('user_id'))
-                                <form action="/login" method="get" enctype="multipart/form-data">
-                                <table>
-                                    <tr>
-                                        <th>
-                                            <label>Kích Cỡ</label>
-                                            <br>
-                                            <select name="size" class="form-control" style="width: 150px;">
-                                            @foreach($product_size as $display_size)
-                                                <option value="{{$display_size->size}}">{{$display_size->size}}</option>
-                                            @endforeach
-                                            </select>
-                                        </th>
-                                        <th>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        </th>
-                                        <th>
-                                            <label>Màu Sắc</label>
-                                            <br>
-                                            @foreach($product_colors as $color)
-                                            <label for="color-{{ $color->index }}">{{ $color->color }}
-                                                <input type="radio" id="color-{{ $color->index }}" name="color" value="{{ $color->color }}">
-                                            </label>
-                                            @endforeach
-                                        </th>
-                                    </tr>
-                                </table>
-                                <br>
-                                <div class="quantity">
-                                    <label>Số Lượng:</label>
-                                    <div class="product__details__cart__option">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input id="quantity_input" type="number" name="quantity" value="1" min="1" max="100">
+                                                @if(!session('user_id') || session('role') == 'Admin')
+                                                <button type="submit" class="primary-btn" onclick="return confirm('Xin chào {{session('fullname')}} (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">
+                                                    Mua Ngay
+                                                </button>
+                                                @endif
                                             </div>
                                         </div>
-                                        <button type="submit" class="primary-btn">Mua Ngay</button>
-                                    </div>
-                                </div>
-                                </form>
-                                @endif
+                                    </form>
                             </div>
                             </div>
                         </td>

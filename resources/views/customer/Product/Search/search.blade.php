@@ -36,14 +36,14 @@
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseOne">Thể loại</a>
                                     </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
-                                                @foreach($category_sidebars as $category_sidebar)
-                                                    <li><a href="#">{{$category_sidebar->category_name}}</a></li>
-                                                @endforeach
-                                                </ul>
+                                                    <ul>
+                                                    @foreach($category_sidebars as $category_sidebar)
+                                                        <li><a href="{{ route('filter.category', ['category_name' => $category_sidebar->category_name ]) }}">{{$category_sidebar->category_name}}</a></li>
+                                                    @endforeach
+                                                    </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -56,9 +56,9 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                @foreach($brand_sidebars as $brand_sidebar)
-                                                    <li><a href="#">{{$brand_sidebar->brand_name}}</a></li>
-                                                @endforeach
+                                                    @foreach($brand_sidebars as $brand_sidebar)
+                                                        <li><a href="{{ route('filter.brand', ['brand_name' => $brand_sidebar->brand_name]) }}">{{ $brand_sidebar->brand_name }}</a></li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
@@ -72,13 +72,13 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="/ktcstore/shop/filter/price_under_200000">Dưới {{number_format(200000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_200000-500000">{{number_format(200000)}}đ - {{number_format(500000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_500000-800000">{{number_format(500000)}}đ - {{number_format(800000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_800000-1000000">{{number_format(800000)}}đ - {{number_format(1000000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_1000000-1500000">{{number_format(1000000)}}đ - {{number_format(1500000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_1500000-2000000">{{number_format(1500000)}}đ - {{number_format(2000000)}}đ</a></li>
-                                                    <li><a href="/ktcstore/shop/filter/price_over-2000000">Trên {{number_format(2000000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => 'under-200']) }}">Dưới {{number_format(200000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => '200-500']) }}">{{number_format(200000)}}đ - {{number_format(500000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => '500-800']) }}">{{number_format(500000)}}đ - {{number_format(800000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => '800-1000']) }}">{{number_format(800000)}}đ - {{number_format(1000000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => '1000-1500']) }}">{{number_format(1000000)}}đ - {{number_format(1500000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => '1500-2000']) }}">{{number_format(1500000)}}đ - {{number_format(2000000)}}đ</a></li>
+                                                    <li><a href="{{ route('filter.price', ['price_range' => 'over-200']) }}">Trên {{number_format(2000000)}}đ</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -91,27 +91,21 @@
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__size">
-                                                <label for="sm">s
-                                                    <input type="radio" id="sm">
-                                                </label>
-                                                <label for="md">m
-                                                    <input type="radio" id="md">
-                                                </label>
-                                                <label for="xl">xl
-                                                    <input type="radio" id="xl">
-                                                </label>
-                                                <label for="2xl">2xl
-                                                    <input type="radio" id="2xl">
-                                                </label>
-                                                <label for="xxl">xxl
-                                                    <input type="radio" id="xxl">
-                                                </label>
-                                                <label for="3xl">3xl
-                                                    <input type="radio" id="3xl">
-                                                </label>
-                                                <label for="4xl">4xl
-                                                    <input type="radio" id="4xl">
-                                                </label>
+                                                <form action="" method="GET">
+                                                    <label for="size_sm">S
+                                                        <input type="radio" id="size_sm" name="size" value="S">
+                                                    </label>
+                                                    <label for="size_md">M
+                                                        <input type="radio" id="size_md" name="size" value="M">
+                                                    </label>
+                                                    <label for="size_xl">XL
+                                                        <input type="radio" id="size_xl" name="size" value="XL">
+                                                    </label>
+                                                    <label for="size_2xl">2XL
+                                                        <input type="radio" id="size_2xl" name="size" value="2XL">
+                                                    </label>
+                                                    <button type="submit">Lọc</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +158,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__left">
-                                        <p>Hiển thị 1-12 của 200 kết quả</p>
+                                        <!-- <p>Hiển thị 1-12 của 200 kết quả</p> -->
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">

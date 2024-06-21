@@ -20,7 +20,7 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Checkout Section Begin -->
-    @if(session()->exists('shopping_cart'))
+@if(session()->has('shopping_cart_' . auth()->id()))
     @php
     $total_in_cart = 0;
     @endphp
@@ -67,13 +67,26 @@
                                     </tr>
                                     @foreach ($shopping_cart as $cart => $details)
                                     @php
-                                        $total = $details['price'] * $details['quantity'];
-                                        $total_in_cart += $total;
+                                        if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price']) 
+                                        {
+                                            $total = $details['sale_price'] * $details['quantity'];
+                                            $total_in_cart += $total;
+                                        }
+                                        else 
+                                        {
+                                            $total = $details['price'] * $details['quantity'];
+                                            $total_in_cart += $total;
+                                        }
                                     @endphp
                                     <tr>
                                         <td><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></td>
                                         <td>{{$details['quantity']}}</td>
+                                        @if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price'])
+                                        <td>{{number_format($details['sale_price'])}}đ</td>
+                                        
+                                        @else
                                         <td>{{number_format($details['price'])}}đ</td>
+                                        @endif
                                         <td>{{number_format($total)}}đ</td>
                                     </tr>
                                     @endforeach
