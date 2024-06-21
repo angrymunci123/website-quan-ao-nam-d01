@@ -23,7 +23,7 @@ class NewsController extends Controller
 
         $news = News::paginate(10);
         Paginator::useBootstrap();
-        return view('admin.news.list', compact('news'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('admin.news.news_list', compact('news'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
     public function create_news()
     {
