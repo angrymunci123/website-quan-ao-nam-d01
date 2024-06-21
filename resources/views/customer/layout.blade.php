@@ -133,7 +133,7 @@
 
                                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Bạn có muốn đăng xuát không?')) { document.getElementById('logout-form').submit(); }">
                                         Đăng xuất
-                                        </a>
+                                        </a>    
                                     </div>
                                 </div>
                                 @endif
