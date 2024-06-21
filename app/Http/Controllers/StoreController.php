@@ -19,7 +19,8 @@ class StoreController extends Controller
 {
     public function mainpage()
     {
-        if (Auth::check()) {
+        $user = Auth::user();
+        if (Auth::check() && $user->role == 'Khách Hàng' || $user->role == 'Admin') {
             $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
                 ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function($join) {
                     $join->on('product_detail.product_id', '=', 'min_prices.product_id')
@@ -32,8 +33,6 @@ class StoreController extends Controller
                 ->paginate(16);
         Paginator::useBootstrap();
 
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
         // Xử lý chuẩn hóa tên sản phẩm
         foreach ($products as $product) 
         {
@@ -52,14 +51,8 @@ class StoreController extends Controller
             $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
 
             $product->standardized_product_name = $standardized_product_name;
-            return redirect('/ktcstore');
         }
-    
-        $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') 
-        {
-            return redirect('/ktcstore'); 
-        }
+
         return view("customer.index");
         }
     }
