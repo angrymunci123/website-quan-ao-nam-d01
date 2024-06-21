@@ -109,7 +109,7 @@ class BrandController extends Controller
 
         if ($product_exist) {
             DB::rollback();
-            return redirect('/admin/category')->with('notification', 'Không thể xóa hãng sản xuất vì có sản phẩm mang mã hãng sản xuất đang tồn tại!');
+            return back()->with('notification', 'Không thể xóa hãng sản xuất vì có sản phẩm mang mã hãng sản xuất đang tồn tại!');
         }
 
         // 2. Nếu không có product mang brand_id tương ứng tồn tại, tiến hành xóa brand
@@ -118,6 +118,6 @@ class BrandController extends Controller
 
         DB::commit();
 
-        return redirect('/admin/brand_id')->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');
+        return back()->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');
     }
 }

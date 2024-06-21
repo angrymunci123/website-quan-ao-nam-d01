@@ -136,7 +136,7 @@ class ProductController extends Controller
 
         if ($product_detail_exist) {
             DB::rollback();
-            return redirect('/admin/product')->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
+            return back()->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
         }
 
         // 2. Nếu không có product detail tồn tại, tiến hành xóa product
@@ -145,7 +145,7 @@ class ProductController extends Controller
 
         DB::commit();
 
-        return redirect('/admin/product')->with('notification', 'Xóa Sản Phẩm Thành Công!');
+        return back()->with('notification', 'Xóa Sản Phẩm Thành Công!');
     }
 
 
