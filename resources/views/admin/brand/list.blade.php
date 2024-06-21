@@ -54,14 +54,14 @@
                             </td>
                         </td>
                     </tr>
-                    <div class="popup" id="confirmPopup">
+                    <div class="popup" id="confirmPopup-{{$brand->brand_id}}">
                       <div class="popup-content">
-                          <p>Bạn có chắc chắn muốn xóa mục này??</p>
-                          <form action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST" id="deleteForm-{{$brand->brand_id}}">
-                            @csrf
-                            <button id="confirmDeleteButton">Xác nhận</button>
-                          </form>
-                          <button id="cancelDeleteButton">Hủy bỏ</button>
+                        <p>Bạn có chắc chắn muốn xóa hãng sản xuất này không? {{$brand->brand_id}}</p>
+                        <form action="/admin/brand/delete_brand/brand_id={{$brand->brand_id}}" method="POST">
+                            @csrf 
+                            <button type="submit" id="confirmDeleteButton-{{$brand->brand_id}}" class="btn btn-danger">Xác nhận</button>
+                            </form>
+                            <button id="cancelDeleteButton-{{$brand->brand_id}}" class="btn btn-secondary">Hủy bỏ</button>
                       </div>
                     </div>
                     @endforeach
@@ -174,28 +174,20 @@
     </div>
   </div>
   <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-    let confirmPopup = document.getElementById("confirmPopup");
-    let deleteForm = document.getElementById("deleteForm-{{$brand->brand_id}}");
+    function openPopup(brand_id) {
+      let confirmPopup = document.getElementById("confirmPopup-" + brand_id);
+      confirmPopup.classList.add("open-popup");
 
-    function openPopup() {
-        confirmPopup.classList.add("open-popup");
-    }
+      let deleteForm = document.getElementById("deleteForm-" + brand_id);
 
-    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+      document.getElementById('confirmDeleteButton-' + brand_id).addEventListener('click', function() {
         confirmPopup.classList.remove("open-popup");
         deleteForm.submit(); // Thực hiện submit form để xóa
-    });
+      });
 
-    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
+      document.getElementById('cancelDeleteButton-' + brand_id).addEventListener('click', function() {
         confirmPopup.classList.remove("open-popup");
-    });
-
+      });
+    }
   </script>
   @endsection
