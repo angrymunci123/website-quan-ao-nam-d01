@@ -9,27 +9,19 @@
   <title>
    KTC Store Dashboard
   </title>
-  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
   <link href="{{asset('admin_assets/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/dropdown.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/popup.css')}}" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('admin_assets/css/soft-ui-dashboard.css?v=1.0.7')}}" rel="stylesheet" />
-  <!-- Nepcha Analytics (nepcha.com) -->
-  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 <body>
 
-
-<!-- Side bar -->
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     {{-- Logo + Dashboard button --}}
     <div class="sidenav-header">
@@ -144,12 +136,11 @@
                         <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="/admin/admin_info" class="dropdown-item">My Profile</a>
+                        <a href="/admin/admin_info" class="dropdown-item">Thông tin cá nhân</a>
                         <a href="#" class="dropdown-item">Settings</a>
                         <a class="dropdown-item" href="/admin/logoutProcess" data-toggle="modal" data-target="#logoutModal"
                            onclick="return confirm('Are you sure you want to log out?');">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Đăng xuất
                         </a>
                     </div>
                 </div>

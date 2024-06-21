@@ -106,7 +106,7 @@ Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"])
 Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
 
 Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
-Route::get('/ktcstore/shopping-cart/remove_from_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
+Route::get('/ktcstore/shopping-cart/remove_from_cart', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
 
