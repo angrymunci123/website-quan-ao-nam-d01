@@ -35,7 +35,7 @@ Route::get('/login', [AuthController::class, "login_form"]);
 Route::post('/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 Route::get('/register', [AuthController::class, "register"]);
 Route::post('/register_process', [AuthController::class, "registerProcess"])->name("registerProcess");
-Route::post('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
+Route::get('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
 Route::post('/ktcstore/logout', [AuthController::class, "logout_customer"])->name('logout_customer');
 
 //Admin

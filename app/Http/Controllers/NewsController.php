@@ -25,10 +25,12 @@ class NewsController extends Controller
         Paginator::useBootstrap();
         return view('admin.news.news_list', compact('news'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
+
+
     public function create_news()
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
 
         $user = Auth::user();
@@ -78,6 +80,7 @@ class NewsController extends Controller
         $news->delete();
         return redirect('/admin/news')->with('notification', 'Xóa Tin Tức Thành Công!');
     }
+
     public function edit_news($news_id)
     {
         if (!Auth::check()) {
@@ -92,6 +95,7 @@ class NewsController extends Controller
         $news = News::find($news_id);
         return view('admin.news.edit_news', compact('news'));
     }
+    
     public function update_news(Request $request, $news_id)
     {
         if (!Auth::check()) {

@@ -192,7 +192,8 @@
   </div>
   <script>
     let confirmPopup = document.getElementById("confirmPopup");
-    let deleteForm = document.getElementById("deleteForm-{{ $inj->product_id }}");
+    
+    let deleteForm = document.getElementById("deleteForm-{{$inj->product_id}}");
 
     function openPopup() {
         confirmPopup.classList.add("open-popup");

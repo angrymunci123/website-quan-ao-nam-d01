@@ -183,7 +183,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#">Thông tin cá nhân</a>
-                  <a class="dropdown-item" href="#">Đăng xuất</a>
+                  <a class="dropdown-item" href="/admin/logout">Đăng xuất</a>
                 </div>
               </div>
             </div>
@@ -256,23 +256,6 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('admin_assets/js/soft-ui-dashboard.min.js?v=1.0.7')}}"></script>
-    <script>
-      let confirmPopup = document.getElementById("confirmPopup");
-      let logoutForm = document.getElementById("logoutForm");
-
-      function openPopup() {
-        confirmPopup.classList.add("open-popup");
-      }
-
-      document.getElementById('confirmLogoutButton').addEventListener('click', function () {
-        confirmPopup.classList.remove("open-popup");
-        logoutForm.submit();
-      });
-
-      document.getElementById('cancelLogoutButton').addEventListener('click', function () {
-        confirmPopup.classList.remove("open-popup");
-      });
-    </script>
 
     @yield('content')
 
@@ -280,4 +263,4 @@
 
 </body>
 
-</html>
+</html> 
