@@ -20,40 +20,38 @@ class StoreController extends Controller
     public function mainpage()
     {
         $user = Auth::user();
-        if (Auth::check() && $user->role == 'Khách Hàng' || $user->role == 'Admin') {
-            $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-                ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function ($join) {
-                    $join->on('product_detail.product_id', '=', 'min_prices.product_id')
-                        ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
-                })
-                ->where('product_detail.size', '=', 'S')
-                ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-                ->groupBy('products.product_id', 'products.product_name')
-                ->orderBy('products.product_id')
-                ->paginate(16);
-            Paginator::useBootstrap();
+        $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function ($join) {
+                $join->on('product_detail.product_id', '=', 'min_prices.product_id')
+                    ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
+            })
+            ->where('product_detail.size', '=', 'S')
+            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+            ->groupBy('products.product_id', 'products.product_name')
+            ->orderBy('products.product_id')
+            ->paginate(16);
+        Paginator::useBootstrap();
 
-            // Xử lý chuẩn hóa tên sản phẩm
-            foreach ($products as $product) {
-                $standardized_product_name = $product->product_name;
-                $standardized_product_name = strtolower($standardized_product_name);
-                $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-                $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-                $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-                $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
+        // Xử lý chuẩn hóa tên sản phẩm
+        foreach ($products as $product) {
+            $standardized_product_name = $product->product_name;
+            $standardized_product_name = strtolower($standardized_product_name);
+            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
+            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
+            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
+            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
+            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
 
-                $product->standardized_product_name = $standardized_product_name;
-            }
-
-            return view("customer.index");
+            $product->standardized_product_name = $standardized_product_name;
         }
+
+        return view("customer.index");
     }
 
     public function contact()
