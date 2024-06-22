@@ -228,6 +228,10 @@ class StoreController extends Controller
 
     public function checkout()
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+        
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
         if (isset($shopping_cart)) {
@@ -264,28 +268,28 @@ class StoreController extends Controller
         if ($create_order) {
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
     
-            foreach ($shopping_cart as $recordData) {
-                if ($recordData['price'] && $recordData['sale_price'] == 0) {
-                    $price_to_use = $recordData['price'];
+            foreach ($shopping_cart as $cart_data) {
+                if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
+                    $price_to_use = $cart_data['price'];
                 }
 
-                else if ($recordData['sale_price'] && $recordData['sale_price'] < $recordData['price']) {
-                    $price_to_use = $recordData['sale_price'];
+                else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
+                    $price_to_use = $cart_data['sale_price'];
                 }
     
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
-                    'product_detail_id' => $recordData['product_detail_id'],
+                    'product_detail_id' => $cart_data['product_detail_id'],
                     'price' => $price_to_use,
-                    'quantity' => $recordData['quantity'],
+                    'quantity' => $cart_data['quantity'],
                     'created_at' => now(),
                     'updated_at' => NULL
                 ]);
 
-                $product_detail = Product_Detail::find($recordData['product_detail_id']);
+                $product_detail = Product_Detail::find($cart_data['product_detail_id']);
                 if ($product_detail) 
                 {
-                    $product_detail->quantity -= $recordData['quantity'];
+                    $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
                 }
             }
@@ -296,73 +300,6 @@ class StoreController extends Controller
         }
     
         return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
-    }
-
-    public function order_history()
-    {
-        if (!Auth::check()) {
-            return redirect('/ktcstore');
-        }
-    
-        $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') {
-            return redirect('/ktcstore'); 
-        }
-
-        $orders = Order::where('order.user_id', session('user_id'))->get();
-        return view('customer.order_history', compact('orders'));
-    }
-
-    public function order_detail($order_id)
-    {
-        $user_id = session('user_id');
-
-        $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-            ->join('users', 'order.user_id', '=', 'users.user_id')
-            ->where('order.order_id', '=', $order_id)
-            ->where('users.user_id', '=', $user_id)
-            ->select('order.*', 'order_detail.*', 'order.created_at as order_created_at')
-            ->get();
-
-        $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
-            ->join('products', 'product_detail.product_id', '=', 'products.product_id')
-            ->where('order_detail.order_id', '=', $order_id)
-            ->select('order_detail.*', 'products.product_id', 'products.product_name')
-            ->get();
-        return view("customer.order_detail_cus", compact('order_details', 'product_order'));
-    }
-
-    public function cancel_order($order_id)
-    {
-        $order = Order::find($order_id);
-        if (!$order) {
-            return redirect('/ktcstore/order_history');
-        }
-
-        if ($order->user_id != auth()->id()) {
-            return redirect('/ktcstore');
-        }
-
-        if ($order->status == 'Đã xác nhận') {
-            return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');
-        }
-
-        $order->status = 'Đã hủy';
-        $order->save();
-
-        // Lấy chi tiết đơn hàng
-        $orderDetails = Order_Detail::where('order_id', $order_id)->get();
-
-        // Cập nhật số lượng sản phẩm
-        foreach ($orderDetails as $orderDetail) {
-            $product_detail = Product_Detail::find($orderDetail->product_detail_id);
-            if ($product_detail) {
-                $product_detail->quantity += $orderDetail->quantity;
-                $product_detail->save();
-            }
-        }
-
-        return redirect('/ktcstore/order_history')->with('notification', 'Hủy đơn hàng thành công!');
     }
 
     public function filter_price_under200() 
