@@ -119,4 +119,7 @@ class NewsController extends Controller
         ]);
         return redirect('/admin/news')->with('notification', 'Sửa Tin Tức Thành Công!');
     }
+    public function new_detail(){
+        return view('admin.news.news_detail');
+    }
 }
