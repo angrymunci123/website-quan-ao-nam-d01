@@ -15,9 +15,10 @@
                 </th>
                 </table>
             </div>
-            <div class="input-group" style="padding-left: 23px">
-              <form style="width: 300px" action="/admin/product/search">
+            <div class="input-group" style="width: 300px; padding-left: 23px">
+              <form method="post" style="width: 300px" action="/admin/product/search_product" enctype='multipart/form-data'>
                 <input type="text" class="form-control" name="keywords" placeholder="Sản phẩm...">
+                @csrf
               </form>
             </div>
             <div class="card-body">

@@ -281,8 +281,15 @@ class StoreController extends Controller
                     'created_at' => now(),
                     'updated_at' => NULL
                 ]);
+
+                $product_detail = Product_Detail::find($recordData['product_detail_id']);
+                if ($product_detail) 
+                {
+                    $product_detail->quantity -= $recordData['quantity'];
+                    $product_detail->save();
+                }
             }
-            
+
             session()->forget('shopping_cart_' . auth()->id());
     
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
@@ -327,18 +334,35 @@ class StoreController extends Controller
 
     public function cancel_order($order_id)
     {
-        $orders = Order::find($order_id);
-        $customer_id = $orders->customer_id;
-        if ($customer_id != Auth::user()->order_id) {
-            return redirect('/storeIndex');
+        $order = Order::find($order_id);
+        if (!$order) {
+            return redirect('/ktcstore/order_history');
         }
-        if ($orders->status == 'Đã xác nhận') {
+
+        if ($order->user_id != auth()->id()) {
+            return redirect('/ktcstore');
+        }
+
+        if ($order->status == 'Đã xác nhận') {
             return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');
         }
-        $orders->status = 'Đã hủy';
-        $orders->save();
 
-        return redirect('/storeIndex/order_history')->with('notification', 'Hủy đơn hàng thành công!');
+        $order->status = 'Đã hủy';
+        $order->save();
+
+        // Lấy chi tiết đơn hàng
+        $orderDetails = Order_Detail::where('order_id', $order_id)->get();
+
+        // Cập nhật số lượng sản phẩm
+        foreach ($orderDetails as $orderDetail) {
+            $product_detail = Product_Detail::find($orderDetail->product_detail_id);
+            if ($product_detail) {
+                $product_detail->quantity += $orderDetail->quantity;
+                $product_detail->save();
+            }
+        }
+
+        return redirect('/ktcstore/order_history')->with('notification', 'Hủy đơn hàng thành công!');
     }
 
     public function filter_price_under200() 
