@@ -304,4 +304,33 @@ class ProductController extends Controller
         $product_detail->delete();
         return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
     }
+
+    public function search_product()
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore');
+        }
+
+        if (isset($_POST['keywords'])) 
+        {
+            $search_text = $_POST['keywords'];
+            $search_products = Product::where('product_name', 'LIKE', "%$search_text%")
+            ->join("brands", "products.brand_id", "=", "brands.brand_id")
+            ->join("category", "products.category_id", "=", "category.category_id")
+            ->orderBy("products.product_id", "desc")
+            ->paginate(5);
+            Paginator::useBootstrap();
+            return view('admin.product.search_product', compact('search_products'), ['keywords' => $search_products])->with('i', (request()->input('page', 1) - 1) * 5);
+        }
+
+        else 
+        {
+            return back();
+        }
+    }
 }

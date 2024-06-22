@@ -16,8 +16,10 @@
               </table>
             </div>
             <div class="input-group" style="width: 300px; padding-left: 23px">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
+              <form method="post" style="width: 300px" action="/admin/product/search_product" enctype='multipart/form-data'>
+                <input type="text" class="form-control" name="keywords" placeholder="Sản phẩm...">
+                @csrf
+              </form>
             </div>
             <div class="card-body">
                 @if(Session::has('notification'))
