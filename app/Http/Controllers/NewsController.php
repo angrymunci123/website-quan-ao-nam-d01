@@ -54,7 +54,7 @@ class NewsController extends Controller
 
         $title = $request->title;
         $content = $request->content;
-        $user_id = Auth::id();
+        $user_id = auth()->id();
         DB::table('news')->insert([
             'user_id' => $user_id,
             'title' => $title,
@@ -119,7 +119,20 @@ class NewsController extends Controller
         ]);
         return redirect('/admin/news')->with('notification', 'Sửa Tin Tức Thành Công!');
     }
-    public function new_detail(){
-        return view('admin.news.news_detail');
+
+    public function view_news(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore');
+        }
+
+        $news_id = $request->news_id;
+        $news_detail = DB::table('news')->where('news_id', '=', $news_id)->get();
+        return view('admin.news.news_detail', compact('news_detail'));
     }
 }

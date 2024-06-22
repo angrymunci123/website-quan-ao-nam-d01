@@ -68,7 +68,9 @@ Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
-Route::get('/admin/news/new_detail', [NewsController::class, "new_detail"]);
+
+Route::get('/admin/news/view_news/news_id={news_id}', [NewsController::class, "view_news"]);
+
 Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
 Route::post('/admin/news/save_news', [NewsController::class, "save_news"]);
 Route::get('/admin/news/edit_news/news_id={news_id}', [NewsController::class, "edit_news"]);
@@ -83,6 +85,7 @@ Route::get('/admin/product/edit_product/product_id={product_id}', [ProductContro
 Route::get('/admin/product/product_detail/product_id={product_id}', [ProductController::class, "view_product"]);
 Route::post('/admin/product/update_product/product_id={product_id}', [ProductController::class, "update_product"]);
 Route::post('/admin/product/delete_product/product_id={product_id}', [ProductController::class, "delete_product"]);
+Route::post('/admin/product/search_product', [ProductController::class, "search_product"]);
 
 //Product Detail
 Route::get('/admin/product/product_detail/add_product_detail/product_id={product_id}', [ProductController::class, "add_product_detail"]);
@@ -117,6 +120,9 @@ Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
 Route::get('/ktcstore/order_history', [StoreController::class, "order_history"]);
 
 Route::get('/ktcstore/order_detail/order_id={order_id}', [StoreController::class, "order_detail"]);
+
+Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [StoreController::class, "cancel_order"]);
+
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 
 Route::get('/ktcstore/shop/filter_price/{price_range}', [StoreController::class, "filter_price"])->name('filter.price');
@@ -126,3 +132,5 @@ Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filt
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
 
 Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
+
+

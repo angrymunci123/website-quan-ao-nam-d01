@@ -203,7 +203,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <a href="logout-url" class="btn btn-primary">Đăng xuất</a>
+                    <a href="/admin/logout" class="btn btn-primary">Đăng xuất</a>
                   </div>
                 </div>
               </div>
@@ -215,7 +215,6 @@
               <i class="fa fa-bell cursor-pointer"></i>
             </a>
             <div class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-              {{-- Notif cho khi có đơn hàng chưa duyệt --}}
               <div>
                 <a class="dropdown-item border-radius-md" href="javascript:;">
                   <div class="d-flex py-1">
