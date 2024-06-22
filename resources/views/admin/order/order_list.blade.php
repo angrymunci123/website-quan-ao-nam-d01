@@ -23,26 +23,33 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Đơn Hàng</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th>                      
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th> 
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Trạng thái</th>                      
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Chức Năng</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($orders as $order)
                     <tr>
                       <td class="text-center">
-                        <h5 class="mb-0"></h5>
+                        <h5 class="mb-0">{{$order->order_id}}</h5>
                       </td>
                       <td class="text-center">
-                        <h5 class="mb-0"></h5>
+                        <h5 class="mb-0">{{$order->created_at->format('d/m/Y') }}</h5>
+                      </td>
+                      <td class="text-center">
+                        <h5 class="mb-0">{{$order->status}}</h5>
                       </td>
                       <td style="width:100px" class="text-center">
-                            <form action="/admin/order_detail" method="GET">    
+                            <form action="/admin/order/order_detail/order_id{{$order->order_id}}" method="GET">    
                                 <button type="submit" class="btn btn-info" style="width:75px; color:white">Xem</button>
                             </form>
                         </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
+                {{ $orders->onEachSide(1)->links() }}
               </div>
             </div>
           </div>

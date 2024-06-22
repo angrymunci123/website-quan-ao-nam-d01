@@ -17,60 +17,80 @@
                     </div>
                 @endif
             </div>
+            @php 
+                $total_price_order = 0;
+            @endphp
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">   
                     <table class="table align-items-center mb-0" style="padding-left: 15px; padding-right: 15px; border-style: none">
                         <tbody>
                         <tr style="width:100%">
+                            @foreach ($order_details as $order_detail) @endforeach
                         <td class="font-weight-bolder opacity-7" style="float: left; width: 50%">
                             <div>
-                                <p><b>Họ tên người nhận: </b>Nguyễn Trung Thành</p>
-                                <p><b>SDT:</b></p>
-                                <p><b>Địa chỉ:</b></p>
-                                <p><b>Ngày đặt:</b></p>
+                                <p><b>Họ tên người nhận: </b>{{$order_detail->consignee}}</p>
+                                <p><b>SDT:</b> {{$order_detail->phone_number}}</p>
+                                <p><b>Địa chỉ:</b> {{$order_detail->address}}</p>
+                                <p><b>Ngày đặt:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
                             </div>
                         </td>
                         <td class="font-weight-bolder opacity-7" style="width: 50%">
                             <div style="float:right">
-                                <p><b>ID đơn hàng:</b></p>
-                                <p><b>Tình trạng đơn hàng:</b></p>
-                                <p><b>Phương thức thanh toán:</b></p>
-                                <p><b>Ngày chỉnh sửa:</b></p>
+                                <p><b>ID đơn hàng:</b> {{$order_detail->order_id}}</p>
+                                <p><b>Tình trạng đơn hàng:</b> {{$order_detail->status}}</p>
+                                <p><b>Phương thức thanh toán:</b> {{$order_detail->payment_method}}</p>
+                                @if($order_detail->updated_at)
+                                <p><b>Ngày xác nhận đơn hàng:</b> {{$order_detail->updated_at->format('d/m/Y') }}</p>
+                                @else
+                                <p><b>Ngày xác nhận đơn hàng:</b></p>
+                                @endif
                             </div>
                         </td>                      
                         </tr>
                         </tbody>
                     </table>
-                    <table class="table align-items-center table-bordered" style="padding: 20px; width:100%;">
-                        <thead class="thead-light">
+                    <table class="table align-items-center table-bordered" style="padding: 20px; width:95%; margin:auto; background-color:#F3F2EE">
+                        <thead style="background-color:white">
                         <tr style="width:100%; text-align: center">
-                            <th>Sản phẩm</th>
-                            <th>Số lượng</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
+                            <th><b>Sản phẩm</b></th>
+                            <th><b>Số lượng</b></th>
+                            <th><b>Đơn giá</b></th>
+                            <th><b>Thành tiền</b></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr style="width:100%; text-align: center">
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
+                        
+                        <tbody style="background-color:white">
+                        @foreach($product_order as $product)
+                            @php 
+                                $total = 0;
+                                $total += $product->price * $product->quantity;
+                                $total_price_order += $total;
+                            @endphp
+                        <tr>
+                            <td>{{$product->product_name}}</td>
+                            <td class="text-center">{{$product->quantity}}</td>
+                            <td class="text-center">{{number_format($product->price)}}đ</td>
+                            <td class="text-center">{{number_format($total)}}đ</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td class="text-center"><b>Tổng tiền</b></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><b>{{number_format($total_price_order)}}đ</b></td>
                         </tr>
                         </tbody>
                     </table>
-                    <table style="width: 100%"> 
-                        <tr style="width: 100%">
-                            <td class="font-weight-bolder" style="width: 50%">
-                                <div style="float: left; padding-left: 50px">
-                                    <p><b>Tổng:</b></p>
-                                </div>
-                            </td>                    
-                        </tr>
-                    </table>
-                    <form action="" method="GET" style="padding-right: 20px; float: right">    
-                        <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại<i></i></button>
+                    <br>
+                    <form action="/admin/order" method="GET" style="padding-right: 20px; float: right">    
+                        <button type="submit" class="btn btn-secondary" style="width: 110px; color:white">Quay lại<i></i></button>
                     </form>    
+                    <form action="/admin/order/confirm/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">    
+                        <button type="submit" class="btn btn-success" style="width: 110px; color:white">Xác nhận<i></i></button>
+                    </form> 
+                    <form action="/admin/order/cancel/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">    
+                        <button type="submit" class="btn btn-danger" style="width: 150px; color:white">Hủy đơn hàng<i></i></button>
+                    </form> 
                 </div>
             </div>
           </div>
