@@ -68,7 +68,9 @@ Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
+
 Route::get('/admin/news/view_news/news_id={news_id}', [NewsController::class, "view_news"]);
+
 Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
 Route::post('/admin/news/save_news', [NewsController::class, "save_news"]);
 Route::get('/admin/news/edit_news/news_id={news_id}', [NewsController::class, "edit_news"]);

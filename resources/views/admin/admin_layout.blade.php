@@ -264,7 +264,7 @@
                               </g>
                             </g>
                           </g>
-                        </g>
+                        </svg>
                       </svg>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
