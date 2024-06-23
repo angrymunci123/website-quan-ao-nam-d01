@@ -52,9 +52,10 @@
                     </div>
                 </div>
             </div>
+            <br>
             <div style="text-align:center">
-                <form action="/admin/product/product_detail/product_id={{$inj->product_id}}" method="GET">
-                    <button type="submit" class="btn btn-info" style="width:75px; color:white">Xem</button>
+                <form action="" method="GET">
+                    <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
                 </form>
             </div>
         </div>
