@@ -65,10 +65,14 @@ Route::post('/admin/category/delete_category/category_id={category_id}', [Catego
 
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
+Route::get('/admin/user_info', [AdminController::class, "userInfo"]);
+Route::get('/admin/user_info/change_password', [AdminController::class, "change_password"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
+
 Route::get('/admin/news/view_news/news_id={news_id}', [NewsController::class, "view_news"]);
+
 Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
 Route::post('/admin/news/save_news', [NewsController::class, "save_news"]);
 Route::get('/admin/news/edit_news/news_id={news_id}', [NewsController::class, "edit_news"]);
@@ -109,6 +113,8 @@ Route::post('/admin/personal_info/confirm_change_password', [OrderController::cl
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
+Route::get('/ktcstore/cus_info', [StoreController::class, "cusInfo"]);
+Route::get('/ktcstore/change_password', [StoreController::class, "change_password"]);
 Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
 Route::get('/ktcstore/blog', [StoreController::class, "blog"]);

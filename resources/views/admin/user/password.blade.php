@@ -6,87 +6,98 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <table style="width: 100%">
-                        <tr>
-                            <th style="width:75%"></th>
-                            <th colspan="3" style="width:25%"></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Chi tiết bài viết:</h4>
-                            </td>
-                            <td>
-                                <form action="./" method="GET">
-                                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Quay
-                                        lại</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="" method="GET">
-                                    <button type="submit" class="btn btn-warning"
-                                        style="width:75px; color:white; padding-left: 10px; padding-right: 10px;">Sửa</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="" method="GET">
-                                    <button type="submit" class="btn btn-danger"
-                                        style="width:75px; color:white">Xóa</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="card-body">
-                    @if(Session::has('notification'))
-                        <div class="alert alert-success" style="color:white">
-                            {{Session::get('notification')}}
-                        </div>
-                    @endif
+                    <h4>Đổi Mật khẩu:</h4>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    <div class="container align-items-center">
-                        <div>
-                            <center><img src="{{asset('temp_assets/img/product/product-1.jpg')}}"
-                                    style="padding-bottom: 10px;"></center>
-                        </div>
-                        <div class="blog__details__content">
-
-                            <div class="blog__details__text">
-                                <p>Hydroderm is the highly desired anti-aging cream on the block. This serum restricts
-                                    the
-                                    occurrence of early aging sings on the skin and keeps the skin younger, tighter and
-                                    healthier. It reduces the wrinkles and loosening of skin. This cream nourishes the
-                                    skin
-                                    and brings back the glow that had lost in the run of hectic years.</p>
-                                <p>The most essential ingredient that makes hydroderm so effective is Vyo-Serum, which
-                                    is a
-                                    product of natural selected proteins. This concentrate works actively in bringing
-                                    about
-                                    the natural youthful glow of the skin. It tightens the skin along with its
-                                    moisturizing
-                                    effect on the skin. The other important ingredient, making hydroderm so effective is
-                                    “marine collagen” which along with Vyo-Serum helps revitalize the skin.</p>
-                            </div>
-                            <div class="blog__details__text">
-                                <p>Vyo-Serum along with tightening the skin also reduces the fine lines indicating aging
-                                    of
-                                    skin. Problems like dark circles, puffiness, and crow’s feet can be control from the
-                                    strong effects of this serum.</p>
-                                <p>Hydroderm is a multi-functional product that helps in reducing the cellulite and
-                                    giving
-                                    the body a toned shape, also helps in cleansing the skin from the root and not
-                                    letting
-                                    the pores clog, nevertheless also let’s sweeps out the wrinkles and all signs of
-                                    aging
-                                    from the sensitive near the eyes.</p>
-                            </div>
-                        </div>
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th colspan="2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="float:right; width:50%">
+                                        <h6 style=" padding-bottom: 5px;">Mật khẩu cũ:</h6>
+                                        <h6 style=" padding-bottom: 5px;">Mật khẩu mới:</h6>
+                                        <h6 style=" padding-bottom: 5px;">Xác nhận mật khẩu mới:</h6>
+                                    </td>
+                                    <td style="width:50%">
+                                        <div style=" padding-bottom: 5px;">
+                                            <input type="text" placeholder="**********" style="width:300px">
+                                        </div>
+                                        <div style=" padding-bottom: 5px;">
+                                            <input type="text" placeholder="**********" style="width:300px">
+                                        </div>
+                                        <div style=" padding-bottom: 5px;">
+                                            <input type="text" placeholder="**********" style="width:300px">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="width: 100%">
+                            <tr>
+                                <th colspan="2"></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form action="" method="GET" style="text-align:right">
+                                        <button type="submit" class="btn btn-info"
+                                            style="width:75px; color:white">Lưu</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="" method="GET" style="text-align:left">
+                                        <button type="submit" class="btn btn-warning" style="width:100px; color:white">Quay lại</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <footer class="footer pt-3  ">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>,
+                        made with <i class="fa fa-heart"></i> by
+                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                        for a better web.
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative
+                                Tim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
+                                target="_blank">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
+                                target="_blank">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                                target="_blank">License</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 </main>
 <div class="fixed-plugin">
