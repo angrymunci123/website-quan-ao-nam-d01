@@ -135,7 +135,7 @@ Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_de
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
 Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
-
+Route::get('vnpay_return', [StoreController::class, "vnpay_return"])->name('vnpay_return');
 //Customer - Order
 Route::get('/ktcstore/order_history', [CustomerController::class, "order_history"]);
 Route::get('/ktcstore/order_detail/order_id={order_id}', [CustomerController::class, "order_detail"]);
@@ -148,7 +148,3 @@ Route::get('/ktcstore/personal_info/edit_info', [OrderController::class, "edit_i
 Route::post('/ktcstore/personal_info/update_info', [OrderController::class, "update_info"]);
 Route::get('/ktcstore/personal_info/change_password', [OrderController::class, "change_password"]);
 Route::post('/ktcstore/personal_info/confirm_change_password', [OrderController::class, "change_password_process"]);
-
-
-
-

@@ -254,6 +254,7 @@ class StoreController extends Controller
         $address = $request->address;
         $phone_number = $request->phone_number;
         $shipping_unit = $request->shipping_unit;
+        $user_id = session('user_id');
 
         // AAAAAAAAAAAAAAA
 
@@ -265,23 +266,75 @@ class StoreController extends Controller
                 'address' => $address,
                 'payment_method' => $payment_method,
                 'shipping_unit' => $shipping_unit,
-                'user_id' => session('user_id'),
+                'user_id' => $user_id,
                 'created_at' => now(),
                 'updated_at' => NULL
             ]);
         } catch (\exception $e) {
             return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
         }
-        if ($payment_method = "Chuyển khoản") {
-            $this->vnpay_payment($request, $new_order_id);
-        }
-
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
+        if ($payment_method = "Chuyển khoản") {
+            session()->put('new_order_id', $new_order_id);
+            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+            $vnp_Returnurl = route('vnpay_return');
+            $vnp_TmnCode = "VRNE42A3"; //Mã website tại VNPAY
+            $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Chuỗi bí mật
+            $vnp_TxnRef = "KTC-" . $user_id . $new_order_id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_OrderInfo = "Thanh toán hóa đơn";
+            $vnp_OrderType = "Đơn hàng KTC Store";
+            $vnp_Amount = $request->total_price * 100;
+            $vnp_Locale = "vn";
+            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+            $inputData = array(
+                "vnp_Version" => "2.1.0",
+                "vnp_TmnCode" => $vnp_TmnCode,
+                "vnp_Amount" => $vnp_Amount,
+                "vnp_Command" => "pay",
+                "vnp_CreateDate" => date('YmdHis'),
+                "vnp_CurrCode" => "VND",
+                "vnp_IpAddr" => $vnp_IpAddr,
+                "vnp_Locale" => $vnp_Locale,
+                "vnp_OrderInfo" => $vnp_OrderInfo,
+                "vnp_OrderType" => $vnp_OrderType,
+                "vnp_ReturnUrl" => $vnp_Returnurl,
+                "vnp_TxnRef" => $vnp_TxnRef,
+            );
 
-        if ($create_order) {
+            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                $inputData['vnp_BankCode'] = $vnp_BankCode;
+            }
+            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+            }
+
+            //var_dump($inputData);
+            ksort($inputData);
+            $query = "";
+            $i = 0;
+            $hashdata = "";
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1;
+                }
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
+
+            $vnp_Url = $vnp_Url . "?" . $query;
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+            return redirect()->to($vnp_Url);
+        } else {
+
+
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
 
             foreach ($shopping_cart as $cart_data) {
@@ -312,8 +365,80 @@ class StoreController extends Controller
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
         }
 
-        return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
+        // return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
     }
+    public function vnpay_return()
+    {
+        $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Secret key
+        $vnp_SecureHash = $_GET['vnp_SecureHash'];
+        $inputData = array();
+        foreach ($_GET as $key => $value) {
+            if (substr($key, 0, 4) == "vnp_") {
+                $inputData[$key] = $value;
+            }
+        }
+
+        unset($inputData['vnp_SecureHash']);
+        ksort($inputData);
+        $i = 0;
+        $hashData = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashData = $hashData . '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashData = $hashData . urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+        }
+
+        $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+        if ($secureHash == $vnp_SecureHash) {
+            if ($_GET['vnp_ResponseCode'] == '00') {
+                $new_order_id = session()->get('new_order_id');
+                $select_order = Order::find($new_order_id);
+                DB::table('order')->where("order_id", "=", "$new_order_id")->update([
+                    'status' => "Đã xác nhận",
+                    'updated_at' => now()
+                ]);
+                $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
+                foreach ($shopping_cart as $cart_data) {
+                    if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
+                        $price_to_use = $cart_data['price'];
+                    } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
+                        $price_to_use = $cart_data['sale_price'];
+                    }
+
+                    DB::table('order_detail')->insert([
+                        'order_id' => $select_order->order_id,
+                        'product_detail_id' => $cart_data['product_detail_id'],
+                        'price' => $price_to_use,
+                        'quantity' => $cart_data['quantity'],
+                        'created_at' => now(),
+                        'updated_at' => NULL
+                    ]);
+
+                    $product_detail = Product_Detail::find($cart_data['product_detail_id']);
+                    if ($product_detail) {
+                        $product_detail->quantity -= $cart_data['quantity'];
+                        $product_detail->save();
+                    }
+                }
+                session()->forget('shopping_cart_' . auth()->id());
+                return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
+            } else {
+                $new_order_id = session()->get('new_order_id');
+                $select_order = Order::findOrFail($new_order_id);
+                $select_order->delete();
+                return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
+            }
+        } else {
+            $new_order_id = session()->get('new_order_id');
+            $select_order = Order::findOrFail($new_order_id);
+            $select_order->delete();
+            return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
+        }
+    }
+
 
     public function filter_price_under200()
     {
