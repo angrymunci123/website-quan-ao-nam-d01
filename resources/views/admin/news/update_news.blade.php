@@ -21,6 +21,15 @@
                         <strong>Nội Dung</strong>
                         <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
                     </div>
+                    <div class="form-group">
+                      <strong>Image</strong>
+                      <div class="card" style="width: 300px">
+                        <input type="file" name="image" value="/image/" class="form-control-ls">
+                      </div>
+                      <div class="card" style="width: 300px">
+                        <img type="file" id="image" src="/image/" class="form-control-ls">
+                      </div>
+                    </div>
                 </div>
                 <br>
                 <div class="col-sm-4 col-xl-1">

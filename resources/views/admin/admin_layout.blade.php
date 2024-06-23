@@ -182,7 +182,7 @@
                   <i class="fa fa-cog fixed-plugin-button-nav"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="/admin/user_info">Thông tin cá nhân</a>
+                  <a class="dropdown-item" href="/admin/personal_info">Thông tin cá nhân</a>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmLogoutModal">Đăng xuất</a>
                 </div>
               </div>

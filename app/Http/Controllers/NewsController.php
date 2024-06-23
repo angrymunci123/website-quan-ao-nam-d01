@@ -55,10 +55,13 @@ class NewsController extends Controller
         $title = $request->title;
         $content = $request->content;
         $user_id = auth()->id();
+        $image = time() . $request->image->getClientOriginalName();
+        $request->image->move(public_path('image'), $image);
         DB::table('news')->insert([
             'user_id' => $user_id,
             'title' => $title,
             'content' => $content,
+            'image' => $image,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -110,11 +113,14 @@ class NewsController extends Controller
         $title = $request->title;
         $content = $request->content;
         $user_id = Auth::id();
+        $image = time() . $request->image->getClientOriginalName();
+        $request->image->move(public_path('image'), $image);
 
         DB::table('news')->where("news_id", "=", "$news_id")->update([
             'user_id' => $user_id,
             'title' => $title,
             'content' => $content,
+            'image' => $image,
             'updated_at' => now(),
         ]);
         return redirect('/admin/news')->with('notification', 'Sửa Tin Tức Thành Công!');
