@@ -109,16 +109,15 @@ class CategoryController extends Controller
 
         if ($product_exist) {
             DB::rollback();
-            return redirect('/admin/category')->with('notification', 'Không thể xóa sản phẩm vì có biến thể sản phẩm đang tồn tại!');
+            return back()->with('notification', 'Không thể xóa sản phẩm vì có biến thể sản phẩm đang tồn tại!');
         }
 
         // 2. Nếu không có product tồn tại, tiến hành xóa category
         $categories = Category::findOrFail($category_id);
-        dd($categories);
         $categories->delete();
 
         DB::commit();
 
-        return redirect('/admin/category')->with('notification', 'Xóa Sản Phẩm Thành Công!');
+        return back()->with('notification', 'Xóa Sản Phẩm Thành Công!');
     }
 }

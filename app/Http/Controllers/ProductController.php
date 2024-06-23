@@ -9,9 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -136,7 +134,7 @@ class ProductController extends Controller
 
         if ($product_detail_exist) {
             DB::rollback();
-            return redirect('/admin/product')->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
+            return back()->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
         }
 
         // 2. Nếu không có product detail tồn tại, tiến hành xóa product
@@ -145,7 +143,7 @@ class ProductController extends Controller
 
         DB::commit();
 
-        return redirect('/admin/product')->with('notification', 'Xóa Sản Phẩm Thành Công!');
+        return back()->with('notification', 'Xóa Sản Phẩm Thành Công!');
     }
 
 
@@ -303,5 +301,34 @@ class ProductController extends Controller
         $product_detail = Product_Detail::findOrFail($product_detail_id);
         $product_detail->delete();
         return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
+    }
+
+    public function search_product()
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore');
+        }
+
+        if (isset($_POST['keywords'])) 
+        {
+            $search_text = $_POST['keywords'];
+            $search_products = Product::where('product_name', 'LIKE', "%$search_text%")
+            ->join("brands", "products.brand_id", "=", "brands.brand_id")
+            ->join("category", "products.category_id", "=", "category.category_id")
+            ->orderBy("products.product_id", "desc")
+            ->paginate(5);
+            Paginator::useBootstrap();
+            return view('admin.product.search_product', compact('search_products'), ['keywords' => $search_products])->with('i', (request()->input('page', 1) - 1) * 5);
+        }
+
+        else 
+        {
+            return back();
+        }
     }
 }

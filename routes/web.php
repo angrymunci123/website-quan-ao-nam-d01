@@ -35,7 +35,7 @@ Route::get('/login', [AuthController::class, "login_form"]);
 Route::post('/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
 Route::get('/register', [AuthController::class, "register"]);
 Route::post('/register_process', [AuthController::class, "registerProcess"])->name("registerProcess");
-Route::post('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
+Route::get('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
 Route::post('/ktcstore/logout', [AuthController::class, "logout_customer"])->name('logout_customer');
 
 //Admin
@@ -65,9 +65,14 @@ Route::post('/admin/category/delete_category/category_id={category_id}', [Catego
 
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
+Route::get('/admin/user_info', [AdminController::class, "userInfo"]);
+Route::get('/admin/user_info/change_password', [AdminController::class, "change_password"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
+
+Route::get('/admin/news/view_news/news_id={news_id}', [NewsController::class, "view_news"]);
+
 Route::get('/admin/news/create_news', [NewsController::class, "create_news"]);
 Route::post('/admin/news/save_news', [NewsController::class, "save_news"]);
 Route::get('/admin/news/edit_news/news_id={news_id}', [NewsController::class, "edit_news"]);
@@ -82,6 +87,7 @@ Route::get('/admin/product/edit_product/product_id={product_id}', [ProductContro
 Route::get('/admin/product/product_detail/product_id={product_id}', [ProductController::class, "view_product"]);
 Route::post('/admin/product/update_product/product_id={product_id}', [ProductController::class, "update_product"]);
 Route::post('/admin/product/delete_product/product_id={product_id}', [ProductController::class, "delete_product"]);
+Route::post('/admin/product/search_product', [ProductController::class, "search_product"]);
 
 //Product Detail
 Route::get('/admin/product/product_detail/add_product_detail/product_id={product_id}', [ProductController::class, "add_product_detail"]);
@@ -93,35 +99,56 @@ Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}
 
 //Order
 Route::get('/admin/order', [OrderController::class, "order_list"]);
-Route::get('/admin/order_detail', [OrderController::class, "or_detail"]);
+Route::get('/admin/order/order_detail/order_id{order_id}', [OrderController::class, "order_detail"]);
+Route::get('/admin/order/confirm/order_id={order_id}', [OrderController::class, "confirm_order"]);
+Route::get('/admin/order/update_status/order_id={order_id}', [OrderController::class, "update_status"]);
+Route::get('/admin/order/cancel/order_id={order_id}', [OrderController::class, "cancel_order"]);
+
+//Admin - Personal info
+Route::get('/admin/personal_info', [OrderController::class, "personal_info"]);
+Route::get('/admin/personal_info/edit_info', [OrderController::class, "edit_info"]);
+Route::post('/admin/personal_info/update_info', [OrderController::class, "update_info"]);
+Route::get('/admin/personal_info/change_password', [OrderController::class, "change_password"]);
+Route::post('/admin/personal_info/confirm_change_password', [OrderController::class, "change_password_process"]);
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
+Route::get('/ktcstore/cus_info', [StoreController::class, "cusInfo"]);
+Route::get('/ktcstore/change_password', [StoreController::class, "cus_pass"]);
 Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
 Route::get('/ktcstore/blog', [StoreController::class, "blog"]);
 Route::get('/ktcstore/shop', [StoreController::class, "shop"]);
 Route::get('/ktcstore/about', [StoreController::class, "about"]);
-Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
-Route::get('/ktcstore/shop-details', [StoreController::class, "shop_detail"]);
-
-Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
-Route::get('/ktcstore/shopping-cart/remove_from_cart', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
-Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
-Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
-
-Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
-Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
-
-Route::get('/ktcstore/order_history', [StoreController::class, "order_history"]);
-
-Route::get('/ktcstore/order_detail/order_id={order_id}', [StoreController::class, "order_detail"]);
-Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
-
 Route::get('/ktcstore/shop/filter_price/{price_range}', [StoreController::class, "filter_price"])->name('filter.price');
 Route::get('/ktcstore/shop/filter_brand/{brand_name}', [StoreController::class, "filter_brand"])->name('filter.brand');
 Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::class, "filter_category"])->name('filter.category');
 Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
-
 Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
+
+//Customer - Shopping Cart, Checkout
+Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
+Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
+Route::get('/ktcstore/shopping-cart/remove_from_cart', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
+Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
+Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
+Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
+Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
+
+//Customer - Order
+Route::get('/ktcstore/order_history', [CustomerController::class, "order_history"]);
+Route::get('/ktcstore/order_detail/order_id={order_id}', [CustomerController::class, "order_detail"]);
+Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [CustomerController::class, "cancel_order"]);
+Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
+
+//Customer - Personal info
+Route::get('/ktcstore/personal_info', [OrderController::class, "personal_info"]);
+Route::get('/ktcstore/personal_info/edit_info', [OrderController::class, "edit_info"]);
+Route::post('/ktcstore/personal_info/update_info', [OrderController::class, "update_info"]);
+Route::get('/ktcstore/personal_info/change_password', [OrderController::class, "change_password"]);
+Route::post('/ktcstore/personal_info/confirm_change_password', [OrderController::class, "change_password_process"]);
+
+
+
+

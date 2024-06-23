@@ -22,7 +22,9 @@ class Product_Detail extends Model
         'material',
         'size',
         'quantity',
-        'image'
+        'image',
+        'created_at',
+        'updated_at'
     ];
     public function product()
     {

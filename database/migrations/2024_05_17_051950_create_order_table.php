@@ -23,7 +23,8 @@ class CreateOrderTable extends Migration
             $table->string('shipping_unit');
             $table->string('payment_method');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('restrict');
+            $table->timestamps();
         });
     }
 

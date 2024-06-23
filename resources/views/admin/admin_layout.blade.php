@@ -14,6 +14,7 @@
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/dropdown.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/popup.css')}}" rel="stylesheet" />
+  <link href="{{asset('admin_assets/css/grid.css')}}" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -89,9 +90,8 @@
             <span class="nav-link-text ms-1">Đơn hàng</span>
           </a>
         </li>
-
         <li class="nav-item">
-          <a class="nav-link  " href="/admin/category">
+          <a class="nav-link" href="/admin/category">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="/admin/brand">
+          <a class="nav-link " href="/admin/brand">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -182,8 +182,58 @@
                   <i class="fa fa-cog fixed-plugin-button-nav"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Thông tin cá nhân</a>
-                  <a class="dropdown-item" href="#">Đăng xuất</a>
+                  <a class="dropdown-item" href="/admin/personal_info">Thông tin cá nhân</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmLogoutModal">Đăng xuất</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirm Logout Modal -->
+            <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmLogoutModalLabel">Xác nhận đăng xuất</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn đăng xuất không?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <a href="/admin/logout" class="btn btn-primary">Đăng xuất</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nav-item dropdown pe-2 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fa fa-bell cursor-pointer"></i>
+            </a>
+            <div class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+              <div>
+                <a class="dropdown-item border-radius-md" href="javascript:;">
+                  <div class="d-flex py-1">
+                    <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                      <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <title>credit-card</title>
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <g transform="translate(1716.000000, 291.000000)">
+                              <g transform="translate(453.000000, 454.000000)">
+                                <path class="color-background"
+                                  d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"
+                                  opacity="0.593633743"></path>
+                                <path class="color-background"
+                                  d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
+                                </path>
+                  <a class="dropdown-item" href="/admin/logout">Đăng xuất</a>
                 </div>
               </div>
             </div>
@@ -216,22 +266,25 @@
                             </g>
                           </g>
                         </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Đơn hàng chưa duyệt
-                        </h6>
-                        <p class="text-xs text-secondary mb-0 ">
-                          xx Đơn hàng
-                        </p>
-                      </div>
+                      </svg>
                     </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        Đơn hàng chưa duyệt
+                      </h6>
+                      <p class="text-xs text-secondary mb-0 ">
+                        xx Đơn hàng
+                      </p>
+                    </div>
+                  </div>
+                </a>
                   </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </nav>
     <script src="{{asset('admin_assets/js/core/popper.min.js')}}"></script>
@@ -256,28 +309,8 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('admin_assets/js/soft-ui-dashboard.min.js?v=1.0.7')}}"></script>
-    <script>
-      let confirmPopup = document.getElementById("confirmPopup");
-      let logoutForm = document.getElementById("logoutForm");
-
-      function openPopup() {
-        confirmPopup.classList.add("open-popup");
-      }
-
-      document.getElementById('confirmLogoutButton').addEventListener('click', function () {
-        confirmPopup.classList.remove("open-popup");
-        logoutForm.submit();
-      });
-
-      document.getElementById('cancelLogoutButton').addEventListener('click', function () {
-        confirmPopup.classList.remove("open-popup");
-      });
-    </script>
-
     @yield('content')
-
   </main>
-
 </body>
-
 </html>
+</html> 
