@@ -114,7 +114,6 @@ Route::post('/admin/personal_info/confirm_change_password', [OrderController::cl
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
 Route::get('/ktcstore/cus_info', [StoreController::class, "cusInfo"]);
-Route::get('/ktcstore/change_password', [StoreController::class, "change_password"]);
 Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
 Route::get('/ktcstore/blog', [StoreController::class, "blog"]);
