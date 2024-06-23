@@ -28,24 +28,19 @@
             <div class="grid">
                 <div class="grid__row">
                     <div class="grid__column-4-2">
-                        <h6>Họ và tên:</h6>
-                        <h6>Email:</h6>
-                        <h6 style="padding-top:12px">Số điện thoại:</h6>
-                        <h6 style="padding-top:12px">Địa chỉ:</h6>
-                        <h6 style="padding-top:12px">Mật khẩu:</h6>
+                        <h6 style="padding-top:5px">Mật khẩu cũ:</h6>
+                        <h6 style="padding-top:8px">Mật khẩu mới:</h6>
+                        <h6 style="padding-top:5px">Xác nhận mật khẩu mới:</h6>
                     </div>
                     <div class="grid__column-4">
-                        <h6>Nguyen Xuan Cong</h6>
-                        <h6>xuancong2003@gmail.com</h6>
                         <div>
-                            <input type="text" placeholder="SĐT" style="width:300px">
-                        </div>
-                        <div>
-                            <input type="text" placeholder="Địa chỉ" style="width:300px">
+                            <input type="text" placeholder="**********" style="width:300px">
                         </div>
                         <div>
                             <input type="text" placeholder="**********" style="width:300px">
-                            <a href="/ktcstore/change_password">Thay đổi</a>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="**********" style="width:300px">
                         </div>
                     </div>
                 </div>
