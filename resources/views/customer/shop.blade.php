@@ -98,13 +98,15 @@
                                                     <label for="size_md">M
                                                         <input type="radio" id="size_md" name="size" value="M">
                                                     </label>
+                                                    <label for="size_md">L
+                                                        <input type="radio" id="size_l" name="size" value="L">
+                                                    </label>
                                                     <label for="size_xl">XL
                                                         <input type="radio" id="size_xl" name="size" value="XL">
                                                     </label>
-                                                    <label for="size_2xl">2XL
+                                                    <label for="size_2xl">XXL
                                                         <input type="radio" id="size_2xl" name="size" value="2XL">
                                                     </label>
-                                                    <button type="submit">Lọc</button>
                                                 </form>
                                             </div>
                                         </div>
