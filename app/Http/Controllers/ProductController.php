@@ -212,6 +212,8 @@ class ProductController extends Controller
             'material' => $material,
             'quantity' => $quantity,
             'image' => $image,
+            'created_at' => now(),
+            'updated_at' => NULL
         ]);
         return redirect('/admin/product/product_detail/product_id=' . $product_id)
         ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
@@ -281,6 +283,7 @@ class ProductController extends Controller
             'material' => $material,
             'quantity' => $quantity,
             'image' => $image,
+            'updated_at' => now()
         ]);
 
         return redirect('/admin/product/product_detail/product_id='.$product_id.'&product_detail_id='.$product_detail_id)

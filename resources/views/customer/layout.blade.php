@@ -191,7 +191,7 @@
     </header>
     @endif
     <!-- Header Section End -->
-    @yield('content')
+     @yield('content')
     <!-- Footer Section Begin -->
     <footer class="footer">
         <div class="container">

@@ -5,6 +5,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
+            @foreach ($news_detail as $news)
                 <div class="card-header pb-0">
                     <table style="width: 100%">
                         <tr>
@@ -13,11 +14,11 @@
                         </tr>
                         <tr>
                             <td>
-                                <h4>Chi tiết bài viết:</h4>
+                                <h4>Chi tiết bài viết: {{$news->title}}</h4>
                             </td>
                             <td>
                                 <form action="./" method="GET">
-                                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Quay
+                                    <button type="submit" class="btn btn-info" style="width:120px; color:white">Quay
                                         lại</button>
                                 </form>
                             </td>
@@ -45,44 +46,21 @@
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="container align-items-center">
-                        <div>
-                            <center><img src="{{asset('temp_assets/img/product/product-1.jpg')}}"
-                                    style="padding-bottom: 10px;"></center>
+                        <div class="text-center">
+                            <img src="/image/{{$news->image}}" style="width:400px;height:600px;">
                         </div>
                         <div class="blog__details__content">
 
                             <div class="blog__details__text">
-                                <p>Hydroderm is the highly desired anti-aging cream on the block. This serum restricts
-                                    the
-                                    occurrence of early aging sings on the skin and keeps the skin younger, tighter and
-                                    healthier. It reduces the wrinkles and loosening of skin. This cream nourishes the
-                                    skin
-                                    and brings back the glow that had lost in the run of hectic years.</p>
-                                <p>The most essential ingredient that makes hydroderm so effective is Vyo-Serum, which
-                                    is a
-                                    product of natural selected proteins. This concentrate works actively in bringing
-                                    about
-                                    the natural youthful glow of the skin. It tightens the skin along with its
-                                    moisturizing
-                                    effect on the skin. The other important ingredient, making hydroderm so effective is
-                                    “marine collagen” which along with Vyo-Serum helps revitalize the skin.</p>
+                                <p>{{$news->content}}</p>
                             </div>
                             <div class="blog__details__text">
-                                <p>Vyo-Serum along with tightening the skin also reduces the fine lines indicating aging
-                                    of
-                                    skin. Problems like dark circles, puffiness, and crow’s feet can be control from the
-                                    strong effects of this serum.</p>
-                                <p>Hydroderm is a multi-functional product that helps in reducing the cellulite and
-                                    giving
-                                    the body a toned shape, also helps in cleansing the skin from the root and not
-                                    letting
-                                    the pores clog, nevertheless also let’s sweeps out the wrinkles and all signs of
-                                    aging
-                                    from the sensitive near the eyes.</p>
+                                <p><b>Ngày tạo: </b> {{$news->created_at}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
