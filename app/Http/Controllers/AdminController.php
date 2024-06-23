@@ -60,4 +60,10 @@ class AdminController extends Controller
         $users = User::orderBy('fullname','asc')->paginate(10);
         return view('admin.user.user_list', compact('users'));
     }
+    public function userInfo(){
+        return view ('admin.user.user_info');
+    }
+    public function change_password(){
+        return view ('admin.user.password');
+    }
 }

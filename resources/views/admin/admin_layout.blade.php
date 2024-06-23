@@ -14,6 +14,7 @@
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/dropdown.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/popup.css')}}" rel="stylesheet" />
+  <link href="{{asset('admin_assets/css/grid.css')}}" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -181,7 +182,7 @@
                   <i class="fa fa-cog fixed-plugin-button-nav"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                  <a class="dropdown-item" href="/admin/user_info">Thông tin cá nhân</a>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmLogoutModal">Đăng xuất</a>
                 </div>
               </div>
