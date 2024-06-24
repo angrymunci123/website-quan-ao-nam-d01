@@ -103,8 +103,10 @@
                             <button type="submit" class="btn btn-success" style="width: 110px; color:white">Xác nhận<i></i></button>
                         </form>
 
-                        <form action="/admin/order/cancel/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
-                            <button type="submit" class="btn btn-danger" style="width: 150px; color:white" >Hủy đơn hàng<i></i></button>
+                        <form action="/admin/order/cancel/order_id={{$order_detail->order_id}}" method="POST" style="padding-right: 20px; float: right">
+                            @csrf
+                            <button type="submit" class="btn btn-danger" style="width: 150px; color:white"
+                            onclick="return confirm('Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại')" >Hủy đơn hàng<i></i></button>
                         </form>
                     @endif
 
