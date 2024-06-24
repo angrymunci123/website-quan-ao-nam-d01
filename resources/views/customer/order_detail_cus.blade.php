@@ -20,7 +20,7 @@
      <br>
 <div class="container">
 <div class="checkout__order">
-    @php 
+    @php
         $total_price_order = 0;
     @endphp
     <h4 class="order__title">Đơn hàng</h4>
@@ -43,7 +43,7 @@
                                 <p><b>Tình trạng đơn hàng: {{$order_detail->status}}</b></p>
                                  <p><b>Phương thức thanh toán: {{$order_detail->payment_method}}</b></p>
                             </div>
-                        </td>                      
+                        </td>
                     </tr>
                 </tbody>
              </table>
@@ -56,7 +56,7 @@
                 <th scope="col">Thành tiền</th>
             </tr>
             @foreach($product_order as $product)
-                @php 
+                @php
                 $total = 0;
                 $total += $product->price * $product->quantity;
                 $total_price_order += $total;
@@ -80,26 +80,26 @@
             <tr>
                 <td>
                     <form action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}" method="POST" id="deleteForm-{{ $order_detail->order_id }}"
-                     style="padding-right: 20px; float: right">    
+                     style="padding-right: 20px; float: right">
                      @csrf
                         <button type="submit" class="btn btn-danger" style="width: 150px; color:white" onclick="openPopup('{{ $order_detail->order_id }}')">Hủy Đơn Hàng</button>
                     </form>
                 </td>
                 <td>
-                    <form action="/ktcstore/order_history" method="GET" style="padding-right: 20px; float: right">    
+                    <form action="/ktcstore/order_history" method="GET" style="padding-right: 20px; float: right">
                         <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
                     </form>
                 </td>
-                <!-- <div class="popup" id="confirmPopup-{{ $order_detail->order_id }}">
+                <div class="popup" id="confirmPopup-{{ $order_detail->order_id }}">
                     <div class="popup-content">
                         <p>Bạn có chắc chắn muốn hủy đơn hàng này không? {{ $order_detail->order_id }}</p>
                         <form action="/admin/brand/delete_brand/brand_id={{ $order_detail->order_id }}" method="POST">
-                            @csrf 
+                            @csrf
                             <button type="submit" id="confirmDeleteButton-{{ $order_detail->order_id }}" class="btn btn-danger">Xác nhận</button>
                         </form>
                         <button id="cancelDeleteButton-{{ $order_detail->order_id }}" class="btn btn-secondary">Hủy bỏ</button>
                     </div>
-                </div> -->
+                </div>
             </tr>
         </table>
     </div>
