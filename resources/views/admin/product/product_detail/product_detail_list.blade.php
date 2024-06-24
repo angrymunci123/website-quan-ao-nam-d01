@@ -77,13 +77,14 @@
                                 </form>
                             </td>
                             <td style="width:10px; column-gap: 1px;" class="text-center">
-                            <form action="/admin/product/product_detail/delete_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="POST" id="deleteForm-{{$product_detail->product_detail_id}}">
+                            <form action="" method="POST" id="deleteForm-{{$product_detail->product_detail_id}}">
                                 @csrf
                                 <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('{{$product_detail->product_detail_id}}')">Xóa</button>
                             </form>
                             </td>
                     </tr>
-                    <div class="popup" id="confirmPopup-{{$product_detail->product_detail_id}}">
+                  @endforeach
+                  <div class="popup" id="confirmPopup-{{$product_detail->product_detail_id}}">
                       <div class="popup-content">
                         <p>Bạn có chắc chắn muốn xóa chi tiết sản phẩm này không? </p>
                         <form action="/admin/product/product_detail/delete_detail/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}" method="POST">
@@ -93,7 +94,6 @@
                             <button id="cancelDeleteButton-{{$product_detail->product_detail_id}}" class="btn btn-secondary">Hủy bỏ</button>
                       </div>
                     </div>
-                  @endforeach
                   </tbody>
                 </table>
                 {{ $product_details->onEachSide(1)->links() }}

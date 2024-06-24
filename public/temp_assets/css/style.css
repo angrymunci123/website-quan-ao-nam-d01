@@ -1049,8 +1049,8 @@ ol {
 	width: 150px;
 }
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
+	font-family: "Nunito Sans", sans-serif;
+	background-color: white;
 	margin: 0;
 	padding: 0;
 }
@@ -1059,7 +1059,6 @@ body {
 	border-radius: 5px;
 	margin: 20px auto;
 	max-width: 800px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .card-header {
 	padding: 20px;
@@ -1090,7 +1089,7 @@ a {
 	text-decoration: none;
 }
 a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .product__item.sale .product__item__text .rating i {
