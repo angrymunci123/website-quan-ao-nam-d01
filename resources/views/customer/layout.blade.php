@@ -29,33 +29,9 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
-    <!-- Offcanvas Menu Begin -->
-    {{-- <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a href="#">Đăng nhập</a>
-                <a href="#">Đăng ký</a>
-            </div>
-        </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="{{ asset ('temp_assets/img/icon/search.png')}}" alt=""></a>
-            <a href="#"><img src="{{ asset ('temp_assets/img/icon/heart.png')}}" alt=""></a>
-            <a href="#"><img src="{{ asset ('temp_assets/img/icon/cart.png')}}" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
-    </div> --}}
-    <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     @if(!session('user_id'))
     <header class="header">
@@ -134,7 +110,7 @@
 
                                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); if(confirm('Bạn có muốn đăng xuát không?')) { document.getElementById('logout-form').submit(); }">
                                         Đăng xuất
-                                        </a>    
+                                        </a>
                                     </div>
                                 </div>
                                 @endif

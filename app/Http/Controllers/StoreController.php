@@ -32,7 +32,7 @@ class StoreController extends Controller
         Paginator::useBootstrap();
 
         // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) 
+        foreach ($products as $product)
         {
             $standardized_product_name = $product->product_name;
             $standardized_product_name = strtolower($standardized_product_name);
@@ -151,7 +151,7 @@ class StoreController extends Controller
             abort(404);
         }
 
-        $user_id = auth()->id(); 
+        $user_id = auth()->id();
 
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
 
@@ -222,7 +222,7 @@ class StoreController extends Controller
         $user_id = auth()->id();
         $product_id = $request->input('product_id');
         $product_detail_id = $request->input('product_detail_id');
-    
+
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             unset($shopping_cart[$product_id . '_' . $product_detail_id]);
@@ -237,7 +237,7 @@ class StoreController extends Controller
         if (!Auth::check()) {
             return redirect('/ktcstore');
         }
-        
+
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
         if (isset($shopping_cart)) {
@@ -253,7 +253,7 @@ class StoreController extends Controller
         $address = $request->address;
         $phone_number = $request->phone_number;
         $shipping_unit = $request->shipping_unit;
-    
+        $notes = $request->notes;
         $create_order = DB::table('order')->insert([
             'status' => 'Đang chờ xác nhận',
             'consignee' => $consignee,
@@ -262,18 +262,19 @@ class StoreController extends Controller
             'payment_method' => $payment_method,
             'shipping_unit' => $shipping_unit,
             'user_id' => session('user_id'),
+            'notes' => $notes,
             'created_at' => now(),
             'updated_at' => NULL
         ]);
-    
+
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
-    
+
         if ($create_order) {
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
-    
+
             foreach ($shopping_cart as $cart_data) {
                 if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
                     $price_to_use = $cart_data['price'];
@@ -282,7 +283,7 @@ class StoreController extends Controller
                 else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
                     $price_to_use = $cart_data['sale_price'];
                 }
-    
+
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $cart_data['product_detail_id'],
@@ -293,7 +294,7 @@ class StoreController extends Controller
                 ]);
 
                 $product_detail = Product_Detail::find($cart_data['product_detail_id']);
-                if ($product_detail) 
+                if ($product_detail)
                 {
                     $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
@@ -301,14 +302,14 @@ class StoreController extends Controller
             }
 
             session()->forget('shopping_cart_' . auth()->id());
-    
+
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
         }
-    
+
         return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
     }
 
-    public function filter_price_under200() 
+    public function filter_price_under200()
     {
         $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S')
@@ -341,11 +342,11 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_price($price_range) 
+    public function filter_price($price_range)
     {
         $price = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($price_range) {
             case 'under-200':
                 $price->where('product_detail.price', '<', 200000);
@@ -409,17 +410,17 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_brand($brand_name) 
+    public function filter_brand($brand_name)
     {
         $brand = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($brand_name) {
             case 'Adam':
                 $brand->where('brands.brand_name', 'Adam');
                 break;
-                
+
             case 'Atino':
                 $brand->where('brands.brand_name', 'Atino');
                 break;
@@ -486,17 +487,17 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_category($category_name) 
+    public function filter_category($category_name)
     {
         $category = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftjoin("category", "products.category_id", "=", "category.category_id")
             ->where('product_detail.size', '=', 'S');
-    
+
         switch ($category_name) {
             case 'Áo':
                 $category->where('category.category_name', 'Áo');
                 break;
-                
+
             case 'Quần':
                 $category->where('category.category_name', 'Quần');
                 break;
@@ -547,7 +548,7 @@ class StoreController extends Controller
         return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
-    public function filter_size($size) 
+    public function filter_size($size)
     {
         $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
@@ -555,7 +556,7 @@ class StoreController extends Controller
             ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
-        
+
         Paginator::useBootstrap();
 
         $brand_sidebars = Brand::get();
@@ -568,7 +569,7 @@ class StoreController extends Controller
         if (isset($_GET['keywords'])) {
             Paginator::useBootstrap();
             $search_keywords = $_GET['keywords'];
-        
+
             $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
             ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S')

@@ -67,12 +67,12 @@
                                     </tr>
                                     @foreach ($shopping_cart as $cart => $details)
                                     @php
-                                        if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price']) 
+                                        if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price'])
                                         {
                                             $total = $details['sale_price'] * $details['quantity'];
                                             $total_in_cart += $total;
                                         }
-                                        else 
+                                        else
                                         {
                                             $total = $details['price'] * $details['quantity'];
                                             $total_in_cart += $total;
@@ -83,7 +83,7 @@
                                         <td>{{$details['quantity']}}</td>
                                         @if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price'])
                                         <td>{{number_format($details['sale_price'])}}đ</td>
-                                        
+
                                         @else
                                         <td>{{number_format($details['price'])}}đ</td>
                                         @endif

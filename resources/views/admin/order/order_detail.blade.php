@@ -17,35 +17,35 @@
                     </div>
                 @endif
             </div>
-            @php 
+            @php
                 $total_price_order = 0;
             @endphp
             <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">   
+                <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0" style="padding-left: 15px; padding-right: 15px; border-style: none">
                         <tbody>
                         <tr style="width:100%">
-                            @foreach ($order_details as $order_detail) @endforeach
-                        <td class="font-weight-bolder opacity-7" style="float: left; width: 50%">
-                            <div>
-                                <p><b>Họ tên người nhận: </b>{{$order_detail->consignee}}</p>
-                                <p><b>SDT:</b> {{$order_detail->phone_number}}</p>
-                                <p><b>Địa chỉ:</b> {{$order_detail->address}}</p>
-                                <p><b>Ngày đặt:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
-                            </div>
-                        </td>
-                        <td class="font-weight-bolder opacity-7" style="width: 50%">
-                            <div style="float:right">
-                                <p><b>ID đơn hàng:</b> {{$order_detail->order_id}}</p>
-                                <p><b>Tình trạng đơn hàng:</b> {{$order_detail->status}}</p>
-                                <p><b>Phương thức thanh toán:</b> {{$order_detail->payment_method}}</p>
-                                @if($order_detail->updated_at)
-                                <p><b>Ngày xác nhận đơn hàng:</b> {{$order_detail->updated_at->format('d/m/Y') }}</p>
-                                @else
-                                <p><b>Ngày xác nhận đơn hàng:</b></p>
-                                @endif
-                            </div>
-                        </td>                      
+                            @foreach ($order_details as $order_detail)  @endforeach
+                            <td class="font-weight-bolder opacity-7" style="float: left; width: 50%">
+                                <div>
+                                    <p><b>Họ tên người nhận: </b>{{$order_detail->consignee}}</p>
+                                    <p><b>SDT:</b> {{$order_detail->phone_number}}</p>
+                                    <p><b>Địa chỉ:</b> {{$order_detail->address}}</p>
+                                    <p><b>Ngày đặt:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
+                                </div>
+                            </td>
+                            <td class="font-weight-bolder opacity-7" style="width: 50%">
+                                <div style="float:right">
+                                    <p><b>ID đơn hàng:</b> {{$order_detail->order_id}}</p>
+                                    <p><b>Tình trạng đơn hàng:</b> {{$order_detail->status}}</p>
+                                    <p><b>Phương thức thanh toán:</b> {{$order_detail->payment_method}}</p>
+                                    @if($order_detail->updated_at)
+                                    <p><b>Ngày xác nhận đơn hàng:</b> {{$order_detail->updated_at->format('d/m/Y') }}</p>
+                                    @else
+                                    <p><b>Ngày xác nhận đơn hàng:</b></p>
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -58,10 +58,10 @@
                             <th><b>Thành tiền</b></th>
                         </tr>
                         </thead>
-                        
+
                         <tbody style="background-color:white">
                         @foreach($product_order as $product)
-                            @php 
+                            @php
                                 $total = 0;
                                 $total += $product->price * $product->quantity;
                                 $total_price_order += $total;
@@ -82,15 +82,37 @@
                         </tbody>
                     </table>
                     <br>
-                    <form action="/admin/order" method="GET" style="padding-right: 20px; float: right">    
+                    <form action="/admin/order" method="GET" style="padding-right: 20px; float: right">
                         <button type="submit" class="btn btn-secondary" style="width: 110px; color:white">Quay lại<i></i></button>
-                    </form>    
-                    <form action="/admin/order/confirm/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">    
-                        <button type="submit" class="btn btn-success" style="width: 110px; color:white">Xác nhận<i></i></button>
-                    </form> 
-                    <form action="/admin/order/cancel/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">    
-                        <button type="submit" class="btn btn-danger" style="width: 150px; color:white">Hủy đơn hàng<i></i></button>
-                    </form> 
+                    </form>
+                    @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
+                        <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật thông tin<i></i></button>
+                        </form>
+                        <form action="/admin/order/confirm/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-warning" style="width: 200px; color:white">Cập nhật trạng thái<i></i></button>
+                        </form>
+                    @endif
+
+                    @if ($order_detail->status == 'Đang chờ xác nhận')
+                        <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật thông tin<i></i></button>
+                        </form>
+
+                        <form action="/admin/order/confirm/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-success" style="width: 110px; color:white">Xác nhận<i></i></button>
+                        </form>
+
+                        <form action="/admin/order/cancel/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-danger" style="width: 150px; color:white" >Hủy đơn hàng<i></i></button>
+                        </form>
+                    @endif
+
+                    @if ($order_detail->status == 'Đã giao hàng')
+                        <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET" style="padding-right: 20px; float: right">
+                            <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật thông tin<i></i></button>
+                        </form>
+                    @endif
                 </div>
             </div>
           </div>
