@@ -66,7 +66,7 @@ class OrderController extends Controller
         $order_id = $request->order_id;
         $order = DB::table('order')->where('order_id', $order_id)->first();
         if (!$order) {
-            return back()->with('error', 'Không tìm thấy mã đơn hàng tương ứng');
+            return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
         }
 
         $order_status = '';
@@ -74,14 +74,20 @@ class OrderController extends Controller
             case "Đang chờ xác nhận":
                 $order_status = "Đã xác nhận";
                 break;
+
             case "Đã xác nhận":
                 $order_status = "Đang giao hàng";
                 break;
+
             case "Đang giao hàng":
                 $order_status = "Đã giao hàng";
                 break;
+
+            case "Đã hủy":
+                return back()->with('notification', 'Không thể xác nhận đơn hàng này vì khách hàng đã hủy đơn hàng');
+
             default:
-                return back()->with('error', 'Invalid order status');
+                return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
         }
 
         DB::table('order')->where('order_id', $order_id)->update([
@@ -106,6 +112,40 @@ class OrderController extends Controller
         $order_details = Order::where('order.order_id', '=', $order_id)->get();
 
         return view('admin.order.update_order_status', compact('order_details'));
+    }
+
+    public function cancel_order(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore');
+        }
+
+        $order_id = $request->order_id;
+        $order = DB::table('order')->where('order_id', $order_id)->first();
+        if (!$order) {
+            return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
+        }
+
+        switch ($order->status) {
+            case "Đang chờ xác nhận":
+                DB::table('order')->where('order_id', $order_id)->update([
+                    'status' => 'Đã hủy'
+                ]);
+                break;
+
+            case "Đã hủy":
+                return back()->with('notification', 'Đơn hàng này đã được khách hàng hủy trước đó!');
+
+            default:
+                return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
+        }
+
+        return back()->with('notification', 'Hủy đơn hàng thành công');
     }
 
     public function update_status_process(Request $request)

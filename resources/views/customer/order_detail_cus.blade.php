@@ -19,6 +19,13 @@
     <!-- Breadcrumb Section End -->
      <br>
 <div class="container">
+    <div class="card-body">
+            @if(Session::has('notification'))
+                <div class="alert alert-success" style="color:white">
+                    {{Session::get('notification')}}
+                </div>
+            @endif
+    </div>
 <div class="checkout__order">
     @php
         $total_price_order = 0;
@@ -78,34 +85,33 @@
                 <th></th>
             </tr>
             <tr>
-                <td>
+                <!-- <td>
                     <form action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}" method="POST" id="deleteForm-{{ $order_detail->order_id }}"
                      style="padding-right: 20px; float: right">
                      @csrf
                         <button type="submit" class="btn btn-danger" style="width: 150px; color:white" onclick="openPopup('{{ $order_detail->order_id }}')">Hủy Đơn Hàng</button>
                     </form>
+                </td> -->
+                @if ($order_detail->status == 'Đang chờ xác nhận')
+                <td>
+                    <form action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}" method="POST"
+                     style="padding-right: 20px; float: right">
+                     @csrf
+                        <button type="submit" class="btn btn-danger" style="width: 150px; color:white" onclick="return confirm('Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại')">Hủy Đơn Hàng</button>
+                    </form>
                 </td>
+                @endif
                 <td>
                     <form action="/ktcstore/order_history" method="GET" style="padding-right: 20px; float: right">
                         <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
                     </form>
                 </td>
-                <div class="popup" id="confirmPopup-{{ $order_detail->order_id }}">
-                    <div class="popup-content">
-                        <p>Bạn có chắc chắn muốn hủy đơn hàng này không? {{ $order_detail->order_id }}</p>
-                        <form action="/admin/brand/delete_brand/brand_id={{ $order_detail->order_id }}" method="POST">
-                            @csrf
-                            <button type="submit" id="confirmDeleteButton-{{ $order_detail->order_id }}" class="btn btn-danger">Xác nhận</button>
-                        </form>
-                        <button id="cancelDeleteButton-{{ $order_detail->order_id }}" class="btn btn-secondary">Hủy bỏ</button>
-                    </div>
-                </div>
             </tr>
         </table>
     </div>
 </div>
 <br>
-<script>
+<!-- <script>
     function openPopup(order_id) {
       let confirmPopup = document.getElementById("confirmPopup-" + order_id);
       confirmPopup.classList.add("open-popup");
@@ -121,5 +127,5 @@
         confirmPopup.classList.remove("open-popup");
       });
     }
-  </script>
+  </script> -->
 @endsection

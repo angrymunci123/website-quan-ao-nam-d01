@@ -59,25 +59,29 @@ class CustomerController extends Controller
             return redirect('/ktcstore');
         }
 
-        if ($order->status == 'Đã xác nhận') {
-            return redirect('/ktcstore/order_history')->with('notification', 'Đơn hàng đã được xác nhận!');
+        $order_status = ['Đã xác nhận', 'Đang giao hàng', 'Đã giao hàng'];
+
+        if (in_array($order->status, $order_status)) {
+            return back()->with('notification', 'Đơn hàng đã được xác nhận hoặc đang trong quá trình giao hàng!');
+        }
+
+        else if ($order->status == "Đã hủy") {
+            return back()->with('notification', 'Đơn hàng đã được hủy bởi quản trị viên cửa hàng!');
         }
 
         $order->status = 'Đã hủy';
         $order->save();
 
-        // Lấy chi tiết đơn hàng
-        $orderDetails = Order_Detail::where('order_id', $order_id)->get();
+        $order_details = Order_Detail::where('order_id', $order_id)->get();
 
-        // Cập nhật số lượng sản phẩm
-        foreach ($orderDetails as $orderDetail) {
-            $product_detail = Product_Detail::find($orderDetail->product_detail_id);
+        foreach ($order_details as $order_detail) {
+            $product_detail = Product_Detail::find($order_detail->product_detail_id);
             if ($product_detail) {
-                $product_detail->quantity += $orderDetail->quantity;
+                $product_detail->quantity += $order_detail->quantity;
                 $product_detail->save();
             }
         }
 
-        return redirect('/ktcstore/order_history')->with('notification', 'Hủy đơn hàng thành công!');
+        return back()->with('notification', 'Hủy đơn hàng thành công!');
     }
 }
