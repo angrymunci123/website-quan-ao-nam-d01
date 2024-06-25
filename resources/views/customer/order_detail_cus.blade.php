@@ -97,10 +97,10 @@
                 </td> -->
                 @if ($order_detail->status == 'Đang chờ xác nhận')
                     <td>
-                        <form action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}"
+                        <form id="cancelOrderForm" action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}"
                             method="POST" style="padding-right: 20px; float: right">
                             @csrf
-                            <button id="cancelOrderForm" type="button" class="btn btn-danger"
+                            <button  type="button" class="btn btn-danger"
                                 style="width: 150px; color:white" onclick="showCancelOrderModal()">Hủy Đơn Hàng</button>
                         </form>
                     </td>
