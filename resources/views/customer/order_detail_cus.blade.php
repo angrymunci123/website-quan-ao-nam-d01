@@ -119,8 +119,8 @@
                                 Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                <form action="/ktcstore/order_history" method="GET"
+                                <button type="button" id="cancel-cancelOrder" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                <form action="/ktcstore/order_history/cancel_order/order_id={{$order_detail->order_id}}" method="GET"
                                     style="padding-right: 20px; float: right">
                                     <button type="button" class="btn btn-danger" id="confirmCancelOrder">Hủy Đơn
                                         Hàng</button>
@@ -166,5 +166,11 @@
     document.getElementById('confirmCancelOrder').addEventListener('click', function () {
         document.getElementById('cancelOrderForm').submit();
     });
+
+
+    document.getElementById('cancel-cancelOrder').addEventListener('click', function() {
+        $('#cancelOrderModal').modal('hide'); 
+    });
+
 </script>
 @endsection
