@@ -6,35 +6,44 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h4>Thông tin cá nhân:</h4>
-                    <p>Quản lý thông tin tài khoản</p>
+                    <h4>Thông tin cá nhân</h4>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    <div class="container">
-                        <div class="grid">
-                            <div class="grid__row">
-                                <div class="grid__column-4-2">
-                                    <h6>Họ và tên:</h6>
-                                    <h6>Email:</h6>
-                                    <h6>Số điện thoại:</h6>
-                                    <h6>Địa chỉ:</h6>
-                                    <h6>Mật khẩu:</h6>
-                                    <h6>Chức vụ:</h6>
-                                </div>
-                                <div class="grid__column-4">
-                                    <h6>Nguyen Xuan Cong</h6>
-                                    <h6>xuancong2003@gmail.com</h6>
-                                    <h6>0912345678</h6>
-                                    <h6>Số 1 Hà Nội</h6>
+                <div class="container">
+                    <table class="table align-items-center"
+                        style="padding-left: 15px; padding-right: 15px;">
+                        <tbody>
+                            <tr style="width:100%">
+                                @foreach ($user_info as $user)
+                                <td class="font-weight-bolder"
+                                    style="float: left; border: solid white">
                                     <div>
-                                        <input type="text" placeholder="**********" style="width:300px">
-                                        <a href="/admin/user_info/change_password">Thay đổi</a>
+                                        <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
+                                        <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
+                                        <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                     </div>
-                                    <h6 style="padding-top: 3px;">Admin</h6>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                                <td class="font-weight-bolder" style="float:right; border: solid white">
+                                    <div>
+                                        <p> <b>Địa chỉ: </b>{{$user->address}}</p>
+                                        <p><b>Mật khẩu: </b>
+                                            <!-- <a href="/ktcstore/change_password">Thay đổi</a></p> -->
+                                            <input type='password' value='{{ $user->password }}' id='myInput' readonly='readonly'>
+                                            <br>
+                                            <input type="checkbox" onclick="myFunction()">&nbsp; Hiển thị mật khẩu
+                                    </div>
+                                </td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div style="text-align:center">
+                        <form action="" method="GET">
+                            <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
+                        </form>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -160,12 +169,13 @@
     </div>
 </div>
 <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-            damping: '0.5'
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
         }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
 @endsection

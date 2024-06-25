@@ -63,12 +63,15 @@ Route::post('/admin/category/update_category/category_id={category_id}', [Catego
 
 Route::post('/admin/category/delete_category/category_id={category_id}', [CategoryController::class, "delete_category"]);
 
-//User list
+//User personal info
 Route::get('/admin/personal_info', [AdminController::class, "personal_info"]);
 Route::get('/admin/personal_info/edit_info', [AdminController::class, "edit_info"]);
 Route::post('/admin/personal_info/update_info', [AdminController::class, "update_info"]);
 Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
 Route::post('/admin/personal_info/confirm_change_password', [AdminController::class, "change_password_process"]);
+
+//User list
+Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);

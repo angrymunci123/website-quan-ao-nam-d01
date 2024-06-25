@@ -21,7 +21,7 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     <div class="form-group">
                         <strong>Giá</strong>
-                        <input type="number" name="price" id="price" class="form-control" required>
+                        <input type="number" name="price" id="price" class="form-control-sm" required>
                     </div>
                     <div class="form-group">
                         <strong>Giá Khuyến Mãi</strong>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <strong>Image</strong>
-                        <input type="file" name="image" id="image" class="form-control-ls">
+                        <input type="file" name="image" id="image" class="form-control-ls" required>
                     </div>
                 </div>
                 </div>
