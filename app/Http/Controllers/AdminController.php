@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
@@ -42,7 +43,8 @@ class AdminController extends Controller
     }
 
     public function personal_info(){
-        return view ('admin.user.user_info');
+        $user_info = User::where('user_id', '=', session('user_id'))->get();
+        return view('admin.user.user_info', compact('user_info'));
     }
 
     public function change_password(){
