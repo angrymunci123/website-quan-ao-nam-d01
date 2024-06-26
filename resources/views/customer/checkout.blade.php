@@ -111,7 +111,7 @@
                                         </label>
                                     </div>
                                 </ul>
-
+                                <input type="hidden" name="total_price" value="{{$total_in_cart}}">
                                 <button type="submit" class="site-btn">ĐẶT HÀNG</button>
                             </div>
                         </div>
