@@ -23,8 +23,8 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Đơn Hàng</th>
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th> 
-                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Trạng thái</th>                      
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th>
+                      <th class="text-uppercase font-weight-bolder opacity-7 text-center">Trạng thái</th>
                       <th class="text-uppercase font-weight-bolder opacity-7 text-center">Chức Năng</th>
                     </tr>
                   </thead>
@@ -41,7 +41,7 @@
                         <h5 class="mb-0">{{$order->status}}</h5>
                       </td>
                       <td style="width:100px" class="text-center">
-                            <form action="/admin/order/order_detail/order_id{{$order->order_id}}" method="GET">    
+                            <form action="/admin/order/order_detail/order_id={{$order->order_id}}" method="GET">
                                 <button type="submit" class="btn btn-info" style="width:75px; color:white">Xem</button>
                             </form>
                         </td>
@@ -124,13 +124,4 @@
       </div>
     </div>
   </div>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
 @endsection

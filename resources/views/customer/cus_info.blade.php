@@ -20,40 +20,37 @@
 <!-- Breadcrumb Section End -->
 <div class="card mb-4">
     <div class="card-header pb-0">
-        <h4>Thông tin cá nhân:</h4>
-        <p>Quản lý thông tin tài khoản</p>
+        <h4>Thông tin cá nhân</h4>
+        <br>
     </div>
-    <div class="card-body px-0 pt-0 pb-2">
+    <div class="card-body">
         <div class="container">
-            <div class="grid">
-                <div class="grid__row">
-                    <div class="grid__column-4-2">
-                        <h6>Họ và tên:</h6>
-                        <h6>Email:</h6>
-                        <h6 style="padding-top:12px">Số điện thoại:</h6>
-                        <h6 style="padding-top:12px">Địa chỉ:</h6>
-                        <h6 style="padding-top:12px">Mật khẩu:</h6>
-                    </div>
-                    <div class="grid__column-4">
-                        <h6>Nguyen Xuan Cong</h6>
-                        <h6>xuancong2003@gmail.com</h6>
-                        <div>
-                            <input type="text" placeholder="SĐT" style="width:300px">
-                        </div>
-                        <div>
-                            <input type="text" placeholder="Địa chỉ" style="width:300px">
-                        </div>
-                        <div>
-                            <input type="text" placeholder="**********" style="width:300px">
-                            <a href="/ktcstore/change_password">Thay đổi</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table class="table align-items-center"
+                style="padding-left: 15px; padding-right: 15px;">
+                <tbody>
+                    <tr style="width:100%">
+                        <td class="font-weight-bolder"
+                            style="float: left; border: solid white">
+                            <div>
+                                <p> <b>Họ và tên: </b> Nguyen Xuan Cong</p>
+                                <p> <b>Địa chỉ Email: </b>xuancong2003@gmail.com</p>
+                                <p> <b>Số điện thoại: </b>0123456789</p>
+                            </div>
+                        </td>
+                        <td class="font-weight-bolder" style="float:right; border: solid white">
+                            <div>
+                                <p> <b>Địa chỉ: </b>Hà Nội</p>
+                                <p><b>Mật khẩu: </b><input type="text" placeholder="**********" style="width:200px" readonly>
+                                    <a href="/ktcstore/change_password">Thay đổi</a></p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <br>
             <div style="text-align:center">
                 <form action="" method="GET">
-                    <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
+                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
                 </form>
             </div>
         </div>

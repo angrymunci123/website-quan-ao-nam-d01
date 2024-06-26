@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('admin_assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('admin_assets/img/favicon.png')}}">
   <title>
-    KTC Store Dashboard
+    Bảng Tin KTC Store
   </title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/nucleo-icons.css')}}" rel="stylesheet" />
@@ -30,9 +30,9 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="/admin/dashboard" target="_blank">
-        <img src="{{asset('admin_assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Dashboard</span>
+      <a class="navbar-brand m-0" href="/admin">
+        <img src="{{asset('temp_assets/KTC_Store.png')}}" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold">Bảng tin</span>
       </a>
     </div>
 
@@ -313,4 +313,4 @@
   </main>
 </body>
 </html>
-</html> 
+</html>

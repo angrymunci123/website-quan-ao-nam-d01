@@ -9,28 +9,10 @@ use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
-    // //Dashboard
-    // public function view_dashboard()
-    // {
-    //     if (!Auth::check()) {
-    //         return redirect('login');
-    //     }
-    //     return view('admin.dashboard.dashboard');
-    // }
-
-    // //User
-    // public function user_list()
-    // {
-    //     if (!Auth::check()) {
-    //         return redirect('login');
-    //     }
-    //     $users = User::orderBy('fullname','asc')->paginate(10);
-    //     return view('admin.user.user_list', compact('users'));
-    // }
-
     public function view_dashboard()
     {
         if (!Auth::check()) {
@@ -39,13 +21,12 @@ class AdminController extends Controller
     
         $user = Auth::user();
         if ($user->role !== 'Admin') {
-            return redirect('/ktcstore'); // Hoặc trang khách hàng tương ứng
+            return redirect('/ktcstore');
         }
     
         return view('admin.dashboard.dashboard');
     }
     
-    //User
     public function user_list()
     {
         if (!Auth::check()) {
@@ -60,9 +41,12 @@ class AdminController extends Controller
         $users = User::orderBy('fullname','asc')->paginate(10);
         return view('admin.user.user_list', compact('users'));
     }
-    public function userInfo(){
-        return view ('admin.user.user_info');
+
+    public function personal_info(){
+        $user_info = User::where('user_id', '=', session('user_id'))->get();
+        return view('admin.user.user_info', compact('user_info'));
     }
+
     public function change_password(){
         return view ('admin.user.password');
     }

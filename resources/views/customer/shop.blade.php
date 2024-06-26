@@ -36,7 +36,7 @@
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseOne">Thể loại</a>
                                     </div>
-                                    <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                     <ul>
@@ -98,13 +98,15 @@
                                                     <label for="size_md">M
                                                         <input type="radio" id="size_md" name="size" value="M">
                                                     </label>
+                                                    <label for="size_md">L
+                                                        <input type="radio" id="size_l" name="size" value="L">
+                                                    </label>
                                                     <label for="size_xl">XL
                                                         <input type="radio" id="size_xl" name="size" value="XL">
                                                     </label>
-                                                    <label for="size_2xl">2XL
+                                                    <label for="size_2xl">XXL
                                                         <input type="radio" id="size_2xl" name="size" value="2XL">
                                                     </label>
-                                                    <button type="submit">Lọc</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -172,7 +174,7 @@
                                 </div>
                             </div>
                 </div>
-                
+
                 <div class="home-product">
                     <div class="grid__row">
                         <!-- Foreach từ đây -->
@@ -189,11 +191,11 @@
                                     <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
-                                            <b style="font-size: 16px; color: red">{{number_format($product->price)}}đ</b> 
+                                            <b style="font-size: 16px; color: red">{{number_format($product->price)}}đ</b>
                                         </span>
-                                       
+
                                     </div>
-                                </div> 
+                                </div>
                             @endif
                             @if ($product->sale_price > 0)
                                 <div class="product-card">
@@ -205,7 +207,7 @@
                                     <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
-                                            <del>{{number_format($product->price)}}đ</del> 
+                                            <del>{{number_format($product->price)}}đ</del>
                                             <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}đ</b>
                                         </span>
                                     </div>
@@ -220,9 +222,9 @@
                                         </span>
                                         <span class='sale_off_label'><b>Giảm</b></span>
                                     </div>
-                                </div> 
+                                </div>
                             @endif
-                            </div> 
+                            </div>
                         </div>
                         @endforeach
                     </div>
@@ -238,9 +240,9 @@
                 </div>
                 <br>
             </div>
-            </div>  
+            </div>
         </div>
-    </div> 
+    </div>
     <style>
         .product-card {
             box-shadow: none;
