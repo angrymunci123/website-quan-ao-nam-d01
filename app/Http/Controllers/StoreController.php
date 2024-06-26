@@ -33,8 +33,7 @@ class StoreController extends Controller
 
         // Xử lý chuẩn hóa tên sản phẩm
 
-        foreach ($products as $product)
-        {
+        foreach ($products as $product) {
             $standardized_product_name = $product->product_name;
             $standardized_product_name = strtolower($standardized_product_name);
             $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
@@ -358,18 +357,17 @@ class StoreController extends Controller
 
                 $product_detail = Product_Detail::find($cart_data['product_detail_id']);
 
-                if ($product_detail)
-                {
+                if ($product_detail) {
                     $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
                 }
-            
 
-            session()->forget('shopping_cart_' . auth()->id());
 
-            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+                session()->forget('shopping_cart_' . auth()->id());
+
+                return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+            }
         }
-
     }
     public function vnpay_return()
     {
@@ -699,17 +697,18 @@ class StoreController extends Controller
     }
 
 
-    public function search_product(Request $request) {
+    public function search_product(Request $request)
+    {
         if (isset($_GET['keywords'])) {
             Paginator::useBootstrap();
             $search_keywords = $_GET['keywords'];
 
             $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
-            ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->where('product_detail.size', '=', 'S')
-            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
+                ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+                ->where('product_detail.size', '=', 'S')
+                ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+                ->groupBy('products.product_id', 'products.product_name')
+                ->paginate(16);
             Paginator::useBootstrap();
 
             $brand_sidebars = Brand::get();
