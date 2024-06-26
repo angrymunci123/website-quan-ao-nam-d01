@@ -48,6 +48,12 @@
                     </div>
                 </div>
             <div class="grid__column-10">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
                 <div class="shop__product__option">
                     <h4 style="padding-top: 8px;"><b>Danh sách đơn hàng</b></h4>
                     <br>
@@ -80,12 +86,6 @@
                         </tr>
                         @endforeach
                     </table>
-                @if(Session::has('success'))
-                        <div class="alert alert-success">{{Session::get('success')}}</div>
-                    @endif
-                    @if(Session::has('fail'))
-                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
-                    @endif
                 </div>
             </div>
             </div>

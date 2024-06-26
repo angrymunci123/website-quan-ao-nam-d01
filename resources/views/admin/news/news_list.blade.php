@@ -16,11 +16,12 @@
                 </table>
             </div>
             <div class="card-body">
-                @if(Session::has('notification'))
-                    <div class="alert alert-success" style="color:white">
-                        {{Session::get('notification')}}
-                    </div>
+                @if(Session::has('success'))
+                  <div class="alert alert-success">{{Session::get('success')}}</div>
                 @endif
+                @if(Session::has('fail'))
+                  <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                @endif  
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">

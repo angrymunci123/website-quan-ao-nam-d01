@@ -123,7 +123,7 @@ class NewsController extends Controller
             'image' => $image,
             'updated_at' => now(),
         ]);
-        return redirect('/admin/news')->with('notification', 'Sửa Tin Tức Thành Công!');
+        return redirect('/admin/news')->with('success', 'Sửa Tin Tức Thành Công!');
     }
 
     public function view_news(Request $request)

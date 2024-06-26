@@ -59,14 +59,6 @@ class StoreController extends Controller
         return view("customer.contact");
     }
 
-    public function cusInfo()
-    {
-        return view('customer.cus_info');
-    }
-    public function cus_pass()
-    {
-        return view('customer.cus_password');
-    }
     public function shopping_cart()
     {
         return view('customer.shopping-cart');
@@ -260,7 +252,8 @@ class StoreController extends Controller
         $notes = $request->notes;
         // AAAAAAAAAAAAAAA
 
-        try {
+        try 
+        {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
                 'consignee' => $consignee,
@@ -272,14 +265,22 @@ class StoreController extends Controller
                 'created_at' => now(),
                 'updated_at' => NULL
             ]);
-        } catch (\exception $e) {
+
+        } 
+        
+        catch (\exception $e) 
+        {
             return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
         }
+
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
-        if (empty($shopping_cart)) {
+        if (empty($shopping_cart)) 
+        {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
-        if ($payment_method = "Chuyển khoản") {
+
+        if ($payment_method = "Chuyển khoản") 
+        {
             session()->put('new_order_id', $new_order_id);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = route('vnpay_return');
@@ -369,6 +370,7 @@ class StoreController extends Controller
             }
         }
     }
+    }
     public function vnpay_return()
     {
         $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Secret key
@@ -438,7 +440,7 @@ class StoreController extends Controller
             DB::table('order')->where('order_id', $new_order_id)->delete();
             session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
-        }
+        }   
     }
 
     public function filter_price_under200()
