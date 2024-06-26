@@ -28,30 +28,27 @@
             <div class="grid">
                 <div class="grid__row">
                     <div class="grid__column-4-2">
-                        <h6>Họ và tên:</h6>
-                        <h6>Email:</h6>
-                        <h6 >Số điện thoại:</h6>
-                        <h6 >Địa chỉ:</h6>
-                        <h6 style="padding-top:12px">Mật khẩu:</h6>
+                        <h6 style="padding-top:5px">Họ và tên:</h6>
+                        <h6 style="padding-top:10px">Email:</h6>
+                        <h6 style="padding-top:12px">Số điện thoại:</h6>
+                        <h6 style="padding-top:9px">Địa chỉ:</h6>
                     </div>
                     <div class="grid__column-4">
-                        <h6>Nguyen Xuan Cong</h6>
-                        <h6>xuancong2003@gmail.com</h6>
-                        <h6>0912334556</h6>
-                        <h6>Số 1 Hà Nội</h6>
-                            <input type="text" placeholder="**********" style="width:300px">
-                            <a href="/ktcstore/change_password">Thay đổi</a>
-                        </div>
+                        <input type="text" placeholder="Họ và tên" style="width:300px">
+                        <input type="text" placeholder="Email" style="width:300px">
+                        <input type="text" placeholder="SĐT" style="width:300px">
+                        <input type="text" placeholder="Địa chỉ" style="width:300px">
                     </div>
                 </div>
             </div>
-            <br>
-            <div style="text-align:center">
-                <form action="/ktcstore/cus_info/change_info" method="GET">
-                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
-                </form>
-            </div>
+        </div>
+        <br>
+        <div style="text-align:center">
+            <form action="" method="GET">
+                <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
+            </form>
         </div>
     </div>
+</div>
 </div>
 @endsection

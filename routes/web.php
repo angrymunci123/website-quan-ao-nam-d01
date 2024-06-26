@@ -110,6 +110,7 @@ Route::post('/admin/order/cancel/order_id={order_id}', [OrderController::class, 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
 Route::get('/ktcstore/cus_info', [StoreController::class, "cusInfo"]);
+Route::get('/ktcstore/cus_info/change_info', [StoreController::class, "updateInfo"]);
 Route::get('/ktcstore/change_password', [StoreController::class, "cus_pass"]);
 Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
@@ -138,12 +139,7 @@ Route::get('/ktcstore/order_detail/order_id={order_id}', [CustomerController::cl
 Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [CustomerController::class, "cancel_order"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 
-//Customer - Personal info
-Route::get('/ktcstore/personal_info', [CustomerController::class, "personal_info"]);
-Route::get('/ktcstore/personal_info/edit_info', [CustomerController::class, "edit_info"]);
-Route::post('/ktcstore/personal_info/update_info', [CustomerController::class, "update_info"]);
-Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
-Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);
+
 
 
 

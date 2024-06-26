@@ -62,6 +62,9 @@ class StoreController extends Controller
     public function cusInfo(){
         return view ('customer.cus_info');
     }
+    public function updateInfo(){
+        return view ('customer.update_info');
+    }
     public function cus_pass(){
         return view ('customer.cus_password');
     }
