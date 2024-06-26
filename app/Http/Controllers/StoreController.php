@@ -425,17 +425,18 @@ class StoreController extends Controller
                     }
                 }
                 session()->forget('shopping_cart_' . auth()->id());
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
             } else {
                 $new_order_id = session()->get('new_order_id');
-                $select_order = Order::findOrFail($new_order_id);
-                $select_order->delete();
+                DB::table('order')->where('order_id', $new_order_id)->delete();
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
             }
         } else {
             $new_order_id = session()->get('new_order_id');
-            $select_order = Order::findOrFail($new_order_id);
-            $select_order->delete();
+            DB::table('order')->where('order_id', $new_order_id)->delete();
+            session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
         }
     }
