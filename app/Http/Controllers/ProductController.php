@@ -72,7 +72,7 @@ class ProductController extends Controller
             'created_at' => now(),
             'updated_at' => NULL
         ]);
-        return redirect('/admin/product')->with('notification', 'Thêm Sản Phẩm Mới Thành Công!');
+        return redirect('/admin/product')->with('success', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
     public function edit_product($product_id)
@@ -114,7 +114,7 @@ class ProductController extends Controller
             'description' => $description,
             'updated_at' => now()
         ]);
-        return redirect('/admin/product')->with('notification', 'Sửa Sản Phẩm Thành Công!');
+        return redirect('/admin/product')->with('success', 'Sửa Sản Phẩm Thành Công!');
     }
 
     public function delete_product($product_id)
@@ -134,7 +134,7 @@ class ProductController extends Controller
 
         if ($product_detail_exist) {
             DB::rollback();
-            return back()->with('notification', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
+            return back()->with('fail', 'Không thể xóa sản phẩm vì có chi tiết sản phẩm đang tồn tại!');
         }
 
         // 2. Nếu không có product detail tồn tại, tiến hành xóa product
@@ -143,7 +143,7 @@ class ProductController extends Controller
 
         DB::commit();
 
-        return back()->with('notification', 'Xóa Sản Phẩm Thành Công!');
+        return back()->with('fail', 'Xóa Sản Phẩm Thành Công!');
     }
 
 
@@ -216,7 +216,7 @@ class ProductController extends Controller
             'updated_at' => NULL
         ]);
         return redirect('/admin/product/product_detail/product_id=' . $product_id)
-        ->with('notification', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
+        ->with('success', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
 
     public function view_product_detail($product_id, $product_detail_id)
@@ -287,7 +287,7 @@ class ProductController extends Controller
         ]);
 
         return redirect('/admin/product/product_detail/product_id='.$product_id.'&product_detail_id='.$product_detail_id)
-        ->with('notification', 'Sửa Chi Tiết Sản Phẩm Thành Công!');
+        ->with('success', 'Sửa Chi Tiết Sản Phẩm Thành Công!');
     }
 
     public function delete_product_detail($product_id, $product_detail_id)
@@ -303,7 +303,7 @@ class ProductController extends Controller
 
         $product_detail = Product_Detail::findOrFail($product_detail_id);
         $product_detail->delete();
-        return redirect('/admin/product/product_detail/product_id='.$product_id)->with('notification', 'Xóa Biến Thể Sản Phẩm Thành Công!');
+        return redirect('/admin/product/product_detail/product_id='.$product_id)->with('success', 'Xóa Chi Tiết Sản Phẩm Thành Công!');
     }
 
     public function search_product()

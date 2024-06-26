@@ -139,7 +139,7 @@
                                             </a>
                                             <div
                                                 class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                                <a href="/ktcstore/cus_info" class="dropdown-item">Thông tin cá nhân</a>
+                                                <a href="/ktcstore/personal_info" class="dropdown-item">Thông tin cá nhân</a>
                                                 <a href="/ktcstore/order_history" class="dropdown-item">Lịch sử đơn hàng</a>
                                                 <form id="logout-form" action="/ktcstore/logout" method="POST"
                                                     style="display: none;">
