@@ -32,6 +32,7 @@ class StoreController extends Controller
         Paginator::useBootstrap();
 
         // Xử lý chuẩn hóa tên sản phẩm
+
         foreach ($products as $product) {
             $standardized_product_name = $product->product_name;
             $standardized_product_name = strtolower($standardized_product_name);
@@ -58,14 +59,6 @@ class StoreController extends Controller
         return view("customer.contact");
     }
 
-    public function cusInfo()
-    {
-        return view('customer.cus_info');
-    }
-    public function cus_pass()
-    {
-        return view('customer.cus_password');
-    }
     public function shopping_cart()
     {
         return view('customer.shopping-cart');
@@ -254,8 +247,9 @@ class StoreController extends Controller
         $address = $request->address;
         $phone_number = $request->phone_number;
         $shipping_unit = $request->shipping_unit;
-        $user_id = session('user_id');
 
+        $user_id = session('user_id');
+        $notes = $request->notes;
         // AAAAAAAAAAAAAAA
 
         try {
@@ -273,10 +267,12 @@ class StoreController extends Controller
         } catch (\exception $e) {
             return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
         }
+
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
+
         if ($payment_method = "Chuyển khoản") {
             session()->put('new_order_id', $new_order_id);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -354,19 +350,20 @@ class StoreController extends Controller
                 ]);
 
                 $product_detail = Product_Detail::find($cart_data['product_detail_id']);
+
                 if ($product_detail) {
                     $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
                 }
+
+
+                session()->forget('shopping_cart_' . auth()->id());
+
+                return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
-
-            session()->forget('shopping_cart_' . auth()->id());
-
-            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
         }
-
-        // return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
     }
+
     public function vnpay_return()
     {
         $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Secret key
@@ -390,7 +387,6 @@ class StoreController extends Controller
                 $i = 1;
             }
         }
-
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
@@ -424,21 +420,21 @@ class StoreController extends Controller
                     }
                 }
                 session()->forget('shopping_cart_' . auth()->id());
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
             } else {
                 $new_order_id = session()->get('new_order_id');
-                $select_order = Order::findOrFail($new_order_id);
-                $select_order->delete();
+                DB::table('order')->where('order_id', $new_order_id)->delete();
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
             }
         } else {
             $new_order_id = session()->get('new_order_id');
-            $select_order = Order::findOrFail($new_order_id);
-            $select_order->delete();
+            DB::table('order')->where('order_id', $new_order_id)->delete();
+            session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
         }
     }
-
 
     public function filter_price_under200()
     {
@@ -694,5 +690,45 @@ class StoreController extends Controller
         $category_sidebars = Category::get();
 
         return view("customer.shop", compact('products', 'brand_sidebars', 'category_sidebars'))->with('i', (request()->input('page', 1) - 1) * 16);
+    }
+
+
+    public function search_product(Request $request)
+    {
+        if (isset($_GET['keywords'])) {
+            Paginator::useBootstrap();
+            $search_keywords = $_GET['keywords'];
+
+            $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
+                ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+                ->where('product_detail.size', '=', 'S')
+                ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+                ->groupBy('products.product_id', 'products.product_name')
+                ->paginate(16);
+            Paginator::useBootstrap();
+
+            $brand_sidebars = Brand::get();
+            $category_sidebars = Category::get();
+            // Xử lý chuẩn hóa tên sản phẩm
+            foreach ($products as $product) {
+                $standardized_product_name = $product->product_name;
+                $standardized_product_name = strtolower($standardized_product_name);
+                $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
+                $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
+                $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
+                $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
+                $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
+
+                $product->standardized_product_name = $standardized_product_name;
+            }
+
+            return view("customer.Product.Search.search", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
+        }
     }
 }

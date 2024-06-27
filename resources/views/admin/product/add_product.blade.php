@@ -7,7 +7,7 @@
             <div class="card-header pb-0">
               <h4>Tạo Sản Phẩm</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body container">
               <div class="table-responsive p-0">
               <form action="/admin/product/save_product" method="POST" enctype='multipart/form-data'>
                 {!! csrf_field() !!}

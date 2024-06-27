@@ -42,7 +42,49 @@ class AdminController extends Controller
     }
 
     public function personal_info(){
-        return view ('admin.user.user_info');
+        $user_info = User::where('user_id', '=', session('user_id'))->get();
+        return view('admin.user.user_info', compact('user_info'));
+    }
+
+    public function edit_personal_info()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+    
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+
+        $user_info = User::where('user_id', '=', session('user_id'))->get();
+        return view('admin.user.edit_user_info', compact('user_info'));
+    }
+
+    public function update_personal_info(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+    
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return redirect('/ktcstore'); 
+        }
+        
+        $fullname = $request->fullname;
+        $email = $request->email;
+        $phone_number = $request->phone_number;
+        $address = $request->address;
+        DB::table('users')->where("user_id", "=", session('user_id'))
+        ->update([
+            'fullname' => $fullname,
+            'email' => $email,
+            'phone_number' => $phone_number,
+            'address' => $address
+        ]);
+
+        return redirect('/admin/personal_info')->with('success', 'Cập nhật thông tin cá nhân thành công!');
     }
 
     public function change_password(){
