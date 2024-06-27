@@ -84,7 +84,6 @@
                             </form>
                             </td>
                     </tr>
-                  @endforeach
                   <div class="popup" id="confirmPopup-{{$product_detail->product_detail_id}}">
                       <div class="popup-content">
                         <p>Bạn có chắc chắn muốn xóa chi tiết sản phẩm này không? </p>
@@ -95,6 +94,7 @@
                             <button id="cancelDeleteButton-{{$product_detail->product_detail_id}}" class="btn btn-secondary">Hủy bỏ</button>
                       </div>
                     </div>
+                    @endforeach
                   </tbody>
                 </table>
                 {{ $product_details->onEachSide(1)->links() }}

@@ -62,12 +62,22 @@
                     </tr>
                     <div class="popup" id="confirmPopup">
                       <div class="popup-content">
-                          <p>Bạn có chắc chắn muốn xóa mục này?</p>
+                          <p>Bạn có chắc chắn muốn xóa mục này?/p>
                           <form action="" method="POST" id="deleteForm-">
                             @csrf
                             <button id="confirmDeleteButton">Xác nhận</button>
                           </form>
                           <button id="cancelDeleteButton">Hủy bỏ</button>
+                      </div>
+                    </div>
+                    <div class="popup" id="confirmPopup-{{$new->news_id}}">
+                      <div class="popup-content">
+                        <p>Bạn có chắc chắn muốn xóa chi tiết sản phẩm này không? </p>
+                        <form action="/admin/news/delete_news/news_id={{$new->news_id}}" method="POST">
+                            @csrf 
+                            <button type="submit" id="confirmDeleteButton-{{$new->news_id}}" class="btn btn-danger">Xác nhận</button>
+                            </form>
+                            <button id="cancelDeleteButton-{{$new->news_id}}" class="btn btn-secondary">Hủy bỏ</button>
                       </div>
                     </div>
                   @endforeach
@@ -159,28 +169,20 @@
   </div>
 </div>
 <script>
-  var win = navigator.platform.indexOf('Win') > -1;
-  if (win && document.querySelector('#sidenav-scrollbar')) {
-    var options = {
-      damping: '0.5'
+    function openPopup(news_id) {
+      let confirmPopup = document.getElementById("confirmPopup-" + news_id);
+      confirmPopup.classList.add("open-popup");
+
+      let deleteForm = document.getElementById("deleteForm-" + news_id);
+
+      document.getElementById('confirmDeleteButton-' + news_id).addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+        deleteForm.submit(); // Thực hiện submit form để xóa
+      });
+
+      document.getElementById('cancelDeleteButton-' + news_id).addEventListener('click', function() {
+        confirmPopup.classList.remove("open-popup");
+      });
     }
-    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-  }
-  let confirmPopup = document.getElementById("confirmPopup");
-  let deleteForm = document.getElementById("deleteForm-");
-
-  function openPopup() {
-    confirmPopup.classList.add("open-popup");
-  }
-
-  document.getElementById('confirmDeleteButton').addEventListener('click', function () {
-    confirmPopup.classList.remove("open-popup");
-    deleteForm.submit(); // Thực hiện submit form để xóa
-  });
-
-  document.getElementById('cancelDeleteButton').addEventListener('click', function () {
-    confirmPopup.classList.remove("open-popup");
-  });
-
-</script>
+  </script>
 @endsection
