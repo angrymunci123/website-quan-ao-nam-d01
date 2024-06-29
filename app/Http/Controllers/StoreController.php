@@ -328,9 +328,9 @@ class StoreController extends Controller
                 $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
             }
             return redirect()->to($vnp_Url);
-        } else {
-
-
+        } 
+        
+        else if ($payment_method = "Thanh toán khi nhận hàng") {
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
 
             foreach ($shopping_cart as $cart_data) {

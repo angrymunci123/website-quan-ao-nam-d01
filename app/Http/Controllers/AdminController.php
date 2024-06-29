@@ -18,11 +18,6 @@ class AdminController extends Controller
             return redirect('login');
         }
     
-        $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
-        }
-    
         return view('admin.dashboard.dashboard');
     }
     
@@ -33,7 +28,7 @@ class AdminController extends Controller
         }
     
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role !== 'Chủ cửa hàng' || $user->role !== 'Nhân Viên') {
             return redirect('/ktcstore'); 
         }
     
