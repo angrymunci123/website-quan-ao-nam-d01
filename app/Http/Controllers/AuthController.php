@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    private function auth_user($user)
+    public function auth_user($user)
     {
         if ($user) 
         {
-            if ($user->role == 'Admin') 
+            if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') 
             {
                 return view('admin.dashboard.dashboard');
             } 
@@ -24,7 +24,7 @@ class AuthController extends Controller
                 return view('customer.index');
             }
         }
-        return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
+        return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');
     }
 
     public function login_form()
@@ -79,7 +79,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) 
             {
                 $user = Auth::user();
-                if ($user->role == 'Admin' || $user->role == 'Siêu Admin') {
+                if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                     $this->setSessionData($request, $user);
                     return view('admin.dashboard.dashboard');
                 }
@@ -88,6 +88,8 @@ class AuthController extends Controller
                     $this->setSessionData($request, $user);
                     return view('customer.index');
                 }
+
+                return back()->with('fail', 'Tài khoản có thể chưa được phân quyền.');
             }
             return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
         }

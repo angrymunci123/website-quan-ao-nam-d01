@@ -40,6 +40,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       {{-- Sidebar icons (mỗi 1 cái li là 1 cái icon) --}}
       <ul class="navbar-nav">
+        @if (session('role') == 'Chủ Cửa Hàng') 
         <li class="nav-item">
           <a class="nav-link  " href="/admin/user">
             <div
@@ -56,6 +57,7 @@
             <span class="nav-link-text ms-1">Người dùng</span>
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link  " href="/admin/product">
             <div
