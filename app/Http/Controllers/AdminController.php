@@ -37,7 +37,7 @@ class AdminController extends Controller
             return redirect('/ktcstore'); 
         }
     
-        $users = User::orderBy('fullname','asc')->paginate(10);
+        $users = User::orderBy('user_id','asc')->paginate(10);
         return view('admin.user.user_list', compact('users'));
     }
 
