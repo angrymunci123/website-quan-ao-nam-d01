@@ -273,7 +273,7 @@ class StoreController extends Controller
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
 
-        if ($payment_method = "Chuyển khoản") {
+        if ($payment_method == "Chuyển khoản") {
             session()->put('new_order_id', $new_order_id);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = route('vnpay_return');
