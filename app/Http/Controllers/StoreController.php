@@ -33,8 +33,7 @@ class StoreController extends Controller
 
         // Xử lý chuẩn hóa tên sản phẩm
 
-        foreach ($products as $product)
-        {
+        foreach ($products as $product) {
             $standardized_product_name = $product->product_name;
             $standardized_product_name = strtolower($standardized_product_name);
             $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
@@ -253,8 +252,7 @@ class StoreController extends Controller
         $notes = $request->notes;
         // AAAAAAAAAAAAAAA
 
-        try 
-        {
+        try {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
                 'consignee' => $consignee,
@@ -266,22 +264,16 @@ class StoreController extends Controller
                 'created_at' => now(),
                 'updated_at' => NULL
             ]);
-
-        } 
-        
-        catch (\exception $e) 
-        {
+        } catch (\exception $e) {
             return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
         }
 
         $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
-        if (empty($shopping_cart)) 
-        {
+        if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
-        
-        if ($payment_method = "Chuyển khoản") 
-        {
+
+        if ($payment_method == "Chuyển khoản") {
             session()->put('new_order_id', $new_order_id);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = route('vnpay_return');
@@ -359,19 +351,18 @@ class StoreController extends Controller
 
                 $product_detail = Product_Detail::find($cart_data['product_detail_id']);
 
-                if ($product_detail)
-                {
+                if ($product_detail) {
                     $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
                 }
-            
 
-            session()->forget('shopping_cart_' . auth()->id());
+                session()->forget('shopping_cart_' . auth()->id());
 
-            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+                return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+            }
         }
     }
-    }
+
     public function vnpay_return()
     {
         $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Secret key
@@ -428,19 +419,20 @@ class StoreController extends Controller
                     }
                 }
                 session()->forget('shopping_cart_' . auth()->id());
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
             } else {
                 $new_order_id = session()->get('new_order_id');
-                $select_order = Order::findOrFail($new_order_id);
-                $select_order->delete();
+                DB::table('order')->where('order_id', $new_order_id)->delete();
+                session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
             }
         } else {
             $new_order_id = session()->get('new_order_id');
-            $select_order = Order::findOrFail($new_order_id);
-            $select_order->delete();
+            DB::table('order')->where('order_id', $new_order_id)->delete();
+            session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
-        }   
+        }
     }
 
     public function filter_price_under200()
@@ -700,17 +692,18 @@ class StoreController extends Controller
     }
 
 
-    public function search_product(Request $request) {
+    public function search_product(Request $request)
+    {
         if (isset($_GET['keywords'])) {
             Paginator::useBootstrap();
             $search_keywords = $_GET['keywords'];
 
             $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
-            ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->where('product_detail.size', '=', 'S')
-            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
+                ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+                ->where('product_detail.size', '=', 'S')
+                ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+                ->groupBy('products.product_id', 'products.product_name')
+                ->paginate(16);
             Paginator::useBootstrap();
 
             $brand_sidebars = Brand::get();

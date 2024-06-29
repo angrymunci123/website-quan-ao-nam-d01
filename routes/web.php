@@ -150,6 +150,3 @@ Route::get('/ktcstore/personal_info/edit_info', [CustomerController::class, "edi
 Route::post('/ktcstore/personal_info/update_info', [CustomerController::class, "update_personal_info"]);
 Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
 Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);
-
-
-
