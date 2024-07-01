@@ -149,5 +149,5 @@ Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 Route::get('/ktcstore/personal_info', [CustomerController::class, "personal_info"]);
 Route::get('/ktcstore/personal_info/edit_info', [CustomerController::class, "edit_personal_info"]);
 Route::post('/ktcstore/personal_info/update_info', [CustomerController::class, "update_personal_info"]);
-Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
+Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "cus_pass"]);
 Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);
