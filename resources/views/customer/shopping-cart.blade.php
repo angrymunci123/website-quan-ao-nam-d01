@@ -119,14 +119,14 @@ $total_in_cart = 0;
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="cart__total">
-                    <h6> Tổng tiền </h6>
-                    <ul>
-                        <li>Tổng tiền<span>{{ number_format($total_in_cart) }}đ</span></li>
-                    </ul>
-                    <a href="/ktcstore/checkout" class="primary-btn">Thanh toán</a>
+                <div class="col-lg-4">
+                    <div class="cart__total" >
+                        <h6> Tổng tiền </h6>
+                        <ul>
+                            <li>Tổng tiền<span>{{ number_format($total_in_cart) }}đ</span></li>
+                        </ul>
+                        <a href="/ktcstore/checkout" class="primary-btn">Thanh toán</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,7 +144,6 @@ $total_in_cart = 0;
                 <a href="/ktcstore/shop" class="primary-btn" style="width:275px; display: block; margin: 0 auto; text-align: center;">Tiếp Tục Mua Hàng</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endif
 @endsection
