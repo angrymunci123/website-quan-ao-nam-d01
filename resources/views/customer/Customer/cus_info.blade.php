@@ -50,7 +50,7 @@
                             <div>
                                 <p> <b>Địa chỉ: </b>{{$user->address}}</p>
                                 <p><b>Mật khẩu: </b><input type="text" placeholder="**********" style="width:200px" readonly>
-                                    <a href="/ktcstore/change_password">Thay đổi</a></p>
+                                    <a href="/ktcstore/personal_info/change_password">Thay đổi</a></p>
                             </div>
                         </td>
                         @endforeach

@@ -58,7 +58,6 @@ class StoreController extends Controller
     {
         return view("customer.contact");
     }
-
     public function shopping_cart()
     {
         return view('customer.shopping-cart');
