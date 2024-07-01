@@ -56,7 +56,7 @@ class BrandController extends Controller
         DB::table('brands')->insert([
             'brand_name' => $brand_name
         ]);
-        return redirect("/admin/brand")->with('notification', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
+        return redirect("/admin/brand")->with('success', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
     }
 
     public function edit_brand($brand_id)
@@ -89,7 +89,7 @@ class BrandController extends Controller
         DB::table('brands')->where("brand_id", "=", "$brand_id")->update([
             'brand_name' => $name
         ]);
-        return redirect('/admin/brand')->with('notification', 'Sửa Hãng Sản Xuất Thành Công!');
+        return redirect('/admin/brand')->with('success', 'Sửa Hãng Sản Xuất Thành Công!');
     }
 
     public function delete_brand($brand_id)
@@ -109,7 +109,7 @@ class BrandController extends Controller
 
         if ($product_exist) {
             DB::rollback();
-            return back()->with('notification', 'Không thể xóa hãng sản xuất vì có sản phẩm mang mã hãng sản xuất đang tồn tại!');
+            return back()->with('fail', 'Không thể xóa hãng sản xuất vì có sản phẩm mang mã hãng sản xuất đang tồn tại!');
         }
 
         // 2. Nếu không có product mang brand_id tương ứng tồn tại, tiến hành xóa brand
@@ -118,6 +118,6 @@ class BrandController extends Controller
 
         DB::commit();
 
-        return back()->with('notification', 'Xóa Hãng Sản Xuất Thành Công!');
+        return back()->with('success', 'Xóa Hãng Sản Xuất Thành Công!');
     }
 }

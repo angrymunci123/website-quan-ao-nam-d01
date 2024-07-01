@@ -22,7 +22,7 @@ class OrderController extends Controller
             return redirect('/ktcstore');
         }
 
-        $orders = Order::paginate(10);
+        $orders = Order::orderBy('order_id', 'desc')->paginate(10);
         Paginator::useBootstrap();
         return view("admin.order.order_list", compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
@@ -84,17 +84,17 @@ class OrderController extends Controller
                 break;
 
             case "Đã hủy":
-                return back()->with('notification', 'Không thể xác nhận đơn hàng này vì khách hàng đã hủy đơn hàng');
+                return back()->with('fail', 'Không thể xác nhận đơn hàng này vì khách hàng đã hủy đơn hàng');
 
             default:
-                return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
+                return back()->with('fail', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
         }
 
         DB::table('order')->where('order_id', $order_id)->update([
             'status' => $order_status
         ]);
 
-        return back()->with('notification', 'Cập nhật trạng thái đơn hàng thành công!');
+        return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
     }
 
     public function update_order_status(Request $request)
@@ -128,7 +128,7 @@ class OrderController extends Controller
         $order_id = $request->order_id;
         $order = DB::table('order')->where('order_id', $order_id)->first();
         if (!$order) {
-            return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
+            return back()->with('fail', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
         }
 
         switch ($order->status) {
@@ -139,10 +139,10 @@ class OrderController extends Controller
                 break;
 
             case "Đã hủy":
-                return back()->with('notification', 'Đơn hàng này đã được khách hàng hủy trước đó!');
+                return back()->with('fail', 'Đơn hàng này đã được khách hàng hủy trước đó!');
 
             default:
-                return back()->with('notification', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
+                return back()->with('fail', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
         }
 
         return back()->with('notification', 'Hủy đơn hàng thành công');
@@ -173,6 +173,6 @@ class OrderController extends Controller
             'status' => $status,
             'updated_at' => now()
         ]);
-        return redirect('/admin/order/order_detail/order_id='.$order_id)->with('notification', 'Xác nhận đơn hàng thành công!');
+        return redirect('/admin/order/order_detail/order_id='.$order_id)->with('success', 'Xác nhận đơn hàng thành công!');
     }
 }

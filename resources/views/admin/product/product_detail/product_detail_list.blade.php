@@ -21,10 +21,11 @@
               </table>
             </div>
             <div class="card-body">
-                @if(Session::has('notification'))
-                    <div class="alert alert-success" style="color:white">
-                        {{Session::get('notification')}}
-                    </div>
+                @if(Session::has('success'))
+                  <div class="alert alert-success">{{Session::get('success')}}</div>
+                @endif
+                @if(Session::has('fail'))
+                  <div class="alert alert-danger">{{Session::get('fail')}}</div>
                 @endif
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -83,7 +84,6 @@
                             </form>
                             </td>
                     </tr>
-                  @endforeach
                   <div class="popup" id="confirmPopup-{{$product_detail->product_detail_id}}">
                       <div class="popup-content">
                         <p>Bạn có chắc chắn muốn xóa chi tiết sản phẩm này không? </p>
@@ -94,6 +94,7 @@
                             <button id="cancelDeleteButton-{{$product_detail->product_detail_id}}" class="btn btn-secondary">Hủy bỏ</button>
                       </div>
                     </div>
+                    @endforeach
                   </tbody>
                 </table>
                 {{ $product_details->onEachSide(1)->links() }}

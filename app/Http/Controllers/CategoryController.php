@@ -56,7 +56,7 @@ class CategoryController extends Controller
         DB::table('category')->insert([
             'category_name' => $brand_name
         ]);
-        return redirect("/admin/category")->with('notification', 'Tạo Danh Mục Mới Thành Công!');;
+        return redirect("/admin/category")->with('success', 'Tạo Danh Mục Mới Thành Công!');;
     }
 
     public function edit_category($category_id)
@@ -89,7 +89,7 @@ class CategoryController extends Controller
         DB::table('category')->where("category_id", "=", "$category_id")->update([
             'category_name' => $name
         ]);
-        return redirect('/admin/category')->with('notification', 'Sửa Danh Mục Thành Công!');
+        return redirect('/admin/category')->with('success', 'Sửa Danh Mục Thành Công!');
     }
 
     public function delete_category($category_id)
@@ -109,7 +109,7 @@ class CategoryController extends Controller
 
         if ($product_exist) {
             DB::rollback();
-            return back()->with('notification', 'Không thể xóa sản phẩm vì có biến thể sản phẩm đang tồn tại!');
+            return back()->with('notification', 'Không thể xóa danh mục vì có sản phẩm đang tồn tại!');
         }
 
         // 2. Nếu không có product tồn tại, tiến hành xóa category
@@ -118,6 +118,6 @@ class CategoryController extends Controller
 
         DB::commit();
 
-        return back()->with('notification', 'Xóa Sản Phẩm Thành Công!');
+        return back()->with('success', 'Xóa Danh Mục Thành Công!');
     }
 }

@@ -33,11 +33,14 @@ Route::get('/', function () {
 //Login (Chung cho cả Admin và Khách Hàng)
 Route::get('/login', [AuthController::class, "login_form"]);
 Route::post('/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+Route::get('/forgot_password', [AuthController::class, "forgot_password"]);
+Route::get('/reset_password', [AuthController::class, "check_password_token"]);
+Route::post('/reset_password_process', [AuthController::class, "reset_password_process"]);
+Route::get('/login', [AuthController::class, "login_form"]);
 Route::get('/register', [AuthController::class, "register"]);
 Route::post('/register_process', [AuthController::class, "registerProcess"])->name("registerProcess");
 Route::get('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
 Route::post('/ktcstore/logout', [AuthController::class, "logout_customer"])->name('logout_customer');
-
 //Admin
 Route::get('/admin', [AdminController::class, "view_dashboard"]);
 
@@ -63,12 +66,15 @@ Route::post('/admin/category/update_category/category_id={category_id}', [Catego
 
 Route::post('/admin/category/delete_category/category_id={category_id}', [CategoryController::class, "delete_category"]);
 
-//User list
+//User personal info
 Route::get('/admin/personal_info', [AdminController::class, "personal_info"]);
-Route::get('/admin/personal_info/edit_info', [AdminController::class, "edit_info"]);
-Route::post('/admin/personal_info/update_info', [AdminController::class, "update_info"]);
+Route::get('/admin/personal_info/edit_info', [AdminController::class, "edit_personal_info"]);
+Route::post('/admin/personal_info/update_info', [AdminController::class, "update_personal_info"]);
 Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
 Route::post('/admin/personal_info/confirm_change_password', [AdminController::class, "change_password_process"]);
+
+//User list
+Route::get('/admin/user', [AdminController::class, "user_list"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
@@ -132,15 +138,16 @@ Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_de
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
 Route::get('/ktcstore/checkout', [StoreController::class, "checkout"]);
 Route::post('/ktcstore/purchase', [StoreController::class, "purchase"]);
-
+Route::get('vnpay_return', [StoreController::class, "vnpay_return"])->name('vnpay_return');
 //Customer - Order
 Route::get('/ktcstore/order_history', [CustomerController::class, "order_history"]);
 Route::get('/ktcstore/order_detail/order_id={order_id}', [CustomerController::class, "order_detail"]);
 Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [CustomerController::class, "cancel_order"]);
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 
-
-
-
-
-
+//Customer - Personal info
+Route::get('/ktcstore/personal_info', [CustomerController::class, "personal_info"]);
+Route::get('/ktcstore/personal_info/edit_info', [CustomerController::class, "edit_personal_info"]);
+Route::post('/ktcstore/personal_info/update_info', [CustomerController::class, "update_personal_info"]);
+Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
+Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);

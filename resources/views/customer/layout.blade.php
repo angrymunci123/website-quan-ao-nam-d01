@@ -104,7 +104,7 @@
                         <div class="col-lg-6 col-md-5">
                             <div class="header__top__right">
                                 <div class="header__top__links">
-                                    @if (session('role') == 'Admin')
+                                    @if (session('role') == 'Chủ Cửa Hàng' || session('role') == 'Nhân Viên')
                                         <div class="nav-item dropdown">
                                             <a href="/admin" style="color: white" style="margin:left">Quay về trang Admin</a>
                                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -139,7 +139,7 @@
                                             </a>
                                             <div
                                                 class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                                <a href="/ktcstore/cus_info" class="dropdown-item">Thông tin cá nhân</a>
+                                                <a href="/ktcstore/personal_info" class="dropdown-item">Thông tin cá nhân</a>
                                                 <a href="/ktcstore/order_history" class="dropdown-item">Lịch sử đơn hàng</a>
                                                 <form id="logout-form" action="/ktcstore/logout" method="POST"
                                                     style="display: none;">

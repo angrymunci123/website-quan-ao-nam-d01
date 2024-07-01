@@ -99,19 +99,19 @@
                                     <div class="checkout__input__checkbox">
                                         <label for="payment">
                                             Thanh toán khi nhận hàng
-                                            <input type="checkbox" name="payment_method" id="payment" value="Thanh toán khi nhận hàng">
+                                            <input name="payment_method" type="radio" id="payment" value="Thanh toán khi nhận hàng">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="checkout__input__checkbox">
                                         <label for="paypal">
                                             Chuyển khoản
-                                            <input type="checkbox" name="payment_method" id="paypal" value="Chuyển khoản">
+                                            <input name="payment_method" type="radio" id="paypal" value="Chuyển khoản">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                 </ul>
-
+                                <input type="hidden" name="total_price" value="{{$total_in_cart}}">
                                 <button type="submit" class="site-btn">ĐẶT HÀNG</button>
                             </div>
                         </div>
@@ -120,6 +120,5 @@
             </div>
         </div>
     </section>
-    @endif
-    <!-- Checkout Section End -->
+    @endif 
 @endsection
