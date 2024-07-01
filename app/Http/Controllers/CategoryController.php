@@ -18,7 +18,7 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -34,7 +34,7 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -99,8 +99,8 @@ class CategoryController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('login');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         // 1. Check product có tồn tại hay không

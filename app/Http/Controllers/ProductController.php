@@ -20,8 +20,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $inner_join = Product::join("brands", "products.brand_id", "=", "brands.brand_id")
@@ -40,8 +40,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $brands = Brand::all();
@@ -56,8 +56,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $brand = $request->brand_id;
@@ -82,8 +82,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $brands = Brand::all();
@@ -99,8 +99,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $brand = $request->brand_id;
@@ -124,8 +124,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         // 1. Check product detail có tồn tại hay không
@@ -154,8 +154,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $product_id = $request->product_id;
@@ -174,8 +174,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $product_id = $request->product_id;
@@ -190,8 +190,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $product_id = $request->product_id;
@@ -226,8 +226,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
@@ -243,8 +243,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $product_id = $request->product_id;
@@ -261,10 +261,9 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
-
         $price = $request->price;
         $sale_price = $request->sale_price;
         $size = $request->size;
@@ -297,8 +296,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $product_detail = Product_Detail::findOrFail($product_detail_id);
@@ -313,8 +312,8 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         if (isset($_POST['keywords'])) 

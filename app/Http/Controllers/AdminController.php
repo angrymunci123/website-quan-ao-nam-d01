@@ -85,4 +85,10 @@ class AdminController extends Controller
     public function change_password(){
         return view ('admin.user.password');
     }
+
+    public function user_info() 
+    {
+        $users = User::where('user_id', '=', session('user_id'))->get();
+        return view('admin.user.user_info', compact('users'));
+    }
 }

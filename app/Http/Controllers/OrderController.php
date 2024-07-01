@@ -18,8 +18,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $orders = Order::orderBy('order_id', 'desc')->paginate(10);
@@ -34,8 +34,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
@@ -59,8 +59,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_id = $request->order_id;
@@ -104,8 +104,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_id = $request->order_id;
@@ -121,8 +121,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_id = $request->order_id;
@@ -155,8 +155,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $consignee = $request->consignee;

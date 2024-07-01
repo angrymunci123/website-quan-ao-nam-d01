@@ -55,7 +55,7 @@ class AuthController extends Controller
         return view("customer.index");
     }
 
-    private function setSessionData(Request $request, $user)
+    private function session_data(Request $request, $user)
     {
         $request->session()->put('user_id', $user->user_id);
         $request->session()->put('fullname', $user->fullname);
@@ -80,16 +80,14 @@ class AuthController extends Controller
             {
                 $user = Auth::user();
                 if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
-                    $this->setSessionData($request, $user);
+                    $this->session_data($request, $user);
                     return view('admin.dashboard.dashboard');
                 }
 
-                if ($user->role == 'Khách Hàng') {
-                    $this->setSessionData($request, $user);
+                else if ($user->role == 'Khách Hàng') {
+                    $this->session_data($request, $user);
                     return view('customer.index');
                 }
-
-                return back()->with('fail', 'Tài khoản có thể chưa được phân quyền.');
             }
             return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
         }

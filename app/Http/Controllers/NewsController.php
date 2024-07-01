@@ -17,7 +17,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -34,7 +34,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -48,7 +48,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -75,7 +75,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -91,7 +91,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -106,7 +106,7 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -133,8 +133,8 @@ class NewsController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
-            return redirect('/ktcstore');
+        if ($user->role == 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $news_id = $request->news_id;

@@ -339,7 +339,6 @@ class StoreController extends Controller
                 } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
                     $price_to_use = $cart_data['sale_price'];
                 }
-
                 DB::table('order_detail')->insert([
                     'order_id' => $select_order->order_id,
                     'product_detail_id' => $cart_data['product_detail_id'],
@@ -355,11 +354,10 @@ class StoreController extends Controller
                     $product_detail->quantity -= $cart_data['quantity'];
                     $product_detail->save();
                 }
-
-                session()->forget('shopping_cart_' . auth()->id());
-
-                return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
+            session()->forget('shopping_cart_' . auth()->id());
+
+            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
         }
     }
 

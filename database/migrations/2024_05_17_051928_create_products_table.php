@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('restrict');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('category_id')->on('category')->onDelete('restrict');;
+            $table->foreign('category_id')->references('category_id')->on('category')->onDelete('restrict');
             $table->string('product_name');
             $table->longText('description');
             $table->timestamps();
