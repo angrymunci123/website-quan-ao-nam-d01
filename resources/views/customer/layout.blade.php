@@ -204,11 +204,11 @@
                     <div class="footer__about">
                         <div class="footer__logo">
                             {{-- logo --}}
-                            <a href="#"><img src="{{ asset('temp_assets/img/footer-logo.png')}}" alt=""></a>
+                            <a href="#"><img src="{{ asset('temp_assets/KTC_Store.png')}}" alt="" style="width: 150px"></a>
                         </div>
                         {{-- slogan --}}
                         <p>Khách hàng không bao giờ đúng</p>
-                        <a href="#"><img src="{{ asset('temp_assets/img/payment.png')}}" alt=""></a>
+                        <a href="#"><img src="{{ asset('temp_assets/vnpay.jpg')}}" alt="" style="width: 100px"></a>
                     </div>
                 </div>
                 <div class="col-lg-4 offset-lg-1 col-md-3 col-sm-6">
