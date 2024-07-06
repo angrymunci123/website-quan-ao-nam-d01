@@ -259,6 +259,7 @@ class StoreController extends Controller
                 'address' => $address,
                 'payment_method' => $payment_method,
                 'shipping_unit' => $shipping_unit,
+                'notes' => $notes,
                 'user_id' => $user_id,
                 'created_at' => now(),
                 'updated_at' => NULL
@@ -430,39 +431,6 @@ class StoreController extends Controller
             session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
         }
-    }
-
-    public function filter_price_under200()
-    {
-        $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->where('product_detail.size', '=', 'S')
-            ->where('product_detail.price', '<', 200000)
-            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
-        Paginator::useBootstrap();
-
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
-        // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-        return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
     public function filter_price($price_range)
