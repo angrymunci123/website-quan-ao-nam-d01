@@ -429,7 +429,7 @@
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-1.jpg')}}"></div>
                         <div class="blog__item__text">
                             <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 29 Tháng 2 2024</span>
-                            <h5>Giảm giá 75% toàn bộ mặt hàng quần què</h5>
+                            <h5>Giảm giá 75% cho những khách hàng lần đầu đặt hàng</h5>
                             <a href="#">Đọc thêm</a>
                         </div>
                     </div>
@@ -439,7 +439,7 @@
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-2.jpg')}}"></div>
                         <div class="blog__item__text">
                             <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 31 Tháng 4 2024</span>
-                            <h5>Giảm giá 50% toàn bộ cửa hàng</h5>
+                            <h5>Giảm giá tới 50% toàn bộ cửa hàng</h5>
                             <a href="#">Đọc thêm</a>
                         </div>
                     </div>
@@ -449,7 +449,7 @@
                         <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-3.jpg')}}"></div>
                         <div class="blog__item__text">
                             <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 30 Tháng 5 2024</span>
-                            <h5>Sale cực sốc không mặt hàng nào cả</h5>
+                            <h5>Deal cực sốc</h5>
                             <a href="#">Đọc thêm</a>
                         </div>
                     </div>

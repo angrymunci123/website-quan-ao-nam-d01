@@ -207,7 +207,7 @@
                             <a href="#"><img src="{{ asset('temp_assets/KTC_Store.png')}}" alt="" style="width: 150px"></a>
                         </div>
                         {{-- slogan --}}
-                        <p>Khách hàng không bao giờ đúng</p>
+                        <p>Nhà tài trợ</p>
                         <a href="#"><img src="{{ asset('temp_assets/vnpay.jpg')}}" alt="" style="width: 100px"></a>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="footer__copyright__text">
-                        <p>Sản phẩm này không phải là thuốc, không có tác dụng thay thế thuốc chữa bệnh.</p>
+                        <p>KTC Store</p>
                     </div>
                 </div>
             </div>
