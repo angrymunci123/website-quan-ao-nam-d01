@@ -157,9 +157,7 @@ class StoreController extends Controller
         if (isset($shopping_cart[$shopping_cart_item])) {
             // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
             $shopping_cart[$shopping_cart_item]['quantity'] += $chosen_quantity;
-        }
-
-        else {
+        } else {
             // Nếu chưa có, thêm sản phẩm vào giỏ hàng
             $shopping_cart[$shopping_cart_item] = [
                 "product_id" => $product->product_id,
@@ -196,6 +194,7 @@ class StoreController extends Controller
         return redirect()->back();
     }
 
+    // lmaoxd
     public function minus_quantity($product_id, $product_detail_id)
     {
         $user_id = auth()->id();
@@ -330,9 +329,7 @@ class StoreController extends Controller
                 $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
             }
             return redirect()->to($vnp_Url);
-        }
-
-        else if ($payment_method = "Thanh toán khi nhận hàng") {
+        } else if ($payment_method = "Thanh toán khi nhận hàng") {
             $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
 
             foreach ($shopping_cart as $cart_data) {
