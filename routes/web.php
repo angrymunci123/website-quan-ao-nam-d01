@@ -43,6 +43,7 @@ Route::get('/admin/logout', [AuthController::class, "logout_admin"])->name('logo
 Route::post('/ktcstore/logout', [AuthController::class, "logout_customer"])->name('logout_customer');
 //Admin
 Route::get('/admin', [AdminController::class, "view_dashboard"]);
+Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
 
 //Brand
 Route::get('/admin/brand', [BrandController::class, "brand_management"]);
