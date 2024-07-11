@@ -38,7 +38,7 @@
                                             <!-- <a href="/ktcstore/change_password">Thay đổi</a></p> -->
                                             <input type='password' value='{{ $user->password }}' id='myInput' readonly='readonly'>
                                             <br>
-                                            <input type="checkbox" onclick="myFunction()">&nbsp; Hiển thị mật khẩu
+                                            <input type="checkbox" id="showPassword" onclick="togglePassword()">&nbsp; Hiển thị mật khẩu
                                     </div>
                                 </td>
                                 @endforeach
@@ -47,8 +47,8 @@
                     </table>
                     <br>
                     <div style="text-align:center">
-                        <form action="/admin/personal_info/edit_info" method="GET">
-                            <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
+                        <form action="/admin/personal_info/change_password" method="GET">
+                            <button type="submit"  class="btn btn-info" style="width:150px; color:white">Đổi mật khẩu</button>
                         </form>
                     </div>
                 </div>
@@ -58,4 +58,15 @@
     </div>
 </div>
 </main>
+<script>
+    function togglePassword() {
+            var passwordField = document.getElementById("myInput");
+            var checkbox = document.getElementById("showPassword");
+            if (checkbox.checked) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+</script>
 @endsection
