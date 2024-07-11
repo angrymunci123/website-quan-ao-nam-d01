@@ -12,14 +12,14 @@ class AuthController extends Controller
 {
     public function auth_user($user)
     {
-        if ($user) 
+        if ($user)
         {
-            if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') 
+            if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên')
             {
                 return view('admin.dashboard.dashboard');
-            } 
-            
-            elseif ($user->role == 'Khách Hàng') 
+            }
+
+            elseif ($user->role == 'Khách Hàng')
             {
                 return view('customer.index');
             }
@@ -29,7 +29,7 @@ class AuthController extends Controller
 
     public function login_form()
     {
-        if (Auth::check()) 
+        if (Auth::check())
         {
             return $this->auth_user(Auth::user());
         }
@@ -37,7 +37,7 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function logout_admin(Request $request) 
+    public function logout_admin(Request $request)
     {
         Auth::logout();
         $request->session()->forget('user_id');
@@ -46,7 +46,7 @@ class AuthController extends Controller
         return redirect("/login");
     }
 
-    public function logout_customer(Request $request) 
+    public function logout_customer(Request $request)
     {
         Auth::logout();
         $request->session()->forget('user_id');
@@ -55,7 +55,7 @@ class AuthController extends Controller
         return view("customer.index");
     }
 
-    private function session_data(Request $request, $user)
+    private function setSessionData(Request $request, $user)
     {
         $request->session()->put('user_id', $user->user_id);
         $request->session()->put('fullname', $user->fullname);
@@ -76,18 +76,20 @@ class AuthController extends Controller
         }
 
         else {
-            if (Auth::attempt($credentials)) 
+            if (Auth::attempt($credentials))
             {
                 $user = Auth::user();
                 if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
-                    $this->session_data($request, $user);
+                    $this->setSessionData($request, $user);
                     return view('admin.dashboard.dashboard');
                 }
 
-                else if ($user->role == 'Khách Hàng') {
-                    $this->session_data($request, $user);
+                if ($user->role == 'Khách Hàng') {
+                    $this->setSessionData($request, $user);
                     return view('customer.index');
                 }
+
+                return back()->with('fail', 'Tài khoản có thể chưa được phân quyền.');
             }
             return back()->with('fail', 'Sai địa chỉ email hoặc mật khẩu. Vui lòng thử lại.');
         }
@@ -133,32 +135,32 @@ class AuthController extends Controller
         }
     }
 
-    public function forgot_password() 
+    public function forgot_password()
     {
-        if (Auth::check()) 
+        if (Auth::check())
         {
             return $this->auth_user(Auth::user());
         }
         return view('forgotten_password');
     }
 
-    public function check_password_token(Request $request) 
+    public function check_password_token(Request $request)
     {
-        if (Auth::check()) 
+        if (Auth::check())
         {
             return $this->auth_user(Auth::user());
         }
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user) 
+        if ($user)
         {
-            if (Hash::check($request->old_password, $user->password_token)) 
+            if (Hash::check($request->old_password, $user->password_token))
             {
                 return view('reset_password', compact('user'));
-            } 
-            
-            else 
+            }
+
+            else
             {
                 return back()->with('fail', 'Sai mật khẩu hoặc địa chỉ email.');
             }
@@ -174,12 +176,12 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) 
+        if (!$user)
         {
             return back()->with('fail', 'Địa chỉ email không tồn tại trong hệ thống!');
         }
 
-        if ($new_password === $confirm_new_password) 
+        if ($new_password === $confirm_new_password)
         {
             $user->password = bcrypt($request->new_password);
             $user->save();

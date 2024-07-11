@@ -19,7 +19,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $orders = Order::orderBy('order_id', 'desc')->paginate(10);
@@ -35,7 +35,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
@@ -47,7 +47,7 @@ class OrderController extends Controller
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
             ->join('products', 'product_detail.product_id', '=', 'products.product_id')
             ->where('order_detail.order_id', '=', $order_id)
-            ->select('order_detail.*', 'products.product_id', 'products.product_name')
+            ->select('order_detail.*', 'product_detail.*', 'products.product_id', 'products.product_name')
             ->get();
         return view("admin.order.order_detail", compact(['order_details', 'product_order']));
     }
@@ -60,7 +60,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $order_id = $request->order_id;
@@ -105,7 +105,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $order_id = $request->order_id;
@@ -122,7 +122,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $order_id = $request->order_id;
@@ -156,7 +156,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
         if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $consignee = $request->consignee;
