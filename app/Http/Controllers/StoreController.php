@@ -157,7 +157,9 @@ class StoreController extends Controller
         if (isset($shopping_cart[$shopping_cart_item])) {
             // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
             $shopping_cart[$shopping_cart_item]['quantity'] += $chosen_quantity;
-        } else {
+        }
+
+        else {
             // Nếu chưa có, thêm sản phẩm vào giỏ hàng
             $shopping_cart[$shopping_cart_item] = [
                 "product_id" => $product->product_id,

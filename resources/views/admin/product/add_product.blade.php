@@ -40,27 +40,6 @@
                         <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
                     </div>
                 </div>
-                <br>
-                <div class="form-group">
-                  <strong>Danh Mục</strong>
-                  <select class="form-control" name='category_id'>
-                    @foreach($categories as $category)
-            <option type="number" name='category_id' value='{{$category->category_id}}'>
-              {{$category->category_name}}</option>
-          @endforeach
-                  </select>
-                </div>
-                <br>
-                <div class="form-group">
-                  <strong>Tên Sản Phẩm</strong>
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" required>
-                </div>
-                <br>
-                <div class="form-group">
-                  <strong>Mô Tả Sản Phẩm</strong>
-                  <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10"
-                    placeholder="Mô tả"></textarea>
-                </div>
               </div>
               <br>
               <div class="col-sm-4 col-xl-1">

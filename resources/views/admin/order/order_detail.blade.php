@@ -57,6 +57,7 @@
                                 <tr style="width:100%; text-align: center">
                                     <th><b>Sản phẩm</b></th>
                                     <th><b>Số lượng</b></th>
+                                    <th><b>Kích cỡ</b></th>
                                     <th><b>Đơn giá</b></th>
                                     <th><b>Thành tiền</b></th>
                                 </tr>
@@ -72,12 +73,14 @@
                                                                 <tr>
                                                                     <td>{{$product->product_name}}</td>
                                                                     <td class="text-center">{{$product->quantity}}</td>
+                                                                    <td class="text-center">{{$product->size}}</td>
                                                                     <td class="text-center">{{number_format($product->price)}}đ</td>
                                                                     <td class="text-center">{{number_format($total)}}đ</td>
                                                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td class="text-center"><b>Tổng tiền</b></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td class="text-center"><b>{{number_format($total_price_order)}}đ</b></td>
@@ -91,7 +94,7 @@
                         </form>
                         @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
                             <form id="updateStatusForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right: 20px; float: right">
+                                method="GET" style="padding-right:20px; float:right">
                                 <button type="button" class="btn btn-warning" style="width: 200px; color:white"
                                     data-toggle="modal" data-target="#updateStatusModal">Cập nhật
                                     trạng thái<i></i></button>
