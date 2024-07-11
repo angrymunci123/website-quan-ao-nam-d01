@@ -56,6 +56,7 @@
                             <thead style="background-color:white">
                                 <tr style="width:100%; text-align: center">
                                     <th><b>Sản phẩm</b></th>
+                                    <th><b>Size</b></th>
                                     <th><b>Số lượng</b></th>
                                     <th><b>Đơn giá</b></th>
                                     <th><b>Thành tiền</b></th>
@@ -71,13 +72,15 @@
                                                                 @endphp
                                                                 <tr>
                                                                     <td>{{$product->product_name}}</td>
-                                                                    <td class="text-center">{{$product->quantity}}</td>
-                                                                    <td class="text-center">{{number_format($product->price)}}đ</td>
-                                                                    <td class="text-center">{{number_format($total)}}đ</td>
+                                                                    <td class="text-center" style="width:50px">{{$product->size}}</td>
+                                                                    <td class="text-center" style="width:50px">{{$product->quantity}}</td>
+                                                                    <td class="text-center" style="width:50px">{{number_format($product->price)}}đ</td>
+                                                                    <td class="text-center" style="width:50px">{{number_format($total)}}đ</td>
                                                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td class="text-center"><b>Tổng tiền</b></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td class="text-center"><b>{{number_format($total_price_order)}}đ</b></td>
