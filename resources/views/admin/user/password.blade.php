@@ -24,14 +24,17 @@
                                         <h6 style=" padding-bottom: 5px;">Xác nhận mật khẩu mới:</h6>
                                     </td>
                                     <td style="width:50%">
-                                        <div style=" padding-bottom: 5px;">
-                                            <input type="text" placeholder="**********" style="width:300px">
+                                        <div style=" padding-bottom: 5px;" class="input-container">
+                                            <input type="password" id="password1" placeholder="" style="width:300px">
+                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password1', this)"></i>
                                         </div>
-                                        <div style=" padding-bottom: 5px;">
-                                            <input type="text" placeholder="**********" style="width:300px">
+                                        <div style=" padding-bottom: 5px;" class="input-container">
+                                            <input type="password" id="password2" placeholder="" style="width:300px">
+                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password2', this)"></i>
                                         </div>
-                                        <div style=" padding-bottom: 5px;">
-                                            <input type="text" placeholder="**********" style="width:300px">
+                                        <div style=" padding-bottom: 5px;" class="input-container">
+                                            <input type="password" id="password3" placeholder="" style="width:300px">
+                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password3', this)"></i>
                                         </div>
                                     </td>
                                 </tr>
@@ -188,5 +191,17 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+    function togglePasswordVisibility(inputId, icon) {
+            var input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
 </script>
 @endsection

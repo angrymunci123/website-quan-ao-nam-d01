@@ -1,0 +1,18 @@
+.input-container {
+    position: relative;
+    width: 300px;
+    padding-bottom: 5px;
+}
+
+.input-container input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.input-container .fa-eye, .input-container .fa-eye-slash {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

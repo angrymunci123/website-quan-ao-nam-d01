@@ -16,10 +16,23 @@
               </table>
             </div>
             <div class="input-group" style="width: 300px; padding-left: 23px">
-              <form method="post" style="width: 300px" action="/admin/product/search_product" enctype='multipart/form-data'>
+              <table>
+                <tr>
+                <th></th>
+                <th></th>
+                </tr>
+                <tr>
+                  <td>
+                  <form method="post" style="width: 300px" action="/admin/product/search_product" enctype='multipart/form-data'>
                 <input type="text" class="form-control" name="keywords" placeholder="Sản phẩm...">
                 @csrf
               </form>
+                  </td>
+                  <td style=" padding-top:15px;">
+                    <button class="btn btn-info" style="width:35px; height: 35px;"><i class="fa fa-search"></i></button>
+                  </td>
+                </tr>
+              </table>
             </div>
             <div class="card-body">
                 @if(Session::has('success'))
