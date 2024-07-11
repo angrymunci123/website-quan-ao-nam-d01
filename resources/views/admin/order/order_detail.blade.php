@@ -90,11 +90,6 @@
                                 lại<i></i></button>
                         </form>
                         @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
-                            <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET"
-                                style="padding-right: 20px; float: right">
-                                <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật
-                                    thông tin<i></i></button>
-                            </form>
                             <form id="updateStatusForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
                                 method="GET" style="padding-right: 20px; float: right">
                                 <button type="button" class="btn btn-warning" style="width: 200px; color:white"
@@ -131,17 +126,11 @@
                         @endif
 
                         @if ($order_detail->status == 'Đang chờ xác nhận')
-                            <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET"
-                                style="padding-right: 20px; float: right">
-                                <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật
-                                    thông tin<i></i></button>
-                            </form>
-
                             <form id="confirmOrderForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
                                 method="GET" style="padding-right: 20px; float: right">
-                                <button type="button" class="btn btn-success" style="width: 110px; color:white"
+                                <button type="button" class="btn btn-success" style="width: 180px; color:white"
                                     data-toggle="modal" data-target="#confirmOrderModal">Xác
-                                    nhận<i></i></button>
+                                    nhận đơn hàng<i></i></button>
                             </form>
                             <!-- Popup form xác nhận đơn hàng -->
                             <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog"
@@ -160,8 +149,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-success" id="confirmOrder">Xác nhận đơn
-                                                hàng</button>
+                                            <button type="button" class="btn btn-success" id="confirmOrder">Xác nhận</button>
                                         </div>
                                     </div>
                                 </div>
@@ -198,14 +186,6 @@
                             </div>
 
                         @endif
-
-                        @if ($order_detail->status == 'Đã giao hàng')
-                            <form action="/admin/order/update_order_info/order_id={{$order_detail->order_id}}" method="GET"
-                                style="padding-right: 20px; float: right">
-                                <button type="submit" class="btn btn-success" style="width: 200px; color:white">Cập nhật
-                                    thông tin<i></i></button>
-                            </form>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -224,5 +204,4 @@
         document.getElementById('updateStatusForm').submit();
     });
 </script>
-
 @endsection
