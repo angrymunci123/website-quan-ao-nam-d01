@@ -81,12 +81,12 @@
                             <td class="text-center">{{number_format($total)}}đ</td>
                             @if ($order_detail->status == 'Đã giao hàng')
                             <td class="text-center">
-                                <form method="get" action="/ktcstore/reviews/">
-                                <input type="number" hidden name="order_id" value="{{$product->order_id}}">
-                                <input type="number" hidden name="product_detail_id" value="{{$product->product_detail_id}}">
-                                <input hidden type="number" name="product_id" value="{{$product->product_id}}">
-                                <input hidden type="text" name="product_name" value="{{$product->product_name}}">
-                                <button type="submit" class="btn btn-success btn-sm" style="width: 150px; color:white">Đánh giá sản phẩm</button>
+                                <form method="POST" action="/ktcstore/reviews/{{$product->product_name}}" enctype='multipart/form-data'>
+                                    @csrf
+                                    <input type="number" hidden name="order_id" value="{{$product->order_id}}"/>
+                                    <input type="number" hidden name="product_detail_id" value="{{$product->product_detail_id}}"/>
+                                    <input hidden type="text" name="product_name" value="{{$product->product_name}}"/>
+                                    <button type="submit" class="btn btn-success btn-sm" style="width: 150px; color:white">Đánh giá sản phẩm</button>
                                 </form>
                             </td>
                             @endif
