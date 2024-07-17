@@ -1,180 +1,69 @@
-Có thể có vài nguyên nhân khiến JavaScript không hoạt động đúng cách. Dưới đây là một số bước để kiểm tra và sửa lỗi:
-
-1. **Kiểm tra console để biết lỗi JavaScript:**
-   - Mở công cụ phát triển trình duyệt (F12 hoặc Ctrl+Shift+I trên Windows/Linux, Cmd+Option+I trên macOS).
-   - Chuyển đến tab "Console" và kiểm tra xem có lỗi nào xuất hiện không.
-
-2. **Đảm bảo rằng jQuery đã được tải trước khi sử dụng:**
-   - Đảm bảo rằng jQuery đã được tải đúng cách và được bao gồm trong file layout của bạn (`admin.admin_layout`).
-   - Đảm bảo rằng tất cả các thư viện và script cần thiết được tải trước khi đoạn mã của bạn chạy.
-
-3. **Kiểm tra các thẻ modal và button:**
-   - Đảm bảo rằng các thẻ button và modal của bạn có các ID chính xác và không trùng lặp.
-
-4. **Đảm bảo rằng không có xung đột với các sự kiện JavaScript khác:**
-   - Có thể có xung đột với các sự kiện JavaScript khác trên trang của bạn.
-
-Dưới đây là mã mẫu được tinh chỉnh lại để đảm bảo rằng jQuery và Bootstrap đã được tải và các modal và button có ID chính xác:
-
-```blade
-@extends('admin.admin_layout')
+@extends('customer.layout')
 @section('content')
-<!-- End Navbar -->
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header pb-0">
-                    <table style="width: 100%">
-                        <th style="font-size: 26px;" class="text-center">Chi tiết đơn hàng</th>
-                    </table>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4 style="color: white">Thông tin cá nhân</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html" style="color: white">Trang chủ</a>
+                        <a href="./shop.html" style="color: white">Cửa hàng</a>
+                        <span>Thông tin cá nhân</span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    @if(Session::has('notification'))
-                        <div class="alert alert-success" style="color:white">
-                            {{Session::get('notification')}}
-                        </div>
-                    @endif
-                </div>
-                @php
-                    $total_price_order = 0;
-                @endphp
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0"
-                            style="padding-left: 15px; padding-right: 15px; border-style: none">
-                            <tbody>
-                                <tr style="width:100%">
-                                    @foreach ($order_details as $order_detail)  @endforeach
-                                    <td class="font-weight-bolder opacity-7" style="float: left; width: 50%">
-                                        <div>
-                                            <p><b>Họ tên người nhận: </b>{{$order_detail->consignee}}</p>
-                                            <p><b>SDT:</b> {{$order_detail->phone_number}}</p>
-                                            <p><b>Địa chỉ:</b> {{$order_detail->address}}</p>
-                                            <p><b>Ngày đặt:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
-                                        </div>
-                                    </td>
-                                    <td class="font-weight-bolder opacity-7" style="width: 50%">
-                                        <div style="float:right">
-                                            <p><b>ID đơn hàng:</b> {{$order_detail->order_id}}</p>
-                                            <p><b>Tình trạng đơn hàng:</b> {{$order_detail->status}}</p>
-                                            <p><b>Phương thức thanh toán:</b> {{$order_detail->payment_method}}</p>
-                                            @if($order_detail->updated_at)
-                                                <p><b>Ngày xác nhận đơn hàng:</b>
-                                                    {{$order_detail->updated_at->format('d/m/Y') }}</p>
-                                            @else
-                                                <p><b>Ngày xác nhận đơn hàng:</b></p>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table align-items-center table-bordered"
-                            style="padding: 20px; width:95%; margin:auto; background-color:#F3F2EE">
-                            <thead style="background-color:white">
-                                <tr style="width:100%; text-align: center">
-                                    <th><b>Sản phẩm</b></th>
-                                    <th><b>Số lượng</b></th>
-                                    <th><b>Đơn giá</b></th>
-                                    <th><b>Thành tiền</b></th>
-                                </tr>
-                            </thead>
-
-                            <tbody style="background-color:white">
-                                @foreach($product_order as $product)
-                                                                @php
-                                                                    $total = 0;
-                                                                    $total += $product->price * $product->quantity;
-                                                                    $total_price_order += $total;
-                                                                @endphp
-                                                                <tr>
-                                                                    <td>{{$product->product_name}}</td>
-                                                                    <td class="text-center">{{$product->quantity}}</td>
-                                                                    <td class="text-center">{{number_format($product->price)}}đ</td>
-                                                                    <td class="text-center">{{number_format($total)}}đ</td>
-                                                                </tr>
-                                @endforeach
-                                <tr>
-                                    <td class="text-center"><b>Tổng tiền</b></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center"><b>{{number_format($total_price_order)}}đ</b></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <form action="/admin/order" method="GET" style="padding-right: 20px; float: right">
-                            <button type="submit" class="btn btn-secondary" style="width: 110px; color:white">Quay
-                                lại<i></i></button>
-                        </form>
-                        @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
-                            <form id="updateStatusForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right:20px; float:right">
-                                <button type="button" class="btn btn-warning" style="width: 200px; color:white"
-                                    data-toggle="modal" data-target="#updateStatusModal">Cập nhật
-                                    trạng thái<i></i></button>
-                            </form>
-                            <!-- Popup form cập nhật trạng thái đơn hàng -->
-                            <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"
-                                aria-labelledby="updateStatusModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateStatusModalLabel">Cập nhật trạng thái đơn hàng
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Bạn chắc chắn muốn cập nhật trạng thái đơn hàng này không? Điều này không thể
-                                            hoàn tác lại.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-warning" id="confirmUpdate">Cập nhật
-                                                trạng
-                                                thái</button>
-                                        </div>
-                                    </div>
-                                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<div class="card mb-4">
+    <div class="card-header pb-0">
+        <h4>Thông tin cá nhân</h4>
+        <br>
+    </div>
+    <div class="card-body">
+        @if(Session::has('success'))
+            <div class="alert alert-success">{{Session::get('success')}}</div>
+        @endif
+        @if(Session::has('fail'))
+            <div class="alert alert-danger">{{Session::get('fail')}}</div>
+        @endif
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <table class="table align-items-center"
+                style="padding-left: 15px; padding-right: 15px;">
+                <tbody>
+                    <tr style="width:100%">
+                        @foreach($user_info as $user)
+                        <td class="font-weight-bolder"
+                            style="float: left; border: solid white">
+                            <div>
+                                <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
+                                <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
+                                <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                             </div>
-
-                        @endif
-
-                        @if ($order_detail->status == 'Đang chờ xác nhận')
-                            <form id="confirmOrderForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right: 20px; float: right">
-                                <button type="button" class="btn btn-success" style="width: 180px; color:white"
-                                    data-toggle="modal" data-target="#confirmOrderModal">Xác
-                                    nhận đơn hàng<i></i></button>
-                            </form>
-                            <!-- Popup form xác nhận đơn hàng -->
-                            <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog"
-                                aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmOrderModalLabel">Xác nhận đơn hàng</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Bạn chắc chắn muốn xác nhận đơn hàng này không? Điều này không thể hoàn tác lại.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-success" id="confirmOrder">Xác nhận</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </td>
+                        <td class="font-weight-bolder" style="float:right; border: solid white">
+                            <div>
+                                <p> <b>Địa chỉ: </b>{{$user->address}}</p>
+                                <p><b>Mật khẩu: </b><input type="text" placeholder="**********" style="width:200px" readonly>
+                                    <a href="/ktcstore/change_password">Thay đổi</a></p>
                             </div>
-
-                            <form id="cancelOrderForm" action="/admin/order/cancel/order_id={{$order_detail->order_id}}"
-                                method="POST" style="padding-right: 20px; float: right">
-                                @csrf
-                                <button type="button" class="btn btn-danger" style
+                        </td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div style="text-align:center">
+                <form action="/ktcstore/personal_info/edit_info" method="GET">
+                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

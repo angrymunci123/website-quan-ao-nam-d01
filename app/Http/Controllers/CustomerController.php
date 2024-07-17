@@ -147,4 +147,11 @@ class CustomerController extends Controller
     {
         return view('customer.Customer.cus_password');
     }
+
+    public function product_review(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product_name = $request->product_name;
+        return view('customer.Customer.cus_password');
+    }
 }
