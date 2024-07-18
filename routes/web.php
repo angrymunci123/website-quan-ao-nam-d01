@@ -130,7 +130,9 @@ Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::c
 Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
 Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
-Route::get('/ktcstore/reviews/{product_name}', [StoreController::class, "product_reviews"]);
+
+Route::get('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
+Route::POST('/ktcstore/reviews/send_reviews', [CustomerController::class, "send_review"]);
 
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
