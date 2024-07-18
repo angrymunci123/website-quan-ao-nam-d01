@@ -48,35 +48,6 @@
                         <input type="file" name="image" id="image" class="form-control-ls" required>
                     </div>
                 </div>
-                <input type="hidden" name="_token" value="<?php echo csrf_token()?>" />
-                <div class="form-group">
-                  <strong>Giá</strong>
-                  <input type="number" name="price" id="price" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Giá Khuyến Mãi</strong>
-                  <input type="number" name="sale_price" id="sale_price" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Số lượng</strong>
-                  <input type="number" name="quantity" id="quantity" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Màu Sắc</strong>
-                  <input type="text" name="color" id="color" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Kích Cỡ</strong>
-                  <input type="text" name="size" id="size" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Chất Liệu</strong>
-                  <input type="text" name="material" id="material" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <strong>Image</strong>
-                  <input type="file" name="image" id="image" class="form-control-ls">
-                </div>
               </div>
           </div>
           <br>
@@ -87,11 +58,11 @@
           <br>
           <div class="col-sm-4 col-xl-1">
             @foreach ($products as $product)
-        <form action="/admin/product/product_detail/product_id={{$product->product_id}}"
-          enctype="multipart/form-data">
-          <button type="submit" class="btn btn-warning">Quay Lại</button>
-        </form>
-      @endforeach
+              <form action="/admin/product/product_detail/product_id={{$product->product_id}}"
+                enctype="multipart/form-data">
+                <button type="submit" class="btn btn-warning">Quay Lại</button>
+              </form>
+            @endforeach
           </div>
         </div>
       </div>

@@ -131,7 +131,8 @@ Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filt
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
 Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
 
-Route::POST('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
+Route::get('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
+Route::POST('/ktcstore/reviews/send_reviews', [CustomerController::class, "send_review"]);
 
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);

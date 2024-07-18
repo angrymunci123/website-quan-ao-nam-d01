@@ -54,34 +54,43 @@
                                 </tr> 
                             </table>
                             <hr>
-                            @endforeach
                             <div class="feedback">
                                 Cám ơn bạn đã mua sản phẩm tại cửa hàng của chúng tôi. Vui lòng đánh giá trải nghiệm sản phẩm của bạn ở dưới
                                 <hr>
-                                <label for="m_3189847521540640526commentText">Đánh giá về chất lượng sản phẩm:</label>
+                                <label>Đánh giá về chất lượng sản phẩm:</label>
                                 <br>
-                                <form>
+                                <form method="POST" action="/ktcstore/reviews/send_reviews" enctype='multipart/form-data'>
+                                    @csrf
+                                    <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+                                    <input hidden type="number" name="product_id" value="{{$product['product_id']}}">
+                                    <input hidden type="text" name="product_name" value="{{$product['product_name']}}">
                                     <span class="star-rating">
-                                        <input type="radio" name="rating1" value="1"><i></i>
-                                        <input type="radio" name="rating1" value="2"><i></i>
-                                        <input type="radio" name="rating1" value="3"><i></i>
-                                        <input type="radio" name="rating1" value="4"><i></i>
-                                        <input type="radio" name="rating1" value="5"><i></i>
+                                        <input type="radio" name="rating" value="1"><i></i>
+                                        <input type="radio" name="rating" value="2"><i></i>
+                                        <input type="radio" name="rating" value="3"><i></i>
+                                        <input type="radio" name="rating" value="4"><i></i>
+                                        <input type="radio" name="rating" value="5"><i></i>
                                     </span>
+                                    <br><br>
+                                    <div class="clear"></div> 
+                                    <label>Nội dung đánh giá:</label><br>
+                                    <textarea cols="75" name="content" rows="5" style="width:100%" required></textarea>
+                                    <br><br>
+                                    <div class="clear"></div> 
+                                    <label>Hình ảnh (Nếu có):</label><br>
+                                    <input type="file" name="image" id="image" class="form-control-ls">
                                     <hr>
-                                    <div class="clear"></div> 
-                                    <hr class="survey-hr"> 
-                                    <label for="m_3189847521540640526commentText">Nội dung đánh giá:</label><br/><br/>
-                                    <textarea cols="75" name="commentText" rows="5" style="width:100%"></textarea><br>
-                                    <br>
-                                    <div class="clear"></div> 
                                     <button type="submit" class="btn btn-warning" style="width: 140px; color:white">Gửi đánh giá</button>
                                 </form>
                             </div>
+                            @endforeach
                             <br>
-                            <form action="/ktcstore/order_history" method="GET">
+                            @foreach($product_order as $order)
+                            <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">
                                 <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
                             </form>
+                            @endforeach
+                            <br>
                     </div>
                 </div>
             </div>

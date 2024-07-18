@@ -157,6 +157,36 @@ class CustomerController extends Controller
         $product_name = $request->product_name;
         $product_info = Product::where('product_name', '=', $product_name)->where('product_detail_id', '=', $product_detail_id)
         ->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')->get();
-        return view('customer.reviews', compact('product_info'));
+        $product_order = Order::where('order_id', '=',  $order_id)->get();
+        return view('customer.reviews', compact('product_info', 'product_order'));
+    }
+
+    public function send_review(Request $request) 
+    {
+        $rating = $request->rating;
+        $content = $request->content;
+        $user = session('user_id');
+        $product = $request->product_id;
+        $product_name = $request->product_name;
+    
+        $image = NULL;
+    
+        if ($request->hasFile('image')) 
+        {
+            $image = time() . $request->image->getClientOriginalName();
+            $request->image->move(public_path('image'), $image);
+        }
+    
+        DB::table('product_reviews')->insert([
+            'user_id' => $user,
+            'product_id' => $product,
+            'rating' => $rating,
+            'content' => $content,
+            'image' => $image,
+            'created_at' => now(),
+            'updated_at' => null
+        ]);
+    
+        return redirect('/ktcstore/product/'.$product_name)->with('success', 'Đánh giá sản phẩm thành công! Cám ơn bạn đã mua hàng tại KTC Store');
     }
 }
