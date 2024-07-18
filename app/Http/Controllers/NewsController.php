@@ -95,8 +95,8 @@ class NewsController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        $news = News::find($news_id);
-        return view('admin.news.edit_news', compact('news'));
+        $news = News::where('news_id', $news_id)->get();
+        return view('admin.news.update_news', compact('news'));
     }
     
     public function update_news(Request $request, $news_id)

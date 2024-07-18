@@ -9,17 +9,18 @@
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
-              <form action="/admin/news/save_news/news_id={{$new -> news_id}}" method="POST" enctype='multipart/form-data'>
-                {!! csrf_field() !!}
+              @foreach($news as $edit_new)
+              <form action="/admin/news/update_news/news_id={{$edit_new->news_id}}" method="POST" enctype='multipart/form-data'>
+                @csrf
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Tiêu Đề</strong>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" required>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Tiêu đề" value="{{$edit_new->title}}" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <strong>Nội Dung</strong>
-                        <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Mô tả"></textarea>
+                        <textarea type="text" name="content" id="content" class="form-control" cols="30" rows="10" value="{{$edit_new->content}}" placeholder="Mô tả"></textarea>
                     </div>
                     <div class="form-group">
                       <strong>Image</strong>
@@ -36,6 +37,7 @@
                         <button type="submit" class="btn btn-primary mt-2" style="width:100px">Cập Nhật</button>
                 </div>
             </form>
+            @endforeach
             <br>
             <div class="col-sm-4 col-xl-1">
                 <form action="/admin/brand" enctype="multipart/form-data">
