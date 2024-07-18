@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Product_Review;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -19,39 +20,65 @@ class StoreController extends Controller
 {
     public function mainpage()
     {
-        $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), function ($join) {
+        $hot_sales = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), 
+            function ($join) {
+                $join->on('product_detail.product_id', '=', 'min_prices.product_id')
+                    ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
+            })
+            ->where('product_detail.size', '=', 'S') 
+            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+            ->groupBy('products.product_id', 'products.product_name')
+            ->orderBy('products.product_id')
+            ->get();
+        
+        $new_arrivals = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), 
+            function ($join) {
                 $join->on('product_detail.product_id', '=', 'min_prices.product_id')
                     ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
             })
             ->where('product_detail.size', '=', 'S')
             ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
+            ->orderBy('products.created_at', 'desc')  
+            ->limit(8)
+            ->get();
+
+        $sale_items = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+            ->leftJoin(DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'), 
+            function ($join) {
+                $join->on('product_detail.product_id', '=', 'min_prices.product_id')
+                    ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
+            })
+            ->where('product_detail.size', '=', 'S')
+            ->where('product_detail.sale_price', '>', 0)  
+            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+            ->groupBy('products.product_id', 'products.product_name')
             ->orderBy('products.product_id')
-            ->paginate(16);
-        Paginator::useBootstrap();
+            ->get();
 
-        // Xử lý chuẩn hóa tên sản phẩm
+            foreach ([$hot_sales, $new_arrivals, $sale_items] as $products) {
+                foreach ($products as $product) {
+                    $standardized_product_name = $product->product_name;
+                    $standardized_product_name = strtolower($standardized_product_name);
+                    $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
+                    $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
+    
+                    $product->standardized_product_name = $standardized_product_name;
+                }
+            }
 
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-
-        return view("customer.index");
+        return view('customer.index', compact(['hot_sales','new_arrivals','sale_items']));
     }
 
     public function contact()
@@ -116,8 +143,20 @@ class StoreController extends Controller
             $product_colors = Product_Detail::where("product_detail.product_id", "=", $product_id)
                 ->distinct()
                 ->get(['product_detail.color']);
-            return view("customer.product-details", compact('product_details', 'product_size', 'product_colors'));
         }
+        
+        $customer_review = Product_Review::where('product_id', '=', $product_id)->join('Users', 'product_reviews.user_id', '=', 'users.user_id')
+        ->take(2)->get(['users.fullname', 'product_reviews.rating', 'product_reviews.content', 'product_reviews.image', 'product_reviews.created_at']);
+
+        $other_products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
+        ->where('product_detail.size', '=', 'S')
+        ->where('products.product_id', '!=', $product_id) 
+        ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+        ->groupBy('products.product_id', 'products.product_name')
+        ->take(4) 
+        ->get();
+
+        return view("customer.product-details", compact('product_details', 'product_size', 'product_colors', 'customer_review', 'other_products'));
     }
 
     public function blog()
