@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order_Detail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -14,7 +13,6 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product_Review;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {

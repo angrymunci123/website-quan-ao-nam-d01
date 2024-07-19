@@ -48,7 +48,7 @@
                           <button type="submit" class="btn btn-info" style="width:75px; color:white">Xem</button>
                         </form>
                       </td>
-                      <td style="width: 100px;" class="text-center">
+                      <td style="width: 100px;" class="text-center">  
                           <form action="/admin/news/edit_news/news_id={{$new->news_id}}" method="GET">
                             <button type="submit" class="btn btn-warning" style="width:75px; color:black">Sửa</button>
                           </form>
