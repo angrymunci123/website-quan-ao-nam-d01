@@ -5,7 +5,7 @@
     <div class="banner_main">
         <div class="banner_main-content">
             <h1 style="color: white">KTC STORE</h1>
-            <p>Thương hiệu quần áo nam hàng đầu Việt Nam</p>
+            <p style="color: white">Thương hiệu quần áo nam hàng đầu Việt Nam</p>
             <a href="/shop" class="banner_main-button">Shop Now</a>
         </div>
     </div>
@@ -22,50 +22,8 @@
                         <img src="{{ asset('temp_assets/img/banner/banner-1.jpg')}}" alt="">
                     </div>
                     <div class="banner__item__text">
-                        <h2>Quần đùi</h2>
-                        <a href="#">Mua ngay</a>
-=======
-  <!-- Hero Section Begin -->
-  <section class="hero">
-        <div class="hero__slider owl-carousel">
-            <div class="hero__items set-bg" data-setbg="{{asset('temp_assets/img/hero/hero-1.jpg')}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h6>Bộ sưu tập mùa hè</h6>
-                                <h2>Bộ sưu tập mùa hè 2024</h2>
-                                <p></p>
-                                <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero__items set-bg" data-setbg="{{ asset ('temp_assets/img/hero/hero-2.jpg')}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h6>Bộ sưu tập mùa Đông</h6>
-                                <h2>Bộ sưu tập Thu-Đông 2024</h2>
-                                <p></p>
-                                <a href="#" class="primary-btn">Xem ngay<span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        <h2>Áo somi</h2>
+                        <a href="/ktcstore/shop">Mua ngay</a>
                     </div>
                 </div>
             </div>
@@ -75,8 +33,8 @@
                         <img src="{{ asset('temp_assets/img/banner/banner-2.jpg')}}" alt="">
                     </div>
                     <div class="banner__item__text">
-                        <h2>Áo ba lỗ</h2>
-                        <a href="#">Mua ngay</a>
+                        <h2>Áo Thun</h2>
+                        <a href="/ktcstore/shop">Mua ngay</a>
                     </div>
                 </div>
             </div>
@@ -86,8 +44,8 @@
                         <img src="{{ asset('temp_assets/img/banner/banner-3.jpg')}}" alt="">
                     </div>
                     <div class="banner__item__text">
-                        <h2>Dép tổ ong</h2>
-                        <a href="#">Mua ngay</a>
+                        <h2>Quần Jogger</h2>
+                        <a href="/ktcstore/shop">Mua ngay</a>
                     </div>
                 </div>
             </div>
