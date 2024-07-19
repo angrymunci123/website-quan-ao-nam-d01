@@ -21,7 +21,7 @@ class AuthController extends Controller
 
             elseif ($user->role == 'Khách Hàng')
             {
-                return view('/ktcstore');
+                return redirect('/ktcstore');
             }
         }
         return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');
