@@ -86,7 +86,7 @@ class AuthController extends Controller
 
                 if ($user->role == 'Khách Hàng') {
                     $this->setSessionData($request, $user);
-                    return view('customer.index');
+                    return redirect('/ktcstore');
                 }
 
                 return back()->with('fail', 'Tài khoản có thể chưa được phân quyền.');
