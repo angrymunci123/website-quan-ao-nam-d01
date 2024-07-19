@@ -33,37 +33,64 @@
     </div>
     <div class="card-body">
         <div class="container">
-            <table class="table align-items-center"
-                style="padding-left: 15px; padding-right: 15px;">
+            <table class="table align-items-center" style="padding-left: 15px; padding-right: 15px;">
                 <tbody>
                     <tr style="width:100%">
                         @foreach($user_info as $user)
-                        <td class="font-weight-bolder"
-                            style="float: left; border: solid white">
-                            <div>
-                                <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
-                                <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
-                                <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
-                            </div>
-                        </td>
-                        <td class="font-weight-bolder" style="float:right; border: solid white">
-                            <div>
-                                <p> <b>Địa chỉ: </b>{{$user->address}}</p>
-                                <p> <b>Mật khẩu: </b><input type="text" style="width:200px" value="{{$user->password}}" readonly>
-                                    <a href="/ktcstore/change_password">Thay đổi</a></p>
-                            </div>
-                        </td>
+                            <td class="font-weight-bolder" style="float: left; border: solid white">
+                                <div>
+                                    <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
+                                    <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
+                                    <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
+                                </div>
+                            </td>
+                            <td class="font-weight-bolder" style="float:right; border: solid white">
+                                <div>
+                                    <p> <b>Địa chỉ: </b>{{$user->address}}</p>
+                                    <div class="input-container">
+                                        <p><b>Mật khẩu: </b>
+                                            <input type="password" value='{{ $user->password }}' id="password1"
+                                                placeholder="" style="width:300px">
+                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password1', this)"></i>
+                                    </div>
+                                    </p>
+                                </div>
+                            </td>
                         @endforeach
                     </tr>
                 </tbody>
             </table>
             <br>
-            <div style="text-align:center">
+            <div style="text-align:center" class="grid">
                 <form action="/ktcstore/personal_info/edit_info" method="GET">
                     <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
+                </form>
+                <form action="/ktcstore/change_password" method="GET" style="padding-left: 10px">
+                    <button type="submit" class="btn btn-secondary" style="width:150px; color:white">Đổi mật khẩu</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+    function togglePasswordVisibility(inputId, icon) {
+        var input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
 @endsection
