@@ -57,14 +57,11 @@
 <!-- Product Section Begin -->
 <section class="product spad">
     <div class="container">
-        <div class="grid">
-            <div class="col-lg-12">
-                <ul class="filter__controls">
-                    <li class="active" data-filter="*">Sản phẩm bán chạy</li>
-
-                </ul>
+        <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>SẢN PHẨM BÁN CHẠY</h2>
+                </div>
             </div>
-        </div>
         <div class="row product__filter">
             <div class="grid__row hot-sales">
                 <!-- Foreach từ đây -->

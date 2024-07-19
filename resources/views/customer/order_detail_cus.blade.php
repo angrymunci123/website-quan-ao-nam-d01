@@ -80,6 +80,7 @@
                             <td class="text-center">{{number_format($product->price)}}đ</td>
                             <td class="text-center">{{number_format($total)}}đ</td>
                             @if ($order_detail->status == 'Đã giao hàng')
+                            @if (!$ratings->contains($product->product_id))
                             <td class="text-center">
                                 <form method="get" action="/ktcstore/reviews/{{$product->product_name}}" enctype='multipart/form-data'>
                                     <input type="number" hidden name="order_id" value="{{$product->order_id}}"/>
@@ -88,6 +89,9 @@
                                     <button type="submit" class="btn btn-success btn-sm" style="width: 150px; color:white">Đánh giá sản phẩm</button>
                                 </form>
                             </td>
+                            @else
+                            <td class="text-center"></td>
+                            @endif
                             @endif
                         </tr>
             @endforeach
@@ -138,37 +142,10 @@
             </tr>
         </table>
         <td style="width:100%">
-                @if ($order_detail->status == 'Đã giao hàng')
-                    <div class="feedback">
-                        Cám ơn bạn đã mua sản phẩm tại cửa hàng của chúng tôi. Vui lòng đánh giá trải nghiệm sản phẩm của bạn ở dưới
-                        <hr>
-                        <label for="m_3189847521540640526commentText">Đánh giá về chất lượng sản phẩm:</label>
-                        <br>
-                        <form>
-                            <span class="star-rating">
-                                <input type="radio" name="rating1" value="1"><i></i>
-                                <input type="radio" name="rating1" value="2"><i></i>
-                                <input type="radio" name="rating1" value="3"><i></i>
-                                <input type="radio" name="rating1" value="4"><i></i>
-                                <input type="radio" name="rating1" value="5"><i></i>
-                            </span>
-                            <hr>
-                            <div class="clear"></div> 
-                            <hr class="survey-hr"> 
-                            <label for="m_3189847521540640526commentText">Nội dung đánh giá:</label><br/><br/>
-                            <textarea cols="75" name="commentText" rows="5" style="width:100%"></textarea><br>
-                            <br>
-                            <div class="clear"></div> 
-                            <button type="submit" class="btn btn-warning" style="width: 140px; color:white">Gửi đánh giá</button>
-                        </form>
-                    </div>
-                    <br>
-                    <form action="/ktcstore/order_history" method="GET">
-                        <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay
-                            lại</button>
-                    </form>
-                @endif
-                </td>
+            <form action="/ktcstore/order_history" method="GET">
+                <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
+            </form>
+        </td>
     </div>
 </div>
 <br>

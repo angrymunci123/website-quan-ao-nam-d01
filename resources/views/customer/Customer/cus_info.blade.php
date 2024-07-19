@@ -49,7 +49,7 @@
                         <td class="font-weight-bolder" style="float:right; border: solid white">
                             <div>
                                 <p> <b>Địa chỉ: </b>{{$user->address}}</p>
-                                <p><b>Mật khẩu: </b><input type="text" placeholder="**********" style="width:200px" readonly>
+                                <p> <b>Mật khẩu: </b><input type="text" style="width:200px" value="{{$user->password}}" readonly>
                                     <a href="/ktcstore/change_password">Thay đổi</a></p>
                             </div>
                         </td>
