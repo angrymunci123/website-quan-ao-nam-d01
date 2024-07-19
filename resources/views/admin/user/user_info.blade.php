@@ -24,21 +24,16 @@
                             <tr style="width:100%">
                                 @foreach ($user_info as $user)
                                 <td class="font-weight-bolder"
-                                    style="float: left; border: solid white">
+                                    style="float: center; border: solid white">
                                     <div>
                                         <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
                                         <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
-                                        <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                     </div>
                                 </td>
                                 <td class="font-weight-bolder" style="float:right; border: solid white">
                                     <div>
+                                        <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                         <p> <b>Địa chỉ: </b>{{$user->address}}</p>
-                                        <p><b>Mật khẩu: </b>
-                                            <!-- <a href="/ktcstore/change_password">Thay đổi</a></p> -->
-                                            <input type='password' value='{{ $user->password }}' id='myInput' readonly='readonly'>
-                                            <br>
-                                            <input type="checkbox" id="showPassword" onclick="togglePassword()">&nbsp; Hiển thị mật khẩu
                                     </div>
                                 </td>
                                 @endforeach
@@ -46,6 +41,11 @@
                         </tbody>
                     </table>
                     <br>
+                    <div style="text-align:center">
+                        <form action="/admin/personal_info/edit_info" method="GET">
+                            <button type="submit"  class="btn btn-info" style="width:150px; color:white">Cập nhật thông tin</button>
+                        </form>
+                    </div>
                     <div style="text-align:center">
                         <form action="/admin/personal_info/change_password" method="GET">
                             <button type="submit"  class="btn btn-info" style="width:150px; color:white">Đổi mật khẩu</button>

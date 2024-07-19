@@ -39,18 +39,16 @@
                     <tr style="width:100%">
                         @foreach($user_info as $user)
                         <td class="font-weight-bolder"
-                            style="float: left; border: solid white">
+                            style="border: solid white">
                             <div>
                                 <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
                                 <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
-                                <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                             </div>
                         </td>
-                        <td class="font-weight-bolder" style="float:right; border: solid white">
+                        <td class="font-weight-bolder" style="border: solid white">
                             <div>
+                                <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                 <p> <b>Địa chỉ: </b>{{$user->address}}</p>
-                                <p> <b>Mật khẩu: </b><input type="text" style="width:200px" value="{{$user->password}}" readonly>
-                                    <a href="/ktcstore/change_password">Thay đổi</a></p>
                             </div>
                         </td>
                         @endforeach
@@ -58,11 +56,19 @@
                 </tbody>
             </table>
             <br>
-            <div style="text-align:center">
-                <form action="/ktcstore/personal_info/edit_info" method="GET">
-                    <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
-                </form>
+            <div class="row text-center">
+                <div class="col">
+                    <form action="/ktcstore/personal_info/edit_info" method="GET">
+                        <button type="submit" class="btn btn-info" style="width:100%; color:white">Cập nhật</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <form action="/ktcstore/personal_info/change_password" method="GET">
+                        <button type="submit" class="btn btn-info" style="width:100%; color:white">Đổi mật khẩu</button>
+                    </form>
+                </div>
             </div>
+            <br>
         </div>
     </div>
 </div>
