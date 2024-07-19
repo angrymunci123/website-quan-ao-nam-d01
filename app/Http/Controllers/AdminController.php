@@ -21,16 +21,29 @@ class AdminController extends Controller
         }
 
         $user = Auth::user();
+
         $order_data = Order::select(DB::raw('COUNT(*) as count'))
         ->whereYear('created_at', date('Y'))
+        ->where('order.status', 'Đã giao hàng')
         ->groupBy(DB::raw("Month(created_at)"))
-        ->pluck('count');
+        ->pluck('count')->toArray();
 
-        $num_of_months = Order::selectRaw('DISTINCT MONTH(created_at) AS month')
-                ->orderBy('month')
-                ->get();
+        $revenue_data = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
+        ->select(
+            DB::raw('SUM(order_detail.price * order_detail.quantity) as total')
+        )
+        ->whereYear('order.created_at', date('Y'))
+        ->where('order.status', 'Đã giao hàng')
+        ->groupBy(DB::raw('MONTH(order.created_at)'))
+        ->orderBy(DB::raw('MONTH(order.created_at)'))
+        ->pluck('total')->toArray();
 
-        return view('admin.dashboard.dashboard', compact('order_data', 'num_of_months'));
+        $num_of_months = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
+        ->selectRaw('DISTINCT MONTH(order.created_at) AS month')
+        ->orderBy('month')
+        ->get();
+
+        return view('admin.dashboard.dashboard', compact('order_data', 'revenue_data', 'num_of_months'));
     }
 
     

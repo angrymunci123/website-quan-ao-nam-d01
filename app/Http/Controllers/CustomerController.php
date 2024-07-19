@@ -150,7 +150,7 @@ class CustomerController extends Controller
         return redirect('/ktcstore/personal_info')->with('success', 'Cập nhật thông tin cá nhân thành công!');
     }
     
-    public function cus_pass()
+    public function change_password()
     {
         return view('customer.Customer.cus_password');
     }
