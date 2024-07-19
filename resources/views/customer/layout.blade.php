@@ -128,10 +128,7 @@
                                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                                         <a href="/ktcstore/personal_info" class="dropdown-item">Thông tin cá nhân</a>
                                         <a href="/ktcstore/order_history" class="dropdown-item">Lịch sử đơn hàng</a>
-                                        <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmLogoutModal">
+                                        <a class="dropdown-item" href="/ktcstore/logout" data-toggle="modal" data-target="#confirmLogoutModal">
                                             Đăng xuất
                                         </a>
                                     </div>
@@ -151,7 +148,10 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                                <a href="/login" class="btn btn-primary" style="height: 37px">Đăng xuất</a>
+                                                <form action="/ktcstore/logout" method="POST">
+                                                    @csrf 
+                                                    <button type="submit" class="btn btn-warning">Đăng xuất</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
