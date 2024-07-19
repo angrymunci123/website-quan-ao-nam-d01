@@ -21,10 +21,6 @@ class AdminController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Chủ Cửa Hàng' || $user->role !== 'Nhân Viên') {
-            return redirect('/ktcstore'); 
-        }
-
         $order_data = Order::select(DB::raw('COUNT(*) as count'))
         ->whereYear('created_at', date('Y'))
         ->groupBy(DB::raw("Month(created_at)"))
