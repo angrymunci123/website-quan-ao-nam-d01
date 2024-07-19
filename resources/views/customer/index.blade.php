@@ -4,7 +4,7 @@
 <section>
     <div class="banner_main">
         <div class="banner_main-content">
-            <h1 style="color: white">KTC STORE</h1>
+            <h1 style="color: white"><b>KTC STORE</b></h1>
             <p style="color: white">Thương hiệu quần áo nam hàng đầu Việt Nam</p>
             <a href="/shop" class="banner_main-button">Shop Now</a>
         </div>
@@ -13,41 +13,51 @@
 <!-- Hero Section End -->
 
 <!-- Banner Section Begin -->
-<section class="banner spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 offset-lg-4">
-                <div class="banner__item">
-                    <div class="banner__item__pic">
-                        <img src="{{ asset('temp_assets/img/banner/banner-1.jpg')}}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Áo somi</h2>
-                        <a href="/ktcstore/shop">Mua ngay</a>
-                    </div>
-                </div>
+<section>
+    <div class="app_container" style="padding-top: 20px; padding-bottom: 20px">
+        <h3 style="text-align:center; padding-bottom: 10px"><b>Thể Loại</b></h3>
+        <div class="grid">
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/somi.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Áo Sơmi</div>
             </div>
-            <div class="col-lg-5">
-                <div class="banner__item banner__item--middle">
-                    <div class="banner__item__pic">
-                        <img src="{{ asset('temp_assets/img/banner/banner-2.jpg')}}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Áo Thun</h2>
-                        <a href="/ktcstore/shop">Mua ngay</a>
-                    </div>
-                </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/quan_au.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Quần Âu</div>
             </div>
-            <div class="col-lg-7">
-                <div class="banner__item banner__item--last">
-                    <div class="banner__item__pic">
-                        <img src="{{ asset('temp_assets/img/banner/banner-3.jpg')}}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Quần Jogger</h2>
-                        <a href="/ktcstore/shop">Mua ngay</a>
-                    </div>
-                </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/jogger.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Quần Jogger</div>
+            </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/thun.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Áo Thun</div>
+            </div>
+        </div>
+        <div class="grid" style="padding-top: 20px;">
+        <div class="category_card">
+                <img src="{{asset('/temp_assets/jean.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Quần Jean</div>
+            </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/ao_ni.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Áo Nỉ</div>
+            </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/ao_khoac.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Áo Khoác</div>
+            </div>
+            <div class="category_card">
+                <img src="{{asset('/temp_assets/quan_dai.png')}}" alt="Category Image"
+                    class="category_image">
+                <div class="category_text">Quần Dài</div>
             </div>
         </div>
     </div>
@@ -105,7 +115,7 @@
                                                                         <?php
                                         $discount_percentage = (1 - ($product->sale_price / $product->price)) * 100;
                                         echo number_format($discount_percentage) . '%';
-                                                                                                                ?>
+                                                                                                                                                                                ?>
                                                                     </b>
                                                                 </span>
                                                                 <span class='sale_off_label'><b>Giảm</b></span>
