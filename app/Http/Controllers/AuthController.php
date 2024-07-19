@@ -16,12 +16,12 @@ class AuthController extends Controller
         {
             if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên')
             {
-                return view('admin.dashboard.dashboard');
+                return redirect('/admin');
             }
 
             elseif ($user->role == 'Khách Hàng')
             {
-                return view('customer.index');
+                return view('/ktcstore');
             }
         }
         return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');
@@ -52,7 +52,7 @@ class AuthController extends Controller
         $request->session()->forget('user_id');
         $request->session()->forget('fullname');
         $request->session()->forget('role');
-        return view("customer.index");
+        return redirect("/ktcstore");
     }
 
     private function setSessionData(Request $request, $user)
@@ -81,7 +81,7 @@ class AuthController extends Controller
                 $user = Auth::user();
                 if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                     $this->setSessionData($request, $user);
-                    return view('admin.dashboard.dashboard');
+                    return redirect('/admin');
                 }
 
                 if ($user->role == 'Khách Hàng') {

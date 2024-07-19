@@ -296,6 +296,7 @@
     <script src="{{asset('admin_assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/plugins/chartjs.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/dropdown.js')}}"></script>
+    <script src="{{asset('js/Chart.js')}}"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Popper.js -->
@@ -312,6 +313,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('admin_assets/js/soft-ui-dashboard.min.js?v=1.0.7')}}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     @yield('content')
   </main>
 </body>

@@ -42,7 +42,7 @@ Route::post('/register_process', [AuthController::class, "registerProcess"])->na
 Route::get('/admin/logout', [AuthController::class, "logout_admin"])->name('logout_admin');
 Route::post('/ktcstore/logout', [AuthController::class, "logout_customer"])->name('logout_customer');
 //Admin
-Route::get('/admin', [AdminController::class, "view_dashboard"]);
+Route::get('/admin', [AdminController::class, 'view_dashboard'])->name("view_dashboard");
 Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
 
 //Brand
