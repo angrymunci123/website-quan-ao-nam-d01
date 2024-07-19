@@ -204,7 +204,8 @@
                     <div class="footer__about">
                         <div class="footer__logo">
                             {{-- logo --}}
-                            <a href="#"><img src="{{ asset('temp_assets/KTC_Store.png')}}" alt="" style="width: 150px"></a>
+                            <a href="#"><img src="{{ asset('temp_assets/KTC_Store.png')}}" alt=""
+                                    style="width: 150px"></a>
                         </div>
                         {{-- slogan --}}
                         <p>Nhà tài trợ</p>
@@ -258,7 +259,11 @@
         </div>
     </div>
     <!-- Search End -->
-
+    <script>
+        document.querySelector('.banner-button').addEventListener('click', function () {
+            alert('Button clicked!');
+        });
+    </script>
     <!-- Js Plugins -->
     <script src="{{ asset('temp_assets/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{ asset('temp_assets/js/bootstrap.min.js')}}"></script>
