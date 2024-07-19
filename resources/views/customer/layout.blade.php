@@ -130,10 +130,10 @@
                                         <a href="/ktcstore/order_history" class="dropdown-item">Lịch sử đơn hàng</a>
                                         <form id="logout-form" action="/ktcstore/logout" method="POST" style="display: none;">
                                             @csrf
-                                        </form>
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmLogoutModal">
                                             Đăng xuất
                                         </a>
+                                        </form>
                                     </div>
                                 </div>
                                 <!-- Confirm Logout Modal -->
