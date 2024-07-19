@@ -131,6 +131,7 @@
                                         <a class="dropdown-item" href="/ktcstore/logout" data-toggle="modal" data-target="#confirmLogoutModal">
                                             Đăng xuất
                                         </a>
+                                        </form>
                                     </div>
                                 </div>
                                 <!-- Confirm Logout Modal -->
