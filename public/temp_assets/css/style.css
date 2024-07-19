@@ -729,6 +729,9 @@ ol {
 .hero__items {
 	height: 800px;
 	padding-top: 230px;
+	background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
 }
 
 .hero__text h6 {
