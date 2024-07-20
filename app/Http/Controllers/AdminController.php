@@ -36,7 +36,6 @@ class AdminController extends Controller
         ->orderBy(DB::raw('MONTH(order.created_at)'))
         ->pluck('total')
         ->map(function($item) {
-            // Chuyển đổi thành số thực để đảm bảo không có dấu nháy kép
             return (float) $item;
         })
         ->toArray();
