@@ -76,7 +76,6 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Cũng là chỉ số gì đó</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    $103,430
                                     <span class="text-success text-sm font-weight-bolder">+5%</span>
                                 </h5>
                             </div>
@@ -100,7 +99,7 @@
                 </div>
                 <div class="card-body p-3">
                     <div class="chart">
-                        <div id="total_revenue_month"></div>
+                        <div id="total_revenue"></div>
                     </div>
                 </div>
             </div>
@@ -118,99 +117,84 @@
             </div>
         </div>
     </div>
+    <!-- Kiểm tra dữ liệu biểu đồ-->
+    <!-- <div id="data-check">
+        <strong>Revenue Data:</strong> {{ json_encode($revenue_data) }}<br>
+        <strong>Order Data:</strong> {{ json_encode($order_data) }}<br>
+        <strong>Months:</strong> {{ json_encode($num_of_months) }}
+    </div> -->
 </div>
 
 <script type="text/javascript">
-    // Dữ liệu doanh thu theo tháng
-    var revenue_data = <?php echo json_encode($revenue_data); ?>;
-    var months = <?php echo json_encode($num_of_months->pluck('month')); ?>;
-
-    Highcharts.chart('total_revenue_month', {
-        title: {
-            text: 'Doanh thu theo năm 2024'  
-        },
-        xAxis: {
-            categories: months.map(month => `Tháng ${month}`), 
-        },
-        yAxis: {
-            title: {
-                text: 'Tổng doanh thu trong tháng'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect: true
-            }
-        },
-        series: [{
-            name: 'Doanh thu theo tháng',
-            data: revenue_data
-        }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-    });
-
-    // Dữ liệu đơn hàng đã giao theo tháng
+    var revenue_data = <?php echo json_encode(array_values($revenue_data)); ?>;
     var order_data = <?php echo json_encode(array_values($order_data)); ?>;
-    var months = <?php echo json_encode($num_of_months->pluck('month')); ?>;
+    var months = <?php echo json_encode($num_of_months); ?>;
 
-    Highcharts.chart('total_units_sold', {
+    // Biểu đồ doanh thu theo tháng
+    Highcharts.chart('total_revenue', {
         title: {
-            text: 'Số đơn hàng đã giao trong năm 2024'
+            text: 'Doanh thu theo năm 2024'
         },
         xAxis: {
-            categories: months.map(month => `Tháng ${month}`), 
+            categories: months.map(month => `Tháng ${month}`),
         },
-        yAxis: {
-            title: {
-                text: 'Số đơn hàng đã giao'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect: true
-            }
-        },
-        series: [{
-            name: 'Đơn hàng đã giao',
-            data: order_data 
-        }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
+            yAxis: {
+                title: {
+                    text: 'Tổng doanh thu trong tháng'
                 }
-            }]
-        }
-    });
+            },
+            series: [{
+                name: 'Doanh thu theo tháng',
+                data: revenue_data
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
+
+        // Biểu đồ số đơn hàng đã giao theo tháng
+        Highcharts.chart('total_units_sold', {
+            title: {
+                text: 'Số đơn hàng đã giao trong năm 2024'
+            },
+            xAxis: {
+                categories: months.map(month => `Tháng ${month}`),
+            },
+            yAxis: {
+                title: {
+                    text: 'Số đơn hàng đã giao'
+                }
+            },
+            series: [{
+                name: 'Đơn hàng đã giao',
+                data: order_data
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
 </script>
+
 @endsection

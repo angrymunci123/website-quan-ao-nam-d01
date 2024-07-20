@@ -8,8 +8,8 @@
                     <div class="breadcrumb__text">
                         <h4 style="color: white">Lịch sử đơn hàng</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html" style="color: white">Trang chủ</a>
-                            <a href="./shop.html" style="color: white">Cửa hàng</a>
+                            <a href="/ktcstore" style="color: white">Trang chủ</a>
+                            <a href="/ktcstore/shop" style="color: white">Cửa hàng</a>
                             <span>Lịch sử đơn hàng</span>
                         </div>
                     </div>
@@ -108,5 +108,6 @@
                   </div>
                 </div>
               </div>
+            </div>
             </div>
 @endsection

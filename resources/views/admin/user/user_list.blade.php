@@ -46,7 +46,6 @@
                           <button onclick="myFunction()" class="dropbtn text-center mt-3 btn btn-info">Quản Lý</button>
                           <div id="myDropdown" class="dropdown-content">
                             <a href="#">Khách Hàng</a>
-                            <a href="#">Quản Lý</a>
                             <a href="#">Nhân Viên</a>
                           </div>
                         </div>

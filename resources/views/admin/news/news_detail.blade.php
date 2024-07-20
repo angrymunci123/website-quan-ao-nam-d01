@@ -18,8 +18,7 @@
                             </td>
                             <td>
                                 <form action="./" method="GET">
-                                    <button type="submit" class="btn btn-info" style="width:120px; color:white">Quay
-                                        lại</button>
+                                    <button type="submit" class="btn btn-info" style="width:120px; color:white">Quay lại</button>
                                 </form>
                             </td>
                             <td>
@@ -47,7 +46,11 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="container align-items-center">
                         <div class="text-center">
+                            @if($news->image == NULL)
+
+                            @else
                             <img src="/image/{{$news->image}}" style="width:400px;height:600px;">
+                            @endif
                         </div>
                         <div class="blog__details__content">
 

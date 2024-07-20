@@ -65,7 +65,7 @@
                 <form action="/ktcstore/personal_info/edit_info" method="GET">
                     <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>
                 </form>
-                <form action="/ktcstore/change_password" method="GET" style="padding-left: 10px">
+                <form action="/ktcstore/personal_info/change_password" method="GET" style="padding-left: 10px">
                     <button type="submit" class="btn btn-secondary" style="width:150px; color:white">Đổi mật khẩu</button>
                 </form>
             </div>

@@ -24,6 +24,7 @@
         <p>Quản lý thông tin tài khoản</p>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
+    <form action="" method="POST">
         <div class="container">
             <div class="grid">
                 <div class="grid__row">
@@ -46,11 +47,8 @@
                 </div>
             </div>
             <br>
-            <div style="text-align:center">
-                <form action="" method="GET">
-                    <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
+            </form>
         </div>
     </div>
 </div>
