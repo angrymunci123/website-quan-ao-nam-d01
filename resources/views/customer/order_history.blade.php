@@ -21,7 +21,7 @@
      <div class="app__container">
         <div class="grid">
         <div class="grid__row">
-        <div class="grid__colunm-2">
+        <div class="grid__column-2" style="padding-right: 270px">
                 <div class="shop__sidebar">
                         <div class="shop__sidebar__accordion" style="padding-top: 20px">
                             <div class="accordion" id="accordionExample">
@@ -49,7 +49,6 @@
                 </div>
             <div class="grid__column-10">
                 <div class="shop__product__option">
-                    <h4 style="padding-top: 8px;"><b>Danh sách đơn hàng</b></h4>
                     @if(Session::has('success'))
                         <div class="alert alert-success">{{Session::get('success')}}</div>
                     @endif
