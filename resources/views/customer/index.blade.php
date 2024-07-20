@@ -6,7 +6,7 @@
         <div class="banner_main-content">
             <h1 style="color: white"><b>KTC STORE</b></h1>
             <p style="color: white">Thương hiệu quần áo nam hàng đầu Việt Nam</p>
-            <a href="/shop" class="banner_main-button">Shop Now</a>
+            <a href="/shop" class="banner_main-button">Mua Ngay</a>
         </div>
     </div>
 </section>
