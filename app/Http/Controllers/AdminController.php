@@ -28,34 +28,31 @@ class AdminController extends Controller
         ->groupBy(DB::raw("Month(created_at)"))
         ->pluck('count')->toArray();
 
-        $revenue_data = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
-        ->select(
-            DB::raw('SUM(order_detail.price * order_detail.quantity) as total')
-        )
+        $revenue_data = Order_Detail::join('order', 'order_detail.order_id', '=', 'order.order_id')
+        ->select(DB::raw('SUM(order_detail.price * order_detail.quantity) as total'))
         ->whereYear('order.created_at', date('Y'))
         ->where('order.status', 'Đã giao hàng')
         ->groupBy(DB::raw('MONTH(order.created_at)'))
         ->orderBy(DB::raw('MONTH(order.created_at)'))
-        ->pluck('total')->toArray();
-
+        ->pluck('total')
+        ->map(function($item) {
+            // Chuyển đổi thành số thực để đảm bảo không có dấu nháy kép
+            return (float) $item;
+        })
+        ->toArray();
+        
         $num_of_months = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
         ->selectRaw('DISTINCT MONTH(order.created_at) AS month')
         ->orderBy('month')
-        ->get();
+        ->pluck('month')->toArray();
 
         return view('admin.dashboard.dashboard', compact('order_data', 'revenue_data', 'num_of_months'));
     }
 
-    
     public function user_list()
     {
         if (!Auth::check()) {
             return redirect('login');
-        }
-    
-        $user = Auth::user();
-        if ($user->role !== 'Chủ Cửa Hàng' || $user->role !== 'Nhân Viên') {
-            return redirect('/ktcstore'); 
         }
     
         $users = User::orderBy('user_id','asc')->paginate(10);
