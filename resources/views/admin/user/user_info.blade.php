@@ -41,15 +41,17 @@
                         </tbody>
                     </table>
                     <br>
+                    <div class="grid">
                     <div style="text-align:center">
                         <form action="/admin/personal_info/edit_info" method="GET">
-                            <button type="submit"  class="btn btn-info" style="width:150px; color:white">Cập nhật thông tin</button>
+                            <button type="submit"  class="btn btn-info" style="width:200px; color:white">Cập nhật thông tin</button>
                         </form>
                     </div>
                     <div style="text-align:center">
-                        <form action="/admin/personal_info/change_password" method="GET">
-                            <button type="submit"  class="btn btn-info" style="width:150px; color:white">Đổi mật khẩu</button>
+                        <form action="/admin/personal_info/change_password" method="GET" style="padding-left: 10px;">
+                            <button type="submit"  class="btn btn-primary" style="width:150px; color:white;">Đổi mật khẩu</button>
                         </form>
+                    </div>
                     </div>
                 </div>
                 </div>
