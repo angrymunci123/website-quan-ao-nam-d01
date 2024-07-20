@@ -12,15 +12,10 @@ class AuthController extends Controller
 {
     public function auth_user($user)
     {
-        if ($user)
-        {
-            if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên')
-            {
+        if ($user) {
+            if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                 return redirect('/admin');
-            }
-
-            elseif ($user->role == 'Khách Hàng')
-            {
+            } elseif ($user->role == 'Khách Hàng') {
                 return view('/ktcstore');
             }
         }
@@ -29,8 +24,7 @@ class AuthController extends Controller
 
     public function login_form()
     {
-        if (Auth::check())
-        {
+        if (Auth::check()) {
             return $this->auth_user(Auth::user());
         }
 
@@ -43,6 +37,7 @@ class AuthController extends Controller
         $request->session()->forget('user_id');
         $request->session()->forget('fullname');
         $request->session()->forget('role');
+        $request->session()->forget('email');
         return redirect("/login");
     }
 
@@ -52,6 +47,7 @@ class AuthController extends Controller
         $request->session()->forget('user_id');
         $request->session()->forget('fullname');
         $request->session()->forget('role');
+        $request->session()->forget('email');
         return redirect("/ktcstore");
     }
 
@@ -60,6 +56,7 @@ class AuthController extends Controller
         $request->session()->put('user_id', $user->user_id);
         $request->session()->put('fullname', $user->fullname);
         $request->session()->put('role', $user->role);
+        $request->session()->put('email', $user->email);
     }
 
     public function loginProcess(Request $request)
@@ -73,11 +70,8 @@ class AuthController extends Controller
 
         if (!$user) {
             return back()->with('fail', 'Tài khoản hiện chưa được đăng ký. Vui lòng đăng ký để mua hàng tại KTC Store');
-        }
-
-        else {
-            if (Auth::attempt($credentials))
-            {
+        } else {
+            if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                     $this->setSessionData($request, $user);
@@ -137,8 +131,7 @@ class AuthController extends Controller
 
     public function forgot_password()
     {
-        if (Auth::check())
-        {
+        if (Auth::check()) {
             return $this->auth_user(Auth::user());
         }
         return view('forgotten_password');
@@ -146,22 +139,16 @@ class AuthController extends Controller
 
     public function check_password_token(Request $request)
     {
-        if (Auth::check())
-        {
+        if (Auth::check()) {
             return $this->auth_user(Auth::user());
         }
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user)
-        {
-            if (Hash::check($request->old_password, $user->password_token))
-            {
+        if ($user) {
+            if (Hash::check($request->old_password, $user->password_token)) {
                 return view('reset_password', compact('user'));
-            }
-
-            else
-            {
+            } else {
                 return back()->with('fail', 'Sai mật khẩu hoặc địa chỉ email.');
             }
         }
@@ -176,13 +163,11 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user)
-        {
+        if (!$user) {
             return back()->with('fail', 'Địa chỉ email không tồn tại trong hệ thống!');
         }
 
-        if ($new_password === $confirm_new_password)
-        {
+        if ($new_password === $confirm_new_password) {
             $user->password = bcrypt($request->new_password);
             $user->save();
             return redirect('/login')->with('success', 'Đổi mật khẩu thành công!');

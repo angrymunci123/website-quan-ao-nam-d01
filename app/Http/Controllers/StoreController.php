@@ -13,6 +13,8 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product_Review;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderMail;
 
 class StoreController extends Controller
 {
@@ -290,7 +292,10 @@ class StoreController extends Controller
 
         $user_id = session('user_id');
         $notes = $request->notes;
-
+        $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
+        if (empty($shopping_cart)) {
+            return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
+        }
         try {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
@@ -303,17 +308,43 @@ class StoreController extends Controller
                 'created_at' => now(),
                 'updated_at' => NULL
             ]);
+
+            $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
+            foreach ($shopping_cart as $cart_data) {
+                if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
+                    $price_to_use = $cart_data['price'];
+                } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
+                    $price_to_use = $cart_data['sale_price'];
+                }
+
+                DB::table('order_detail')->insert([
+                    'order_id' => $new_order_id,
+                    'product_detail_id' => $cart_data['product_detail_id'],
+                    'price' => $price_to_use,
+                    'quantity' => $cart_data['quantity'],
+                    'created_at' => now(),
+                    'updated_at' => NULL
+                ]);
+
+                $product_detail = Product_Detail::find($cart_data['product_detail_id']);
+                if ($product_detail) {
+                    $product_detail->quantity -= $cart_data['quantity'];
+                    $product_detail->save();
+                }
+            }
+
+            session()->put('new_order_id', $new_order_id);
         } catch (\exception $e) {
             return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
         }
 
-        $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
-        if (empty($shopping_cart)) {
-            return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
-        }
 
+        $new_order_id = session()->get('new_order_id');
         if ($payment_method == "Chuyển khoản") {
-            session()->put('new_order_id', $new_order_id);
+            DB::table('order')->where("order_id", "=", "$new_order_id")->update([
+                'status' => 'Đã hủy',
+                'updated_at' => now()
+            ]);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = route('vnpay_return');
             $vnp_TmnCode = "VRNE42A3"; //Mã website tại VNPAY
@@ -391,6 +422,8 @@ class StoreController extends Controller
                     $product_detail->save();
                 }
             }
+
+            Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
             session()->forget('shopping_cart_' . auth()->id());
 
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
@@ -424,45 +457,25 @@ class StoreController extends Controller
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
                 $new_order_id = session()->get('new_order_id');
-                $select_order = Order::find($new_order_id);
                 DB::table('order')->where("order_id", "=", "$new_order_id")->update([
                     'status' => "Đã xác nhận",
                     'updated_at' => now()
                 ]);
                 $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
-                foreach ($shopping_cart as $cart_data) {
-                    if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
-                        $price_to_use = $cart_data['price'];
-                    } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
-                        $price_to_use = $cart_data['sale_price'];
-                    }
-
-                    DB::table('order_detail')->insert([
-                        'order_id' => $select_order->order_id,
-                        'product_detail_id' => $cart_data['product_detail_id'],
-                        'price' => $price_to_use,
-                        'quantity' => $cart_data['quantity'],
-                        'created_at' => now(),
-                        'updated_at' => NULL
-                    ]);
-
-                    $product_detail = Product_Detail::find($cart_data['product_detail_id']);
-                    if ($product_detail) {
-                        $product_detail->quantity -= $cart_data['quantity'];
-                        $product_detail->save();
-                    }
-                }
+                Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
                 session()->forget('shopping_cart_' . auth()->id());
                 session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
             } else {
                 $new_order_id = session()->get('new_order_id');
+                DB::table('order_detail')->where('order_id', $new_order_id)->delete();
                 DB::table('order')->where('order_id', $new_order_id)->delete();
                 session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
             }
         } else {
             $new_order_id = session()->get('new_order_id');
+            DB::table('order_detail')->where('order_id', $new_order_id)->delete();
             DB::table('order')->where('order_id', $new_order_id)->delete();
             session()->forget('new_order_id');
             return redirect('/ktcstore/order_history')->with('fail', 'Thanh toán và đặt hàng thất bại');
