@@ -11,9 +11,14 @@
                     </table>
                 </div>
                 <div class="card-body">
-                    @if(Session::has('notification'))
+                    @if(Session::has('success'))
                         <div class="alert alert-success" style="color:white">
-                            {{Session::get('notification')}}
+                            {{Session::get('success')}}
+                        </div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-success" style="color:white">
+                            {{Session::get('fail')}}
                         </div>
                     @endif
                 </div>
@@ -96,8 +101,9 @@
                                 lại<i></i></button>
                         </form>
                         @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
-                            <form id="updateStatusForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right:20px; float:right">
+                            <form id="updateStatusForm" action="/admin/order/update_status/order_id={{$order_detail->order_id}}"
+                                method="POST" style="padding-right:20px; float:right">
+                                @csrf
                                 <button type="button" class="btn btn-warning" style="width: 200px; color:white"
                                     data-toggle="modal" data-target="#updateStatusModal">Cập nhật
                                     trạng thái<i></i></button>
@@ -121,19 +127,17 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-warning" id="confirmUpdate">Cập nhật
-                                                trạng
-                                                thái</button>
+                                            <button type="button" class="btn btn-warning" id="confirmUpdate">Cập nhật trạng thái</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         @endif
 
                         @if ($order_detail->status == 'Đang chờ xác nhận')
-                            <form id="confirmOrderForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right: 20px; float: right">
+                            <form id="confirmOrderForm" action="/admin/order/update_status/order_id={{$order_detail->order_id}}"
+                                method="POST" style="padding-right: 20px; float: right">
+                                @csrf
                                 <button type="button" class="btn btn-success" style="width: 180px; color:white"
                                     data-toggle="modal" data-target="#confirmOrderModal">Xác
                                     nhận đơn hàng<i></i></button>
