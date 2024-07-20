@@ -52,7 +52,7 @@ class OrderController extends Controller
         return view("admin.order.order_detail", compact(['order_details', 'product_order']));
     }
 
-    public function confirm_order(Request $request)
+    public function update_order_status(Request $request)
     {
         if (!Auth::check()) {
             return redirect('login');
@@ -97,23 +97,6 @@ class OrderController extends Controller
         return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
     }
 
-    public function update_order_status(Request $request)
-    {
-        if (!Auth::check()) {
-            return redirect('login');
-        }
-
-        $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
-        }
-
-        $order_id = $request->order_id;
-        $order_details = Order::where('order.order_id', '=', $order_id)->get();
-
-        return view('admin.order.update_order_status', compact('order_details'));
-    }
-
     public function cancel_order(Request $request)
     {
         if (!Auth::check()) {
@@ -146,33 +129,5 @@ class OrderController extends Controller
         }
 
         return back()->with('notification', 'Hủy đơn hàng thành công');
-    }
-
-    public function update_status_process(Request $request)
-    {
-        if (!Auth::check()) {
-            return redirect('login');
-        }
-
-        $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
-        }
-
-        $consignee = $request->consignee;
-        $phone_number = $request->phone_number;
-        $address = $request->address;
-        $shiping_unit = $request->shiping_unit;
-        $status = $request->status;
-        $order_id = $request->order_id;
-        DB::table('order')->where("order_id", "=", "$order_id")->update([
-            'consignee' => $consignee,
-            'phone_number' => $phone_number,
-            'address' => $address,
-            'shipping_unit' => $shiping_unit,
-            'status' => $status,
-            'updated_at' => now()
-        ]);
-        return redirect('/admin/order/order_detail/order_id='.$order_id)->with('success', 'Xác nhận đơn hàng thành công!');
     }
 }
