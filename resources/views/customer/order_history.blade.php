@@ -20,8 +20,8 @@
     <!-- Breadcrumb Section End -->
      <div class="app__container">
         <div class="grid">
-        <div class="grid__row" style="width:1500px">
-        <div class="grid__column-0">
+        <div class="grid__row">
+        <div class="grid__column-2" style="padding-right: 270px">
                 <div class="shop__sidebar">
                         <div class="shop__sidebar__accordion" style="padding-top: 20px">
                             <div class="accordion" id="accordionExample">
