@@ -26,38 +26,32 @@
                                     <td style="width:50%">
                                         <div style=" padding-bottom: 5px;" class="input-container">
                                             <input type="password" id="password1" placeholder="" style="width:300px">
-                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password1', this)"></i>
+                                            <i class="fas fa-eye"
+                                                onclick="togglePasswordVisibility('password1', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
                                             <input type="password" id="password2" placeholder="" style="width:300px">
-                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password2', this)"></i>
+                                            <i class="fas fa-eye"
+                                                onclick="togglePasswordVisibility('password2', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
                                             <input type="password" id="password3" placeholder="" style="width:300px">
-                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password3', this)"></i>
+                                            <i class="fas fa-eye"
+                                                onclick="togglePasswordVisibility('password3', this)"></i>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <table style="width: 100%">
-                            <tr>
-                                <th colspan="2"></th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <form action="" method="GET" style="text-align:right">
-                                        <button type="submit" class="btn btn-info"
-                                            style="width:75px; color:white">Lưu</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action="" method="GET" style="text-align:left">
-                                        <button type="submit" class="btn btn-warning" style="width:100px; color:white">Quay lại</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="grid">
+                            <form action="" method="GET" style="text-align:center">
+                                <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
+                            </form>
+                            <form action="" method="GET" style="text-align:center; padding-left: 10px;">
+                                <button type="submit" class="btn btn-warning" style="width:110px; color:white">Quay
+                                    lại</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,16 +186,16 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     function togglePasswordVisibility(inputId, icon) {
-            var input = document.getElementById(inputId);
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            }
+        var input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
         }
+    }
 </script>
 @endsection

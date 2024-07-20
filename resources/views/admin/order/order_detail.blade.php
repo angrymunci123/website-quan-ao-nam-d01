@@ -11,9 +11,14 @@
                     </table>
                 </div>
                 <div class="card-body">
-                    @if(Session::has('notification'))
+                    @if(Session::has('success'))
                         <div class="alert alert-success" style="color:white">
-                            {{Session::get('notification')}}
+                            {{Session::get('success')}}
+                        </div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-success" style="color:white">
+                            {{Session::get('fail')}}
                         </div>
                     @endif
                 </div>
@@ -96,11 +101,12 @@
                                 lại<i></i></button>
                         </form>
                         @if ($order_detail->status == 'Đã xác nhận' || $order_detail->status == 'Đang giao hàng')
-                            <form id="updateStatusForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right:20px; float:right">
+                            <form id="updateStatusForm" action="/admin/order/update_status/order_id={{$order_detail->order_id}}"
+                                method="POST" style="padding-right:20px; float:right">
+                                @csrf
                                 <button type="button" class="btn btn-warning" style="width: 200px; color:white"
                                     data-toggle="modal" data-target="#updateStatusModal">Cập nhật
-                                    trạng thái<i></i></button>
+                                    trạng thái</button>
                             </form>
                             <!-- Popup form cập nhật trạng thái đơn hàng -->
                             <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"
@@ -121,22 +127,20 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-warning" id="confirmUpdate">Cập nhật
-                                                trạng
-                                                thái</button>
+                                            <button type="button" class="btn btn-warning" id="confirmUpdate">Cập nhật trạng thái</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         @endif
 
                         @if ($order_detail->status == 'Đang chờ xác nhận')
-                            <form id="confirmOrderForm" action="/admin/order/confirm/order_id={{$order_detail->order_id}}"
-                                method="GET" style="padding-right: 20px; float: right">
+                            <form id="confirmOrderForm" action="/admin/order/update_status/order_id={{$order_detail->order_id}}"
+                                method="POST" style="padding-right: 20px; float: right">
+                                @csrf
                                 <button type="button" class="btn btn-success" style="width: 180px; color:white"
                                     data-toggle="modal" data-target="#confirmOrderModal">Xác
-                                    nhận đơn hàng<i></i></button>
+                                    nhận đơn hàng</button>
                             </form>
                             <!-- Popup form xác nhận đơn hàng -->
                             <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog"
@@ -162,35 +166,34 @@
                             </div>
 
                             <form id="cancelOrderForm" action="/admin/order/cancel/order_id={{$order_detail->order_id}}"
-                                method="POST" style="padding-right: 20px; float: right">
-                                @csrf
-                                <button type="button" class="btn btn-danger" style="width: 150px; color:white"
-                                    data-toggle="modal" data-target="#cancelOrderModal">Hủy
-                                    đơn hàng<i></i></button>
-                            </form>
-                            <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog"
-                                aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="cancelOrderModalLabel">Xác nhận hủy đơn hàng</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Đóng</button>
-                                            <button type="button" class="btn btn-danger" id="confirmCancel">Hủy đơn
-                                                hàng</button>
+                                    method="POST" style="padding-right: 20px; float: right">
+                                    @csrf
+                                    <button type="button" class="btn btn-danger" style="width: 150px; color:white"
+                                        data-toggle="modal" data-target="#cancelOrderModal">Hủy
+                                        đơn hàng</button>
+                                </form>
+                                <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="cancelOrderModalLabel">Xác nhận hủy đơn hàng</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+                                                <button type="button" class="btn btn-danger" id="confirmCancel">Hủy đơn
+                                                    hàng</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
                         @endif
                     </div>
                 </div>
@@ -200,14 +203,18 @@
 </div>
 </main>
 <script>
-    document.getElementById('confirmCancel').addEventListener('click', function () {
-        document.getElementById('cancelOrderForm').submit();
-    });
-    document.getElementById('confirmOrder').addEventListener('click', function () {
-        document.getElementById('confirmOrderForm').submit();
-    });
-    document.getElementById('confirmUpdate').addEventListener('click', function () {
-        document.getElementById('updateStatusForm').submit();
+    $(document).ready(function() {
+        $('#confirmCancel').click(function() {
+            $('#cancelOrderForm').submit();
+        });
+
+        $('#confirmOrder').click(function() {
+            $('#confirmOrderForm').submit();
+        });
+
+        $('#confirmUpdate').click(function() {
+            $('#updateStatusForm').submit();
+        });
     });
 </script>
 @endsection

@@ -28,19 +28,19 @@
             <div class="grid">
                 <div class="grid__row">
                     <div class="grid__column-4-2">
-                        <h6 style="padding-top:5px">Mật khẩu cũ:</h6>
+                        <h6 style="padding-top:5px">Mật khẩu hiện tại:</h6>
                         <h6 style="padding-top:8px">Mật khẩu mới:</h6>
                         <h6 style="padding-top:5px">Xác nhận mật khẩu mới:</h6>
                     </div>
                     <div class="grid__column-4">
                         <div>
-                            <input type="text" placeholder="**********" style="width:300px">
+                            <input type="text" name="current_pass" placeholder="Mật khẩu hiện tại" style="width:300px" required>
                         </div>
                         <div>
-                            <input type="text" placeholder="**********" style="width:300px">
+                            <input type="text" name="new_pass" placeholder="Mật khẩu mới" style="width:300px" required>
                         </div>
                         <div>
-                            <input type="text" placeholder="**********" style="width:300px">
+                            <input type="text" name="confirm_new_pass" placeholder="Xác nhận mật khẩu mới" style="width:300px" required>
                         </div>
                     </div>
                 </div>

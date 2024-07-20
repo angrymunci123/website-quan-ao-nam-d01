@@ -15,8 +15,10 @@ class AuthController extends Controller
         if ($user) {
             if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                 return redirect('/admin');
+
             } elseif ($user->role == 'Khách Hàng') {
                 return view('/ktcstore');
+
             }
         }
         return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');
@@ -55,6 +57,7 @@ class AuthController extends Controller
     {
         $request->session()->put('user_id', $user->user_id);
         $request->session()->put('fullname', $user->fullname);
+        $request->session()->put('email', $user->email);
         $request->session()->put('role', $user->role);
         $request->session()->put('email', $user->email);
     }
