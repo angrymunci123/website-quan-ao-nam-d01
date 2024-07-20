@@ -54,9 +54,6 @@ class AdminController extends Controller
         }
     
         $user = Auth::user();
-        if ($user->role !== 'Chủ Cửa Hàng' || $user->role !== 'Nhân Viên') {
-            return redirect('/ktcstore'); 
-        }
     
         $users = User::orderBy('user_id','asc')->paginate(10);
         return view('admin.user.user_list', compact('users'));
@@ -111,4 +108,5 @@ class AdminController extends Controller
     public function change_password(){
         return view ('admin.user.password');
     }
+  
 }
