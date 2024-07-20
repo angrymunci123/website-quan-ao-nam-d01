@@ -59,6 +59,7 @@ class AuthController extends Controller
     {
         $request->session()->put('user_id', $user->user_id);
         $request->session()->put('fullname', $user->fullname);
+        $request->session()->put('email', $user->email);
         $request->session()->put('role', $user->role);
     }
 
