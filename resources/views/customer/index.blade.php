@@ -56,7 +56,7 @@
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/quan_dai.png')}}" alt="Category Image"
-                    class="category_image" style="height: 343px">
+                    class="category_image" style="height: 266px">
                 <div class="category_text">Quần Sooc</div>
             </div>
         </div>

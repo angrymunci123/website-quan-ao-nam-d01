@@ -105,7 +105,7 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white">
                                         <span class="d-none d-lg-inline-flex">{{session('fullname')}}</span>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0" style="width: 250px">
                                         <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}}, hãy quay về trang Admin để xem thông tin cá nhân')">Thông
                                             tin cá nhân</a>
                                         <a class="dropdown-item" onclick="return confirm('Xin chào {{session('fullname')}}, (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">Lịch
