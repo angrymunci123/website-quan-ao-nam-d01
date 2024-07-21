@@ -59,14 +59,13 @@
         </div>
         <table class="table">
             <tr>
-                <th scope="col" >Sản phẩm</th>
+                <th scope="col">Sản phẩm</th>
                 <th scope="col" class="text-center">Số lượng</th>
                 <th scope="col" class="text-center">Đơn giá</th>
                 <th scope="col" class="text-center">Thành tiền</th>
                 @if ($order_detail->status == 'Đã giao hàng')
-                <th></th>
-                @endif  
-            </tr>
+                    <th></th>
+                @endif              </tr>
             @foreach($product_order as $product)
                         @php
                             $total = 0;
@@ -81,16 +80,18 @@
                             <td class="text-center">{{number_format($total)}}đ</td>
                             @if ($order_detail->status == 'Đã giao hàng')
                                 @if (!$ratings->contains($product->product_id))
-                                <td class="text-center">
-                                    <form method="get" action="/ktcstore/reviews/{{$product->product_name}}" enctype='multipart/form-data'>
-                                        <input type="number" hidden name="order_id" value="{{$product->order_id}}"/>
-                                        <input type="number" hidden name="product_detail_id" value="{{$product->product_detail_id}}"/>
-                                        <input hidden type="text" name="product_name" value="{{$product->product_name}}"/>
-                                        <button type="submit" class="btn btn-success btn-sm" style="width: 150px; color:white">Đánh giá sản phẩm</button>
-                                    </form>
-                                </td>
+                                    <td class="text-center">
+                                        <form method="get" action="/ktcstore/reviews/{{$product->product_name}}"
+                                            enctype='multipart/form-data'>
+                                            <input type="number" hidden name="order_id" value="{{$product->order_id}}" />
+                                            <input type="number" hidden name="product_detail_id" value="{{$product->product_detail_id}}" />
+                                            <input hidden type="text" name="product_name" value="{{$product->product_name}}" />
+                                            <button type="submit" class="btn btn-success btn-sm" style="width: 150px; color:white">Đánh giá
+                                                sản phẩm</button>
+                                        </form>
+                                    </td>
                                 @else
-                                <td class="text-center"></td>
+                                    <td class="text-center"></td>
                                 @endif
                             @endif
                         </tr>
@@ -107,11 +108,12 @@
             <tr>
                 @if ($order_detail->status == 'Đang chờ xác nhận')
                     <td>
-                        <form id="cancelOrderForm" action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}"
+                        <form id="cancelOrderForm"
+                            action="/ktcstore/order_history/cancel_order/order_id={{ $order_detail->order_id }}"
                             method="POST" style="padding-right: 20px; float: right">
                             @csrf
-                            <button  type="button" class="btn btn-danger"
-                                style="width: 150px; color:white" onclick="showCancelOrderModal()">Hủy Đơn Hàng</button>
+                            <button type="button" class="btn btn-danger" style="width: 150px; color:white"
+                                onclick="showCancelOrderModal()">Hủy Đơn Hàng</button>
                         </form>
                     </td>
                 @endif
@@ -129,9 +131,10 @@
                                 Bạn chắc chắn muốn hủy đơn hàng này không? Điều này không thể hoàn tác lại.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cancel-cancelOrder" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
-                                <form action="/ktcstore/order_history/cancel_order/order_id={{$order_detail->order_id}}" method="GET"
-                                    style="padding-right: 20px; float: right">
+                                <button type="button" id="cancel-cancelOrder" class="btn btn-secondary"
+                                    data-dismiss="modal">Hủy bỏ</button>
+                                <form action="/ktcstore/order_history/cancel_order/order_id={{$order_detail->order_id}}"
+                                    method="GET" style="padding-right: 20px; float: right">
                                     <button type="button" class="btn btn-danger" id="confirmCancelOrder">Hủy Đơn
                                         Hàng</button>
                                 </form>
@@ -139,13 +142,15 @@
                         </div>
                     </div>
                 </div>
+                <td style="width:100%">
+                    <form action="/ktcstore/order_history" method="GET">
+                        <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay
+                            lại</button>
+                    </form>
+                </td>
             </tr>
         </table>
-        <td style="width:100%">
-            <form action="/ktcstore/order_history" method="GET">
-                <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay lại</button>
-            </form>
-        </td>
+
     </div>
 </div>
 <br>
@@ -160,8 +165,8 @@
     });
 
 
-    document.getElementById('cancel-cancelOrder').addEventListener('click', function() {
-        $('#cancelOrderModal').modal('hide'); 
+    document.getElementById('cancel-cancelOrder').addEventListener('click', function () {
+        $('#cancelOrderModal').modal('hide');
     });
 
 </script>

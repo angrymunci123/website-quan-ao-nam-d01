@@ -1222,10 +1222,10 @@ ol {
 	margin-right: -12px;
  }
  .grid{
+	width: 1200px;
 	max-width: 100%;	
 	margin: 0 auto;	
 	display: flex;
-    justify-content:center;
  }
  .grid__full-width{
 	width: 100%;
