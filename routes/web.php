@@ -111,6 +111,7 @@ Route::get('/admin/order', [OrderController::class, "order_list"]);
 Route::get('/admin/order/order_detail/order_id={order_id}', [OrderController::class, "order_detail"]);
 Route::post('/admin/order/update_status/order_id={order_id}', [OrderController::class, "update_order_status"])->name('update_order_status');
 Route::post('/admin/order/cancel/order_id={order_id}', [OrderController::class, "cancel_order"]);
+Route::get('/admin/order/filter-status', [OrderController::class, "filter_status"])->name('filter.status');;
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);

@@ -7,9 +7,23 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <table style="width: 100%">
-              <th style="font-size: 26px;" class="text-center">Đơn Hàng</th>
-                </table>
+              <th style="font-size: 26px">Đơn Hàng</th>
+              <th style="float:right">
+              <form action="{{ route('filter.status') }}" method="GET">
+                  <select name="status" id="order_status" class="form-select w-auto" aria-label="Chọn trạng thái đơn hàng">
+                      <option value="">Chọn trạng thái</option>
+                      <option value="Đang chờ xác nhận">Đang chờ xác nhận</option>
+                      <option value="Đã xác nhận">Đã xác nhận</option>
+                      <option value="Đang giao hàng">Đang giao hàng</option>
+                      <option value="Đã giao hàng">Đã giao hàng</option>
+                      <option value="Đã hủy">Đã hủy</option>
+                  </select>
+                  <button type="submit">Lọc</button>
+              </form>
+              </th>
+              </table>
             </div>
+            
             <div class="card-body">
                 @if(Session::has('success'))
                   <div class="alert alert-success">{{Session::get('success')}}</div>
@@ -125,4 +139,19 @@
       </div>
     </div>
   </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('order_status');
+    
+    // Thay đổi của select
+    select.addEventListener('change', function () {
+        const selected_option = select.options[select.selectedIndex];
+        const href = selected_option.getAttribute('data-href');
+        
+        if (href) {
+            window.location.href = href;
+        }
+    });
+});
+</script>
 @endsection
