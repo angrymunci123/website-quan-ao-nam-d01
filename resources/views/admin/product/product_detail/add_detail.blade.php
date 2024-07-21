@@ -21,7 +21,7 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     <div class="form-group">
                         <strong>Giá</strong>
-                        <input type="number" name="price" id="price" class="form-control-sm" required>
+                        <input type="number" name="price" id="price" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <strong>Giá Khuyến Mãi</strong>
