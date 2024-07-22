@@ -21,6 +21,9 @@ class AdminController extends Controller
         }
 
         $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
 
         $order_data = Order::select(DB::raw('COUNT(*) as count'))
         ->whereYear('created_at', date('Y'))
@@ -53,12 +56,23 @@ class AdminController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
+
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
     
         $users = User::orderBy('user_id','asc')->paginate(10);
         return view('admin.user.user_list', compact('users'));
     }
 
-    public function personal_info(){
+    public function personal_info()
+    {
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
         $user_info = User::where('user_id', '=', session('user_id'))->get();
         return view('admin.user.user_info', compact('user_info'));
     }
@@ -70,7 +84,7 @@ class AdminController extends Controller
         }
     
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -85,7 +99,7 @@ class AdminController extends Controller
         }
     
         $user = Auth::user();
-        if ($user->role !== 'Admin') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
         
@@ -104,8 +118,30 @@ class AdminController extends Controller
         return redirect('/admin/personal_info')->with('success', 'Cập nhật thông tin cá nhân thành công!');
     }
 
-    public function change_password(){
+    public function change_password() 
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+    
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
         return view ('admin.user.password');
+    }
+
+    public function change_password_process() 
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+    
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
     }
   
 }

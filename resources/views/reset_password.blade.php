@@ -14,16 +14,16 @@
                         <div class="alert alert-danger">{{Session::get('fail')}}</div>
                     @endif
                     @csrf
-					<input type="hidden" name="email" value="{{$user->email}}"/>
+					<input type="hidden" name="email" value="{{$email}}"/>
 					<div class="wrap-input100 validate-input" data-validate="Mật khẩu mới là bắt buộc">
 						<span class="label-input100" style="font-family: Arial">Mật khẩu mới</span>
-						<input style="font-family: Arial" class="input100" type="password" name="new_password" id="exampleInputPassword1" placeholder="Mật khẩu mới">
+						<input style="font-family: Arial" class="input100" type="password" name="new_password" id="exampleInputPassword1" required placeholder="Mật khẩu mới">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Xác nhận mật khẩu mới là bắt buộc">
 						<span class="label-input100" style="font-family: Arial">Xác nhận mật khẩu mới</span>
-						<input style="font-family: Arial" class="input100" type="password" name="confirm_new_password" id="exampleInputPassword1" placeholder="Xác nhận mật khẩu mới">
+						<input style="font-family: Arial" class="input100" type="password" name="confirm_new_password" id="exampleInputPassword1" required placeholder="Xác nhận mật khẩu mới">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>
@@ -41,7 +41,4 @@
 			</div>
 		</div>
 	</div>
-
-
-	<div id="dropDownSelect1"></div>
 @endsection

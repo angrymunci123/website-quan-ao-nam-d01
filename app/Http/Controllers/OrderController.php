@@ -19,8 +19,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $orders = Order::orderBy('order_id', 'desc')->paginate(10);
@@ -35,8 +35,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
@@ -55,6 +55,15 @@ class OrderController extends Controller
     
     public function filter_status(Request $request) 
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
         $order_status = $request->status;
 
         if ($order_status) 
@@ -82,8 +91,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_id = $request->order_id;
@@ -127,8 +136,8 @@ class OrderController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
-            return redirect('/ktcstore');
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
         }
 
         $order_id = $request->order_id;
