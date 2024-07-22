@@ -48,7 +48,7 @@ class OrderController extends Controller
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
             ->join('products', 'product_detail.product_id', '=', 'products.product_id')
             ->where('order_detail.order_id', '=', $order_id)
-            ->select('order_detail.*', 'product_detail.*', 'products.product_id', 'products.product_name')
+            ->select('order_detail.*', 'product_detail.size', 'product_detail.color', 'products.product_id', 'products.product_name')
             ->get();
         return view("admin.order.order_detail", compact(['order_details', 'product_order']));
     }
