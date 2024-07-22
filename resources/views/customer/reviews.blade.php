@@ -17,7 +17,7 @@
     </div>
 </section>
 <br>
-<div class="container" style="background-color: #F3F2EE">
+<div class="container" style="background-color: #F3F2EE; padding: 12px;">
     <table class="table" style="background-color: #F3F2EE; padding-left: 15px; padding-right: 15px; border-style: none">
         <tr>
             <div style="width:1500px; margin:auto">
@@ -82,20 +82,20 @@
                                     <label>Hình ảnh (Nếu có):</label><br>
                                     <input type="file" name="image" id="image" class="form-control-ls">
                                     <hr>
-                                    <div class="grid">
-                                        <button type="submit" class="btn btn-warning" style="width: 140px; color:white">Gửi
+                                    <div class="grid" style="width: 100%; justify-content: left;">
+                                        <button type="submit" class="btn btn-warning" style="width: 140px; color:white;">Gửi
                                             đánh giá</button>
                                 </form>
-                            </div>
+
                         @endforeach
-                        <br>
-                        @foreach($product_order as $order)
-                            <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">
-                                <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay
-                                    lại</button>
-                            </form>
-                        @endforeach
-                        <br>
+                            @foreach($product_order as $order)
+                                <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET" style="padding-left: 10px;">
+                                    <button type="submit" class="btn btn-success" style="width: 110px; color:white">Quay
+                                        lại</button>
+                                </form>
+                            @endforeach
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>

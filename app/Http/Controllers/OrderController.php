@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Order_Detail;
+use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
@@ -50,6 +51,28 @@ class OrderController extends Controller
             ->select('order_detail.*', 'product_detail.*', 'products.product_id', 'products.product_name')
             ->get();
         return view("admin.order.order_detail", compact(['order_details', 'product_order']));
+    }
+    
+    public function filter_status(Request $request) 
+    {
+        $order_status = $request->status;
+
+        if ($order_status) 
+        {
+            $orders = Order::where('status', '=', $order_status)
+            ->orderBy('order_id', 'desc')
+            ->paginate(10);
+        } 
+        
+        else 
+        {
+            $orders = Order::orderBy('order_id', 'desc')->paginate(10);
+        }
+
+        Paginator::useBootstrap();
+
+        return view("admin.order.order_list", compact('orders'))
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     public function update_order_status(Request $request)

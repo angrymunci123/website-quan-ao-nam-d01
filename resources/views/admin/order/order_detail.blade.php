@@ -71,19 +71,19 @@
 
                             <tbody style="background-color:white">
                                 @foreach($product_order as $product)
-                                                                @php
-                                                                    $total = 0;
-                                                                    $total += $product->price * $product->quantity;
-                                                                    $total_price_order += $total;
-                                                                @endphp
-                                                                <tr>
-                                                                    <td>{{$product->product_name}}</td>
-                                                                    <td class="text-center">{{$product->size}}</td>
-                                                                    <td class="text-center">{{$product->quantity}}</td>
-                                                                    <td class="text-center">{{$product->color}}</td>
-                                                                    <td class="text-center">{{number_format($product->price)}}đ</td>
-                                                                    <td class="text-center">{{number_format($total)}}đ</td>
-                                                                </tr>
+                                    @php
+                                        $total = 0;
+                                        $total += $product->price * $product->quantity;
+                                        $total_price_order += $total;
+                                    @endphp
+                                    <tr>
+                                        <td>{{$product->product_name}}</td>
+                                        <td class="text-center">{{$product->size}}</td>
+                                        <td class="text-center">{{$product->quantity}}</td>
+                                        <td class="text-center">{{$product->color}}</td>
+                                        <td class="text-center">{{number_format($product->price)}}đ</td>
+                                        <td class="text-center">{{number_format($total)}}đ</td>
+                                    </tr>
                                 @endforeach
                                 <tr>
                                     <td class="text-center"><b>Tổng tiền</b></td>
@@ -108,7 +108,6 @@
                                     data-toggle="modal" data-target="#updateStatusModal">Cập nhật
                                     trạng thái</button>
                             </form>
-                            <!-- Popup form cập nhật trạng thái đơn hàng -->
                             <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"
                                 aria-labelledby="updateStatusModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -142,7 +141,6 @@
                                     data-toggle="modal" data-target="#confirmOrderModal">Xác
                                     nhận đơn hàng</button>
                             </form>
-                            <!-- Popup form xác nhận đơn hàng -->
                             <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog"
                                 aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
