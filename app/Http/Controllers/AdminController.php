@@ -22,14 +22,15 @@ class AdminController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore');
+            return redirect('/ktcstore'); 
+        }
+      
         } else {
             $order_data = Order::select(DB::raw('COUNT(*) as count'))
                 ->whereYear('created_at', date('Y'))
                 ->where('order.status', 'Đã giao hàng')
                 ->groupBy(DB::raw("Month(created_at)"))
                 ->pluck('count')->toArray();
-
 
             $revenue_data = Order_Detail::join('order', 'order_detail.order_id', '=', 'order.order_id')
                 ->select(DB::raw('SUM(order_detail.price * order_detail.quantity) as total'))
@@ -58,7 +59,6 @@ class AdminController extends Controller
             return redirect('login');
         }
 
-
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
@@ -70,11 +70,11 @@ class AdminController extends Controller
 
     public function personal_info()
     {
-
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
+
         $user_info = User::where('user_id', '=', session('user_id'))->get();
         return view('admin.user.user_info', compact('user_info'));
     }

@@ -219,6 +219,20 @@ class ProductController extends Controller
         ->with('success', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
 
+    public function check_product_exist($product_id, $product_detail_id)
+    {
+        $check_product_id = Product::where('product_id', $product_id)->exists();
+        $check_product_detail_id = Product_Detail::where('product_detail_id', $product_detail_id)
+            ->where('product_id', $product_id)
+            ->exists();
+            
+        if (!$check_product_id || !$check_product_detail_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public function view_product_detail($product_id, $product_detail_id)
     {
         if (!Auth::check()) {
@@ -229,15 +243,9 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
-
-        $check_product_id = Product::where('product_id', $product_id)->exists();
-        $check_product_detail_id = Product_Detail::where('product_detail_id', $product_detail_id)
-                                            ->where('product_id', $product_id)
-                                            ->exists();
-        
-        if (!$check_product_id && $check_product_detail_id) 
-        {
-            return redirect('/admin');  
+      
+        if (!$this->check_product_exist($product_id, $product_detail_id)) {
+            return redirect('/admin/product');  
         }
 
         $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
@@ -256,9 +264,15 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
+        
 
         $product_id = $request->product_id;
         $product_detail_id = $request->product_detail_id;
+
+        if (!$this->check_product_exist($product_id, $product_detail_id)) {
+            return redirect('/admin/product');  
+        }
+
         $inner_join = Product_Detail::where("product_detail.product_detail_id", "=", $product_detail_id)
         ->join('products', 'product_detail.product_id', '=', 'products.product_id')->get();
         return view("admin.product.product_detail.update_detail", compact('inner_join'));
@@ -274,6 +288,11 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
+
+        if (!$this->check_product_exist($product_id, $product_detail_id)) {
+            return redirect('/admin/product');  
+        }
+
         $price = $request->price;
         $sale_price = $request->sale_price;
         $size = $request->size;
@@ -308,6 +327,10 @@ class ProductController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_product_exist($product_id, $product_detail_id)) {
+            return redirect('/admin/product');  
         }
 
         $product_detail = Product_Detail::findOrFail($product_detail_id);
