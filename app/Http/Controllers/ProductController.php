@@ -20,7 +20,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -56,7 +56,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -82,7 +82,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -99,7 +99,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -124,7 +124,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -154,7 +154,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -174,7 +174,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -190,7 +190,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -226,8 +226,18 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        $check_product_id = Product::where('product_id', $product_id)->exists();
+        $check_product_detail_id = Product_Detail::where('product_detail_id', $product_detail_id)
+                                            ->where('product_id', $product_id)
+                                            ->exists();
+        
+        if (!$check_product_id && $check_product_detail_id) 
+        {
+            return redirect('/admin');  
         }
 
         $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
@@ -243,7 +253,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -261,7 +271,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
         $price = $request->price;
@@ -296,7 +306,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -312,7 +322,7 @@ class ProductController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 

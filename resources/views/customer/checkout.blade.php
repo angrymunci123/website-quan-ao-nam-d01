@@ -62,6 +62,8 @@
                                     <tr>
                                         <th scope="col">Sản phẩm</th>
                                         <th scope="col">Số lượng</th>
+                                        <th scope="col">Size</th>
+                                        <th scope="col">Màu sắc</th>
                                         <th scope="col">Đơn giá</th>
                                         <th scope="col">Thành tiền</th>
                                     </tr>
@@ -79,15 +81,17 @@
                                         }
                                     @endphp
                                     <tr>
-                                        <td><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></td>
-                                        <td>{{$details['quantity']}}</td>
+                                        <td class="text-center"><a href="/ktcstore/product/{{$details['product_name']}}" style="color:black">{{$details['product_name']}}</a></td>
+                                        <td class="text-center">{{$details['quantity']}}</td>
+                                        <td class="text-center">{{$details['size']}}</td>
+                                        <td class="text-center">{{$details['color']}}</td>
                                         @if ($details['sale_price'] > 0 && $details['sale_price'] < $details['price'])
-                                        <td>{{number_format($details['sale_price'])}}đ</td>
+                                        <td class="text-center">{{number_format($details['sale_price'])}}đ</td>
 
                                         @else
-                                        <td>{{number_format($details['price'])}}đ</td>
+                                        <td class="text-center">{{number_format($details['price'])}}đ</td>
                                         @endif
-                                        <td>{{number_format($total)}}đ</td>
+                                        <td class="text-center">{{number_format($total)}}đ</td>
                                     </tr>
                                     @endforeach
                                 </table>

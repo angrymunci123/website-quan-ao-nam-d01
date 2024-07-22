@@ -1,6 +1,5 @@
 @extends('customer.layout')
 @section('content')
- <!-- Blog Details Hero Begin -->
  <section class="blog-hero spad">
         <div class="container">
             <div class="row d-flex justify-content-center">
@@ -13,9 +12,7 @@
             </div>
         </div>
     </section>
-    <!-- Blog Details Hero End -->
 
-    <!-- Blog Details Section Begin -->
     <section class="blog-details spad">
         <div class="container">
             <div class="row d-flex justify-content-center">

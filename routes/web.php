@@ -38,8 +38,7 @@ Route::get('/login_process', function () {
 });
 
 Route::get('/forgot_password', [AuthController::class, "forgot_password"]);
-Route::get('/reset_process', [AuthController::class, "send_token"]);
-Route::get('/reset_password/token={password_token}&email={email}', [AuthController::class, "checking_reset_token"]);
+Route::get('/reset_password', [AuthController::class, "check_password_token"]);
 Route::post('/reset_password_process', [AuthController::class, "reset_password_process"]);
 Route::get('/reset_password_process', function () {
     return redirect('/');
