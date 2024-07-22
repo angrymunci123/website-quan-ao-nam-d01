@@ -105,12 +105,8 @@
           </div>
         </div>
       </div>
-
     </div>
   </main>
-  <div class="fixed-plugin">
-    <!-- Your fixed plugin content -->
-  </div>
   <script>
     function openPopup(product_id) {
       let confirmPopup = document.getElementById("confirmPopup-" + product_id);
