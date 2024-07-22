@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
 
 class AuthController extends Controller
 {
@@ -15,10 +18,8 @@ class AuthController extends Controller
         if ($user) {
             if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                 return redirect('/admin');
-
             } elseif ($user->role == 'Khách Hàng') {
                 return view('/ktcstore');
-
             }
         }
         return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');
@@ -117,7 +118,6 @@ class AuthController extends Controller
                     'email' => $email,
                     'phone_number' => $phone_number,
                     'password' => $hashedPassword,
-                    'password_token' => $hashedPassword,
                     'address' => $address,
                     'role' => 'Khách Hàng',
                     'created_at' => now(),
@@ -140,7 +140,7 @@ class AuthController extends Controller
         return view('forgotten_password');
     }
 
-    public function check_password_token(Request $request)
+    public function send_token(Request $request)
     {
         if (Auth::check()) {
             return $this->auth_user(Auth::user());
@@ -149,15 +149,25 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            if (Hash::check($request->old_password, $user->password_token)) {
-                return view('reset_password', compact('user'));
-            } else {
-                return back()->with('fail', 'Sai mật khẩu hoặc địa chỉ email.');
-            }
+            $password_token = Str::random(30);
+            $user->password_token = $password_token;
+            $user->save();
+            Mail::to($user->email)->send(new PasswordResetMail($password_token, $user->email));
+            return back()->with('success', 'Mã xác minh đã dược gửi tới hòm thư của bạn');
         }
-        return back()->with('fail', 'Địa chỉ email không tồn tại hoặc sai mật khẩu.');
+        return back()->with('fail', 'Địa chỉ email chưa đăng kí tài khoản');
     }
-
+    public function checking_reset_token($password_token, $email)
+    {
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            if ($password_token == $user->password_token) {
+                return view('reset_password')->with('email', $email);
+            }
+            return redirect('/');
+        }
+        return redirect('/');
+    }
     public function reset_password_process(Request $request)
     {
         $user = $request->email;
@@ -172,6 +182,7 @@ class AuthController extends Controller
 
         if ($new_password === $confirm_new_password) {
             $user->password = bcrypt($request->new_password);
+            $user->password_token = null;
             $user->save();
             return redirect('/login')->with('success', 'Đổi mật khẩu thành công!');
         }

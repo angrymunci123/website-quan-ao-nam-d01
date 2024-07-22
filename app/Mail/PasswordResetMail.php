@@ -12,16 +12,17 @@ class PasswordResetMail extends Mailable
     use Queueable, SerializesModels;
 
 
-    public $passwordtoken;
-
-    public function __construct($passwordtoken)
+    public $password_token;
+    public $email;
+    public function __construct($password_token, $email)
     {
-        $this->passwordtoken = $passwordtoken;
+        $this->password_token = $password_token;
+        $this->email = $email;
     }
 
 
     public function build()
     {
-        return $this->subject("Cảm ơn bạn đã đặt hàng")->view('customer.mail.passwordResetMail');
+        return $this->subject("Thiết lập lại mật khẩu đăng nhập KTC Store")->view('customer.mail.passwordResetMail');
     }
 }
