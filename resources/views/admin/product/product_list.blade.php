@@ -39,7 +39,7 @@
                   <div class="alert alert-success">{{Session::get('success')}}</div>
                 @endif
                 @if(Session::has('fail'))
-                  <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                  <div class="alert alert-danger" style="color: white">{{Session::get('fail')}}</div>
                 @endif
             </div>
             <div class="card-body px-0 pt-0 pb-2">

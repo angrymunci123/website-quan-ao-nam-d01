@@ -495,9 +495,13 @@ class StoreController extends Controller
                 break;
         }
 
-        $products = $price->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+        $products = $price->select('products.product_id', 'products.product_name', 
+        DB::raw('MAX(product_detail.image) as image'), 
+        DB::raw('MAX(product_detail.price) as price'), 
+        DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
+            
         Paginator::useBootstrap();
 
         $brand_sidebars = Brand::get();
@@ -530,7 +534,7 @@ class StoreController extends Controller
         $brand = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
             ->where('product_detail.size', '=', 'S');
-
+        
         switch ($brand_name) {
             case 'Adam':
                 $brand->where('brands.brand_name', 'Adam');
@@ -571,8 +575,11 @@ class StoreController extends Controller
             default:
                 break;
         }
-
-        $products = $brand->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
+        
+        $products = $brand->select('products.product_id', 'products.product_name', 
+        DB::raw('MAX(product_detail.image) as image'), 
+        DB::raw('MAX(product_detail.price) as price'), 
+        DB::raw('MAX(product_detail.sale_price) as sale_price'))
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
         Paginator::useBootstrap();
@@ -607,35 +614,46 @@ class StoreController extends Controller
         $category = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->leftjoin("category", "products.category_id", "=", "category.category_id")
             ->where('product_detail.size', '=', 'S');
-
         switch ($category_name) {
-            case 'Áo':
-                $category->where('category.category_name', 'Áo');
+            case 'Áo Sơmi':
+                $category->where('category.category_name', 'Áo Sơmi');
                 break;
 
-            case 'Quần':
-                $category->where('category.category_name', 'Quần');
+            case 'Quần Âu':
+                $category->where('category.category_name', 'Quần Âu');
                 break;
 
-            case 'Giày':
-                $category->where('category.category_name', 'Giày');
+            case 'Áo Nỉ':
+                $category->where('category.category_name', 'Áo Nỉ');
                 break;
 
-            case 'Dép':
-                $category->where('category.category_name', 'Dép');
+            case 'Áo Thun':
+                $category->where('category.category_name', 'Áo Thun');
                 break;
 
-            case 'Tất':
-                $category->where('category.category_name', 'Tất');
+            case 'Áo Nỉ':
+                $category->where('category.category_name', 'Áo Nỉ');
+                break;
+
+            case 'Áo Khoác':
+                $category->where('category.category_name', 'Áo Khoác');
+                break;
+
+            case 'Quần Sooc':
+                $category->where('category.category_name', 'Quần Sooc');
                 break;
 
             default:
                 break;
         }
 
-        $products = $category->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
+        $products = $category->select('products.product_id', 'products.product_name', 
+        DB::raw('MAX(product_detail.image) as image'), 
+        DB::raw('MAX(product_detail.price) as price'), 
+        DB::raw('MAX(product_detail.sale_price) as sale_price'))
+        ->groupBy('products.product_id', 'products.product_name')
+        ->paginate(16);
+
         Paginator::useBootstrap();
 
         $brand_sidebars = Brand::get();

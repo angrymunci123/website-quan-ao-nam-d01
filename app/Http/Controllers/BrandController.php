@@ -18,7 +18,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -34,7 +34,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -48,7 +48,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -66,7 +66,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -81,7 +81,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
@@ -99,7 +99,7 @@ class BrandController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role == 'Khách Hàng') {
+        if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
 
