@@ -165,7 +165,7 @@ class AuthController extends Controller
             if ($password_token == $user->password_token) {
                 return view('reset_password')->with('email', $email);
             }
-            return redirect('/');
+            return back()->with('fail', 'Mật khẩu và xác nhận mật khẩu chưa khớp');
         }
         return redirect('/');
     }
