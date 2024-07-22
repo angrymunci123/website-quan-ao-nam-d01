@@ -33,9 +33,12 @@ Route::get('/', function () {
 //Login (Chung cho cả Admin và Khách Hàng)
 Route::get('/login', [AuthController::class, "login_form"]);
 Route::post('/login_process', [AuthController::class, "loginProcess"])->name("loginProcess");
+
 Route::get('/forgot_password', [AuthController::class, "forgot_password"]);
-Route::get('/reset_password', [AuthController::class, "check_password_token"]);
+Route::get('/reset_process', [AuthController::class, "send_token"]);
+Route::get('/reset_password/token={password_token}&email={email}', [AuthController::class, "checking_reset_token"]);
 Route::post('/reset_password_process', [AuthController::class, "reset_password_process"]);
+
 Route::get('/login', [AuthController::class, "login_form"]);
 Route::get('/register', [AuthController::class, "register"]);
 Route::post('/register_process', [AuthController::class, "registerProcess"])->name("registerProcess");
