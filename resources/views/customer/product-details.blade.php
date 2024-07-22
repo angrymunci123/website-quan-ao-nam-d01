@@ -99,7 +99,7 @@
                                             </div>
                                         </form>
                                     @endif
-                                    @if(!session('user_id') || session('role') == 'Admin')
+                                    @if(session('role') == 'Chủ Cửa Hàng' && session('role') == 'Nhân Viên')
                                         <table>
                                             <th>
                                                 <div>
@@ -140,6 +140,51 @@
                                                 </div>
                                                 <a type="submit" class="primary-btn" style="color:white"
                                                     onclick="return confirm('Xin chào {{session('fullname')}} (không phải là tài khoản khách hàng? Vui lòng đăng xuất và đăng nhập vào tài khoản khách hàng của bạn)')">
+                                                    Mua Ngay
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if(!session('user_id'))
+                                    <table>
+                                            <th>
+                                                <div>
+                                                    <label for="size"><b>Kích Cỡ</b></label>
+                                                    <br>
+                                                    <select name="size" id="size" class="form-control">
+                                                        @foreach($product_size as $display_size)
+                                                            <option name="size" value="{{$display_size->size}}">
+                                                                {{$display_size->size}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            <th>
+
+                                            <th>
+                                                <div>
+                                                    <label><b>Màu Sắc: </b></label>
+                                                    <br>
+                                                    <select name="color" id="color" class="form-control">
+                                                        @foreach($product_colors as $color)
+                                                            <option name="color" value="{{$color->color}}">{{$color->color}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            <th>
+                                        </table>
+                                        <br>
+                                        <div class="quantity">
+                                            <label><b>Số Lượng:</b></label>
+                                            <div class="product__details__cart__option">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input id="quantity_input" type="number" name="quantity" value="1"
+                                                            min="1" max="{{$product_detail->quantity}}">
+                                                    </div>
+                                                </div>
+                                                <a type="submit" href="/login" class="primary-btn" style="color:white">
                                                     Mua Ngay
                                                 </a>
                                             </div>

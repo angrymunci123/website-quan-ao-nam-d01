@@ -15,7 +15,8 @@ class AuthController extends Controller
 {
     public function auth_user($user)
     {
-        if ($user) {
+        if ($user) 
+        {
             if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                 return redirect('/admin');
             } elseif ($user->role == 'Khách Hàng') {
