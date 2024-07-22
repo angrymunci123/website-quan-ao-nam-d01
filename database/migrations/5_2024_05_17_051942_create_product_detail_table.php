@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductDetailTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,13 @@ class CreateProductDetailTable extends Migration
             $table->id('product_detail_id');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('product_id')->on('products')->onDelete('restrict');
-            $table->string('price');
+            $table->decimal('price', 60, 0);
+            $table->decimal('sale_price', 60, 0);
             $table->string('size');
             $table->string('color');
-            $table->string('quantity');
+            $table->integer('quantity');
             $table->string('material');
-            $table->string('image', 300);
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -36,4 +37,4 @@ class CreateProductDetailTable extends Migration
     {
         Schema::dropIfExists('product_detail');
     }
-}
+};

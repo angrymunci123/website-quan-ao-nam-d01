@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductReviewsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,8 +18,9 @@ class CreateProductReviewsTable extends Migration
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('restrict');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('product_id')->on('products')->onDelete('restrict');
-            $table->string('content');
-            $table->string('image', 300);
+            $table->integer('rating');
+            $table->longtext('content');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -33,4 +34,4 @@ class CreateProductReviewsTable extends Migration
     {
         Schema::dropIfExists('product_reviews');
     }
-}
+};
