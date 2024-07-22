@@ -20,44 +20,45 @@
             <div class="category_card">
                 <img src="{{asset('/temp_assets/somi.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Áo Sơmi</div>
+                <a href="/ktcstore/shop/Áo-Sơmi" class="category_text">Áo Sơmi</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/quan_au.png')}}" alt="Category Image"
                     class="category_image">
                 <div class="category_text">Quần Âu</div>
+                <a href="/ktcstore/shop/Quần-Âu" class="category_text">Quần Âu</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/jogger.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Quần Jogger</div>
+                <a href="/ktcstore/shop/Áo-Nỉ" class="category_text">Áo Nỉ</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/thun.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Áo Thun</div>
+                <a href="/ktcstore/shop/Áo-Thun" class="category_text">Áo Thun</a>
             </div>
         </div>
         <div class="grid" style="padding-top: 20px;">
         <div class="category_card">
                 <img src="{{asset('/temp_assets/jean.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Quần Jean</div>
+                <a href="/ktcstore/shop/Quần-Jean" class="category_text">Quần Jean</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/ao_ni.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Áo Nỉ</div>
+                <a href="/ktcstore/shop/Áo-Nỉ" class="category_text">Áo Nỉ</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/ao_khoac.png')}}" alt="Category Image"
                     class="category_image">
-                <div class="category_text">Áo Khoác</div>
+                <a href="/ktcstore/shop/Áo-Khoác" class="category_text">Áo Khoác</a>
             </div>
             <div class="category_card">
                 <img src="{{asset('/temp_assets/quan_dai.png')}}" alt="Category Image"
                     class="category_image" style="height: 266px">
-                <div class="category_text">Quần Sooc</div>
+                <a href="/ktcstore/shop/Quần-Sooc" class="category_text">Quần Sooc</a>
             </div>
         </div>
     </div>
