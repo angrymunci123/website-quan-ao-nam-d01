@@ -398,31 +398,6 @@ class StoreController extends Controller
             }
             return redirect()->to($vnp_Url);
         } else if ($payment_method = "Thanh toán khi nhận hàng") {
-            $select_order = Order::where('user_id', session('user_id'))->orderBy('order_id', 'desc')->first();
-
-            foreach ($shopping_cart as $cart_data) {
-                if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
-                    $price_to_use = $cart_data['price'];
-                } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
-                    $price_to_use = $cart_data['sale_price'];
-                }
-                DB::table('order_detail')->insert([
-                    'order_id' => $select_order->order_id,
-                    'product_detail_id' => $cart_data['product_detail_id'],
-                    'price' => $price_to_use,
-                    'quantity' => $cart_data['quantity'],
-                    'created_at' => now(),
-                    'updated_at' => NULL
-                ]);
-
-                $product_detail = Product_Detail::find($cart_data['product_detail_id']);
-
-                if ($product_detail) {
-                    $product_detail->quantity -= $cart_data['quantity'];
-                    $product_detail->save();
-                }
-            }
-
             Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
             session()->forget('shopping_cart_' . auth()->id());
 
