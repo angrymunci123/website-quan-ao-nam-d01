@@ -243,7 +243,7 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
-
+      
         if (!$this->check_product_exist($product_id, $product_detail_id)) {
             return redirect('/admin/product');  
         }

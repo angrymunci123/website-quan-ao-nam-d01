@@ -372,6 +372,7 @@ class StoreController extends Controller
                 if ($request->has('vnp_BankCode') && $request->vnp_BankCode != "") {
                     $inputData['vnp_BankCode'] = $request->vnp_BankCode;
                 }
+              
                 if ($request->has('vnp_Bill_State') && $request->vnp_Bill_State != "") {
                     $inputData['vnp_Bill_State'] = $request->vnp_Bill_State;
                 }
@@ -398,7 +399,19 @@ class StoreController extends Controller
                 return redirect()->to($vnp_Url);
             } else if ($payment_method == "Thanh toán khi nhận hàng") {
                 session()->forget('shopping_cart_' . auth()->id());
+           
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
 
+            $vnp_Url = $vnp_Url . "?" . $query;
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+            return redirect()->to($vnp_Url);
+        } else if ($payment_method = "Thanh toán khi nhận hàng") {
+            Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
+            session()->forget('shopping_cart_' . auth()->id());
                 return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
         } catch (\Exception $e) {
@@ -577,7 +590,7 @@ class StoreController extends Controller
             default:
                 break;
         }
-        
+      
         $products = $brand->select('products.product_id', 'products.product_name', 
         DB::raw('MAX(product_detail.image) as image'), 
         DB::raw('MAX(product_detail.price) as price'), 
