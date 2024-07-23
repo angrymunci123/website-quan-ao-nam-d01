@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StoreController;
 
@@ -194,11 +195,49 @@ Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filt
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
 Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
 
+//Customer - Review
 Route::get('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
 Route::post('/ktcstore/reviews/send_reviews', [CustomerController::class, "send_review"]);
 Route::get('/ktcstore/reviews/send_reviews', function () {
     return redirect('/');
 });
+
+//Customer - Filter products
+//Price
+Route::get('/ktcstore/shop/price=below-200', [FilterController::class, "below_200"]);
+Route::get('/ktcstore/shop/price=200-500', [FilterController::class, "from_200_to_500"]);
+Route::get('/ktcstore/shop/price=500-800', [FilterController::class, "from_500_to_800"]);
+Route::get('/ktcstore/shop/price=800-1000', [FilterController::class, "from_800_to_1000"]);
+Route::get('/ktcstore/shop/price=1000-1500', [FilterController::class, "from_1000_to_1500"]);
+Route::get('/ktcstore/shop/price=1500-2000', [FilterController::class, "from_1500_to_2000"]);
+Route::get('/ktcstore/shop/price=above-2000', [FilterController::class, "above_2000"]);
+
+//Category
+Route::get('/ktcstore/shop/brand=Adam', [FilterController::class, "Adam"]);
+Route::get('/ktcstore/shop/brand=Atino', [FilterController::class, "Atino"]);
+Route::get('/ktcstore/shop/brand=Adidas', [FilterController::class, "Adidas"]);
+Route::get('/ktcstore/shop/brand=Nike', [FilterController::class, "Nike"]);
+Route::get('/ktcstore/shop/brand=Puma', [FilterController::class, "Puma"]);
+Route::get('/ktcstore/shop/brand=H&M', [FilterController::class, "H_and_M"]);
+Route::get('/ktcstore/shop/brand=MLB', [FilterController::class, "MLB"]);
+Route::get('/ktcstore/shop/brand=Calvin-Klein', [FilterController::class, "Calvin_Klein"]);
+Route::get('/ktcstore/shop/brand=Valentino', [FilterController::class, "Valentino"]);
+Route::get('/ktcstore/shop/brand=Levis', [FilterController::class, "Levis"]);
+
+//Brand
+Route::get('/ktcstore/shop/category=Áo-thun', [FilterController::class, "ao_thun"]);
+Route::get('/ktcstore/shop/category=Áo-sơmi', [FilterController::class, "ao_so_mi"]);
+Route::get('/ktcstore/shop/category=Áo-nỉ', [FilterController::class, "ao_ni"]);
+Route::get('/ktcstore/shop/category=Áo-khoác', [FilterController::class, "ao_khoac"]);
+Route::get('/ktcstore/shop/category=Quần-âu', [FilterController::class, "quan_au"]);
+Route::get('/ktcstore/shop/category=Quần-jogger', [FilterController::class, "quan_jogger"]);
+Route::get('/ktcstore/shop/category=Quần-jean', [FilterController::class, "quan_jean"]);
+Route::get('/ktcstore/shop/category=Quần-short', [FilterController::class, "quan_short"]);
+
+//Asc - desc
+Route::post('/ktcstore/shop/price-asc', [CustomerController::class, "price_asc"]);
+Route::post('/ktcstore/shop/price-desc', [CustomerController::class, "price_desc"]);
+
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
 Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');

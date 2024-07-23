@@ -105,8 +105,6 @@ class StoreController extends Controller
             ->paginate(16);
         Paginator::useBootstrap();
 
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
         // Xử lý chuẩn hóa tên sản phẩm
         foreach ($products as $product) {
             $standardized_product_name = $product->product_name;
@@ -126,7 +124,7 @@ class StoreController extends Controller
             $product->standardized_product_name = $standardized_product_name;
         }
 
-        return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
+        return view("customer.shop", compact(['products']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
 
@@ -401,7 +399,7 @@ class StoreController extends Controller
             }
             return redirect()->to($vnp_Url);
         } else if ($payment_method = "Thanh toán khi nhận hàng") {
-            Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
+            // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
             session()->forget('shopping_cart_' . auth()->id());
 
             return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
