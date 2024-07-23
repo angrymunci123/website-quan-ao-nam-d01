@@ -28,6 +28,17 @@ class OrderController extends Controller
         return view("admin.order.order_list", compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
+    public function check_order_exist($order_id)
+    {
+        $check_order_id = Order::where('order_id', $order_id)->exists();
+            
+        if (!$check_order_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public function order_detail($order_id)
     {
         if (!Auth::check()) {
@@ -37,6 +48,10 @@ class OrderController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_order_exist($order_id)) {
+            return redirect('/admin');  
         }
 
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
@@ -141,6 +156,12 @@ class OrderController extends Controller
         }
 
         $order_id = $request->order_id;
+        
+        if (!$this->check_order_exist($order_id)) {
+            return redirect('/admin');  
+        }
+
+
         $order = DB::table('order')->where('order_id', $order_id)->first();
         if (!$order) {
             return back()->with('fail', 'Đã có lỗi xảy ra, vui lòng thử lại sau');
