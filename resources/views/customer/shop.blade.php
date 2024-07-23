@@ -39,11 +39,16 @@
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                    <ul>
-                                                    @foreach($category_sidebars as $category_sidebar)
-                                                        <li><a href="{{ route('filter.category', ['category_name' => $category_sidebar->category_name ]) }}">{{$category_sidebar->category_name}}</a></li>
-                                                    @endforeach
-                                                    </ul>
+                                                <ul>
+                                                    <li><a href="/ktcstore/shop/category=Áo-thun">Áo Thun</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Áo-sơmi">Áo Sơmi</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Áo-nỉ">Áo Nỉ</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Áo-khoác">Áo Khoác</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Quần-âu">Quần Âu</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Quần-jogger">Quần Jogger</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Quần-jean">Quần Jeans</a></li>
+                                                    <li><a href="/ktcstore/shop/category=Quần-short">Quần Short</a></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -56,9 +61,16 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                    @foreach($brand_sidebars as $brand_sidebar)
-                                                        <li><a href="{{ route('filter.brand', ['brand_name' => $brand_sidebar->brand_name]) }}">{{ $brand_sidebar->brand_name }}</a></li>
-                                                    @endforeach
+                                                    <li><a href="/ktcstore/shop/brand=Adam">Adam</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Atino">Atino</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Adidas">Adidas</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Nike">Nike</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Puma">Puma</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=H&M">H&M</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=MLB">MLB</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Calvin-Klein">Calvin Klein</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Valentino">Valentino</a></li>
+                                                    <li><a href="/ktcstore/shop/brand=Levis">Levi's</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -72,85 +84,18 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => 'under-200']) }}">Dưới {{number_format(200000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => '200-500']) }}">{{number_format(200000)}}đ - {{number_format(500000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => '500-800']) }}">{{number_format(500000)}}đ - {{number_format(800000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => '800-1000']) }}">{{number_format(800000)}}đ - {{number_format(1000000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => '1000-1500']) }}">{{number_format(1000000)}}đ - {{number_format(1500000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => '1500-2000']) }}">{{number_format(1500000)}}đ - {{number_format(2000000)}}đ</a></li>
-                                                    <li><a href="{{ route('filter.price', ['price_range' => 'over-200']) }}">Trên {{number_format(2000000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=below-200">Dưới {{number_format(200000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=200-500">{{number_format(200000)}}đ - {{number_format(500000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=500-800">{{number_format(500000)}}đ - {{number_format(800000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=800-1000">{{number_format(800000)}}đ - {{number_format(1000000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=1000-1500">{{number_format(1000000)}}đ - {{number_format(1500000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=1500-2000">{{number_format(1500000)}}đ - {{number_format(2000000)}}đ</a></li>
+                                                    <li><a href="/ktcstore/shop/price=above-2000">Trên {{number_format(2000000)}}đ</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFour">Kích cỡ</a>
-                                    </div>
-                                    <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__size">
-                                                <form action="" method="GET">
-                                                    <label for="size_sm">S
-                                                        <input type="radio" id="size_sm" name="size" value="S">
-                                                    </label>
-                                                    <label for="size_md">M
-                                                        <input type="radio" id="size_md" name="size" value="M">
-                                                    </label>
-                                                    <label for="size_md">L
-                                                        <input type="radio" id="size_l" name="size" value="L">
-                                                    </label>
-                                                    <label for="size_xl">XL
-                                                        <input type="radio" id="size_xl" name="size" value="XL">
-                                                    </label>
-                                                    <label for="size_2xl">XXL
-                                                        <input type="radio" id="size_2xl" name="size" value="2XL">
-                                                    </label>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Màu sắc</a>
-                                    </div>
-                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__color">
-                                                <label class="c-1" for="sp-1">
-                                                    <input type="radio" id="sp-1">
-                                                </label>
-                                                <label class="c-2" for="sp-2">
-                                                    <input type="radio" id="sp-2">
-                                                </label>
-                                                <label class="c-3" for="sp-3">
-                                                    <input type="radio" id="sp-3">
-                                                </label>
-                                                <label class="c-4" for="sp-4">
-                                                    <input type="radio" id="sp-4">
-                                                </label>
-                                                <label class="c-5" for="sp-5">
-                                                    <input type="radio" id="sp-5">
-                                                </label>
-                                                <label class="c-6" for="sp-6">
-                                                    <input type="radio" id="sp-6">
-                                                </label>
-                                                <label class="c-7" for="sp-7">
-                                                    <input type="radio" id="sp-7">
-                                                </label>
-                                                <label class="c-8" for="sp-8">
-                                                    <input type="radio" id="sp-8">
-                                                </label>
-                                                <label class="c-9" for="sp-9">
-                                                    <input type="radio" id="sp-9">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -171,7 +116,6 @@
                                 </div>
                             </div>
                 </div>
-
                 <div class="home-product">
                     <div class="grid__row">
                         <!-- Foreach từ đây -->
@@ -237,9 +181,10 @@
                 </div>
                 <br>
             </div>
-            </div>
+        </div>
         </div>
     </div>
+    <br>
     <style>
         .product-card {
             box-shadow: none;
