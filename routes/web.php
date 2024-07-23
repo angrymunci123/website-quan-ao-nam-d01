@@ -170,6 +170,11 @@ Route::get('/admin/product/product_detail/delete_detail/product_id={product_id}&
 
 //Order
 Route::get('/admin/order', [OrderController::class, "order_list"]);
+Route::get('/admin/order/status=pending', [OrderController::class, "order_pending"]);
+Route::get('/admin/order/status=confirmed', [OrderController::class, "order_confirmed"]);
+Route::get('/admin/order/status=delivering', [OrderController::class, "order_delivering"]);
+Route::get('/admin/order/status=delivered', [OrderController::class, "order_delivered"]);
+Route::get('/admin/order/status=canceled', [OrderController::class, "order_canceled"]);
 Route::get('/admin/order/order_detail/order_id={order_id}', [OrderController::class, "order_detail"]);
 Route::post('/admin/order/update_status/order_id={order_id}', [OrderController::class, "update_order_status"])->name('update_order_status');
 Route::get('/admin/order/update_status/order_id={order_id}', function () {
