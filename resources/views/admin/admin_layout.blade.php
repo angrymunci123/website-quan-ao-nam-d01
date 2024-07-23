@@ -10,6 +10,7 @@
     Quản Lý KTC Store
   </title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="{{asset('admin_assets/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <link href="{{asset('admin_assets/css/dropdown.css')}}" rel="stylesheet" />

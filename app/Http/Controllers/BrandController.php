@@ -59,7 +59,7 @@ class BrandController extends Controller
         return redirect("/admin/brand")->with('success', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
     }
 
-    public function check_product_exist($brand_id)
+    public function check_brand_exist($brand_id)
     {
         $check_brand_id = Brand::where('brand_id', $brand_id)->exists();
             
