@@ -25,7 +25,7 @@ class AdminController extends Controller
             return redirect('/ktcstore'); 
         }
       
-        } else {
+        else {
             $order_data = Order::select(DB::raw('COUNT(*) as count'))
                 ->whereYear('created_at', date('Y'))
                 ->where('order.status', 'Đã giao hàng')
