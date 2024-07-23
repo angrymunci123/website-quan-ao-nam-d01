@@ -23,20 +23,145 @@ class CustomerController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') {
+        if ($user->role !== 'Khách Hàng') 
+        {
             return redirect('/ktcstore');
         }
 
         $orders = Order::where('user_id', session('user_id'))
             ->orderBy('order_id', "desc")
-            ->get();
-        return view('customer.order_history', compact('orders'));
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function order_pending()
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '=', 'Đang chờ xác nhận')
+            ->orderBy('order_id', "desc")
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function order_confirmed()
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '=', 'Đã xác nhận')
+            ->orderBy('order_id', "desc")
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function order_delivering()
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '=', 'Đang giao hàng')
+            ->orderBy('order_id', "desc")
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function order_delivered()
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '=', 'Đã giao hàng')
+            ->orderBy('order_id', "desc")
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function order_canceled()
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '=', 'Đã hủy')
+            ->orderBy('order_id', "desc")
+            ->paginate(10);
+
+        Paginator::useBootstrap();
+        return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 10);
+    }
+
+    public function check_order_exist($order_id)
+    {
+        $check_order_id = Order::where('order_id', $order_id)->exists();
+            
+        if (!$check_order_id) 
+        {
+            return false;
+        }
+        
+        return true;
     }
 
     public function order_detail($order_id)
     {
         $user_id = session('user_id');
-    
+        
+        if (!$this->check_order_exist($order_id)) 
+        {
+            return redirect('/ktcstore');  
+        }
+
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
             ->join('users', 'order.user_id', '=', 'users.user_id')
             ->where('order.order_id', '=', $order_id)
@@ -60,19 +185,30 @@ class CustomerController extends Controller
     public function cancel_order($order_id)
     {
         $order = Order::find($order_id);
-        if (!$order) {
+        if (!$order) 
+        {
             return redirect('/ktcstore/order_history');
         }
 
-        if ($order->user_id != session('user_id')) {
+        if ($order->user_id != session('user_id')) 
+        {
             return redirect('/ktcstore');
+        }
+
+        if (!$this->check_order_exist($order_id)) 
+        {
+            return redirect('/ktcstore');  
         }
 
         $order_status = ['Đã xác nhận', 'Đang giao hàng', 'Đã giao hàng'];
 
-        if (in_array($order->status, $order_status)) {
+        if (in_array($order->status, $order_status)) 
+        {
             return back()->with('fail', 'Đơn hàng đã được xác nhận hoặc đang trong quá trình giao hàng!');
-        } else if ($order->status == "Đã hủy") {
+        } 
+        
+        else if ($order->status == "Đã hủy") 
+        {
             return back()->with('fail', 'Đơn hàng đã được hủy bởi quản trị viên cửa hàng!');
         }
 
@@ -81,7 +217,8 @@ class CustomerController extends Controller
 
         $order_details = Order_Detail::where('order_id', $order_id)->get();
 
-        foreach ($order_details as $order_detail) {
+        foreach ($order_details as $order_detail) 
+        {
             $product_detail = Product_Detail::find($order_detail->product_detail_id);
             if ($product_detail) {
                 $product_detail->quantity += $order_detail->quantity;
@@ -99,7 +236,8 @@ class CustomerController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') {
+        if ($user->role !== 'Khách Hàng') 
+        {
             return redirect('/ktcstore');
         }
 
@@ -114,7 +252,8 @@ class CustomerController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') {
+        if ($user->role !== 'Khách Hàng') 
+        {
             return redirect('/ktcstore');
         }
 
@@ -124,12 +263,14 @@ class CustomerController extends Controller
 
     public function update_personal_info(Request $request)
     {
-        if (!Auth::check()) {
+        if (!Auth::check()) 
+        {
             return redirect('/ktcstore');
         }
 
         $user = Auth::user();
-        if ($user->role !== 'Khách Hàng') {
+        if ($user->role !== 'Khách Hàng') 
+        {
             return redirect('/ktcstore');
         }
 
@@ -175,7 +316,8 @@ class CustomerController extends Controller
 
         $image = NULL;
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) 
+        {
             $image = time() . $request->image->getClientOriginalName();
             $request->image->move(public_path('image'), $image);
         }

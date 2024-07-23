@@ -27,6 +27,17 @@ class CategoryController extends Controller
         return view('admin.category.list', compact('categories'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function check_category_exist($category_id)
+    {
+        $check_category_id = Category::where('brand_id', $category_id)->exists();
+            
+        if (!$check_category_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public function add_category()
     {
         if (!Auth::check()) {
@@ -70,6 +81,10 @@ class CategoryController extends Controller
             return redirect('/ktcstore'); 
         }
 
+        if (!$this->check_product_exist($category_id)) {
+            return redirect('/admin');  
+        }
+
         $categories = Category::find($category_id);
         return view('admin.category.edit_category', compact('categories'));
     }
@@ -83,6 +98,10 @@ class CategoryController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_product_exist($category_id)) {
+            return redirect('/admin');  
         }
 
         $name = $request->category_name;
@@ -101,6 +120,10 @@ class CategoryController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_product_exist($category_id)) {
+            return redirect('/admin');  
         }
 
         // 1. Check product có tồn tại hay không

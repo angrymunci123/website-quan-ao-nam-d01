@@ -67,6 +67,17 @@ class NewsController extends Controller
         ]);
         return redirect("/admin/news")->with('notification', 'Tạo Tin Tức Mới Thành Công!');;
     }
+    
+    public function check_news_exist($news_id)
+    {
+        $check_news_id = News::where('brand_id', $news_id)->exists();
+            
+        if (!$check_news_id) {
+            return false;
+        }
+        
+        return true;
+    }
 
     public function delete_news($news_id)
     {

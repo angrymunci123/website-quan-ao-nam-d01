@@ -25,8 +25,8 @@
             <div class="grid__colunm-2">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
+                            <form action="/ktcstore/shop/search" method="GET" enctype='multipart/form-data'>
+                                <input type="text" name="keywords" placeholder="Tìm kiếm...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -118,56 +118,65 @@
                 </div>
                 <div class="home-product">
                     <div class="grid__row">
-                        <!-- Foreach từ đây -->
-                        @foreach($products as $product)
-                        <div class="grid__column-2-4">
-                            <div class="home-product-item">
-                            @if ($product->sale_price == 0)
-                                <div class="product-card">
-                                    <div class="home-product-item_img">
-                                        <a href="/ktcstore/product/{{$product->product_name}}">
-                                            <img src="/image/{{$product->image}}">
-                                        </a>
-                                    </div>
-                                    <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
-                                    <div class="home-product_price">
-                                        <span style="font-size: 12px">
-                                            <b style="font-size: 16px; color: red">{{number_format($product->price)}}đ</b>
-                                        </span>
-
-                                    </div>
-                                </div>
-                            @endif
-                            @if ($product->sale_price > 0)
-                                <div class="product-card">
-                                    <div class="home-product-item_img">
-                                        <a href="/ktcstore/product/{{$product->product_name}}">
-                                            <img src="/image/{{$product->image}}">
-                                        </a>
-                                    </div>
-                                    <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
-                                    <div class="home-product_price">
-                                        <span style="font-size: 12px">
-                                            <del>{{number_format($product->price)}}đ</del>
-                                            <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}đ</b>
-                                        </span>
-                                    </div>
-                                    <div class='sale_off'>
-                                        <span class='sale_off_percent'>
-                                            <b>
-                                                <?php
-                                                $discount_percentage = (1 - ($product->sale_price / $product->price)) * 100;
-                                                echo number_format($discount_percentage) . '%';
-                                                ?>
-                                            </b>
-                                        </span>
-                                        <span class='sale_off_label'><b>Giảm</b></span>
-                                    </div>
-                                </div>
-                            @endif
+                        @if($products->isEmpty())
+                            <div class="col-lg-12">
+                                <p style="text-align: center; font-size: 18px; color: #333;">Không có sản phẩm nào để hiển thị.</p>
                             </div>
-                        </div>
-                        @endforeach
+                        @else
+                            @foreach($products as $product)
+                            <div class="grid__column-2-4">
+                                <div class="home-product-item">
+                                @if ($product->sale_price == 0)
+                                    <div class="product-card">
+                                        <div class="home-product-item_img">
+                                            <a href="/ktcstore/product/{{$product->product_name}}">
+                                                <img src="/image/{{$product->image}}">
+                                            </a>
+                                        </div>
+                                        <a href="/ktcstore/product/{{$product->product_name}}">
+                                            <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
+                                        </a>
+                                        <div class="home-product_price">
+                                            <span style="font-size: 12px">
+                                                <b style="font-size: 16px; color: red">{{number_format($product->price)}}đ</b>
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if ($product->sale_price > 0)
+                                    <div class="product-card">
+                                        <div class="home-product-item_img">
+                                            <a href="/ktcstore/product/{{$product->product_name}}">
+                                                <img src="/image/{{$product->image}}">
+                                            </a>
+                                        </div>
+                                        <a href="/ktcstore/product/{{$product->product_name}}">
+                                        <h6 class="home-product-name"><b>{{$product->product_name}}</b></h6>
+                                        </a>
+                                        <div class="home-product_price">
+                                            <span style="font-size: 12px">
+                                                <del>{{number_format($product->price)}}đ</del>
+                                                <b style="font-size: 16px; color: red; margin-left:2px">{{number_format($product->sale_price)}}đ</b>
+                                            </span>
+                                        </div>
+                                        
+                                        <div class='sale_off'>
+                                            <span class='sale_off_percent'>
+                                                <b>
+                                                    <?php
+                                                    $discount_percentage = (1 - ($product->sale_price / $product->price)) * 100;
+                                                    echo number_format($discount_percentage) . '%';
+                                                    ?>
+                                                </b>
+                                            </span>
+                                            <span class='sale_off_label'><b>Giảm</b></span>
+                                        </div>
+                                    </div>
+                                @endif
+                                </div>
+                            </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <div class="product__pagination">

@@ -235,7 +235,9 @@
                                                         </div>
                                                     </div>
                                                     <p class="mb-1" style="padding-top: 10px; text-align:justify">{{$review->content}}</p>
-                                                    <img src="{{asset('temp_assets/img/product/product-1.jpg')}}" style="width: 150px">
+                                                    @if ($review->image)
+                                                        <img src="/image/{{$review->image}}" style="width: 150px">
+                                                    @endif
                                                 </div>
                                             @endforeach
                                         </div>
@@ -273,7 +275,9 @@
                                             <img src="/image/{{$other_product->image}}">
                                         </a>
                                     </div>
-                                    <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    <a href="/ktcstore/product/{{$other_product->product_name}}">
+                                        <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    </a>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
                                             <b style="font-size: 16px; color: red">{{number_format($other_product->price)}}đ</b>
@@ -289,7 +293,9 @@
                                             <img src="/image/{{$other_product->image}}">
                                         </a>
                                     </div>
-                                    <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    <a href="/ktcstore/product/{{$other_product->product_name}}">
+                                        <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    </a>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
                                             <del>{{number_format($other_product->price)}}đ</del>

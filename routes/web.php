@@ -193,7 +193,7 @@ Route::get('/ktcstore/shop/filter_brand/{brand_name}', [StoreController::class, 
 Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::class, "filter_category"])->name('filter.category');
 Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
-Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
+Route::get('/ktcstore/shop/search', [StoreController::class, "search_product"])->name("search_product");
 
 //Customer - Review
 Route::get('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
@@ -237,6 +237,13 @@ Route::get('/ktcstore/shop/category=Quần-short', [FilterController::class, "qu
 //Asc - desc
 Route::post('/ktcstore/shop/price-asc', [CustomerController::class, "price_asc"]);
 Route::post('/ktcstore/shop/price-desc', [CustomerController::class, "price_desc"]);
+
+//Customer - Filter order status
+Route::get('/ktcstore/order_history/pending', [CustomerController::class, "order_pending"]);
+Route::get('/ktcstore/order_history/confirmed', [CustomerController::class, "order_confirmed"]);
+Route::get('/ktcstore/order_history/delivering', [CustomerController::class, "order_delivering"]);
+Route::get('/ktcstore/order_history/delivered', [CustomerController::class, "order_delivered"]);
+Route::get('/ktcstore/order_history/canceled', [CustomerController::class, "order_canceled"]);
 
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
