@@ -75,10 +75,39 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('success', 'Thêm Sản Phẩm Mới Thành Công!');
     }
 
+    public function check_product_id_exist($product_id)
+    {
+        $check_product_id = Product::where('product_id', $product_id)->exists();
+            
+        if (!$check_product_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public function check_product_exist($product_id, $product_detail_id)
+    {
+        $check_product_id = Product::where('product_id', $product_id)->exists();
+        $check_product_detail_id = Product_Detail::where('product_detail_id', $product_detail_id)
+            ->where('product_id', $product_id)
+            ->exists();
+            
+        if (!$check_product_id || !$check_product_detail_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public function edit_product($product_id)
     {
         if (!Auth::check()) {
             return redirect('login');
+        }
+
+        if (!$this->check_product_id_exist($product_id)) {
+            return redirect('/admin');  
         }
 
         $user = Auth::user();
@@ -101,6 +130,10 @@ class ProductController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_product_id_exist($product_id)) {
+            return redirect('/admin');  
         }
 
         $brand = $request->brand_id;
@@ -157,8 +190,13 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
-
+        
         $product_id = $request->product_id;
+
+        if (!$this->check_product_id_exist($product_id)) {
+            return redirect('/admin');  
+        }
+
         $product_name = DB::table('products')->where('product_id', '=', $product_id)->get('product_name');
         $product_details = DB::table('products')->join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
         ->where('products.product_id', '=', $product_id)
@@ -219,20 +257,6 @@ class ProductController extends Controller
         ->with('success', 'Thêm Chi Tiết Sản Phẩm Mới Thành Công!');
     }
 
-    public function check_product_exist($product_id, $product_detail_id)
-    {
-        $check_product_id = Product::where('product_id', $product_id)->exists();
-        $check_product_detail_id = Product_Detail::where('product_detail_id', $product_detail_id)
-            ->where('product_id', $product_id)
-            ->exists();
-            
-        if (!$check_product_id || !$check_product_detail_id) {
-            return false;
-        }
-        
-        return true;
-    }
-
     public function view_product_detail($product_id, $product_detail_id)
     {
         if (!Auth::check()) {
@@ -245,7 +269,7 @@ class ProductController extends Controller
         }
       
         if (!$this->check_product_exist($product_id, $product_detail_id)) {
-            return redirect('/admin/product');  
+            return redirect('/admin');  
         }
 
         $view_prd_details = Product::join('product_detail', 'products.product_id', '=', 'product_detail.product_id')
@@ -349,18 +373,26 @@ class ProductController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (isset($_POST['keywords'])) 
-        {
+        if (isset($_POST['keywords'])) {
             $search_text = $_POST['keywords'];
             $search_products = Product::where('product_name', 'LIKE', "%$search_text%")
-            ->join("brands", "products.brand_id", "=", "brands.brand_id")
-            ->join("category", "products.category_id", "=", "category.category_id")
-            ->orderBy("products.product_id", "desc")
-            ->paginate(5);
+                ->join("brands", "products.brand_id", "=", "brands.brand_id")
+                ->join("category", "products.category_id", "=", "category.category_id")
+                ->orderBy("products.product_id", "desc")
+                ->paginate(5);
             Paginator::useBootstrap();
-            return view('admin.product.search_product', compact('search_products'), ['keywords' => $search_products])->with('i', (request()->input('page', 1) - 1) * 5);
-        }
 
+            if ($search_products->isEmpty()) {
+                return view('admin.product.search_product', compact('search_products'));
+            } 
+            
+            else 
+            {
+                return view('admin.product.search_product', compact('search_products'))->with('keywords', $search_text)->with('i', (request()->input('page', 1) - 1) * 5);
+            }
+
+        } 
+        
         else 
         {
             return back();

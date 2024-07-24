@@ -86,8 +86,37 @@ class AdminController extends Controller
             return redirect('/ktcstore'); 
         }
     
-        $users = User::orderBy('user_id','asc')->paginate(10);
+        $users = User::where(function ($user_query) {
+            $user_query->where('role', 'Khách Hàng')
+                  ->orWhere('role', 'Nhân Viên');
+        })
+        ->orderBy('user_id', 'asc')
+        ->paginate(10);
+
         return view('admin.user.user_list', compact('users'));
+    }
+
+    public function update_role(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
+        $user_id = $request->user_id;
+        $role = $request->role;
+        
+        DB::table('users')->where('user_id', '=', $user_id)
+        ->update([
+            'role' => $role,
+            'updated_at' => now()
+        ]);
+
+        return back()->with('success', 'Phân quyền người dùng thành công');
     }
 
     public function personal_info()
@@ -156,7 +185,7 @@ class AdminController extends Controller
         return view ('admin.user.password');
     }
 
-    public function change_password_process() 
+    public function change_password_process(Request $request) 
     {
         if (!Auth::check()) {
             return redirect('/login');
@@ -166,6 +195,9 @@ class AdminController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
+
+        $current_password = $request;
+
     }
   
 }

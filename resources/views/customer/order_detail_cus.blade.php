@@ -61,6 +61,8 @@
             <tr>
                 <th scope="col">Sản phẩm</th>
                 <th scope="col" class="text-center">Số lượng</th>
+                <th scope="col" class="text-center">Kích cỡ</th>
+                <th scope="col" class="text-center">Màu sắc</th>
                 <th scope="col" class="text-center">Đơn giá</th>
                 <th scope="col" class="text-center">Thành tiền</th>
                 @if ($order_detail->status == 'Đã giao hàng')
@@ -76,6 +78,8 @@
                             <td><a href="/ktcstore/product/{{$product->product_name}}"
                                     style="color:black">{{$product->product_name}}</a></td>
                             <td class="text-center">{{$product->quantity}}</td>
+                            <td class="text-center">{{$product->size}}</td>
+                            <td class="text-center">{{$product->color}}</td>
                             <td class="text-center">{{number_format($product->price)}}đ</td>
                             <td class="text-center">{{number_format($total)}}đ</td>
                             @if ($order_detail->status == 'Đã giao hàng')

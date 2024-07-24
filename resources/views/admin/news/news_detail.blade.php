@@ -17,18 +17,19 @@
                                 <h4>Chi tiết bài viết: {{$news->title}}</h4>
                             </td>
                             <td>
-                                <form action="./" method="GET">
+                                <form action="/admin/news" method="GET">
                                     <button type="submit" class="btn btn-info" style="width:120px; color:white">Quay lại</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="" method="GET">
+                                <form action="/admin/news/edit_news/news_id={{$news->news_id}}" method="GET">
                                     <button type="submit" class="btn btn-warning"
                                         style="width:75px; color:white; padding-left: 10px; padding-right: 10px;">Sửa</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="" method="GET">
+                                <form action="/admin/news/delete_news/news_id={{$news->news_id}}" method="POST">
+                                @csrf
                                     <button type="submit" class="btn btn-danger"
                                         style="width:75px; color:white">Xóa</button>
                                 </form>
