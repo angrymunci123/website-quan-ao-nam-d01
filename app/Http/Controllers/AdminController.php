@@ -55,18 +55,23 @@ class AdminController extends Controller
             $count_delivered_order = Order::where('status', 'Đã giao hàng')->count();
 
             $count_revenue_current_month = Order_Detail::join('order', 'order_detail.order_id', '=', 'order.order_id')
-            ->select(DB::raw('SUM(order_detail.price * order_detail.quantity) as total'))
-            ->whereYear('order.created_at', date('Y'))
-            ->whereMonth('order.created_at', date('m'))
-            ->where('order.status', 'Đã giao hàng')
-            ->groupBy(DB::raw('MONTH(order.created_at)'))
-            ->orderBy(DB::raw('MONTH(order.created_at)'))
-            ->first();
+                ->select(DB::raw('SUM(order_detail.price * order_detail.quantity) as total'))
+                ->whereYear('order.created_at', date('Y'))
+                ->whereMonth('order.created_at', date('m'))
+                ->where('order.status', 'Đã giao hàng')
+                ->groupBy(DB::raw('MONTH(order.created_at)'))
+                ->orderBy(DB::raw('MONTH(order.created_at)'))
+                ->first();
 
-            $total_revenue_current_month = (float) $count_revenue_current_month->total;
+            $current_revenue = 0;
+
+            if ($count_revenue_current_month) 
+            {
+                $current_revenue = (float) $count_revenue_current_month->total;
+            }
 
             return view('admin.dashboard.dashboard', compact('order_data', 'revenue_data', 'num_of_months', 'count_user', 
-            'count_pending_order', 'count_delivered_order', 'total_revenue_current_month'));
+                'count_pending_order', 'count_delivered_order', 'current_revenue'));
         }
     }
 

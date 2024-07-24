@@ -75,7 +75,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Doanh thu trong tháng này</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{number_format($total_revenue_current_month)}}đ
+                                    {{number_format($current_revenue)}}đ
                                 </h5>
                             </div>
                         </div>
