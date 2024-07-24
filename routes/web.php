@@ -108,6 +108,8 @@ Route::get('/admin/personal_info/confirm_change_password', function () {
 });
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
+Route::post('/admin/user/update_role', [AdminController::class, 'update_role'])->name('admin.update_role');
+Route::post('/admin/user/search_user', [AdminController::class, "search_user"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
@@ -252,7 +254,7 @@ Route::get('/ktcstore/order_history/canceled', [CustomerController::class, "orde
 
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
-Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
+Route::post('/ktcstore/add_to_cart', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/ktcstore/shopping-cart/remove_from_cart', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');

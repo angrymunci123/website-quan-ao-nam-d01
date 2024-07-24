@@ -29,7 +29,7 @@ class CategoryController extends Controller
 
     public function check_category_exist($category_id)
     {
-        $check_category_id = Category::where('brand_id', $category_id)->exists();
+        $check_category_id = Category::where('category_id', $category_id)->exists();
             
         if (!$check_category_id) {
             return false;
@@ -81,7 +81,7 @@ class CategoryController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($category_id)) {
+        if (!$this->check_category_exist($category_id)) {
             return redirect('/admin');  
         }
 
@@ -100,7 +100,7 @@ class CategoryController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($category_id)) {
+        if (!$this->check_category_exist($category_id)) {
             return redirect('/admin');  
         }
 
@@ -122,11 +122,10 @@ class CategoryController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($category_id)) {
+        if (!$this->check_category_exist($category_id)) {
             return redirect('/admin');  
         }
 
-        // 1. Check product có tồn tại hay không
         DB::beginTransaction();
         $product_exist = Product::where('category_id', $category_id)->exists();
 
@@ -135,7 +134,6 @@ class CategoryController extends Controller
             return back()->with('notification', 'Không thể xóa danh mục vì có sản phẩm đang tồn tại!');
         }
 
-        // 2. Nếu không có product tồn tại, tiến hành xóa category
         $categories = Category::findOrFail($category_id);
         $categories->delete();
 

@@ -24,12 +24,9 @@
                 <tr>
                   <td>
                   <form method="post" style="width: 300px" action="/admin/product/search_product" enctype='multipart/form-data'>
-                <input type="text" class="form-control" name="keywords" placeholder="Sản phẩm...">
+                  <input type="text" class="form-control" name="keywords" placeholder="Sản phẩm...">
                 @csrf
               </form>
-                  </td>
-                  <td style=" padding-top:15px;">
-                    <button class="btn btn-info" style="width:35px; height: 35px;"><i class="fa fa-search"></i></button>
                   </td>
                 </tr>
               </table>

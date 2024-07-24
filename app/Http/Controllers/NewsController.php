@@ -44,7 +44,7 @@ class NewsController extends Controller
     public function save_news(Request $request)
     {
         if (!Auth::check()) {
-            return redirect('admin');
+            return redirect('login');
         }
 
         $user = Auth::user();
@@ -55,8 +55,14 @@ class NewsController extends Controller
         $title = $request->title;
         $content = $request->content;
         $user_id = auth()->id();
-        $image = time() . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image'), $image);
+        $image = NULL;
+
+        if ($request->hasFile('image')) 
+        {
+            $image = time() . $request->image->getClientOriginalName();
+            $request->image->move(public_path('image'), $image);
+        }
+        
         DB::table('news')->insert([
             'user_id' => $user_id,
             'title' => $title,
@@ -65,7 +71,7 @@ class NewsController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        return redirect("/admin/news")->with('notification', 'Tạo Tin Tức Mới Thành Công!');;
+        return redirect("/admin/news")->with('success', 'Tạo Tin Tức Mới Thành Công!');;
     }
     
     public function check_news_exist($news_id)
@@ -82,7 +88,7 @@ class NewsController extends Controller
     public function delete_news($news_id)
     {
         if (!Auth::check()) {
-            return view('admin');
+            return redirect('login');
         }
 
         $user = Auth::user();
@@ -92,7 +98,7 @@ class NewsController extends Controller
 
         $news = News::findOrFail($news_id);
         $news->delete();
-        return redirect('/admin/news')->with('notification', 'Xóa Tin Tức Thành Công!');
+        return redirect('/admin/news')->with('success', 'Xóa Tin Tức Thành Công!');
     }
 
     public function edit_news($news_id)
@@ -124,8 +130,14 @@ class NewsController extends Controller
         $title = $request->title;
         $content = $request->content;
         $user_id = Auth::id();
-        $image = time() . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image'), $image);
+
+        $image = NULL;
+
+        if ($request->hasFile('image')) 
+        {
+            $image = time() . $request->image->getClientOriginalName();
+            $request->image->move(public_path('image'), $image);
+        }
 
         DB::table('news')->where("news_id", "=", "$news_id")->update([
             'user_id' => $user_id,

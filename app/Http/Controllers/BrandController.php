@@ -81,7 +81,7 @@ class BrandController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($brand_id)) {
+        if (!$this->check_brand_exist($brand_id)) {
             return redirect('/admin');  
         }
 
@@ -100,7 +100,7 @@ class BrandController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($brand_id)) {
+        if (!$this->check_brand_exist($brand_id)) {
             return redirect('/admin');  
         }
 
@@ -122,7 +122,7 @@ class BrandController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (!$this->check_product_exist($brand_id)) {
+        if (!$this->check_brand_exist($brand_id)) {
             return redirect('/admin');  
         }
 
