@@ -54,9 +54,9 @@
                           </form>
                       </td>
                       <td style="width: 100px;">
-                        <form action="/admin/news/delete_news/news_id={{$new->news_id}}" method="POST" id="deleteForm-">
-                            @csrf
-                            <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('')">Xóa</button>
+                        <form action="/admin/news/delete_news/news_id={{$new->news_id}}" method="POST" id="deleteForm-{{$new->news_id}}">
+                          @csrf
+                          <button type="button" class="btn btn-danger" style="width:75px" onclick="openPopup('{{$new->news_id}}')">Xóa</button>
                         </form>
                       </td>
                     </tr>

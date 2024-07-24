@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Order;
+use Illuminate\Support\Str;
 use App\Models\Product_Review;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -56,10 +56,10 @@ class StoreController extends Controller
             $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
             $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
 
-                $product->standardized_product_name = $standardized_product_name;
+            $product->standardized_product_name = $standardized_product_name;
         }
 
-        return view('customer.index', compact(['products']));
+        return view('customer.index', compact(['products', 'standardized_product_name']));
     }
 
     public function contact()
@@ -79,26 +79,6 @@ class StoreController extends Controller
             ->groupBy('products.product_id', 'products.product_name')
             ->paginate(16);
         Paginator::useBootstrap();
-
-        // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-
         return view("customer.shop", compact(['products']))->with('i', (request()->input('page', 1) - 1) * 16);
     }
 
@@ -153,8 +133,14 @@ class StoreController extends Controller
         return view("customer.about");
     }
 
-    public function add_to_cart(Request $request, $product_id, $product_detail_id)
+    public function add_to_cart(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $product_id = $request->product_id;
+        $product_detail_id = $request->product_detail_id;
         $chosen_quantity = $request->quantity;
         $size = $request->size;
         $color = $request->color;
@@ -434,248 +420,6 @@ class StoreController extends Controller
         }
     }
 
-    public function filter_price($price_range)
-    {
-        $price = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->where('product_detail.size', '=', 'S');
-
-        switch ($price_range) {
-            case 'under-200':
-                $price->where('product_detail.price', '<', 200000);
-                break;
-
-            case '200-500':
-                $price->whereBetween('product_detail.price', [200000, 500000]);
-                break;
-
-            case '500-800':
-                $price->whereBetween('product_detail.price', [500000, 800000]);
-                break;
-
-            case '800-1000':
-                $price->whereBetween('product_detail.price', [800000, 1000000]);
-                break;
-
-            case '1000-1500':
-                $price->whereBetween('product_detail.price', [1000000, 1500000]);
-                break;
-
-            case '1500-2000':
-                $price->whereBetween('product_detail.price', [1500000, 2000000]);
-                break;
-
-            case 'over-2000':
-                $price->where('product_detail.price', '>', 2000000);
-                break;
-
-            default:
-                break;
-        }
-
-        $products = $price->select('products.product_id', 'products.product_name', 
-        DB::raw('MAX(product_detail.image) as image'), 
-        DB::raw('MAX(product_detail.price) as price'), 
-        DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
-            
-        Paginator::useBootstrap();
-
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
-
-        // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-
-        return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
-    }
-
-    public function filter_brand($brand_name)
-    {
-        $brand = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
-            ->where('product_detail.size', '=', 'S');
-        
-        switch ($brand_name) {
-            case 'Adam':
-                $brand->where('brands.brand_name', 'Adam');
-                break;
-
-            case 'Atino':
-                $brand->where('brands.brand_name', 'Atino');
-                break;
-
-            case 'Adidas':
-                $brand->where('brands.brand_name', 'Adidas');
-                break;
-
-            case 'Nike':
-                $brand->where('brands.brand_name', 'Nike');
-                break;
-
-            case 'Puma':
-                $brand->where('brands.brand_name', 'Puma');
-                break;
-
-            case 'H&M':
-                $brand->where('brands.brand_name', 'H&M');
-                break;
-
-            case 'Calvin-Klein':
-                $brand->where('brands.brand_name', 'Calvin Klein');
-                break;
-
-            case 'Valentino':
-                $brand->where('brands.brand_name', 'Valentino');
-                break;
-
-            case 'Levis':
-                $brand->where('brands.brand_name', 'Levis');
-                break;
-
-            default:
-                break;
-        }
-      
-        $products = $brand->select('products.product_id', 'products.product_name', 
-        DB::raw('MAX(product_detail.image) as image'), 
-        DB::raw('MAX(product_detail.price) as price'), 
-        DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
-        Paginator::useBootstrap();
-
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
-
-        // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-
-        return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
-    }
-
-    public function filter_category($category_name)
-    {
-        $category = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->leftjoin("category", "products.category_id", "=", "category.category_id")
-            ->where('product_detail.size', '=', 'S');
-        switch ($category_name) {
-            case 'Áo Sơmi':
-                $category->where('category.category_name', 'Áo Sơmi');
-                break;
-
-            case 'Quần Âu':
-                $category->where('category.category_name', 'Quần Âu');
-                break;
-
-            case 'Áo Nỉ':
-                $category->where('category.category_name', 'Áo Nỉ');
-                break;
-
-            case 'Áo Thun':
-                $category->where('category.category_name', 'Áo Thun');
-                break;
-
-            case 'Áo Nỉ':
-                $category->where('category.category_name', 'Áo Nỉ');
-                break;
-
-            case 'Áo Khoác':
-                $category->where('category.category_name', 'Áo Khoác');
-                break;
-
-            case 'Quần Sooc':
-                $category->where('category.category_name', 'Quần Sooc');
-                break;
-
-            default:
-                break;
-        }
-
-        $products = $category->select('products.product_id', 'products.product_name', 
-        DB::raw('MAX(product_detail.image) as image'), 
-        DB::raw('MAX(product_detail.price) as price'), 
-        DB::raw('MAX(product_detail.sale_price) as sale_price'))
-        ->groupBy('products.product_id', 'products.product_name')
-        ->paginate(16);
-
-        Paginator::useBootstrap();
-
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
-
-        // Xử lý chuẩn hóa tên sản phẩm
-        foreach ($products as $product) {
-            $standardized_product_name = $product->product_name;
-            $standardized_product_name = strtolower($standardized_product_name);
-            $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-            $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-            $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-            $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-            $product->standardized_product_name = $standardized_product_name;
-        }
-
-        return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
-    }
-
-    public function filter_size($size)
-    {
-        $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-            ->leftJoin("brands", "products.brand_id", "=", "brands.brand_id")
-            ->where('product_detail.size', '=', $size)
-            ->select('products.product_id', 'products.product_name', DB::raw('MAX(product_detail.image) as image'), DB::raw('MAX(product_detail.price) as price'), DB::raw('MAX(product_detail.sale_price) as sale_price'))
-            ->groupBy('products.product_id', 'products.product_name')
-            ->paginate(16);
-
-        Paginator::useBootstrap();
-
-        $brand_sidebars = Brand::get();
-        $category_sidebars = Category::get();
-
-        return view("customer.shop", compact('products', 'brand_sidebars', 'category_sidebars'))->with('i', (request()->input('page', 1) - 1) * 16);
-    }
-
-
     public function search_product(Request $request)
     {
         if (isset($_GET['keywords'])) {
@@ -690,28 +434,7 @@ class StoreController extends Controller
                 ->paginate(16);
             Paginator::useBootstrap();
 
-            $brand_sidebars = Brand::get();
-            $category_sidebars = Category::get();
-            // Xử lý chuẩn hóa tên sản phẩm
-            foreach ($products as $product) {
-                $standardized_product_name = $product->product_name;
-                $standardized_product_name = strtolower($standardized_product_name);
-                $standardized_product_name = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[íìỉĩị]/u', 'i', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[óòỏõọôốồổỗộơớờởỡợ]/u', 'o', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[úùủũụưứừửữự]/u', 'u', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[ýỳỷỹỵ]/u', 'y', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[đ]/u', 'd', $standardized_product_name);
-                $standardized_product_name = preg_replace('/[^a-z0-9\s-]/', '', $standardized_product_name);
-                $standardized_product_name = preg_replace('/\s+/', ' ', $standardized_product_name);
-                $standardized_product_name = preg_replace('/^-+|-+$/', '', $standardized_product_name);
-                $standardized_product_name = preg_replace('/\s/', '-', $standardized_product_name);
-
-                $product->standardized_product_name = $standardized_product_name;
-            }
-
-            return view("customer.shop", compact(['products', 'brand_sidebars', 'category_sidebars']))->with('i', (request()->input('page', 1) - 1) * 16);
+            return view("customer.shop", compact(['products']))->with('i', (request()->input('page', 1) - 1) * 16);
         }
     }
 }

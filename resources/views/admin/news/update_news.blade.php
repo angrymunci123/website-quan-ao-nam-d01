@@ -28,10 +28,21 @@
           <div class="form-group">
             <strong>Image</strong>
             <div class="card" style="width: 300px">
-            <input type="file" name="image" value="/image/" class="form-control-ls">
+            @if ($edit_new->image == NULL)
+            <input type="file" name="image" class="form-control-ls">
             </div>
             <div class="card" style="width: 300px">
-            <img type="file" id="image" src="/image/" class="form-control-ls">
+            
+            <img type="file" id="image" class="form-control-ls">
+            @endif
+
+            @if ($edit_new->image)
+            <input type="file" name="image" value="/image/{{$edit_new->image}}" class="form-control-ls">
+            </div>
+            <div class="card" style="width: 300px">
+            
+            <img type="file" id="image" src="/image/{{$edit_new->image}}" class="form-control-ls">
+            @endif
             </div>
           </div>
           </div>
@@ -42,7 +53,7 @@
         </form>
       @endforeach
             <div class="col-sm-4 col-xl-1">
-              <form action="/admin/brand" enctype="multipart/form-data" style=" padding-left: 30px; padding-top: 7px">
+              <form action="/admin/news" enctype="multipart/form-data" style=" padding-left: 30px; padding-top: 7px">
                 <button type="submit" class="btn btn-warning" style="width: 120px;">Quay Lại</button>
               </form>
             </div>
