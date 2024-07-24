@@ -8,8 +8,17 @@
                 <div class="card-header pb-0">
                     <h4>Đổi Mật khẩu:</h4>
                 </div>
+                <div class="card-body">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
+                </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
+                    <form action="/admin/personal_info/change_password_process" method="POST" style="text-align:center">
                         <table class="table align-items-center mb-0" style="width:100%">
                             <thead>
                                 <tr>
@@ -30,12 +39,12 @@
                                                 onclick="togglePasswordVisibility('password1', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
-                                            <input type="password" id="password2" placeholder="" style="width:300px">
+                                            <input type="password" id="password2" placeholder="" name="new_password" style="width:300px">
                                             <i class="fas fa-eye"
                                                 onclick="togglePasswordVisibility('password2', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
-                                            <input type="password" id="password3" placeholder="" style="width:300px">
+                                            <input type="password" id="password3" placeholder="" name="confirm_new_password" style="width:300px">
                                             <i class="fas fa-eye"
                                                 onclick="togglePasswordVisibility('password3', this)"></i>
                                         </div>
@@ -44,10 +53,11 @@
                             </tbody>
                         </table>
                         <div class="grid">
-                            <form action="" method="GET" style="text-align:center">
+                            
+                                @csrf
                                 <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
                             </form>
-                            <form action="" method="GET" style="text-align:center; padding-left: 10px;">
+                            <form action="/admin/personal_info" method="GET" style="text-align:center; padding-left: 10px;">
                                 <button type="submit" class="btn btn-warning" style="width:110px; color:white">Quay
                                     lại</button>
                             </form>

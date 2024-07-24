@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Brand;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Order_Detail;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -187,17 +185,48 @@ class AdminController extends Controller
 
     public function change_password_process(Request $request) 
     {
-        if (!Auth::check()) {
+        if (!Auth::check()) 
+        {
             return redirect('/login');
         }
-    
+
         $user = Auth::user();
-        if ($user->role === 'Khách Hàng') {
+
+        if ($user->role === 'Khách Hàng') 
+        {
             return redirect('/ktcstore'); 
         }
 
-        $current_password = $request;
+        $user = User::find(session('user_id'));
 
+        if ($user) {
+            $current_password = $request->current_password;
+            $new_password = $request->new_password;
+            $confirm_new_password = $request->confirm_new_password;
+
+            if (Hash::check($current_password, $user->password)) 
+            {
+                if ($new_password === $confirm_new_password) 
+                {
+                    $user->password = bcrypt($new_password);
+                    $user->password_token = null;
+                    $user->save();
+                    return redirect('/admin/personal_info')->with('success', 'Đổi mật khẩu thành công!');
+                } 
+                
+                else 
+                {
+                    return back()->with('fail', 'Mật khẩu mới và xác nhận mật khẩu không trùng khớp!');
+                }
+            } 
+            
+            else 
+            {
+                return back()->with('fail', 'Sai mật khẩu hiện tại! Vui lòng thử lại');
+            }
+        }
+
+        return back()->with('fail', 'Không tìm thấy người dùng!');
     }
   
 }
