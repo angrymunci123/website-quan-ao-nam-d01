@@ -24,7 +24,8 @@
         <p>Quản lý thông tin tài khoản</p>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
-    <form action="" method="POST">
+    <form action="/ktcstore/personal_info/change_password_process" method="POST">
+        @csrf
         <div class="container">
             <div class="grid">
                 <div class="grid__row">
@@ -35,13 +36,13 @@
                     </div>
                     <div class="grid__column-4">
                         <div>
-                            <input type="text" name="current_pass" placeholder="Mật khẩu hiện tại" style="width:300px" required>
+                            <input type="text" name="current_password" placeholder="" style="width:300px" required>
                         </div>
                         <div>
-                            <input type="text" name="new_pass" placeholder="Mật khẩu mới" style="width:300px" required>
+                            <input type="text" name="new_password" placeholder="" style="width:300px" required>
                         </div>
                         <div>
-                            <input type="text" name="confirm_new_pass" placeholder="Xác nhận mật khẩu mới" style="width:300px" required>
+                            <input type="text" name="confirm_new_password" placeholder="" style="width:300px" required>
                         </div>
                     </div>
                 </div>

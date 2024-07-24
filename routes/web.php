@@ -102,8 +102,8 @@ Route::get('/admin/personal_info/update_info', function () {
     return redirect('/');
 });
 Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
-Route::post('/admin/personal_info/confirm_change_password', [AdminController::class, "change_password_process"]);
-Route::get('/admin/personal_info/confirm_change_password', function () {
+Route::post('/admin/personal_info/change_password_process', [AdminController::class, "change_password_process"]);
+Route::get('/admin/personal_info/change_password_process', function () {
     return redirect('/');
 });
 //User list
@@ -281,7 +281,7 @@ Route::get('/ktcstore/personal_info/update_info', function () {
     return redirect('/');
 });
 Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
-Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);
-Route::get('/ktcstore/personal_info/confirm_change_password', function () {
+Route::post('/ktcstore/personal_info/change_password_process', [CustomerController::class, "change_password_process"]);
+Route::get('/ktcstore/personal_info/change_password_process', function () {
     return redirect('/');
 });

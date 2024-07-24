@@ -40,7 +40,14 @@
             </div>
             <div class="form-group">
               <strong>Kích Cỡ</strong>
-              <input type="text" name="size" id="size" value="{{$inj->size}}" class="form-control" required>
+              <!-- <input type="text" name="size" id="size" value="{{$inj->size}}" class="form-control" required> -->
+              <select name="size" id="size" class="form-select w-auto" aria-label="Chọn kích cỡ" required>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                  </select>
             </div>
             <div class="form-group">
               <strong>Chất Liệu</strong>

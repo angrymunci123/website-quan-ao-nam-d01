@@ -5,7 +5,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h4>Tạo Biến Thể Sản Phẩm</h4>
+          <h4>Tạo Chi Tiết Sản Phẩm</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive p-0">
@@ -39,7 +39,13 @@
                 </div>
                 <div class="form-group">
                   <strong>Kích Cỡ</strong>
-                  <input type="text" name="size" id="size" class="form-control" required>
+                  <select name="size" id="size" class="form-select w-auto" aria-label="Chọn kích cỡ" required>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <strong>Chất Liệu</strong>

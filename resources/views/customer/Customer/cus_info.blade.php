@@ -41,19 +41,12 @@
                                 <div>
                                     <p> <b>Họ và tên: </b> {{$user->fullname}}</p>
                                     <p> <b>Địa chỉ Email: </b>{{$user->email}}</p>
-                                    <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                 </div>
                             </td>
                             <td class="font-weight-bolder" style="float:right; border: solid white">
                                 <div>
+                                    <p> <b>Số điện thoại: </b>{{$user->phone_number}}</p>
                                     <p> <b>Địa chỉ: </b>{{$user->address}}</p>
-                                    <div class="input-container">
-                                        <p><b>Mật khẩu: </b>
-                                            <input type="password" value='{{ $user->password }}' id="password1"
-                                                placeholder="" style="width:300px">
-                                            <i class="fas fa-eye" onclick="togglePasswordVisibility('password1', this)"></i>
-                                    </div>
-                                    </p>
                                 </div>
                             </td>
                         @endforeach

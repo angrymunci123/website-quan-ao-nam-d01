@@ -12,7 +12,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Product_Review;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -263,8 +263,7 @@ class CustomerController extends Controller
 
     public function update_personal_info(Request $request)
     {
-        if (!Auth::check()) 
-        {
+        if (!Auth::check()) {
             return redirect('/ktcstore');
         }
 
@@ -291,11 +290,75 @@ class CustomerController extends Controller
     
     public function change_password()
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
         return view('customer.Customer.cus_password');
+    }
+
+    public function change_password_process(Request $request) 
+    {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
+        $user = User::find(session('user_id'));
+
+        if ($user) {
+            $current_password = $request->current_password;
+            $new_password = $request->new_password;
+            $confirm_new_password = $request->confirm_new_password;
+
+            if (Hash::check($current_password, $user->password)) 
+            {
+                if ($new_password === $confirm_new_password) 
+                {
+                    $user->password = bcrypt($new_password);
+                    $user->password_token = null;
+                    $user->save();
+                    return redirect('/ktcstore/personal_info')->with('success', 'Đổi mật khẩu thành công!');
+                } 
+                
+                else 
+                {
+                    return back()->with('fail', 'Mật khẩu mới và xác nhận mật khẩu không trùng khớp!');
+                }
+            } 
+            
+            else 
+            {
+                return back()->with('fail', 'Sai mật khẩu hiện tại! Vui lòng thử lại');
+            }
+        }
+
+        return back()->with('fail', 'Không tìm thấy người dùng!');
     }
 
     public function product_review(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
         $order_id = $request->order_id;
         $product_id = $request->product_id;
         $product_detail_id = $request->product_detail_id;
@@ -308,6 +371,16 @@ class CustomerController extends Controller
 
     public function send_review(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/ktcstore');
+        }
+
+        $user = Auth::user();
+        if ($user->role !== 'Khách Hàng') 
+        {
+            return redirect('/ktcstore');
+        }
+
         $rating = $request->rating;
         $content = $request->content;
         $user = session('user_id');
