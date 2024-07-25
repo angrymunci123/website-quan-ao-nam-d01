@@ -82,16 +82,8 @@
                                             </table>
                                             <br>
                                             <div class="quantity">
-                                                <label><b>Số Lượng:</b></label>
                                                 <div class="product__details__cart__option">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty">
-                                                            <input id="quantity_input" type="number" name="quantity" value="1"
-                                                                min="1" max="{{$product_detail->quantity}}">
-                                                        </div>
-                                                    </div>
-                                                    <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào
-                                                        Giỏ Hàng</button>
+                                                    <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
                                                 </div>
                                             </div>
                                         </form>
