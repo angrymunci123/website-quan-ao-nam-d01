@@ -31,7 +31,7 @@
                             <div class="rowdy">
                                 <div class="border">
                                     <img src="/image/{{$product_detail->image}}"
-                                        style="width: 500px; height: 600px; object-fit: cover">
+                                        style="width: 100%; object-fit: cover">
                                 </div>
                             </div>
                         </td>
@@ -48,12 +48,9 @@
                                 <br>
                                 <div class="product__details__option">
                                     @if(session()->exists('user_id') && session('role') == 'Khách Hàng')
-                                        <form
-                                            action="/ktcstore/add_to_cart/product_id={{$product_detail->product_id}}&product_detail_id={{$product_detail->product_detail_id}}"
-                                            method="get">
+                                        <form action="/ktcstore/add_to_cart" method="post">
                                             @csrf
-                                            <input type="hidden" name="product_detail_id"
-                                                value="{{$product_detail->product_detail_id}}" />
+                                            <input type="hidden" name="product_detail_id" value="{{$product_detail->product_detail_id}}" />
                                             <input type="hidden" name="product_id" value="{{$product_detail->product_id}}" />
                                             <table>
                                                 <th>
@@ -235,7 +232,9 @@
                                                         </div>
                                                     </div>
                                                     <p class="mb-1" style="padding-top: 10px; text-align:justify">{{$review->content}}</p>
-                                                    <img src="{{asset('temp_assets/img/product/product-1.jpg')}}" style="width: 150px">
+                                                    @if ($review->image)
+                                                        <img src="/image/{{$review->image}}" style="width: 150px">
+                                                    @endif
                                                 </div>
                                             @endforeach
                                         </div>
@@ -273,7 +272,9 @@
                                             <img src="/image/{{$other_product->image}}">
                                         </a>
                                     </div>
-                                    <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    <a href="/ktcstore/product/{{$other_product->product_name}}">
+                                        <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    </a>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
                                             <b style="font-size: 16px; color: red">{{number_format($other_product->price)}}đ</b>
@@ -289,7 +290,9 @@
                                             <img src="/image/{{$other_product->image}}">
                                         </a>
                                     </div>
-                                    <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    <a href="/ktcstore/product/{{$other_product->product_name}}">
+                                        <h6 class="home-product-name"><b>{{$other_product->product_name}}</b></h6>
+                                    </a>
                                     <div class="home-product_price">
                                         <span style="font-size: 12px">
                                             <del>{{number_format($other_product->price)}}đ</del>

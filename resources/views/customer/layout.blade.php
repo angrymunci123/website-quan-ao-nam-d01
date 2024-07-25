@@ -72,12 +72,27 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch">
-                            <div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset('temp_assets/img/icon/search.png')}}" alt="">
-                        </a>
-                        <a class="ml-2" href="/ktcstore/shopping-cart">
+                    @if(session('user_id'))
+                            @if(session('role') == 'Chủ Cửa Hàng' || session('role') == 'Nhân Viên')
+                            <a class="ml-2" onclick="return confirm('Xin chào {{session('fullname')}}, vui lòng đăng nhập tài khoản khách hàng để truy cập trang giỏ hàng')">
+                                <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
+                            </a>
+                            @endif
+                        @endif
+
+                        @if(!session('user_id'))
+                        <a class="ml-2" href="/login">
                             <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
                         </a>
+                        @endif
+
+                        @if(session('user_id'))
+                            @if(session('role') == 'Khách Hàng')
+                            <a class="ml-2" href="/ktcstore/shopping-cart">
+                                <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
+                            </a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -144,7 +159,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body" style="text-align: left;">
                                                 Bạn có chắc chắn muốn đăng xuất không?
                                             </div>
                                             <div class="modal-footer">
@@ -183,12 +198,27 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch">
-                            <div class="price">Tìm kiếm</div><img class="ml-1" src="{{ asset('temp_assets/img/icon/search.png')}}" alt="">
-                        </a>
-                        <a class="ml-2" href="/ktcstore/shopping-cart">
+                        @if(session('user_id'))
+                            @if(session('role') == 'Chủ Cửa Hàng' || session('role') == 'Nhân Viên')
+                            <a class="ml-2" onclick="return confirm('Xin chào {{session('fullname')}}, vui lòng đăng nhập tài khoản khách hàng để truy cập trang giỏ hàng')">
+                                <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
+                            </a>
+                            @endif
+                        @endif
+
+                        @if(!session('user_id'))
+                        <a class="ml-2" href="/login">
                             <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
                         </a>
+                        @endif
+
+                        @if(session('user_id'))
+                            @if(session('role') == 'Khách Hàng')
+                            <a class="ml-2" href="/ktcstore/shopping-cart">
+                                <div class="price">Giỏ hàng</div> <img src="{{ asset('temp_assets/img/icon/cart.png')}}" alt="">
+                            </a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>

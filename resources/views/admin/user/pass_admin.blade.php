@@ -22,7 +22,6 @@
                             <div>
                                 <p> <b>Địa chỉ: </b>{{$user->address}}</p>
                                 <p><b>Mật khẩu: </b>
-                                    <!-- <a href="/ktcstore/change_password">Thay đổi</a></p> -->
                                     <input type='password' value='{{ $user->password }}' id='myInput' readonly='readonly'>
                                     <br>
                                     <input type="checkbox" id="showPassword" onclick="togglePassword()">&nbsp; Hiển thị mật

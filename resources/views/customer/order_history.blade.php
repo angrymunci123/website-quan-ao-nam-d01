@@ -25,6 +25,13 @@
                 <div class="shop__sidebar">
                         <div class="shop__sidebar__accordion" style="padding-top: 20px">
                             <div class="accordion" id="accordionExample">
+                                <div class="shop__sidebar__search">
+                                    <form action="/ktcstore/order_history/search_order" method="POST" enctype='multipart/form-data'>
+                                        @csrf
+                                        <input type="number" name="order_id" placeholder="Nhập mã đơn hàng..." min="1">
+                                        <button type="submit"><span class="icon_search"></span></button>
+                                    </form>
+                                </div>
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseOne">Tình Trạng Đơn Hàng</a>
@@ -33,11 +40,11 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
-                                                    <li><a href="#">Chờ xác nhận</a></li>
-                                                    <li><a href="#">Đã xác nhận</a></li>
-                                                    <li><a href="#">Đang vận chuyển</a></li>
-                                                    <li><a href="#">Đã Giao</a></li>
-                                                    <li><a href="#">Đã Hủy</a></li>
+                                                    <li><a href="/ktcstore/order_history/pending">Chờ xác nhận</a></li>
+                                                    <li><a href="/ktcstore/order_history/confirmed">Đã xác nhận</a></li>
+                                                    <li><a href="/ktcstore/order_history/delivering">Đang vận chuyển</a></li>
+                                                    <li><a href="/ktcstore/order_history/delivered">Đã Giao</a></li>
+                                                    <li><a href="/ktcstore/order_history/canceled">Đã Hủy</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -86,6 +93,16 @@
                         @endforeach
                     </table>
                 </div>
+                <div class="product__pagination">
+                    @if ($orders->lastPage() > 1)
+                        <a class="active" href="{{ $orders->previousPageUrl() }}">«</a>
+                        @for ($i = 1; $i <= $orders->lastPage(); $i++)
+                            <a class="{{ $i === $orders->currentPage() ? 'active' : '' }}" href="{{ $orders->url($i) }}">{{ $i }}</a>
+                        @endfor
+                        <a class="active" href="{{ $orders->nextPageUrl() }}">»</a>
+                    @endif
+                </div>
+                <br>
             </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StoreController;
 
@@ -101,12 +102,14 @@ Route::get('/admin/personal_info/update_info', function () {
     return redirect('/');
 });
 Route::get('/admin/personal_info/change_password', [AdminController::class, "change_password"]);
-Route::post('/admin/personal_info/confirm_change_password', [AdminController::class, "change_password_process"]);
-Route::get('/admin/personal_info/confirm_change_password', function () {
+Route::post('/admin/personal_info/change_password_process', [AdminController::class, "change_password_process"]);
+Route::get('/admin/personal_info/change_password_process', function () {
     return redirect('/');
 });
 //User list
 Route::get('/admin/user', [AdminController::class, "user_list"]);
+Route::post('/admin/user/update_role', [AdminController::class, 'update_role'])->name('admin.update_role');
+Route::post('/admin/user/search_user', [AdminController::class, "search_user"]);
 
 //News
 Route::get('/admin/news', [NewsController::class, "news"]);
@@ -158,8 +161,8 @@ Route::get('/admin/product/product_detail/save_product_detail', function () {
 });
 Route::get('/admin/product/product_detail/view_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "view_product_detail"]);
 Route::get('/admin/product/product_detail/edit_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "edit_product_detail"]);
-Route::post('/admin/product/product_detail/update_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "update_product_detail"]);
-Route::get('/admin/product/product_detail/update_detail/product_id={product_id}&product_detail_id={product_detail_id}', function () {
+Route::post('/admin/product/product_detail/update_detail', [ProductController::class, "update_product_detail"]);
+Route::get('/admin/product/product_detail/update_detail', function () {
     return redirect('/');
 });
 Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "delete_product_detail"]);
@@ -169,6 +172,11 @@ Route::get('/admin/product/product_detail/delete_detail/product_id={product_id}&
 
 //Order
 Route::get('/admin/order', [OrderController::class, "order_list"]);
+Route::get('/admin/order/status=pending', [OrderController::class, "order_pending"]);
+Route::get('/admin/order/status=confirmed', [OrderController::class, "order_confirmed"]);
+Route::get('/admin/order/status=delivering', [OrderController::class, "order_delivering"]);
+Route::get('/admin/order/status=delivered', [OrderController::class, "order_delivered"]);
+Route::get('/admin/order/status=canceled', [OrderController::class, "order_canceled"]);
 Route::get('/admin/order/order_detail/order_id={order_id}', [OrderController::class, "order_detail"]);
 Route::post('/admin/order/update_status/order_id={order_id}', [OrderController::class, "update_order_status"])->name('update_order_status');
 Route::get('/admin/order/update_status/order_id={order_id}', function () {
@@ -192,16 +200,61 @@ Route::get('/ktcstore/shop/filter_brand/{brand_name}', [StoreController::class, 
 Route::get('/ktcstore/shop/filter_category/{category_name}', [StoreController::class, "filter_category"])->name('filter.category');
 Route::get('/ktcstore/shop/filter_color/{color}', [StoreController::class, "filter_color"])->name('filter.color');
 Route::get('/ktcstore/shop/filter_size/{size}', [StoreController::class, "filter_size"])->name('filter.size');
-Route::get('/ktcstore/search_product', [StoreController::class, "search_product"])->name("search_product");
+Route::get('/ktcstore/shop/search', [StoreController::class, "search_product"])->name("search_product");
 
+//Customer - Review
 Route::get('/ktcstore/reviews/{product_name}', [CustomerController::class, "product_review"]);
 Route::post('/ktcstore/reviews/send_reviews', [CustomerController::class, "send_review"]);
 Route::get('/ktcstore/reviews/send_reviews', function () {
     return redirect('/');
 });
+
+//Customer - Filter products
+//Price
+Route::get('/ktcstore/shop/price=below-200', [FilterController::class, "below_200"]);
+Route::get('/ktcstore/shop/price=200-500', [FilterController::class, "from_200_to_500"]);
+Route::get('/ktcstore/shop/price=500-800', [FilterController::class, "from_500_to_800"]);
+Route::get('/ktcstore/shop/price=800-1000', [FilterController::class, "from_800_to_1000"]);
+Route::get('/ktcstore/shop/price=1000-1500', [FilterController::class, "from_1000_to_1500"]);
+Route::get('/ktcstore/shop/price=1500-2000', [FilterController::class, "from_1500_to_2000"]);
+Route::get('/ktcstore/shop/price=above-2000', [FilterController::class, "above_2000"]);
+
+//Category
+Route::get('/ktcstore/shop/brand=Adam', [FilterController::class, "Adam"]);
+Route::get('/ktcstore/shop/brand=Atino', [FilterController::class, "Atino"]);
+Route::get('/ktcstore/shop/brand=Adidas', [FilterController::class, "Adidas"]);
+Route::get('/ktcstore/shop/brand=Nike', [FilterController::class, "Nike"]);
+Route::get('/ktcstore/shop/brand=Puma', [FilterController::class, "Puma"]);
+Route::get('/ktcstore/shop/brand=H&M', [FilterController::class, "H_and_M"]);
+Route::get('/ktcstore/shop/brand=MLB', [FilterController::class, "MLB"]);
+Route::get('/ktcstore/shop/brand=Calvin-Klein', [FilterController::class, "Calvin_Klein"]);
+Route::get('/ktcstore/shop/brand=Valentino', [FilterController::class, "Valentino"]);
+Route::get('/ktcstore/shop/brand=Levis', [FilterController::class, "Levis"]);
+
+//Brand
+Route::get('/ktcstore/shop/category=Áo-thun', [FilterController::class, "ao_thun"]);
+Route::get('/ktcstore/shop/category=Áo-sơmi', [FilterController::class, "ao_so_mi"]);
+Route::get('/ktcstore/shop/category=Áo-nỉ', [FilterController::class, "ao_ni"]);
+Route::get('/ktcstore/shop/category=Áo-khoác', [FilterController::class, "ao_khoac"]);
+Route::get('/ktcstore/shop/category=Quần-âu', [FilterController::class, "quan_au"]);
+Route::get('/ktcstore/shop/category=Quần-jogger', [FilterController::class, "quan_jogger"]);
+Route::get('/ktcstore/shop/category=Quần-jean', [FilterController::class, "quan_jean"]);
+Route::get('/ktcstore/shop/category=Quần-short', [FilterController::class, "quan_short"]);
+
+//Asc - desc
+Route::get('/ktcstore/shop/price-asc', [FilterController::class, "price_asc"]);
+Route::get('/ktcstore/shop/price-desc', [FilterController::class, "price_desc"]);
+
+//Customer - Filter order status
+Route::get('/ktcstore/order_history/pending', [CustomerController::class, "order_pending"]);
+Route::get('/ktcstore/order_history/confirmed', [CustomerController::class, "order_confirmed"]);
+Route::get('/ktcstore/order_history/delivering', [CustomerController::class, "order_delivering"]);
+Route::get('/ktcstore/order_history/delivered', [CustomerController::class, "order_delivered"]);
+Route::get('/ktcstore/order_history/canceled', [CustomerController::class, "order_canceled"]);
+
 //Customer - Shopping Cart, Checkout
 Route::get('/ktcstore/shopping-cart', [StoreController::class, "shopping_cart"]);
-Route::get('/ktcstore/add_to_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
+Route::post('/ktcstore/add_to_cart', [StoreController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/ktcstore/shopping-cart/remove_from_cart', [StoreController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::get('/ktcstore/shopping-cart/plus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'plus_quantity'])->name('plus_cart');
 Route::get('/ktcstore/shopping-cart/minus_cart/product_id={product_id}&product_detail_id={product_detail_id}', [StoreController::class, 'minus_quantity'])->name('minus_cart');
@@ -218,6 +271,9 @@ Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [Custome
 Route::get('/ktcstore/order_history/cancel_order/order_id={order_id}', function () {
     return redirect('/');
 });
+
+Route::POST('/ktcstore/order_history/search_order', [CustomerController::class, "search_order"]);
+
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 
 //Customer - Personal info
@@ -228,7 +284,7 @@ Route::get('/ktcstore/personal_info/update_info', function () {
     return redirect('/');
 });
 Route::get('/ktcstore/personal_info/change_password', [CustomerController::class, "change_password"]);
-Route::post('/ktcstore/personal_info/confirm_change_password', [CustomerController::class, "change_password_process"]);
-Route::get('/ktcstore/personal_info/confirm_change_password', function () {
+Route::post('/ktcstore/personal_info/change_password_process', [CustomerController::class, "change_password_process"]);
+Route::get('/ktcstore/personal_info/change_password_process', function () {
     return redirect('/');
 });

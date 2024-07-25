@@ -59,6 +59,17 @@ class BrandController extends Controller
         return redirect("/admin/brand")->with('success', 'Tạo Hãng Sản Xuất Mới Thành Công!');;
     }
 
+    public function check_brand_exist($brand_id)
+    {
+        $check_brand_id = Brand::where('brand_id', $brand_id)->exists();
+            
+        if (!$check_brand_id) {
+            return false;
+        }
+        
+        return true;
+    }
+
     public function edit_brand($brand_id)
     {
         if (!Auth::check()) {
@@ -68,6 +79,10 @@ class BrandController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_brand_exist($brand_id)) {
+            return redirect('/admin');  
         }
 
         $brands = Brand::find($brand_id);
@@ -83,6 +98,10 @@ class BrandController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_brand_exist($brand_id)) {
+            return redirect('/admin');  
         }
 
         $name = $request->brand_name;
@@ -101,6 +120,10 @@ class BrandController extends Controller
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
+        }
+
+        if (!$this->check_brand_exist($brand_id)) {
+            return redirect('/admin');  
         }
 
         // 1. Check product mang brand_id tương ứng có tồn tại hay không
