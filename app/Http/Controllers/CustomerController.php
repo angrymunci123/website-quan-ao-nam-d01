@@ -407,4 +407,27 @@ class CustomerController extends Controller
 
         return redirect('/ktcstore/product/' . $product_name)->with('success', 'Đánh giá sản phẩm thành công! Cám ơn bạn đã mua hàng tại KTC Store');
     }
+
+    public function search_order(Request $request) 
+    {
+        $order_id = $request->order_id;
+        if ($order_id) {
+            $orders = Order::where('user_id', session('user_id'))
+            ->where('order_id',  $order_id)
+            ->orderBy('order_id', 'desc')
+            ->paginate(10);
+            Paginator::useBootstrap();
+
+            if ($orders->isEmpty()) 
+            {
+                return view('customer.order_history', compact('orders'));
+            } 
+            
+            else 
+            {
+                return view('customer.order_history', compact('orders'))->with('i', (request()->input('page', 1) - 1) * 5);
+            }
+
+        } 
+    }
 }

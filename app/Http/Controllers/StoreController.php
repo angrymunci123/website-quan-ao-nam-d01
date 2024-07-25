@@ -66,6 +66,7 @@ class StoreController extends Controller
     {
         return view("customer.contact");
     }
+
     public function shopping_cart()
     {
         return view('customer.shopping-cart');
@@ -186,15 +187,28 @@ class StoreController extends Controller
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            $stock_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['total_quantity'];
-            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
+        {
+            $product_detail = Product_Detail::find($product_detail_id);
+            if (!$product_detail) 
+            {
+                session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
+                return redirect()->back();
+            }
+
+            $stock_quantity = $product_detail->quantity;
+            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) 
+            {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } else {
+            } 
+            
+            else 
+            {
                 session()->flash('fail', 'Số lượng đã đạt giới hạn số lượng sản phẩm có sẵn!');
             }
         }
+
         return redirect()->back();
     }
 
@@ -203,14 +217,29 @@ class StoreController extends Controller
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
+        {
+            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) 
+            {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
+
+                $updated_product_detail = Product_Detail::find($product_detail_id);
+                if (!$updated_product_detail || $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > $updated_product_detail->quantity) 
+                {
+                    $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] = $updated_product_detail ? $updated_product_detail->quantity : 1;
+                    session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                    session()->flash('fail', 'Số lượng sản phẩm đã bị giới hạn do không đủ hàng.');
+                    return redirect()->back();
+                }
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } else {
+            } 
+            
+            else 
+            {
                 session()->flash('fail', 'Số lượng sản phẩm không thể giảm xuống 0!');
             }
         }
+
         return redirect()->back();
     }
 
@@ -240,7 +269,40 @@ class StoreController extends Controller
         if (!isset($shopping_cart)) {
             return redirect('/ktcstore');
         }
-        $customer = User::where("user_id", "=", session('user_id'))->first();
+
+        // Kiểm tra các sản phẩm trong giỏ hàng
+        foreach ($shopping_cart as $item) {
+            $product_id = $item['product_id'];
+            $product_detail_id = $item['product_detail_id'];
+            $quantity = $item['quantity'];
+
+            // Kiểm tra xem sản phẩm có tồn tại và có đủ số lượng không
+            $product = Product::find($product_id);
+            $product_detail = Product_Detail::where('product_detail_id', $product_detail_id)
+                                            ->where('product_id', $product_id)
+                                            ->where('size', $item['size'])
+                                            ->where('color', $item['color'])
+                                            ->first();
+
+            if (!$product || !$product_detail) {
+                unset($shopping_cart[$product_id . '_' . $product_detail_id]);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Một số sản phẩm không còn tồn tại trong cửa hàng.');
+                return redirect('/ktcstore/shopping-cart');
+            }
+
+            if ($quantity > $product_detail->quantity) {
+                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] = $product_detail->quantity;
+                session()->flash('fail', 'Số lượng một số sản phẩm đã bị giới hạn do không đủ hàng.');
+                
+                unset($shopping_cart[$product_id . '_' . $product_detail_id]);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                
+                return redirect('/ktcstore/shopping-cart');
+            }
+        }
+
+        $customer = User::find($user_id);
         return view("customer.checkout", compact(['customer', 'shopping_cart']));
     }
 
@@ -422,10 +484,9 @@ class StoreController extends Controller
 
     public function search_product(Request $request)
     {
-        if (isset($_GET['keywords'])) {
+        $search_keywords = $request->keywords;
+        if ($search_keywords) {
             Paginator::useBootstrap();
-            $search_keywords = $_GET['keywords'];
-
             $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
                 ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
                 ->where('product_detail.size', '=', 'S')

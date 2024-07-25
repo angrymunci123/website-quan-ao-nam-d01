@@ -25,6 +25,13 @@
                 <div class="shop__sidebar">
                         <div class="shop__sidebar__accordion" style="padding-top: 20px">
                             <div class="accordion" id="accordionExample">
+                                <div class="shop__sidebar__search">
+                                    <form action="/ktcstore/order_history/search_order" method="POST" enctype='multipart/form-data'>
+                                        @csrf
+                                        <input type="number" name="order_id" placeholder="Nhập mã đơn hàng..." min="1">
+                                        <button type="submit"><span class="icon_search"></span></button>
+                                    </form>
+                                </div>
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseOne">Tình Trạng Đơn Hàng</a>

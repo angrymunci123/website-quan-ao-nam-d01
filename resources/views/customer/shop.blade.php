@@ -95,27 +95,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFour">Lọc theo thứ tự giá</a>
+                                    </div>
+                                    <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__price">
+                                                <ul>
+                                                    <li><a href="/ktcstore/shop/price-asc">Giá tăng dần</a></li>
+                                                    <li><a href="/ktcstore/shop/price-desc">Giá giảm dần</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="grid__column-10">
-                <div class="shop__product__option">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- Tạm thời để trống -->
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__right">
-                                <p>Sắp xếp theo giá</p>
-                                <select id="sort_options" onchange="location = this.value;">
-                                    <option value="/ktcstore/shop">Thấp tới cao</option>
-                                    <option value="/ktcstore/shop?sort=desc">Cao tới thấp</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="home-product">
                     <div class="grid__row">
                         @if ($products->isEmpty())
