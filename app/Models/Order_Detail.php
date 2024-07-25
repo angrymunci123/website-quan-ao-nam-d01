@@ -19,7 +19,9 @@ class Order_Detail extends Model
         'order_id',
         'product_detail_id',
         'price',
-        'quantity'
+        'quantity',
+        'created_at',
+        'updated_at'
     ];
     public function product_detail()
     {
