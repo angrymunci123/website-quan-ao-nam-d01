@@ -35,18 +35,18 @@
                             <div class="row">
                                     <div class="checkout__input">
                                         <p>Họ và tên người nhận<span>*</span></p>
-                                        <input type="text" name="consignee" value="{{ $customer->fullname }}" style="color:black">
+                                        <input type="text" name="consignee" value="{{ $customer->fullname }}" style="color:black" required maxlength="255">
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Địa chỉ<span>*</span></p>
-                                <input type="text" name="address" placeholder="Địa chỉ nhận hàng" class="checkout__input__add" style="color:black" value="{{ $customer->address }}" style="color:black">
+                                <input type="text" name="address" placeholder="Địa chỉ nhận hàng" class="checkout__input__add" style="color:black" value="{{ $customer->address }}" style="color:black" required maxlength="255">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="number" name="phone_number" value="{{ $customer->phone_number }}" style="color:black">
+                                        <input type="number" name="phone_number" value="{{ $customer->phone_number }}" style="color:black" required maxlength="255">
                                     </div>
                                 </div>
                             </div>
@@ -124,5 +124,5 @@
             </div>
         </div>
     </section>
-    @endif 
+    @endif
 @endsection

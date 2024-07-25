@@ -17,7 +17,7 @@
           <div class="form-group">
             <strong>Tiêu Đề</strong>
             <input type="text" name="title" id="title" class="form-control" placeholder="Tiêu đề"
-            value="{{$edit_new->title}}" required>
+            value="{{$edit_new->title}}" required maxlength="255">
           </div>
           <br>
           <div class="form-group">
@@ -32,7 +32,7 @@
             <input type="file" name="image" class="form-control-ls">
             </div>
             <div class="card" style="width: 300px">
-            
+
             <img type="file" id="image" class="form-control-ls">
             @endif
 
@@ -40,7 +40,7 @@
             <input type="file" name="image" value="/image/{{$edit_new->image}}" class="form-control-ls">
             </div>
             <div class="card" style="width: 300px">
-            
+
             <img type="file" id="image" src="/image/{{$edit_new->image}}" class="form-control-ls">
             @endif
             </div>

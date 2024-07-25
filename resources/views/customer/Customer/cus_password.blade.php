@@ -36,13 +36,13 @@
                     </div>
                     <div class="grid__column-4">
                         <div>
-                            <input type="text" name="current_password" placeholder="" style="width:300px" required>
+                            <input type="text" name="current_password" placeholder="" style="width:300px" required minlength="8" maxlength="20">
                         </div>
                         <div>
-                            <input type="text" name="new_password" placeholder="" style="width:300px" required>
+                            <input type="text" name="new_password" placeholder="" style="width:300px" required minlength="8" maxlength="20">
                         </div>
                         <div>
-                            <input type="text" name="confirm_new_password" placeholder="" style="width:300px" required>
+                            <input type="text" name="confirm_new_password" placeholder="" style="width:300px" required minlength="8" maxlength="20">
                         </div>
                     </div>
                 </div>

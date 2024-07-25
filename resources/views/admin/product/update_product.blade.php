@@ -16,7 +16,7 @@
                 <div class="form-group">
                   <strong>Tên Sản Phẩm</strong>
                   <input type="text" name="product_name" id="productname" class="form-control"
-                    value="{{$products->product_name}}" required />
+                    value="{{$products->product_name}}" required maxlength="255"/>
                 </div>
                 <div class="form-group">
                   <strong>Danh Mục</strong>
@@ -46,7 +46,7 @@
                 <div class="form-group">
                   <strong>Mô Tả Sản Phẩm</strong>
                   <textarea type="text" name="description" id="description" class="form-control" cols="30"
-                    rows="10">{{$products->description}}</textarea>
+                    rows="10">{{$products->description}} required</textarea>
                 </div>
               </div>
           </div>

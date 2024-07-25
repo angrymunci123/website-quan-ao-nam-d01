@@ -34,17 +34,17 @@
                                     </td>
                                     <td style="width:50%">
                                         <div style=" padding-bottom: 5px;" class="input-container">
-                                            <input type="password" id="password1" name="current_password" placeholder="" style="width:300px">
+                                            <input type="password" id="password1" name="current_password" placeholder="" style="width:300px" minlength="8" maxlength="20" required>
                                             <i class="fas fa-eye"
                                                 onclick="togglePasswordVisibility('password1', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
-                                            <input type="password" id="password2" placeholder="" name="new_password" style="width:300px">
+                                            <input type="password" id="password2" placeholder="" name="new_password" style="width:300px" minlength="8" maxlength="20" required>
                                             <i class="fas fa-eye"
                                                 onclick="togglePasswordVisibility('password2', this)"></i>
                                         </div>
                                         <div style=" padding-bottom: 5px;" class="input-container">
-                                            <input type="password" id="password3" placeholder="" name="confirm_new_password" style="width:300px">
+                                            <input type="password" id="password3" placeholder="" name="confirm_new_password" style="width:300px" minlength="8" maxlength="20" required>
                                             <i class="fas fa-eye"
                                                 onclick="togglePasswordVisibility('password3', this)"></i>
                                         </div>
@@ -53,7 +53,7 @@
                             </tbody>
                         </table>
                         <div class="grid">
-                            
+
                                 @csrf
                                 <button type="submit" class="btn btn-info" style="width:75px; color:white">Lưu</button>
                             </form>
