@@ -149,7 +149,6 @@ class StoreController extends Controller
         }
 
         $product_id = $request->product_id;
-        $product_detail_id = $request->product_detail_id;
         $chosen_quantity = (int)$request->quantity; 
         $size = $request->size;
         $color = $request->color;
@@ -178,7 +177,7 @@ class StoreController extends Controller
 
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
-        $shopping_cart_item = $product_id . '_' . $product_detail_id;
+        $shopping_cart_item = $product_id . '_' . $product_detail->product_detail_id;
 
         if (isset($shopping_cart[$shopping_cart_item])) 
         {
@@ -196,7 +195,7 @@ class StoreController extends Controller
         {
             $shopping_cart[$shopping_cart_item] = [
                 "product_id" => $product->product_id,
-                "product_detail_id" => $product_detail_id,
+                "product_detail_id" => $product_detail->product_detail_id,
                 "product_name" => $product->product_name,
                 "quantity" => $chosen_quantity,
                 "price" => $product_detail->price,
@@ -420,7 +419,8 @@ class StoreController extends Controller
 
         DB::beginTransaction();
 
-        try {
+        try 
+        {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
                 'consignee' => $consignee,
@@ -525,8 +525,8 @@ class StoreController extends Controller
             
             else if ($payment_method == "Thanh toán khi nhận hàng") 
             {
+                Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
                 session()->forget('shopping_cart_' . $user_id);
-
                 return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
         } catch (\Exception $e) {

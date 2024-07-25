@@ -82,8 +82,11 @@
                                             </table>
                                             <br>
                                             <div class="quantity">
+                                                <label><b>Số Lượng:</b></label>
                                                 <div class="product__details__cart__option">
-                                                    <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào Giỏ Hàng</button>
+                                                    <input hidden type="number" name="quantity" value="1">
+                                                    <button type="submit" id="add_to_cart_message" class="primary-btn">Thêm Vào
+                                                        Giỏ Hàng</button>
                                                 </div>
                                             </div>
                                         </form>
