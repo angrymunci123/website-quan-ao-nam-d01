@@ -20,7 +20,7 @@ class AuthController extends Controller
             if ($user->role == 'Chủ Cửa Hàng' || $user->role == 'Nhân Viên') {
                 return redirect('/admin');
             } elseif ($user->role == 'Khách Hàng') {
-                return view('/ktcstore');
+                return redirect('/ktcstore');
             }
         }
         return view("login")->with('error', 'Vui lòng đăng nhập để tiếp tục.');

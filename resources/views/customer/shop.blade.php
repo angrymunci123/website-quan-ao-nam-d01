@@ -70,7 +70,6 @@
                                                 <li><a href="/ktcstore/shop/brand=MLB">MLB</a></li>
                                                 <li><a href="/ktcstore/shop/brand=Calvin-Klein">Calvin Klein</a></li>
                                                 <li><a href="/ktcstore/shop/brand=Valentino">Valentino</a></li>
-                                                <li><a href="/ktcstore/shop/brand=Levis">Levi's</a></li>
                                             </ul>
                                         </div>
                                     </div>

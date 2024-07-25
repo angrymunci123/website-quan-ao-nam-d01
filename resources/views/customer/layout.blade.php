@@ -159,7 +159,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body" style="text-align: left;">
                                                 Bạn có chắc chắn muốn đăng xuất không?
                                             </div>
                                             <div class="modal-footer">
