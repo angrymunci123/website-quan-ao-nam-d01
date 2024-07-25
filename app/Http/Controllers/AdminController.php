@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Order_Detail;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
+
 
 class AdminController extends Controller
 {
@@ -90,6 +92,8 @@ class AdminController extends Controller
         })
         ->orderBy('user_id', 'asc')
         ->paginate(10);
+
+        Paginator::useBootstrap();
 
         return view('admin.user.user_list', compact('users'));
     }
@@ -227,6 +231,45 @@ class AdminController extends Controller
         }
 
         return back()->with('fail', 'Không tìm thấy người dùng!');
+    }
+
+    public function search_user(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+
+        $search_text = $request->username;
+        if ($search_text) {
+            $users = User::where('fullname', 'LIKE', "%$search_text%")->where(function ($user_query) {
+                $user_query->where('role', 'Khách Hàng')
+                      ->orWhere('role', 'Nhân Viên');
+            })
+            ->orderBy('user_id', 'asc')
+            ->paginate(10);
+            Paginator::useBootstrap();
+
+            if ($users->isEmpty()) 
+            {
+                return view('admin.user.user_list', compact('users'));
+            } 
+            
+            else 
+            {
+                return view('admin.user.user_list', compact('users'))->with('username', $search_text)->with('i', (request()->input('page', 1) - 1) * 5);
+            }
+
+        } 
+        
+        else 
+        {
+            return back();
+        }
     }
   
 }
