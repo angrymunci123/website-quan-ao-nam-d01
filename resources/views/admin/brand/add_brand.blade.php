@@ -14,7 +14,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <strong>Tên Hãng Sản Xuất</strong>
-                  <input type="text" name="brand_name" id="brand_name" class="form-control" required>
+                  <input type="text" name="brand_name" id="brand_name" class="form-control" required maxlength="255">
                 </div>
               </div>
               <div class="grid">
@@ -23,7 +23,7 @@
                 </div>
             </form>
             <div class="col-sm-4 col-xl-1">
-              <form action="/admin/brand" enctype="multipart/form-data" style=" padding-left: 10px; padding-top: 7px"> 
+              <form action="/admin/brand" enctype="multipart/form-data" style=" padding-left: 10px; padding-top: 7px">
                 <button type="submit" class="btn btn-warning" style="width: 120px;">Quay Lại</button>
               </form>
             </div>

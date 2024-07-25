@@ -17,7 +17,7 @@
                 <div class="form-group">
                   <strong>Tên Hãng Sản Xuất</strong>
                   <input type="text" name="category_name" id="category_name" value="{{$categories->category_name}}"
-                    class="form-control" required>
+                    class="form-control" required maxlength="255">
                 </div>
               </div>
               <div class="grid">

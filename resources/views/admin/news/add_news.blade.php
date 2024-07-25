@@ -14,12 +14,12 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <strong>Tiêu Đề</strong>
-                  <input type="text" name="title" id="title" class="form-control" placeholder="Tên sản phẩm" required>
+                  <input type="text" name="title" id="title" class="form-control" placeholder="Tên sản phẩm" required maxlength="255">
                 </div>
                 <div class="form-group">
                   <strong>Nội Dung</strong>
                   <textarea type="text" name="content" id="content" class="form-control" cols="30" rows="10"
-                    placeholder="Mô tả"></textarea>
+                    placeholder="Mô tả" required></textarea>
                 </div>
                 <div class="form-group">
                   <strong>Image</strong>

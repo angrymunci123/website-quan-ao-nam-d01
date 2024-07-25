@@ -15,7 +15,7 @@
                     @endif
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Địa chỉ email là bắt buộc">
 						<span class="label-input100" style="font-family: Arial">Địa Chỉ Email</span>
-						<input class="input100" style="font-family: Arial" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Địa chỉ email" required>
+						<input class="input100" style="font-family: Arial" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Địa chỉ email" required maxlength="255">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>

@@ -20,29 +20,29 @@
             <div class="col-md-12">
               <div class="form-group">
                 <strong>Sản Phẩm: {{$inj->product_name}}</strong>
-                <input type="number" name="product_id" id="product_id" value="{{$inj->product_id}}" hidden required>
+                <input type="number" name="product_id" id="product_id" value="{{$inj->product_id}}" hidden required maxlength="255">
               </div>
               <div class="form-group">
                 <strong>Giá</strong>
-                <input type="number" name="price" id="price" value="{{$inj->price}}" class="form-control" required>
+                <input type="number" name="price" id="price" value="{{$inj->price}}" class="form-control" required max="9999999999">
               </div>
               <div class="form-group">
                 <strong>Giá Khuyến Mãi</strong>
                 <input type="number" name="sale_price" id="sale_price" value="{{$inj->sale_price}}"
-                class="form-control" required>
+                class="form-control" required max="9999999999">
               </div>
               <div class="form-group">
                 <strong>Số lượng</strong>
                 <input type="number" name="quantity" id="quantity" value="{{$inj->quantity}}" class="form-control"
-                required>
+                required max="500">
               </div>
               <div class="form-group">
                 <strong>Màu Sắc</strong>
-                <input type="text" name="color" id="color" value="{{$inj->color}}" class="form-control" required>
+                <input type="text" name="color" id="color" value="{{$inj->color}}" class="form-control" required maxlength="255" >
               </div>
               <div class="form-group">
                 <strong>Kích Cỡ</strong>
-                <select name="size" id="size" class="form-select w-auto" aria-label="Chọn kích cỡ" required>
+                <select name="size" id="size" class="form-select w-auto" aria-label="Chọn kích cỡ" required >
                         <option value="S">S</option>
                         <option value="M">M</option>
                         <option value="L">L</option>
@@ -53,7 +53,7 @@
               <div class="form-group">
                 <strong>Chất Liệu</strong>
                 <input type="text" name="material" id="material" value="{{$inj->material}}" class="form-control"
-                required>
+                required maxlength="255">
               </div>
               <div class="form-group">
                 <strong>Image</strong>
@@ -63,7 +63,7 @@
                 <div class="card" style="width: 300px">
                 <img type="file" id="image" src="/image/{{$inj->image}}" class="form-control-ls">
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
           <div class="grid">
