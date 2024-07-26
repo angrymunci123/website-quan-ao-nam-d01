@@ -193,7 +193,8 @@ Route::post('/admin/order/search_order', [OrderController::class, "search_order"
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
 Route::get('/ktcstore/product/{product_name}', [StoreController::class, "product_detail"]);
 Route::get('/ktcstore/contact', [StoreController::class, "contact"]);
-Route::get('/ktcstore/blog', [StoreController::class, "blog"]);
+Route::get('/ktcstore/blog', [StoreController::class, "news_list"]);
+Route::get('/ktcstore/blog/{title}', [StoreController::class, "read_news"]);
 Route::get('/ktcstore/shop', [StoreController::class, "shop"]);
 Route::get('/ktcstore/about', [StoreController::class, "about"]);
 Route::get('/ktcstore/shop/filter_price/{price_range}', [StoreController::class, "filter_price"])->name('filter.price');
