@@ -64,6 +64,12 @@
                         <div class="alert alert-danger">{{Session::get('fail')}}</div>
                     @endif
                     <br>
+                    @if ($orders->isEmpty())
+                        <div class="col-lg-12">
+                            <p style="text-align: center; font-size: 18px; color: #333;">Không có đơn hàng nào để hiển
+                                thị.</p>
+                        </div>
+                    @else
                     <table style="width: 100%; text-align: center" class="table table-border">
                         <tr>
                             <th>Đơn hàng</th>
@@ -73,27 +79,28 @@
                             <th></th>
                         </tr>
                         @foreach($orders as $order)
-                        @php
-                            $details = App\Models\Order_Detail::where('order_id', '=', $order->order_id)->get();
-                            $total = 0;
-                        @endphp
-                        @foreach($details as $detail)
-                        @php($total += $detail->price * $detail->quantity)
-                        @endforeach
-                        <tr>
-                            <td>{{$order->order_id}}</td>
-                            <td>{{$order->created_at->format('d/m/Y')}}</td>
-                            <td>{{$order->status}}</td>
-                            <td>{{number_format($total)}}đ</td>
-                            <td>
-                                <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">
-                                    <button type="submit" class="btn btn-info" style="width:90px; color:white"><b>Chi
-                                            tiết</b></button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
+                            @php
+                                $details = App\Models\Order_Detail::where('order_id', '=', $order->order_id)->get();
+                                $total = 0;
+                            @endphp
+                            @foreach($details as $detail)
+                            @php($total += $detail->price * $detail->quantity)
+                            @endforeach
+                            <tr>
+                                <td>{{$order->order_id}}</td>
+                                <td>{{$order->created_at->format('d/m/Y')}}</td>
+                                <td>{{$order->status}}</td>
+                                <td>{{number_format($total)}}đ</td>
+                                <td>
+                                    <form action="/ktcstore/order_detail/order_id={{$order->order_id}}" method="GET">
+                                        <button type="submit" class="btn btn-info" style="width:90px; color:white"><b>Chi
+                                                tiết</b></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                     </table>
+                    @endif
                 </div>
                 <div class="product__pagination">
                     @if ($orders->lastPage() > 1)

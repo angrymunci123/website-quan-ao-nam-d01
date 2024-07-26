@@ -37,7 +37,7 @@
                                             <p><b>Họ tên người nhận: </b>{{$order_detail->consignee}}</p>
                                             <p><b>SDT:</b> {{$order_detail->phone_number}}</p>
                                             <p><b>Địa chỉ:</b> {{$order_detail->address}}</p>
-                                            <p><b>Ngày đặt:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
+                                            <p><b>Ngày đặt hàng:</b> {{$order_detail->created_at->format('d/m/Y') }}</p>
                                         </div>
                                     </td>
                                     <td class="font-weight-bolder opacity-7" style="width: 50%">
@@ -45,12 +45,6 @@
                                             <p><b>ID đơn hàng:</b> {{$order_detail->order_id}}</p>
                                             <p><b>Tình trạng đơn hàng:</b> {{$order_detail->status}}</p>
                                             <p><b>Phương thức thanh toán:</b> {{$order_detail->payment_method}}</p>
-                                            @if($order_detail->updated_at)
-                                                <p><b>Ngày xác nhận đơn hàng:</b>
-                                                    {{$order_detail->updated_at->format('d/m/Y') }}</p>
-                                            @else
-                                                <p><b>Ngày xác nhận đơn hàng:</b></p>
-                                            @endif
                                         </div>
                                     </td>
                                 </tr>

@@ -22,8 +22,7 @@
           <br>
           <div class="form-group">
             <strong>Nội Dung</strong>
-            <textarea type="text" name="content" id="content" class="form-control" cols="30" rows="10"
-            value="{{$edit_new->content}}" placeholder="Mô tả"></textarea>
+            <textarea type="text" name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Mô tả">{{$edit_new->content}}</textarea>
           </div>
           <div class="form-group">
             <strong>Image</strong>
