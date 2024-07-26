@@ -409,6 +409,7 @@ class StoreController extends Controller
 
     public function purchase(Request $request)
     {
+        // Lấy thông tin khách hàng và giỏ hàng
         $payment_method = $request->payment_method;
         $consignee = $request->consignee;
         $address = $request->address;
@@ -422,7 +423,7 @@ class StoreController extends Controller
         }
 
         DB::beginTransaction();
-
+        // Thêm đơn hàng và chi tiết đơn hàng
         try {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
@@ -465,13 +466,14 @@ class StoreController extends Controller
             session()->forget('shopping_cart_' . $user_id);
 
             DB::commit();
-
+            // Nếu phương thức thanh toán là chuyển khoản
             if ($payment_method == "Chuyển khoản") {
+                session()->put('new_order_id', $new_order_id);
                 DB::table('order')->where("order_id", $new_order_id)->update([
                     'status' => 'Đã hủy thanh toán',
                     'updated_at' => now()
                 ]);
-
+                // Gửi thông tin sang VNPAY
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 $vnp_Returnurl = route('vnpay_return');
                 $vnp_TmnCode = "VRNE42A3";
@@ -535,7 +537,7 @@ class StoreController extends Controller
         }
     }
 
-
+    // Khi nhận return từ VNPay
     public function vnpay_return()
     {
         $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H";
@@ -561,6 +563,7 @@ class StoreController extends Controller
         }
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
+            // Mã 00 là thanh toán thành công
             if ($_GET['vnp_ResponseCode'] == '00') {
                 $new_order_id = session()->get('new_order_id');
                 DB::table('order')->where("order_id", "=", "$new_order_id")->update([
@@ -572,6 +575,7 @@ class StoreController extends Controller
                 session()->forget('shopping_cart_' . auth()->id());
                 session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
+                // Các mã khác là đã có thể có lỗi thanh toán xảy ra từ bên người dùng hoặc bên VNPay khiến thanh toán không được hoàn tất
             } else {
                 $new_order_id = session()->get('new_order_id');
                 DB::table('order_detail')->where('order_id', $new_order_id)->delete();

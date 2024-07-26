@@ -46,7 +46,7 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="number" name="phone_number" value="{{ $customer->phone_number }}" style="color:black" required maxlength="255">
+                                        <input type="text" name="phone_number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ $customer->phone_number }}" style="color:black" required minlength="10" maxlength="11">
                                     </div>
                                 </div>
                             </div>
