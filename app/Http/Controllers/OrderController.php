@@ -214,7 +214,8 @@ class OrderController extends Controller
         }
 
         DB::table('order')->where('order_id', $order_id)->update([
-            'status' => $order_status
+            'status' => $order_status,
+            'updated_at' => now()
         ]);
 
         return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
