@@ -23,6 +23,14 @@
         <h4>Thông tin cá nhân:</h4>
         <p>Quản lý thông tin tài khoản</p>
     </div>
+    <div class="card-body">
+        @if(Session::has('success'))
+            <div class="alert alert-success">{{Session::get('success')}}</div>
+        @endif
+        @if(Session::has('fail'))
+            <div class="alert alert-danger">{{Session::get('fail')}}</div>
+        @endif
+    </div>
     <div class="card-body px-0 pt-0 pb-2">
     <form action="/ktcstore/personal_info/change_password_process" method="POST">
         @csrf

@@ -214,6 +214,7 @@ class StoreController extends Controller
     public function plus_quantity($product_id, $product_detail_id)
     {
         $user_id = auth()->id();
+        //lấy dữ liệu session giỏ hàng theo id người dùng 
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
         if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
@@ -229,18 +230,29 @@ class StoreController extends Controller
             $stock_quantity = $product_detail->quantity;
             $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
 
+            //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ tăng số lượng
             if ($current_quantity < $stock_quantity) 
             {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
             } 
 
+            //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ cập nhật sang số lượng tối da hiện tại
+            else if ($current_quantity > $stock_quantity) 
+            {
+                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] = $stock_quantity;
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa và đã được cập nhật thành số lượng tối đa.');
+            } 
+
+            //nếu số lượng sp hiện tại bằng số lượng có sẵn sẽ thông báo đã đạt số lượng tối đa
             else if ($current_quantity == $stock_quantity) 
             {
                 session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa.');
 
             } 
 
+            //nếu số lượng sp hiện tại bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng 
             else if ($stock_quantity == 0) 
             {
                 unset($shopping_cart[$product_id . '_' . $product_detail_id]);
@@ -274,6 +286,7 @@ class StoreController extends Controller
 
             $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
 
+            //nếu số lượng sản phẩm trong giỏ hàng lớn hơn 1 sẽ giảm số lượng 
             if ($current_quantity > 1) 
             {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
@@ -281,12 +294,14 @@ class StoreController extends Controller
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
             } 
 
+            //nếu số lượng sản phẩm trong giỏ hàng bằng 1, ấn giảm só lượng sẽ trả về thông báo
             else if ($current_quantity == 1) 
             {
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
                 session()->flash('fail', 'Sản phẩm không thể giảm xuống 0.');
             }
 
+            //nếu số lượng sản phẩm có sẵn trong kho bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng
             if ($product_detail->quantity == 0) 
             {
                 unset($shopping_cart[$product_id . '_' . $product_detail_id]);
@@ -328,6 +343,7 @@ class StoreController extends Controller
         }
 
         $user_id = auth()->id();
+        // lấy giỏ hàng từ session theo id người dùng hoặc khởi tạo là mảng rỗng nếu không tìm thấy giỏ hàng
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
 
         if (empty($shopping_cart)) 
@@ -335,7 +351,9 @@ class StoreController extends Controller
             return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn trống.');
         }
 
-        $isUpdated = false;
+        //  is_updated được sử dụng để kiểm tra có thay đổi về số lượng sản phẩm hay các sản phẩm trong giỏ hàng hay không 
+        $is_updated = false;
+
 
         foreach ($shopping_cart as $cart_item => $product) 
         {
@@ -351,10 +369,12 @@ class StoreController extends Controller
             {
                 session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
                 unset($shopping_cart[$cart_item]);
-                $isUpdated = true;
+                $is_updated = true;
                 continue;
+                //continue được sử dụng để bỏ qua và tiếp tục với dòng sản phẩm tiếp theo trong giỏ hàng
             }
 
+            // tìm chi tiết sản phẩm với size và color đã cho
             $product_detail = Product_Detail::where('product_detail_id', $product_detail_id)
                 ->where('product_id', $product_id)
                 ->where('size', $size)
@@ -365,7 +385,7 @@ class StoreController extends Controller
             {
                 session()->flash('fail', 'Thông tin chi tiết sản phẩm không hợp lệ.');
                 unset($shopping_cart[$cart_item]);
-                $isUpdated = true;
+                $is_updated = true;
                 continue;
             }
 
@@ -373,32 +393,42 @@ class StoreController extends Controller
             {
                 session()->flash('fail', 'Sản phẩm đã hết hàng hoặc đang không có sẵn trong cửa hàng.');
                 unset($shopping_cart[$cart_item]);
-                $isUpdated = true;
+                $is_updated = true;
                 continue;
             }
 
+
+            // kiểm tra xem số lượng sản phẩm trong giỏ hàng có vượt quá số lượng có sẵn trong kho không
             if ($quantity > $product_detail->quantity) 
             {
                 $shopping_cart[$cart_item]['quantity'] = $product_detail->quantity;
                 session()->flash('fail', 'Số lượng một số sản phẩm đã đạt số lượng tối đa và đã được cập nhật.');
-                $isUpdated = true;
+                $is_updated = true;
             }
         }
 
-        // Nếu giỏ hàng đã được cập nhật, lưu lại và chuyển hướng đến trang giỏ hàng
-        if ($isUpdated) 
+        // nếu giỏ hàng đã được cập nhật, lưu thay đổi và chuyển hướng đến trang giỏ hàng
+        if ($is_updated) 
         {
             session()->put('shopping_cart_' . $user_id, $shopping_cart);
 
+            // Kiểm tra xem giỏ hàng còn sản phẩm không sau khi cập nhật
             if (empty($shopping_cart)) 
             {
                 return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn hiện đã trống.');
             }
 
-            return redirect('/ktcstore/shopping-cart');
+            // Nếu giỏ hàng vẫn còn sản phẩm và đã có thông báo lỗi từ trước
+            if (session()->has('fail')) 
+            {
+                return redirect('/ktcstore/shopping-cart');
+            }
+
+            // Nếu không có thông báo lỗi, chuyển hướng đến trang giỏ hàng với thông báo thành công
+            return redirect('/ktcstore/shopping-cart')->with('success', 'Giỏ hàng của bạn đã được cập nhật thành công.');
         }
 
-        // Nếu không có thay đổi nào và giỏ hàng hợp lệ, chuyển đến trang thanh toán
+        // Nếu không có thay đổi nào sẽ chuyển đến trang thanh toán
         $customer = User::find($user_id);
         return view("customer.checkout", compact('customer', 'shopping_cart'));
     }
@@ -525,7 +555,7 @@ class StoreController extends Controller
             
             else if ($payment_method == "Thanh toán khi nhận hàng") 
             {
-                Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
+                // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
                 session()->forget('shopping_cart_' . $user_id);
                 return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
