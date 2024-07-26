@@ -605,4 +605,19 @@ class StoreController extends Controller
             return view("customer.shop", compact(['products']))->with('i', (request()->input('page', 1) - 1) * 16);
         }
     }
+
+    public function news_list() 
+    {
+        $news_list = News::get()->all();
+        return view('customer.blog', compact('news_list'));
+    }
+
+    public function read_news(Request $request) 
+    {
+        $title = $request->title;
+        $news_detail = News::where('title', '=', $title)
+        ->join('users', 'news.user_id', '=', 'users.user_id')
+        ->get();
+        return view('customer.blog-details', compact('news_detail'));
+    }
 }
