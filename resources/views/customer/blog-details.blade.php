@@ -35,7 +35,7 @@
                         <div class="blog__details__quote">
                             <i class="fa fa-quote-left"></i>
                             <p>Người đăng: {{$news->fullname}}</p>
-                            <h6>Ngày đăng: {{$news->created_at}}</h6>
+                            {{-- <h6>Ngày đăng: {{$news->created_at}}</h6> --}}
                         </div>
                     </div>
                 </div>
