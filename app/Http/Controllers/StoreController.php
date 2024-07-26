@@ -463,7 +463,6 @@ class StoreController extends Controller
                 $product_detail->save();
             }
 
-            session()->forget('shopping_cart_' . $user_id);
 
             DB::commit();
             // Nếu phương thức thanh toán là chuyển khoản
