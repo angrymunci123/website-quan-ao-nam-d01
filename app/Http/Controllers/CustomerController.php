@@ -29,6 +29,7 @@ class CustomerController extends Controller
         }
 
         $orders = Order::where('user_id', session('user_id'))
+            ->where('status', '!=', 'Đã hủy thanh toán')
             ->orderBy('order_id', "desc")
             ->paginate(10);
 
