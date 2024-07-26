@@ -44,7 +44,7 @@
                                     @csrf
                                     <input hidden type="text" name="fullname" value="{{$user->fullname}}" required/>
                                     <input hidden type="text" name="email" value="{{$user->email}}" required/>
-                                    <p> <b>Số điện thoại: </b> <input type="text" name="phone_number" value="{{$user->phone_number}}" placeholder="Số điện thoại" required maxlength="255"/></p>
+                                    <p> <b>Số điện thoại: </b> <input type="text" name="phone_number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{$user->phone_number}}" placeholder="Số điện thoại" required minlength="10" maxlength="11"/></p>
                                     <p> <b>Địa chỉ: </b> <input type="text" name="address" value="{{$user->address}}" placeholder="Địa chỉ" required maxlength="255"/></p>
                                     <div style="text-align:center">
                                         <button type="submit" class="btn btn-info" style="width:100px; color:white">Cập nhật</button>

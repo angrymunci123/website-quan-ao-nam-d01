@@ -34,7 +34,7 @@
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Số Điện Thoại là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Số Điện Thoại</span>
-						<input class="input100" type="text" name="phone_number" id="" placeholder="Số Điện Thoại" style="font-family: Arial;" maxlength="255">
+						<input class="input100" type="text" name="phone_number" id="" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Số Điện Thoại" style="font-family: Arial;" minlength="10" maxlength="11">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>

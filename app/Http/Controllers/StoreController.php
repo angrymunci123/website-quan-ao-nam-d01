@@ -21,25 +21,25 @@ class StoreController extends Controller
     public function mainpage()
     {
         $products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
-        ->leftJoin(
-            DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'),
-            function ($join) {
-                $join->on('product_detail.product_id', '=', 'min_prices.product_id')
-                    ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
-            }
-        )
-        ->where('product_detail.size', '=', 'S')
-        ->select(
-            'products.product_id',
-            'products.product_name',
-            DB::raw('MAX(product_detail.image) as image'),
-            DB::raw('MAX(product_detail.price) as price'),
-            DB::raw('MAX(product_detail.sale_price) as sale_price')
-        )
-        ->groupBy('products.product_id', 'products.product_name')
-        ->orderBy('products.product_id')
-        ->take(12)  
-        ->get();
+            ->leftJoin(
+                DB::raw('(SELECT product_id, MIN(sale_price) AS min_sale_price FROM product_detail GROUP BY product_id) AS min_prices'),
+                function ($join) {
+                    $join->on('product_detail.product_id', '=', 'min_prices.product_id')
+                        ->on('product_detail.sale_price', '=', 'min_prices.min_sale_price');
+                }
+            )
+            ->where('product_detail.size', '=', 'S')
+            ->select(
+                'products.product_id',
+                'products.product_name',
+                DB::raw('MAX(product_detail.image) as image'),
+                DB::raw('MAX(product_detail.price) as price'),
+                DB::raw('MAX(product_detail.sale_price) as sale_price')
+            )
+            ->groupBy('products.product_id', 'products.product_name')
+            ->orderBy('products.product_id')
+            ->take(12)
+            ->get();
 
         foreach ($products as $product) {
             $standardized_product_name = $product->product_name;
@@ -95,17 +95,16 @@ class StoreController extends Controller
                 'product_detail.product_detail_id', 'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size'
             ]);
 
-        if ($product_details->isNotEmpty()) 
-        {
+        if ($product_details->isNotEmpty()) {
             $product_id = $product_details->first()->product_id;
             $product_size = Product_Detail::where("product_detail.product_id", "=", $product_id)
-            ->where('product_detail.quantity', '>', 0)
-            ->get(['product_detail.product_detail_id', 'product_detail.product_id', 'product_detail.size', 'product_detail.quantity']);
+                ->where('product_detail.quantity', '>', 0)
+                ->get(['product_detail.product_detail_id', 'product_detail.product_id', 'product_detail.size', 'product_detail.quantity']);
 
             $product_colors = Product_Detail::where("product_detail.product_id", "=", $product_id)
-            ->where('product_detail.quantity', '>', 0)
-            ->distinct()
-            ->get(['product_detail.color']);
+                ->where('product_detail.quantity', '>', 0)
+                ->distinct()
+                ->get(['product_detail.color']);
         }
 
         // Fetch customer reviews
@@ -143,13 +142,14 @@ class StoreController extends Controller
 
     public function add_to_cart(Request $request)
     {
-        if (!Auth::check()) 
-        {
+        if (!Auth::check()) {
             return redirect('/ktcstore')->with('fail', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         }
 
         $product_id = $request->product_id;
-        $chosen_quantity = (int)$request->quantity; 
+
+        $chosen_quantity = (int)$request->quantity;
+
         $size = $request->size;
         $color = $request->color;
 
@@ -165,13 +165,11 @@ class StoreController extends Controller
 
         $total_quantity = $product_detail->quantity;
 
-        if ($total_quantity == 0) 
-        {
+        if ($total_quantity == 0) {
             return redirect()->back()->with('fail', 'Kích cỡ sản phẩm này đã hết hàng.');
         }
 
-        if ($chosen_quantity > $total_quantity) 
-        {
+        if ($chosen_quantity > $total_quantity) {
             return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
         }
 
@@ -179,20 +177,15 @@ class StoreController extends Controller
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
         $shopping_cart_item = $product_id . '_' . $product_detail->product_detail_id;
 
-        if (isset($shopping_cart[$shopping_cart_item])) 
-        {
+        if (isset($shopping_cart[$shopping_cart_item])) {
             $new_quantity = $shopping_cart[$shopping_cart_item]['quantity'] + $chosen_quantity;
 
-            if ($new_quantity > $total_quantity) 
-            {
+            if ($new_quantity > $total_quantity) {
                 return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
             }
 
             $shopping_cart[$shopping_cart_item]['quantity'] = $new_quantity;
-        } 
-
-        else 
-        {
+        } else {
             $shopping_cart[$shopping_cart_item] = [
                 "product_id" => $product->product_id,
                 "product_detail_id" => $product_detail->product_detail_id,
@@ -214,15 +207,13 @@ class StoreController extends Controller
     public function plus_quantity($product_id, $product_detail_id)
     {
         $user_id = auth()->id();
-        //lấy dữ liệu session giỏ hàng theo id người dùng 
+        //lấy dữ liệu session giỏ hàng theo id người dùng
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
-        {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             $product_detail = Product_Detail::find($product_detail_id);
 
-            if (!$product_detail) 
-            {
+            if (!$product_detail) {
                 session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
                 return redirect()->back();
             }
@@ -230,39 +221,33 @@ class StoreController extends Controller
             $stock_quantity = $product_detail->quantity;
             $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
 
+
             //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ tăng số lượng
-            if ($current_quantity < $stock_quantity) 
-            {
+            if ($current_quantity < $stock_quantity) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } 
+            }
 
             //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ cập nhật sang số lượng tối da hiện tại
-            else if ($current_quantity > $stock_quantity) 
-            {
+            else if ($current_quantity > $stock_quantity) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] = $stock_quantity;
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
                 session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa và đã được cập nhật thành số lượng tối đa.');
-            } 
+            }
 
             //nếu số lượng sp hiện tại bằng số lượng có sẵn sẽ thông báo đã đạt số lượng tối đa
-            else if ($current_quantity == $stock_quantity) 
-            {
+            else if ($current_quantity == $stock_quantity) {
                 session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa.');
+            }
 
-            } 
+            //nếu số lượng sp hiện tại bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng
+            else if ($stock_quantity == 0) {
 
-            //nếu số lượng sp hiện tại bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng 
-            else if ($stock_quantity == 0) 
-            {
                 unset($shopping_cart[$product_id . '_' . $product_detail_id]);
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
                 session()->flash('fail', 'Sản phẩm đã hết hàng và bị xóa khỏi giỏ hàng.');
             }
-
-        } 
-        else 
-        {
+        } else {
             session()->flash('fail', 'Sản phẩm không có trong giỏ hàng.');
         }
 
@@ -274,44 +259,40 @@ class StoreController extends Controller
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
-        {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             $product_detail = Product_Detail::find($product_detail_id);
 
-            if (!$product_detail) 
-            {
+            if (!$product_detail) {
                 session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
                 return redirect()->back();
             }
 
             $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
 
-            //nếu số lượng sản phẩm trong giỏ hàng lớn hơn 1 sẽ giảm số lượng 
-            if ($current_quantity > 1) 
-            {
+
+            //nếu số lượng sản phẩm trong giỏ hàng lớn hơn 1 sẽ giảm số lượng
+            if ($current_quantity > 1) {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
 
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } 
+            }
 
             //nếu số lượng sản phẩm trong giỏ hàng bằng 1, ấn giảm só lượng sẽ trả về thông báo
-            else if ($current_quantity == 1) 
-            {
+            else if ($current_quantity == 1) {
+
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
                 session()->flash('fail', 'Sản phẩm không thể giảm xuống 0.');
             }
 
+
             //nếu số lượng sản phẩm có sẵn trong kho bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng
-            if ($product_detail->quantity == 0) 
-            {
+            if ($product_detail->quantity == 0) {
+
                 unset($shopping_cart[$product_id . '_' . $product_detail_id]);
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
                 session()->flash('fail', 'Sản phẩm đã hết hàng và bị xóa khỏi giỏ hàng.');
             }
-        }
-
-        else 
-        {
+        } else {
             session()->flash('fail', 'Sản phẩm không có trong giỏ hàng.');
         }
 
@@ -326,8 +307,7 @@ class StoreController extends Controller
         $product_detail_id = $request->input('product_detail_id');
 
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
-        {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
             unset($shopping_cart[$product_id . '_' . $product_detail_id]);
             session()->put('shopping_cart_' . $user_id, $shopping_cart);
         }
@@ -337,8 +317,7 @@ class StoreController extends Controller
 
     public function checkout()
     {
-        if (!Auth::check()) 
-        {
+        if (!Auth::check()) {
             return redirect('/ktcstore');
         }
 
@@ -346,17 +325,15 @@ class StoreController extends Controller
         // lấy giỏ hàng từ session theo id người dùng hoặc khởi tạo là mảng rỗng nếu không tìm thấy giỏ hàng
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
 
-        if (empty($shopping_cart)) 
-        {
+        if (empty($shopping_cart)) {
             return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn trống.');
         }
 
-        //  is_updated được sử dụng để kiểm tra có thay đổi về số lượng sản phẩm hay các sản phẩm trong giỏ hàng hay không 
+        //  is_updated được sử dụng để kiểm tra có thay đổi về số lượng sản phẩm hay các sản phẩm trong giỏ hàng hay không
         $is_updated = false;
 
 
-        foreach ($shopping_cart as $cart_item => $product) 
-        {
+        foreach ($shopping_cart as $cart_item => $product) {
             $product_id = $product['product_id'];
             $product_detail_id = $product['product_detail_id'];
             $quantity = $product['quantity'];
@@ -365,8 +342,7 @@ class StoreController extends Controller
 
             $product = Product::find($product_id);
 
-            if (!$product) 
-            {
+            if (!$product) {
                 session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
                 unset($shopping_cart[$cart_item]);
                 $is_updated = true;
@@ -381,16 +357,14 @@ class StoreController extends Controller
                 ->where('color', $color)
                 ->first();
 
-            if (!$product_detail) 
-            {
+            if (!$product_detail) {
                 session()->flash('fail', 'Thông tin chi tiết sản phẩm không hợp lệ.');
                 unset($shopping_cart[$cart_item]);
                 $is_updated = true;
                 continue;
             }
 
-            if ($product_detail->quantity == 0) 
-            {
+            if ($product_detail->quantity == 0) {
                 session()->flash('fail', 'Sản phẩm đã hết hàng hoặc đang không có sẵn trong cửa hàng.');
                 unset($shopping_cart[$cart_item]);
                 $is_updated = true;
@@ -398,29 +372,29 @@ class StoreController extends Controller
             }
 
 
+
             // kiểm tra xem số lượng sản phẩm trong giỏ hàng có vượt quá số lượng có sẵn trong kho không
-            if ($quantity > $product_detail->quantity) 
-            {
+            if ($quantity > $product_detail->quantity) {
+
                 $shopping_cart[$cart_item]['quantity'] = $product_detail->quantity;
                 session()->flash('fail', 'Số lượng một số sản phẩm đã đạt số lượng tối đa và đã được cập nhật.');
                 $is_updated = true;
             }
         }
 
+
         // nếu giỏ hàng đã được cập nhật, lưu thay đổi và chuyển hướng đến trang giỏ hàng
-        if ($is_updated) 
-        {
+        if ($is_updated) {
             session()->put('shopping_cart_' . $user_id, $shopping_cart);
 
             // Kiểm tra xem giỏ hàng còn sản phẩm không sau khi cập nhật
-            if (empty($shopping_cart)) 
-            {
+            if (empty($shopping_cart)) {
+
                 return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn hiện đã trống.');
             }
 
             // Nếu giỏ hàng vẫn còn sản phẩm và đã có thông báo lỗi từ trước
-            if (session()->has('fail')) 
-            {
+            if (session()->has('fail')) {
                 return redirect('/ktcstore/shopping-cart');
             }
 
@@ -432,9 +406,10 @@ class StoreController extends Controller
         $customer = User::find($user_id);
         return view("customer.checkout", compact('customer', 'shopping_cart'));
     }
-    
+
     public function purchase(Request $request)
     {
+        // Lấy thông tin khách hàng và giỏ hàng
         $payment_method = $request->payment_method;
         $consignee = $request->consignee;
         $address = $request->address;
@@ -448,9 +423,8 @@ class StoreController extends Controller
         }
 
         DB::beginTransaction();
-
-        try 
-        {
+        // Thêm đơn hàng và chi tiết đơn hàng
+        try {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
                 'consignee' => $consignee,
@@ -492,13 +466,14 @@ class StoreController extends Controller
             session()->forget('shopping_cart_' . $user_id);
 
             DB::commit();
-
+            // Nếu phương thức thanh toán là chuyển khoản
             if ($payment_method == "Chuyển khoản") {
+                session()->put('new_order_id', $new_order_id);
                 DB::table('order')->where("order_id", $new_order_id)->update([
                     'status' => 'Đã hủy thanh toán',
                     'updated_at' => now()
                 ]);
-
+                // Gửi thông tin sang VNPAY
                 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 $vnp_Returnurl = route('vnpay_return');
                 $vnp_TmnCode = "VRNE42A3";
@@ -551,10 +526,7 @@ class StoreController extends Controller
                     $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
                 }
                 return redirect()->to($vnp_Url);
-            } 
-            
-            else if ($payment_method == "Thanh toán khi nhận hàng") 
-            {
+            } else if ($payment_method == "Thanh toán khi nhận hàng") {
                 // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
                 session()->forget('shopping_cart_' . $user_id);
                 return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
@@ -565,10 +537,10 @@ class StoreController extends Controller
         }
     }
 
-
+    // Khi nhận return từ VNPay
     public function vnpay_return()
     {
-        $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; 
+        $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H";
         $vnp_SecureHash = $_GET['vnp_SecureHash'];
         $inputData = array();
         foreach ($_GET as $key => $value) {
@@ -591,6 +563,7 @@ class StoreController extends Controller
         }
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
+            // Mã 00 là thanh toán thành công
             if ($_GET['vnp_ResponseCode'] == '00') {
                 $new_order_id = session()->get('new_order_id');
                 DB::table('order')->where("order_id", "=", "$new_order_id")->update([
@@ -602,6 +575,7 @@ class StoreController extends Controller
                 session()->forget('shopping_cart_' . auth()->id());
                 session()->forget('new_order_id');
                 return redirect('/ktcstore/order_history')->with('success', 'Thanh toán và đặt hàng thành công');
+                // Các mã khác là đã có thể có lỗi thanh toán xảy ra từ bên người dùng hoặc bên VNPay khiến thanh toán không được hoàn tất
             } else {
                 $new_order_id = session()->get('new_order_id');
                 DB::table('order_detail')->where('order_id', $new_order_id)->delete();
