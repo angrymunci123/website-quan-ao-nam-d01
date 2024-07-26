@@ -12,15 +12,16 @@ class NewsController extends Controller
 {
     public function news()
     {
+        //Check auth
         if (!Auth::check()) {
             return redirect('login');
         }
-
+        // Check Role
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
-
+        // Lấy news và phân trang
         $news = News::paginate(10);
         Paginator::useBootstrap();
         return view('admin.news.news_list', compact('news'))->with('i', (request()->input('page', 1) - 1) * 5);
@@ -35,7 +36,7 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         return view('admin.news.add_news');
@@ -49,7 +50,7 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $title = $request->title;
@@ -57,12 +58,11 @@ class NewsController extends Controller
         $user_id = auth()->id();
         $image = NULL;
 
-        if ($request->hasFile('image')) 
-        {
+        if ($request->hasFile('image')) {
             $image = time() . $request->image->getClientOriginalName();
             $request->image->move(public_path('image'), $image);
         }
-        
+
         DB::table('news')->insert([
             'user_id' => $user_id,
             'title' => $title,
@@ -73,15 +73,15 @@ class NewsController extends Controller
         ]);
         return redirect("/admin/news")->with('success', 'Tạo Tin Tức Mới Thành Công!');;
     }
-    
+
     public function check_news_exist($news_id)
     {
         $check_news_id = News::where('brand_id', $news_id)->exists();
-            
+
         if (!$check_news_id) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -93,7 +93,7 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $news = News::findOrFail($news_id);
@@ -109,13 +109,13 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $news = News::where('news_id', $news_id)->get();
         return view('admin.news.update_news', compact('news'));
     }
-    
+
     public function update_news(Request $request, $news_id)
     {
         if (!Auth::check()) {
@@ -124,7 +124,7 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $title = $request->title;
@@ -133,8 +133,7 @@ class NewsController extends Controller
 
         $image = NULL;
 
-        if ($request->hasFile('image')) 
-        {
+        if ($request->hasFile('image')) {
             $image = time() . $request->image->getClientOriginalName();
             $request->image->move(public_path('image'), $image);
         }
@@ -157,7 +156,7 @@ class NewsController extends Controller
 
         $user = Auth::user();
         if ($user->role === 'Khách Hàng') {
-            return redirect('/ktcstore'); 
+            return redirect('/ktcstore');
         }
 
         $news_id = $request->news_id;
