@@ -606,18 +606,18 @@ class StoreController extends Controller
         }
     }
 
-    public function news_list() 
+    public function news_list()
     {
         $news_list = News::get()->all();
         return view('customer.blog', compact('news_list'));
     }
 
-    public function read_news(Request $request) 
+    public function read_news(Request $request)
     {
         $title = $request->title;
         $news_detail = News::where('title', '=', $title)
-        ->join('users', 'news.user_id', '=', 'users.user_id')
-        ->get();
+            ->join('users', 'news.user_id', '=', 'users.user_id')
+            ->get();
         return view('customer.blog-details', compact('news_detail'));
     }
 }
