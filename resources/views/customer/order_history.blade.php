@@ -21,30 +21,31 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="shop__sidebar">
-                        <div class="shop__sidebar__accordion" style="padding-top: 20px">
-                            <div class="accordion" id="accordionExample">
-                                <div class="shop__sidebar__search">
-                                    <form action="/ktcstore/order_history/search_order" method="POST" enctype='multipart/form-data'>
-                                        @csrf
-                                        <input type="number" name="order_id" placeholder="Nhập mã đơn hàng..." min="1">
-                                        <button type="submit"><span class="icon_search"></span></button>
-                                    </form>
+                    <div class="shop__sidebar__accordion" style="padding-top: 20px">
+                        <div class="accordion" id="accordionExample">
+                            <div class="shop__sidebar__search">
+                                <form action="/ktcstore/order_history/search_order" method="POST"
+                                    enctype='multipart/form-data'>
+                                    @csrf
+                                    <input type="number" name="order_id" placeholder="Nhập mã đơn hàng..." min="1">
+                                    <button type="submit"><span class="icon_search"></span></button>
+                                </form>
+                            </div>
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne">Tình Trạng Đơn Hàng</a>
                                 </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Tình Trạng Đơn Hàng</a>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
-                                                    <li><a href="/ktcstore/order_history/pending">Chờ xác nhận</a></li>
-                                                    <li><a href="/ktcstore/order_history/confirmed">Đã xác nhận</a></li>
-                                                    <li><a href="/ktcstore/order_history/delivering">Đang vận chuyển</a></li>
-                                                    <li><a href="/ktcstore/order_history/delivered">Đã Giao</a></li>
-                                                    <li><a href="/ktcstore/order_history/canceled">Đã Hủy</a></li>
-                                                </ul>
-                                            </div>
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll">
+                                                <li><a href="/ktcstore/order_history/pending">Chờ xác nhận</a></li>
+                                                <li><a href="/ktcstore/order_history/confirmed">Đã xác nhận</a></li>
+                                                <li><a href="/ktcstore/order_history/delivering">Đang vận chuyển</a>
+                                                </li>
+                                                <li><a href="/ktcstore/order_history/delivered">Đã Giao</a></li>
+                                                <li><a href="/ktcstore/order_history/canceled">Đã Hủy</a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -53,8 +54,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-9">
-            <div class="shop__product__option">
+                <div class="shop__product__option">
                     @if(Session::has('success'))
                         <div class="alert alert-success">{{Session::get('success')}}</div>
                     @endif
@@ -107,6 +109,7 @@
             </div>
         </div>
     </div>
+    </div>
     <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -127,6 +130,6 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 </section>
 @endsection

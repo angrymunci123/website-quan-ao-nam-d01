@@ -100,21 +100,6 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseFour">Lọc theo thứ tự giá</a>
-                                </div>
-                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__price">
-                                            <ul>
-                                                <li><a href="/ktcstore/shop/price-asc">Giá tăng dần</a></li>
-                                                <li><a href="/ktcstore/shop/price-desc">Giá giảm dần</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseFour">Lọc theo thứ tự giá</a>
                                     </div>
