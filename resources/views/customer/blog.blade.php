@@ -16,16 +16,20 @@
     <section class="blog spad">
         <div class="container">
             <div class="row">
+                @foreach($news_list as $news)
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="{{ asset ('temp_assets/img/blog/blog-1.jpg')}}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="{{ asset('image/'.$news->image) }}">
+                            <img src="{{ asset('image/'.$news->image) }}" alt="Image" style="display: none;">
+                        </div>
                         <div class="blog__item__text">
-                            <span><img src="{{ asset ('temp_assets/img/icon/calendar.png')}}" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="/ktcstore/blog-details">Read More</a>
+                            <span><img src="{{ asset('temp_assets/img/icon/calendar.png') }}" alt="">{{ $news->created_at }}</span>
+                            <h5>{{ $news->title }}</h5>
+                            <a href="/ktcstore/blog/{{$news->title}}">Xem thêm</a>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </section>
