@@ -137,7 +137,7 @@ class OrderController extends Controller
         $order_details = Order::join('order_detail', 'order.order_id', '=', 'order_detail.order_id')
             ->join('users', 'order.user_id', '=', 'users.user_id')
             ->where('order.order_id', '=', $order_id)
-            ->select('order.*', 'order_detail.*', 'order.created_at as order_created_at')
+            ->select('order.*', 'order_detail.*')
             ->get();
 
         $product_order = Order_Detail::join('product_detail', 'order_detail.product_detail_id', '=', 'product_detail.product_detail_id')
@@ -274,19 +274,15 @@ class OrderController extends Controller
 
         $order_id = $request->order_id;
         if ($order_id) {
-            $search_text = $_POST['username'];
-            $users = Order::where('fullname', 'LIKE', "%$search_text%")->where(function ($user_query) {
-                $user_query->where('role', 'Khách Hàng')
-                    ->orWhere('role', 'Nhân Viên');
-            })
-                ->orderBy('user_id', 'asc')
+            $orders = Order::where('order_id', $order_id)
+                ->orderBy('order_id', 'desc')
                 ->paginate(10);
             Paginator::useBootstrap();
 
-            if ($users->isEmpty()) {
-                return view('admin.user.user_list', compact('users'));
+            if ($orders->isEmpty()) {
+                return view('admin.order.order_list', compact('orders'));
             } else {
-                return view('admin.user.user_list', compact('users'))->with('username', $search_text)->with('i', (request()->input('page', 1) - 1) * 5);
+                return view('admin.order.order_list', compact('orders'))->with('order_id', $order_id)->with('i', (request()->input('page', 1) - 1) * 5);
             }
         } else {
             return back();

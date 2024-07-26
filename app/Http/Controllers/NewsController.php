@@ -76,7 +76,7 @@ class NewsController extends Controller
 
     public function check_news_exist($news_id)
     {
-        $check_news_id = News::where('brand_id', $news_id)->exists();
+        $check_news_id = News::where('news_id', $news_id)->exists();
 
         if (!$check_news_id) {
             return false;

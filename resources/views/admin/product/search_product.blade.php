@@ -86,7 +86,7 @@
                     </tr>
                     <div class="popup" id="confirmPopup-{{$search->product_id}}">
                       <div class="popup-content">
-                        <p>Bạn có chắc chắn muốn xóa sản phẩm này không? {{$inj->product_id}}</p>
+                        <p>Bạn có chắc chắn muốn xóa sản phẩm này không? {{$search->product_id}}</p>
                         <form action="/admin/product/delete_product/product_id={{$search->product_id}}" method="POST">
                             @csrf 
                             <button type="submit" id="confirmDeleteButton-{{$search->product_id}}" class="btn btn-danger">Xác nhận</button>

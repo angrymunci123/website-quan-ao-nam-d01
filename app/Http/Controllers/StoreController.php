@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Models\Product_Review;
+use App\Models\News;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
@@ -59,7 +60,9 @@ class StoreController extends Controller
             $product->standardized_product_name = $standardized_product_name;
         }
 
-        return view('customer.index', compact(['products', 'standardized_product_name']));
+        $display_news = News::get()->take(3);
+
+        return view('customer.index', compact(['products', 'standardized_product_name', 'display_news']));
     }
 
     public function contact()

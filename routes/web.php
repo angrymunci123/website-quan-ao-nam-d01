@@ -186,7 +186,8 @@ Route::post('/admin/order/cancel/order_id={order_id}', [OrderController::class, 
 Route::get('/admin/order/cancel/order_id={order_id}', function () {
     return redirect('/');
 });
-Route::get('/admin/order/filter-status', [OrderController::class, "filter_status"])->name('filter.status');;
+Route::get('/admin/order/filter-status', [OrderController::class, "filter_status"])->name('filter.status');
+Route::post('/admin/order/search_order', [OrderController::class, "search_order"]);
 
 //Customer
 Route::get('/ktcstore', [StoreController::class, "mainpage"]);
