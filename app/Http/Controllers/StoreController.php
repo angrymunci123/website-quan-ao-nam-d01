@@ -145,48 +145,43 @@ class StoreController extends Controller
 
     public function add_to_cart(Request $request)
     {
+        // Kiểm tra xem đã đăng nhập chưa
         if (!Auth::check()) {
             return redirect('/ktcstore')->with('fail', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         }
-
+        // Lấy thông tin sản phẩm
         $product_id = $request->product_id;
-
         $chosen_quantity = (int)$request->quantity;
-
         $size = $request->size;
         $color = $request->color;
-
         $product = Product::find($product_id);
         $product_detail = Product_Detail::where('product_id', $product_id)
             ->where('size', $size)
             ->where('color', $color)
             ->first();
-
+        // Nếu product hoặc detail không tồn tại thì abort 404
         if (!$product || !$product_detail) {
             abort(404);
         }
-
+        // Kiểm tra số lượng sản phẩm tồn kho
         $total_quantity = $product_detail->quantity;
-
         if ($total_quantity == 0) {
             return redirect()->back()->with('fail', 'Kích cỡ sản phẩm này đã hết hàng.');
         }
-
         if ($chosen_quantity > $total_quantity) {
             return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
         }
-
+        // Lấy thông tin user và shopping cart hiện tại
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
         $shopping_cart_item = $product_id . '_' . $product_detail->product_detail_id;
-
+        // Nếu có item này trong cart rồi thì tăng quantity
         if (isset($shopping_cart[$shopping_cart_item])) {
             $new_quantity = $shopping_cart[$shopping_cart_item]['quantity'] + $chosen_quantity;
-
+            // Kiểm tra số lượng tồn kho
             if ($new_quantity > $total_quantity) {
                 return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
             }
-
             $shopping_cart[$shopping_cart_item]['quantity'] = $new_quantity;
         } else {
             $shopping_cart[$shopping_cart_item] = [
@@ -302,7 +297,7 @@ class StoreController extends Controller
         return redirect()->back();
     }
 
-
+    // Xóa sản phẩm khỏi giỏ hàng
     public function remove_from_cart(Request $request)
     {
         $user_id = auth()->id();
