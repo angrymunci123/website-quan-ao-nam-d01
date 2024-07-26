@@ -50,7 +50,7 @@
               <thead>
                 <tr>
                   <th class="text-uppercase font-weight-bolder opacity-7 text-center">ID Đơn Hàng</th>
-                  <th class="text-uppercase font-weight-bolder opacity-7 text-center">Thời Gian</th>
+                  <th class="text-uppercase font-weight-bolder opacity-7 text-center">Ngày đặt hàng</th>
                   <th class="text-uppercase font-weight-bolder opacity-7 text-center">Trạng thái</th>
                   <th class="text-uppercase font-weight-bolder opacity-7 text-center">Chức Năng</th>
                 </tr>

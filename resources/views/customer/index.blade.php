@@ -159,39 +159,20 @@
             </div>
         </div>
         <div class="row">
+        @foreach($display_news as $news)
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="blog__item">
-                    <div class="blog__item__pic set-bg" data-setbg="{{ asset('temp_assets/img/blog/blog-1.jpg')}}">
+                    <div class="blog__item__pic set-bg" data-setbg="{{ asset('image/'.$news->image) }}">
+                        <img src="{{ asset('image/'.$news->image) }}" alt="Image" style="display: none;">
                     </div>
                     <div class="blog__item__text">
-                        <span><img src="{{ asset('temp_assets/img/icon/calendar.png')}}" alt="">29 Tháng 2 2024</span>
-                        <h5>Giảm giá 75% cho những khách hàng lần đầu đặt hàng</h5>
+                        <span><img src="{{ asset('temp_assets/img/icon/calendar.png') }}" alt="">{{ $news->created_at }}</span>
+                        <h5>{{ $news->title }}</h5>
                         <a href="#">Đọc thêm</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic set-bg" data-setbg="{{ asset('temp_assets/img/blog/blog-2.jpg')}}">
-                    </div>
-                    <div class="blog__item__text">
-                        <span><img src="{{ asset('temp_assets/img/icon/calendar.png')}}" alt=""> 31 Tháng 4 2024</span>
-                        <h5>Giảm giá tới 50% toàn bộ cửa hàng</h5>
-                        <a href="#">Đọc thêm</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic set-bg" data-setbg="{{ asset('temp_assets/img/blog/blog-3.jpg')}}">
-                    </div>
-                    <div class="blog__item__text">
-                        <span><img src="{{ asset('temp_assets/img/icon/calendar.png')}}" alt=""> 30 Tháng 5 2024</span>
-                        <h5>Deal cực sốc</h5>
-                        <a href="#">Đọc thêm</a>
-                    </div>
-                </div>
-            </div>
+        @endforeach
         </div>
     </div>
 </section>
