@@ -23,19 +23,19 @@
                 <input type="hidden" name="_token" value="<?php echo csrf_token()?>" />
                 <div class="form-group">
                   <strong>Giá</strong>
-                  <input type="number" name="price" id="price" class="form-control" required>
+                  <input type="number" name="price" id="price" class="form-control" required max="9999999999">
                 </div>
                 <div class="form-group">
                   <strong>Giá Khuyến Mãi</strong>
-                  <input type="number" name="sale_price" id="sale_price" class="form-control" required>
+                  <input type="number" name="sale_price" id="sale_price" class="form-control" required max="9999999999">
                 </div>
                 <div class="form-group">
                   <strong>Số lượng</strong>
-                  <input type="number" name="quantity" id="quantity" class="form-control" required>
+                  <input type="number" name="quantity" id="quantity" class="form-control" required max="500">
                 </div>
                 <div class="form-group">
                   <strong>Màu Sắc</strong>
-                  <input type="text" name="color" id="color" class="form-control" required>
+                  <input type="text" name="color" id="color" class="form-control" required maxlength="255">
                 </div>
                 <div class="form-group">
                   <strong>Kích Cỡ</strong>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                   <strong>Chất Liệu</strong>
-                  <input type="text" name="material" id="material" class="form-control" required>
+                  <input type="text" name="material" id="material" class="form-control" required maxlength="255">
                 </div>
                 <div class="form-group">
                   <strong>Image</strong>

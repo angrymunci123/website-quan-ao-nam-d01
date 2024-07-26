@@ -15,7 +15,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <strong>Tên Danh Mục</strong>
-                  <input type="text" name="category_name" id="category_name" class="form-control" required>
+                  <input type="text" name="category_name" id="category_name" class="form-control" required maxlength="255">
                 </div>
               </div>
               <div class="grid">

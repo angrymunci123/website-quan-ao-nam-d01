@@ -263,4 +263,44 @@ class OrderController extends Controller
 
         return back()->with('notification', 'Hủy đơn hàng thành công');
     }
+
+    public function search_order(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        $user = Auth::user();
+        if ($user->role === 'Khách Hàng') {
+            return redirect('/ktcstore'); 
+        }
+        
+        $order_id = $request->order_id;
+        if ($order_id) {
+            $search_text = $_POST['username'];
+            $users = Order::where('fullname', 'LIKE', "%$search_text%")->where(function ($user_query) {
+                $user_query->where('role', 'Khách Hàng')
+                      ->orWhere('role', 'Nhân Viên');
+            })
+            ->orderBy('user_id', 'asc')
+            ->paginate(10);
+            Paginator::useBootstrap();
+
+            if ($users->isEmpty()) 
+            {
+                return view('admin.user.user_list', compact('users'));
+            } 
+            
+            else 
+            {
+                return view('admin.user.user_list', compact('users'))->with('username', $search_text)->with('i', (request()->input('page', 1) - 1) * 5);
+            }
+
+        } 
+        
+        else 
+        {
+            return back();
+        }
+    }
 }

@@ -66,6 +66,7 @@ class StoreController extends Controller
     {
         return view("customer.contact");
     }
+
     public function shopping_cart()
     {
         return view('customer.shopping-cart');
@@ -94,19 +95,26 @@ class StoreController extends Controller
                 'product_detail.product_detail_id', 'product_detail.image', 'products.description', 'product_detail.quantity', 'product_detail.size'
             ]);
 
-        if ($product_details->isNotEmpty()) {
+        if ($product_details->isNotEmpty()) 
+        {
             $product_id = $product_details->first()->product_id;
             $product_size = Product_Detail::where("product_detail.product_id", "=", $product_id)
-                ->get(['product_detail.product_detail_id', 'product_detail.product_id', 'product_detail.size']);
+            ->where('product_detail.quantity', '>', 0)
+            ->get(['product_detail.product_detail_id', 'product_detail.product_id', 'product_detail.size', 'product_detail.quantity']);
 
             $product_colors = Product_Detail::where("product_detail.product_id", "=", $product_id)
-                ->distinct()
-                ->get(['product_detail.color']);
+            ->where('product_detail.quantity', '>', 0)
+            ->distinct()
+            ->get(['product_detail.color']);
         }
 
-        $customer_review = Product_Review::where('product_id', '=', $product_id)->join('Users', 'product_reviews.user_id', '=', 'users.user_id')
-            ->take(2)->get(['users.fullname', 'product_reviews.rating', 'product_reviews.content', 'product_reviews.image', 'product_reviews.created_at']);
+        // Fetch customer reviews
+        $customer_review = Product_Review::where('product_id', '=', $product_id)
+            ->join('Users', 'product_reviews.user_id', '=', 'users.user_id')
+            ->take(2)
+            ->get(['users.fullname', 'product_reviews.rating', 'product_reviews.content', 'product_reviews.image', 'product_reviews.created_at']);
 
+        // Fetch other products
         $other_products = Product::leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
             ->where('product_detail.size', '=', 'S')
             ->where('products.product_id', '!=', $product_id)
@@ -135,37 +143,59 @@ class StoreController extends Controller
 
     public function add_to_cart(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/ktcstore');
+        if (!Auth::check()) 
+        {
+            return redirect('/ktcstore')->with('fail', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         }
 
         $product_id = $request->product_id;
-        $product_detail_id = $request->product_detail_id;
-        $chosen_quantity = $request->quantity;
+        $chosen_quantity = (int)$request->quantity; 
         $size = $request->size;
         $color = $request->color;
 
         $product = Product::find($product_id);
-        $product_detail = Product_Detail::where('product_id', '=', $product_id)
-                                ->where('size', $size)
-                                ->first();
-        $product_detail_id = $product_detail->product_detail_id;
-        $total_quantity = $product_detail->quantity;
+        $product_detail = Product_Detail::where('product_id', $product_id)
+            ->where('size', $size)
+            ->where('color', $color)
+            ->first();
 
         if (!$product || !$product_detail) {
             abort(404);
         }
 
-        $user_id = auth()->id();
+        $total_quantity = $product_detail->quantity;
 
+        if ($total_quantity == 0) 
+        {
+            return redirect()->back()->with('fail', 'Kích cỡ sản phẩm này đã hết hàng.');
+        }
+
+        if ($chosen_quantity > $total_quantity) 
+        {
+            return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
+        }
+
+        $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
-        $shopping_cart_item = $product_id . '_' . $product_detail_id;
-        if (isset($shopping_cart[$shopping_cart_item])) {
-            $shopping_cart[$shopping_cart_item]['quantity'] += $chosen_quantity;
-        } else {
+        $shopping_cart_item = $product_id . '_' . $product_detail->product_detail_id;
+
+        if (isset($shopping_cart[$shopping_cart_item])) 
+        {
+            $new_quantity = $shopping_cart[$shopping_cart_item]['quantity'] + $chosen_quantity;
+
+            if ($new_quantity > $total_quantity) 
+            {
+                return redirect()->back()->with('fail', 'Số lượng bạn chọn vượt quá số lượng có sẵn trong kho.');
+            }
+
+            $shopping_cart[$shopping_cart_item]['quantity'] = $new_quantity;
+        } 
+
+        else 
+        {
             $shopping_cart[$shopping_cart_item] = [
                 "product_id" => $product->product_id,
-                "product_detail_id" => $product_detail_id,
+                "product_detail_id" => $product_detail->product_detail_id,
                 "product_name" => $product->product_name,
                 "quantity" => $chosen_quantity,
                 "price" => $product_detail->price,
@@ -176,25 +206,66 @@ class StoreController extends Controller
                 "total_quantity" => $total_quantity
             ];
         }
-        session()->put('shopping_cart_' . $user_id, $shopping_cart);
 
+        session()->put('shopping_cart_' . $user_id, $shopping_cart);
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
 
     public function plus_quantity($product_id, $product_detail_id)
     {
         $user_id = auth()->id();
+        //lấy dữ liệu session giỏ hàng theo id người dùng 
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            $stock_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['total_quantity'];
-            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] < $stock_quantity) {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
+        {
+            $product_detail = Product_Detail::find($product_detail_id);
+
+            if (!$product_detail) 
+            {
+                session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
+                return redirect()->back();
+            }
+
+            $stock_quantity = $product_detail->quantity;
+            $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
+
+            //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ tăng số lượng
+            if ($current_quantity < $stock_quantity) 
+            {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']++;
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } else {
-                session()->flash('fail', 'Số lượng đã đạt giới hạn số lượng sản phẩm có sẵn!');
+            } 
+
+            //nếu số lượng sp hiện tại nhỏ hơn số lượng có sẵn sẽ cập nhật sang số lượng tối da hiện tại
+            else if ($current_quantity > $stock_quantity) 
+            {
+                $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] = $stock_quantity;
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa và đã được cập nhật thành số lượng tối đa.');
+            } 
+
+            //nếu số lượng sp hiện tại bằng số lượng có sẵn sẽ thông báo đã đạt số lượng tối đa
+            else if ($current_quantity == $stock_quantity) 
+            {
+                session()->flash('fail', 'Số lượng sản phẩm đã đạt số lượng tối đa.');
+
+            } 
+
+            //nếu số lượng sp hiện tại bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng 
+            else if ($stock_quantity == 0) 
+            {
+                unset($shopping_cart[$product_id . '_' . $product_detail_id]);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Sản phẩm đã hết hàng và bị xóa khỏi giỏ hàng.');
             }
+
+        } 
+        else 
+        {
+            session()->flash('fail', 'Sản phẩm không có trong giỏ hàng.');
         }
+
         return redirect()->back();
     }
 
@@ -203,16 +274,50 @@ class StoreController extends Controller
         $user_id = auth()->id();
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
 
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
-            if ($shopping_cart[$product_id . '_' . $product_detail_id]['quantity'] > 1) {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
+        {
+            $product_detail = Product_Detail::find($product_detail_id);
+
+            if (!$product_detail) 
+            {
+                session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
+                return redirect()->back();
+            }
+
+            $current_quantity = $shopping_cart[$product_id . '_' . $product_detail_id]['quantity'];
+
+            //nếu số lượng sản phẩm trong giỏ hàng lớn hơn 1 sẽ giảm số lượng 
+            if ($current_quantity > 1) 
+            {
                 $shopping_cart[$product_id . '_' . $product_detail_id]['quantity']--;
+
                 session()->put('shopping_cart_' . $user_id, $shopping_cart);
-            } else {
-                session()->flash('fail', 'Số lượng sản phẩm không thể giảm xuống 0!');
+            } 
+
+            //nếu số lượng sản phẩm trong giỏ hàng bằng 1, ấn giảm só lượng sẽ trả về thông báo
+            else if ($current_quantity == 1) 
+            {
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Sản phẩm không thể giảm xuống 0.');
+            }
+
+            //nếu số lượng sản phẩm có sẵn trong kho bằng 0 sẽ xóa sản phẩm khỏi giỏ hàng
+            if ($product_detail->quantity == 0) 
+            {
+                unset($shopping_cart[$product_id . '_' . $product_detail_id]);
+                session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                session()->flash('fail', 'Sản phẩm đã hết hàng và bị xóa khỏi giỏ hàng.');
             }
         }
+
+        else 
+        {
+            session()->flash('fail', 'Sản phẩm không có trong giỏ hàng.');
+        }
+
         return redirect()->back();
     }
+
 
     public function remove_from_cart(Request $request)
     {
@@ -221,7 +326,8 @@ class StoreController extends Controller
         $product_detail_id = $request->input('product_detail_id');
 
         $shopping_cart = session()->get('shopping_cart_' . $user_id);
-        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) {
+        if (isset($shopping_cart[$product_id . '_' . $product_detail_id])) 
+        {
             unset($shopping_cart[$product_id . '_' . $product_detail_id]);
             session()->put('shopping_cart_' . $user_id, $shopping_cart);
         }
@@ -231,34 +337,120 @@ class StoreController extends Controller
 
     public function checkout()
     {
-        if (!Auth::check()) {
+        if (!Auth::check()) 
+        {
             return redirect('/ktcstore');
         }
 
         $user_id = auth()->id();
-        $shopping_cart = session()->get('shopping_cart_' . $user_id);
-        if (!isset($shopping_cart)) {
-            return redirect('/ktcstore');
-        }
-        $customer = User::where("user_id", "=", session('user_id'))->first();
-        return view("customer.checkout", compact(['customer', 'shopping_cart']));
-    }
+        // lấy giỏ hàng từ session theo id người dùng hoặc khởi tạo là mảng rỗng nếu không tìm thấy giỏ hàng
+        $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
 
+        if (empty($shopping_cart)) 
+        {
+            return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn trống.');
+        }
+
+        //  is_updated được sử dụng để kiểm tra có thay đổi về số lượng sản phẩm hay các sản phẩm trong giỏ hàng hay không 
+        $is_updated = false;
+
+
+        foreach ($shopping_cart as $cart_item => $product) 
+        {
+            $product_id = $product['product_id'];
+            $product_detail_id = $product['product_detail_id'];
+            $quantity = $product['quantity'];
+            $size = $product['size'];
+            $color = $product['color'];
+
+            $product = Product::find($product_id);
+
+            if (!$product) 
+            {
+                session()->flash('fail', 'Sản phẩm không tồn tại trong cửa hàng.');
+                unset($shopping_cart[$cart_item]);
+                $is_updated = true;
+                continue;
+                //continue được sử dụng để bỏ qua và tiếp tục với dòng sản phẩm tiếp theo trong giỏ hàng
+            }
+
+            // tìm chi tiết sản phẩm với size và color đã cho
+            $product_detail = Product_Detail::where('product_detail_id', $product_detail_id)
+                ->where('product_id', $product_id)
+                ->where('size', $size)
+                ->where('color', $color)
+                ->first();
+
+            if (!$product_detail) 
+            {
+                session()->flash('fail', 'Thông tin chi tiết sản phẩm không hợp lệ.');
+                unset($shopping_cart[$cart_item]);
+                $is_updated = true;
+                continue;
+            }
+
+            if ($product_detail->quantity == 0) 
+            {
+                session()->flash('fail', 'Sản phẩm đã hết hàng hoặc đang không có sẵn trong cửa hàng.');
+                unset($shopping_cart[$cart_item]);
+                $is_updated = true;
+                continue;
+            }
+
+
+            // kiểm tra xem số lượng sản phẩm trong giỏ hàng có vượt quá số lượng có sẵn trong kho không
+            if ($quantity > $product_detail->quantity) 
+            {
+                $shopping_cart[$cart_item]['quantity'] = $product_detail->quantity;
+                session()->flash('fail', 'Số lượng một số sản phẩm đã đạt số lượng tối đa và đã được cập nhật.');
+                $is_updated = true;
+            }
+        }
+
+        // nếu giỏ hàng đã được cập nhật, lưu thay đổi và chuyển hướng đến trang giỏ hàng
+        if ($is_updated) 
+        {
+            session()->put('shopping_cart_' . $user_id, $shopping_cart);
+
+            // Kiểm tra xem giỏ hàng còn sản phẩm không sau khi cập nhật
+            if (empty($shopping_cart)) 
+            {
+                return redirect('/ktcstore')->with('fail', 'Giỏ hàng của bạn hiện đã trống.');
+            }
+
+            // Nếu giỏ hàng vẫn còn sản phẩm và đã có thông báo lỗi từ trước
+            if (session()->has('fail')) 
+            {
+                return redirect('/ktcstore/shopping-cart');
+            }
+
+            // Nếu không có thông báo lỗi, chuyển hướng đến trang giỏ hàng với thông báo thành công
+            return redirect('/ktcstore/shopping-cart')->with('success', 'Giỏ hàng của bạn đã được cập nhật thành công.');
+        }
+
+        // Nếu không có thay đổi nào sẽ chuyển đến trang thanh toán
+        $customer = User::find($user_id);
+        return view("customer.checkout", compact('customer', 'shopping_cart'));
+    }
+    
     public function purchase(Request $request)
     {
         $payment_method = $request->payment_method;
         $consignee = $request->consignee;
         $address = $request->address;
         $phone_number = $request->phone_number;
-
-
-        $user_id = session('user_id');
+        $user_id = auth()->id();
         $notes = $request->notes;
-        $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
+        $shopping_cart = session()->get('shopping_cart_' . $user_id, []);
+
         if (empty($shopping_cart)) {
             return redirect('/ktcstore/checkout')->with('fail', 'Giỏ hàng của bạn đang trống.');
         }
-        try {
+
+        DB::beginTransaction();
+
+        try 
+        {
             $new_order_id = DB::table('order')->insertGetId([
                 'status' => 'Đang chờ xác nhận',
                 'consignee' => $consignee,
@@ -271,102 +463,108 @@ class StoreController extends Controller
                 'updated_at' => NULL
             ]);
 
-            $shopping_cart = session()->get('shopping_cart_' . auth()->id(), []);
             foreach ($shopping_cart as $cart_data) {
-                if ($cart_data['price'] && $cart_data['sale_price'] == 0) {
-                    $price_to_use = $cart_data['price'];
-                } else if ($cart_data['sale_price'] && $cart_data['sale_price'] < $cart_data['price']) {
-                    $price_to_use = $cart_data['sale_price'];
+                $product_detail = Product_Detail::find($cart_data['product_detail_id']);
+
+                if (!$product_detail) {
+                    throw new \Exception('Sản phẩm không tồn tại trong kho.');
+                }
+
+                if ($product_detail->quantity < $cart_data['quantity']) {
+                    $shopping_cart[$cart_data['product_id'] . '_' . $cart_data['product_detail_id']]['quantity'] = $product_detail->quantity;
+                    session()->put('shopping_cart_' . $user_id, $shopping_cart);
+                    throw new \Exception('Số lượng một số sản phẩm đã đạt số lượng tối đa và đã được cập nhật.');
                 }
 
                 DB::table('order_detail')->insert([
                     'order_id' => $new_order_id,
                     'product_detail_id' => $cart_data['product_detail_id'],
-                    'price' => $price_to_use,
+                    'price' => $cart_data['sale_price'] ?: $cart_data['price'],
                     'quantity' => $cart_data['quantity'],
                     'created_at' => now(),
                     'updated_at' => NULL
                 ]);
 
-                $product_detail = Product_Detail::find($cart_data['product_detail_id']);
-                if ($product_detail) {
-                    $product_detail->quantity -= $cart_data['quantity'];
-                    $product_detail->save();
+                $product_detail->quantity -= $cart_data['quantity'];
+                $product_detail->save();
+            }
+
+            session()->forget('shopping_cart_' . $user_id);
+
+            DB::commit();
+
+            if ($payment_method == "Chuyển khoản") {
+                DB::table('order')->where("order_id", $new_order_id)->update([
+                    'status' => 'Đã hủy thanh toán',
+                    'updated_at' => now()
+                ]);
+
+                $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+                $vnp_Returnurl = route('vnpay_return');
+                $vnp_TmnCode = "VRNE42A3";
+                $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H";
+                $vnp_TxnRef = "KTC-" . $user_id . $new_order_id;
+                $vnp_OrderInfo = "Thanh toán hóa đơn";
+                $vnp_OrderType = "Đơn hàng KTC Store";
+                $vnp_Amount = $request->total_price * 100;
+                $vnp_Locale = "vn";
+                $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+                $inputData = array(
+                    "vnp_Version" => "2.1.0",
+                    "vnp_TmnCode" => $vnp_TmnCode,
+                    "vnp_Amount" => $vnp_Amount,
+                    "vnp_Command" => "pay",
+                    "vnp_CreateDate" => date('YmdHis'),
+                    "vnp_CurrCode" => "VND",
+                    "vnp_IpAddr" => $vnp_IpAddr,
+                    "vnp_Locale" => $vnp_Locale,
+                    "vnp_OrderInfo" => $vnp_OrderInfo,
+                    "vnp_OrderType" => $vnp_OrderType,
+                    "vnp_ReturnUrl" => $vnp_Returnurl,
+                    "vnp_TxnRef" => $vnp_TxnRef,
+                );
+
+                if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                    $inputData['vnp_BankCode'] = $vnp_BankCode;
                 }
-            }
-
-            session()->put('new_order_id', $new_order_id);
-        } catch (\exception $e) {
-            return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng.');
-        }
-
-
-        $new_order_id = session()->get('new_order_id');
-        if ($payment_method == "Chuyển khoản") {
-            DB::table('order')->where("order_id", "=", "$new_order_id")->update([
-                'status' => 'Đã hủy thanh toán',
-                'updated_at' => now()
-            ]);
-            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = route('vnpay_return');
-            $vnp_TmnCode = "VRNE42A3"; //Mã website tại VNPAY
-            $vnp_HashSecret = "YK1OFOLRCMEYE0OPJ2ZL71S33GL0RD7H"; //Chuỗi bí mật
-            $vnp_TxnRef = "KTC-" . $user_id . $new_order_id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-            $vnp_OrderInfo = "Thanh toán hóa đơn";
-            $vnp_OrderType = "Đơn hàng KTC Store";
-            $vnp_Amount = $request->total_price * 100;
-            $vnp_Locale = "vn";
-            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-            $inputData = array(
-                "vnp_Version" => "2.1.0",
-                "vnp_TmnCode" => $vnp_TmnCode,
-                "vnp_Amount" => $vnp_Amount,
-                "vnp_Command" => "pay",
-                "vnp_CreateDate" => date('YmdHis'),
-                "vnp_CurrCode" => "VND",
-                "vnp_IpAddr" => $vnp_IpAddr,
-                "vnp_Locale" => $vnp_Locale,
-                "vnp_OrderInfo" => $vnp_OrderInfo,
-                "vnp_OrderType" => $vnp_OrderType,
-                "vnp_ReturnUrl" => $vnp_Returnurl,
-                "vnp_TxnRef" => $vnp_TxnRef,
-            );
-
-            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-                $inputData['vnp_BankCode'] = $vnp_BankCode;
-            }
-            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-                $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-            }
-
-            ksort($inputData);
-            $query = "";
-            $i = 0;
-            $hashdata = "";
-            foreach ($inputData as $key => $value) {
-                if ($i == 1) {
-                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-                } else {
-                    $hashdata .= urlencode($key) . "=" . urlencode($value);
-                    $i = 1;
+                if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                    $inputData['vnp_Bill_State'] = $vnp_Bill_State;
                 }
-                $query .= urlencode($key) . "=" . urlencode($value) . '&';
-            }
 
-            $vnp_Url = $vnp_Url . "?" . $query;
-            if (isset($vnp_HashSecret)) {
-                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
-                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-            }
-            return redirect()->to($vnp_Url);
-        } else if ($payment_method = "Thanh toán khi nhận hàng") {
-            // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
-            session()->forget('shopping_cart_' . auth()->id());
+                ksort($inputData);
+                $query = "";
+                $i = 0;
+                $hashdata = "";
+                foreach ($inputData as $key => $value) {
+                    if ($i == 1) {
+                        $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                    } else {
+                        $hashdata .= urlencode($key) . "=" . urlencode($value);
+                        $i = 1;
+                    }
+                    $query .= urlencode($key) . "=" . urlencode($value) . '&';
+                }
 
-            return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+                $vnp_Url = $vnp_Url . "?" . $query;
+                if (isset($vnp_HashSecret)) {
+                    $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+                    $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+                }
+                return redirect()->to($vnp_Url);
+            } 
+            
+            else if ($payment_method == "Thanh toán khi nhận hàng") 
+            {
+                // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
+                session()->forget('shopping_cart_' . $user_id);
+                return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('/ktcstore/checkout')->with('fail', 'Đã xảy ra lỗi khi đặt hàng: ' . $e->getMessage());
         }
     }
-    
+
 
     public function vnpay_return()
     {
@@ -422,10 +620,9 @@ class StoreController extends Controller
 
     public function search_product(Request $request)
     {
-        if (isset($_GET['keywords'])) {
+        $search_keywords = $request->keywords;
+        if ($search_keywords) {
             Paginator::useBootstrap();
-            $search_keywords = $_GET['keywords'];
-
             $products = Product::where('product_name', 'LIKE', "%$search_keywords%")
                 ->leftJoin("product_detail", "products.product_id", "=", "product_detail.product_id")
                 ->where('product_detail.size', '=', 'S')

@@ -302,7 +302,7 @@ class ProductController extends Controller
         return view("admin.product.product_detail.update_detail", compact('inner_join'));
     }
 
-    public function update_product_detail(Request $request, $product_id, $product_detail_id)
+    public function update_product_detail(Request $request)
     {
         if (!Auth::check()) {
             return redirect('login');
@@ -312,6 +312,9 @@ class ProductController extends Controller
         if ($user->role === 'Khách Hàng') {
             return redirect('/ktcstore'); 
         }
+
+        $product_id = $request->product_id;
+        $product_detail_id = $request->product_detail_id;
 
         if (!$this->check_product_exist($product_id, $product_detail_id)) {
             return redirect('/admin/product');  
@@ -362,7 +365,7 @@ class ProductController extends Controller
         return redirect('/admin/product/product_detail/product_id='.$product_id)->with('success', 'Xóa Chi Tiết Sản Phẩm Thành Công!');
     }
 
-    public function search_product()
+    public function search_product(Request $request)
     {
         if (!Auth::check()) {
             return redirect('login');
@@ -373,8 +376,9 @@ class ProductController extends Controller
             return redirect('/ktcstore'); 
         }
 
-        if (isset($_POST['keywords'])) {
-            $search_text = $_POST['keywords'];
+        $search_text = $request->keywords;
+
+        if ($search_text) {
             $search_products = Product::where('product_name', 'LIKE', "%$search_text%")
                 ->join("brands", "products.brand_id", "=", "brands.brand_id")
                 ->join("category", "products.category_id", "=", "category.category_id")

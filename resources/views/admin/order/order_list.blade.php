@@ -21,6 +21,14 @@
                   <button type="submit">Lọc</button>
               </form>
               </th>
+              <tr>
+                  <td>
+                  <form method="post" style="width: 300px" action="/admin/order/search_order" enctype='multipart/form-data'>
+                    <input type="number" class="form-control" name="order_id" placeholder="Nhập mã đơn hàng..." min="1">
+                    @csrf
+                  </form>
+                  </td>z`
+                </tr>
               </table>
             </div>
             

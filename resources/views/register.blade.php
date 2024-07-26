@@ -17,36 +17,36 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Địa chỉ email là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Địa Chỉ Email</span>
-						<input class="input100" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Địa chỉ email">
+						<input class="input100" type="email" name="email" id="exampleInputEmail" aria-describedby="emailHelp" value="{{old('email')}}" placeholder="Địa chỉ email" maxlength="255">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Họ và tên là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Họ Và Tên</span>
-						<input class="input100" type="text" name="full_name" id="" placeholder="Họ Và Tên" style="font-family: Arial;">
+						<input class="input100" type="text" name="full_name" id="" placeholder="Họ Và Tên" style="font-family: Arial;" maxlength="255">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Địa Chỉ là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Địa Chỉ</span>
-						<input class="input100" type="text" name="address" id="" placeholder="Địa Chỉ" style="font-family: Arial;">
+						<input class="input100" type="text" name="address" id="" placeholder="Địa Chỉ" style="font-family: Arial;" maxlength="255">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Số Điện Thoại là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Số Điện Thoại</span>
-						<input class="input100" type="text" name="phone_number" id="" placeholder="Số Điện Thoại" style="font-family: Arial;">
+						<input class="input100" type="text" name="phone_number" id="" placeholder="Số Điện Thoại" style="font-family: Arial;" maxlength="255">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Mật khẩu là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Mật Khẩu</span>
-						<input class="input100" type="password" name="password" id="exampleInputPassword1" placeholder="Mật khẩu" style="font-family: Arial;">
+						<input class="input100" type="password" name="password" id="exampleInputPassword1" placeholder="Mật khẩu" minlength="8" maxlength="20" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>
 					<div class="wrap-input100 validate-input" data-validate="Mật khẩu là bắt buộc">
 						<span class="label-input100" style="font-family: Arial;">Xác Nhận Mật Khẩu</span>
-						<input class="input100" type="password" name="confirm_password" id="" placeholder="Mật khẩu" style="font-family: Arial;">
+						<input class="input100" type="password" name="confirm_password" id="" placeholder="Mật khẩu từ 8 tới 20 kí tự" minlength="8" maxlength="20" style="font-family: Arial;">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					<br>

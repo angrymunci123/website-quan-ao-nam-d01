@@ -161,8 +161,8 @@ Route::get('/admin/product/product_detail/save_product_detail', function () {
 });
 Route::get('/admin/product/product_detail/view_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "view_product_detail"]);
 Route::get('/admin/product/product_detail/edit_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "edit_product_detail"]);
-Route::post('/admin/product/product_detail/update_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "update_product_detail"]);
-Route::get('/admin/product/product_detail/update_detail/product_id={product_id}&product_detail_id={product_detail_id}', function () {
+Route::post('/admin/product/product_detail/update_detail', [ProductController::class, "update_product_detail"]);
+Route::get('/admin/product/product_detail/update_detail', function () {
     return redirect('/');
 });
 Route::post('/admin/product/product_detail/delete_detail/product_id={product_id}&product_detail_id={product_detail_id}', [ProductController::class, "delete_product_detail"]);
@@ -242,8 +242,8 @@ Route::get('/ktcstore/shop/category=Quần-jean', [FilterController::class, "qua
 Route::get('/ktcstore/shop/category=Quần-short', [FilterController::class, "quan_short"]);
 
 //Asc - desc
-Route::post('/ktcstore/shop/price-asc', [CustomerController::class, "price_asc"]);
-Route::post('/ktcstore/shop/price-desc', [CustomerController::class, "price_desc"]);
+Route::get('/ktcstore/shop/price-asc', [FilterController::class, "price_asc"]);
+Route::get('/ktcstore/shop/price-desc', [FilterController::class, "price_desc"]);
 
 //Customer - Filter order status
 Route::get('/ktcstore/order_history/pending', [CustomerController::class, "order_pending"]);
@@ -271,6 +271,9 @@ Route::post('/ktcstore/order_history/cancel_order/order_id={order_id}', [Custome
 Route::get('/ktcstore/order_history/cancel_order/order_id={order_id}', function () {
     return redirect('/');
 });
+
+Route::POST('/ktcstore/order_history/search_order', [CustomerController::class, "search_order"]);
+
 Route::get('/ktcstore/blog-details', [StoreController::class, "blog_detail"]);
 
 //Customer - Personal info

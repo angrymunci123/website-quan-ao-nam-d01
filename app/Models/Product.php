@@ -26,6 +26,10 @@ class Product extends Model
     {
         return $this->hasMany(Product_Detail::class, 'product_id');
     }
+    public function product_review()
+    {
+        return $this->hasMany(Product_Review::class, 'product_id');
+    }
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
