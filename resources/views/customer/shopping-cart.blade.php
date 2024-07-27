@@ -23,7 +23,7 @@
 $total_in_cart = 0;
 @endphp
 <section class="shopping-cart spad">
-    <div style="width:1500px; margin:auto">
+    <div style="width:1300px; margin:auto">
         <div class="row">
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
@@ -36,13 +36,13 @@ $total_in_cart = 0;
                     <table style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Sản phẩm</th>
+                                <th style="width: 50px">Sản phẩm</th>
                                 <th></th>
                                 <th class="text-center">Số lượng</th>
                                 <th></th>
-                                <th class="text-center">Kích Cỡ</th>
+                                <th class="text-center">Size</th>
                                 <th></th>
-                                <th class="text-center">Màu Sắc</th>
+                                <th class="text-center">Màu</th>
                                 <th></th>
                                 <th class="text-center">Thành tiền</th>
                                 <th></th>

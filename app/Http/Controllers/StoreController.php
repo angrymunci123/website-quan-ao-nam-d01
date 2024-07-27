@@ -524,7 +524,7 @@ class StoreController extends Controller
                 }
                 return redirect()->to($vnp_Url);
             } else if ($payment_method == "Thanh toán khi nhận hàng") {
-                // Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
+                Mail::to(session()->get('email'))->send(new OrderMail($shopping_cart));
                 session()->forget('shopping_cart_' . $user_id);
                 return redirect('/ktcstore/order_history')->with('success', 'Đã đặt hàng thành công!');
             }
