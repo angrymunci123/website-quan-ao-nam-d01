@@ -165,7 +165,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                                 <form action="/ktcstore/logout" method="POST">
-                                                    @csrf 
+                                                    @csrf
                                                     <button type="submit" class="btn btn-warning">Đăng xuất</button>
                                                 </form>
                                             </div>
@@ -239,7 +239,7 @@
                             <a href="#"><img src="{{ asset('temp_assets/KTC_Store.png')}}" alt="" style="width: 150px"></a>
                         </div>
                         {{-- slogan --}}
-                        <p>Nhà tài trợ</p>
+                        <p>Hỗ trợ thanh toán</p>
                         <a href="#"><img src="{{ asset('temp_assets/vnpay.jpg')}}" alt="" style="width: 100px"></a>
                     </div>
                 </div>

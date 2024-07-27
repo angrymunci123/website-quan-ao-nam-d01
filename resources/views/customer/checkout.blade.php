@@ -25,7 +25,7 @@
     $total_in_cart = 0;
     @endphp
     <section class="checkout spad">
-        <div style="width:100%; max-width:1500px; margin:auto">
+        <div style="width:100%; max-width:1300px; margin:auto">
             <div class="checkout__form">
                 <form action="/ktcstore/purchase" method="POST" enctype='multipart/form-data'>
                 @csrf

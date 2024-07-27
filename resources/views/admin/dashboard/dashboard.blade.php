@@ -39,7 +39,7 @@
                                     <i class="fa-solid fa-eye text-lg opacity-10" aria-hidden="true"></i>
                                 </a>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                                     <i class="fa-solid fa-eye text-lg opacity-10" aria-hidden="true"></i>
                                 </a>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
